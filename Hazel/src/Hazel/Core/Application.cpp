@@ -2,15 +2,14 @@
 
 #include <memory>
 
+#include "Hazel/Core/Logger.h"
 #include "Hazel/Events/Events.h"
 #include "Hazel/Layers/LayerStack.h"
 #include "Hazel/Utils/Reversed.h"
 
 namespace Hazel
 {
-    class ApplicationImplementation
-        : public GenericEventListener,
-        public WindowClosedListener
+    class ApplicationImplementation : public EventListener
     {
     private:
         std::unique_ptr<Window> window;
@@ -35,6 +34,7 @@ namespace Hazel
             running = true;
             while (running)
             {
+                CoreTrace("Update");
                 for (Layer *layer : Reversed(layers))
                 {
                     layer->OnUpdate();
@@ -61,14 +61,10 @@ namespace Hazel
 
         virtual void OnEvent(Event &e) override
         {
-            CoreTrace("{}", e);
+            CoreDebug("{}", e);
             for (Layer *layer : layers)
             {
-                if (e.IsHandled())
-                {
-                    break;
-                }
-                EventDispatcher(*layer).Dispatch(e);
+                EventDispatcher(layer).Dispatch(e);
             }
         }
 
@@ -80,16 +76,16 @@ namespace Hazel
     private:
         inline void Init()
         {
-            CoreTrace("Application initialization.");
+            CoreDebug("Application initialization.");
             SetupWindow();
-            CoreTrace("Application initialized.");
+            CoreDebug("Application initialized.");
         }
 
         inline void SetupWindow()
         {
-            CoreTrace("Main window setup started.");
+            CoreDebug("Main window setup started.");
             window->SetEventListener(this);
-            CoreTrace("Main window setup stopped.");
+            CoreDebug("Main window setup stopped.");
         }
     };
 

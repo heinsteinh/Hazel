@@ -16,9 +16,11 @@ workspace "Hazel"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-include "Hazel/vendor/GLFW"
-include "Hazel/vendor/Glad"
-include "Hazel/vendor/imgui"
+group "Dependecies"
+    include "Hazel/vendor/GLFW"
+    include "Hazel/vendor/Glad"
+    include "Hazel/vendor/imgui"
+group ""
 
 project "Hazel"
     location "Hazel"

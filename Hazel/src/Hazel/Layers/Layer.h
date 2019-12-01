@@ -9,10 +9,7 @@
 
 namespace Hazel
 {
-    class HAZEL_API Layer
-        : public Attachable,
-        public Runnable,
-        public virtual EventListener
+    class HAZEL_API Layer : public EventListener, public Attachable, public Runnable
     {
     public:
         virtual ~Layer() = default;

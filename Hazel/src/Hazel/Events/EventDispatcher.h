@@ -2,84 +2,115 @@
 
 #include "Hazel/Core/Core.h"
 #include "Categories/Categories.h"
-#include "Listeners/Listeners.h"
+#include "EventListener.h"
 
 namespace Hazel
 {
     class HAZEL_API EventDispatcher
     {
     private:
-        EventListener &listener;
+        EventListener *listener;
 
     public:
-        EventDispatcher(EventListener &listener)
-            : listener(listener)
-        {
-        }
+        EventDispatcher(EventListener *listener);
 
-        void Dispatch(Event &e)
-        {
-            TryHandle(&GenericEventListener::OnEvent, e);
-            TryHandleKey(e) || TryHandleMouse(e) || TryHandleApplication(e);
-        }
+        void Dispatch(Event &e);
 
     private:
-        inline bool TryHandleKey(Event &e)
+        inline bool DispatchEvent(Event &e)
         {
-            if (!TryHandle(&KeyListener::OnKeyEvent, e))
-            {
-                return false;
-            }
-            TryHandle(&KeyPressedListener::OnKeyPressed, e);
-            TryHandle(&KeyReleasedListener::OnKeyReleased, e);
-            TryHandle(&KeyTypedListener::OnKeyTyped, e);
-            return true;
+            return TryHandle(&EventListener::OnEvent, e);
         }
 
-        inline bool TryHandleMouse(Event &e)
+        inline bool DispatchApplicationEvent(Event &e)
         {
-            if (!TryHandle(&MouseListener::OnMouseEvent, e))
-            {
-                return false;
-            }
-            if (TryHandle(&MouseButtonListener::OnMouseButtonEvent, e))
-            {
-                TryHandle(&MouseButtonPressedListener::OnMouseButtonPressed, e);
-                TryHandle(&MouseButtonReleasedListener::OnMouseButtonReleased, e);
-            }
-            else
-            {
-                TryHandle(&MouseWheelListener::OnMouseScrolled, e);
-                TryHandle(&MouseMotionListener::OnMouseMoved, e);
-            }
-            return true;
+            return DispatchEvent(e)
+                || TryHandle(&EventListener::OnApplicationEvent, e);
         }
 
-        inline bool TryHandleApplication(Event &e)
+        inline bool DispatchWindowClosedEvent(Event &e)
         {
-            if (!TryHandle(&ApplicationListener::OnApplicationEvent, e))
-            {
-                return false;
-            }
-            TryHandle(&WindowClosedListener::OnWindowClosed, e);
-            TryHandle(&WindowResizedListener::OnWindowResized, e);
-            return true;
+            return DispatchApplicationEvent(e)
+                || TryHandle(&EventListener::OnWindowClosed, e);
         }
 
-        template<typename L, typename E>
-        inline bool TryHandle(void (L:: *method)(E &), Event &e)
+        inline bool DispatchWindowResizedEvent(Event &e)
         {
-            if (e.IsHandled())
-            {
-                return false;
-            }
-            L *object = dynamic_cast<L *>(&listener);
-            E *event = dynamic_cast<E *>(&e);
-            if (object && event)
-            {
-                (object->*method)(*event);
-            }
-            return event;
+            return DispatchApplicationEvent(e)
+                || TryHandle(&EventListener::OnWindowResized, e);
+        }
+
+        inline bool DispatchInputEvent(Event &e)
+        {
+            return DispatchEvent(e)
+                || TryHandle(&EventListener::OnInputEvent, e);
+        }
+
+        inline bool DispatchKeyEvent(Event &e)
+        {
+            return DispatchInputEvent(e)
+                || TryHandle(&EventListener::OnKeyEvent, e);
+        }
+
+        inline bool DispatchKeyPressedEvent(Event &e)
+        {
+            return DispatchKeyEvent(e)
+                || TryHandle(&EventListener::OnKeyPressed, e);
+        }
+
+        inline bool DispatchKeyReleasedEvent(Event &e)
+        {
+            return DispatchKeyEvent(e)
+                || TryHandle(&EventListener::OnKeyReleased, e);
+        }
+
+        inline bool DispatchKeyTypedEvent(Event &e)
+        {
+            return DispatchKeyEvent(e)
+                || TryHandle(&EventListener::OnKeyTyped, e);
+        }
+
+        inline bool DispatchMouseEvent(Event &e)
+        {
+            return DispatchInputEvent(e)
+                || TryHandle(&EventListener::OnMouseEvent, e);
+        }
+
+        inline bool DispatchMouseMovedEvent(Event &e)
+        {
+            return DispatchMouseEvent(e)
+                || TryHandle(&EventListener::OnMouseMoved, e);
+        }
+
+        inline bool DispatchMouseScrolledEvent(Event &e)
+        {
+            return DispatchMouseEvent(e)
+                || TryHandle(&EventListener::OnMouseScrolled, e);
+        }
+
+        inline bool DispatchMouseButtonEvent(Event &e)
+        {
+            return DispatchMouseEvent(e)
+                || TryHandle(&EventListener::OnMouseButtonEvent, e);
+        }
+
+        inline bool DispatchMouseButtonPressedEvent(Event &e)
+        {
+            return DispatchMouseButtonEvent(e)
+                || TryHandle(&EventListener::OnMouseButtonPressed, e);
+        }
+
+        inline bool DispatchMouseButtonReleasedEvent(Event &e)
+        {
+            return DispatchMouseButtonEvent(e)
+                || TryHandle(&EventListener::OnMouseButtonReleased, e);
+        }
+
+        template<typename T>
+        inline bool TryHandle(void (EventListener:: *method)(T &), Event &e)
+        {
+            (listener->*method)((T &)e);
+            return e.IsHandled();
         }
     };
 }

@@ -58,7 +58,6 @@ namespace Hazel
         void OnMouseButton(int button, int action);
         void OnMouseScrolled(double x, double y);
         void OnMouseMoved(double x, double y);
-        void OnEvent(Event &e);
         void Shutdown();
     };
 }

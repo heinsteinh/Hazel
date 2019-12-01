@@ -1,9 +1,7 @@
 #pragma once
 
 #include "Hazel/Core/Core.h"
-#include "Hazel/Utils/format.h"
-
-#include <ostream>
+#include "spdlog/fmt/ostr.h"
 
 namespace Hazel
 {
@@ -16,22 +14,7 @@ namespace Hazel
     };
 }
 
-inline std::ostream &operator<<(std::ostream &stream, const Hazel::Loggable &e)
+inline std::ostream &operator<<(std::ostream &stream, const Hazel::Loggable &loggable)
 {
-    return stream << e.ToString();
+    return stream << loggable.ToString();
 }
-
-template <>
-struct fmt::formatter<Hazel::Loggable &>
-{
-    constexpr auto parse(format_parse_context &context)
-    {
-        return context.begin();
-    }
-
-    template <typename FormatContext>
-    constexpr auto format(const Hazel::Loggable &loggable, FormatContext &context)
-    {
-        return format_to(context.out(), "{}", loggable.ToString());
-    }
-};

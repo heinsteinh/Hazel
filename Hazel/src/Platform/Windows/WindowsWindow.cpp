@@ -192,12 +192,12 @@ namespace Hazel
     {
         width = width;
         height = height;
-        OnEvent(WindowResizedEvent(width, height));
+        EventDispatcher(listener).Dispatch(WindowResizedEvent(width, height));
     }
 
     void WindowsWindow::OnClose()
     {
-        OnEvent(WindowClosedEvent());
+        EventDispatcher(listener).Dispatch(WindowClosedEvent());
     }
 
     void WindowsWindow::OnKey(int key, int action)
@@ -205,22 +205,22 @@ namespace Hazel
         switch (action)
         {
         case GLFW_PRESS:
-            OnEvent(KeyPressedEvent(GlfwKeyMap.GetHazelKey(key), 0));
+            EventDispatcher(listener).Dispatch(KeyPressedEvent(GlfwKeyMap.GetHazelKey(key), 0));
             count = 0;
             break;
         case GLFW_RELEASE:
-            OnEvent(KeyReleasedEvent(GlfwKeyMap.GetHazelKey(key)));
+            EventDispatcher(listener).Dispatch(KeyReleasedEvent(GlfwKeyMap.GetHazelKey(key)));
             count = 0;
             break;
         case GLFW_REPEAT:
             count++;
-            OnEvent(KeyPressedEvent(GlfwKeyMap.GetHazelKey(key), count));
+            EventDispatcher(listener).Dispatch(KeyPressedEvent(GlfwKeyMap.GetHazelKey(key), count));
         }
     }
 
     void WindowsWindow::OnChar(int key)
     {
-        OnEvent(KeyTypedEvent(GlfwKeyMap.GetHazelKey(key)));
+        EventDispatcher(listener).Dispatch(KeyTypedEvent(GlfwKeyMap.GetHazelKey(key)));
     }
 
     void WindowsWindow::OnMouseButton(int button, int action)
@@ -228,29 +228,21 @@ namespace Hazel
         switch (action)
         {
         case GLFW_PRESS:
-            OnEvent(MouseButtonPressedEvent(button));
+            EventDispatcher(listener).Dispatch(MouseButtonPressedEvent(button));
             break;
         case GLFW_RELEASE:
-            OnEvent(MouseButtonReleasedEvent(button));
+            EventDispatcher(listener).Dispatch(MouseButtonReleasedEvent(button));
         }
     }
 
     void WindowsWindow::OnMouseScrolled(double x, double y)
     {
-        OnEvent(MouseScrolledEvent(x, y));
+        EventDispatcher(listener).Dispatch(MouseScrolledEvent(x, y));
     }
 
     void WindowsWindow::OnMouseMoved(double x, double y)
     {
-        OnEvent(MouseMovedEvent(x, y));
-    }
-
-    void WindowsWindow::OnEvent(Event &e)
-    {
-        if (listener)
-        {
-            EventDispatcher(*listener).Dispatch(e);
-        }
+        EventDispatcher(listener).Dispatch(MouseMovedEvent(x, y));
     }
 
     void WindowsWindow::Shutdown()

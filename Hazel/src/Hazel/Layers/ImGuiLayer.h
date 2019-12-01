@@ -5,16 +5,7 @@
 
 namespace Hazel
 {
-    class HAZEL_API ImGuiLayer
-        : public Layer,
-        public MouseButtonPressedListener,
-        public MouseButtonReleasedListener,
-        public MouseMotionListener,
-        public MouseWheelListener,
-        public KeyPressedListener,
-        public KeyReleasedListener,
-        public KeyTypedListener,
-        public WindowResizedListener
+    class HAZEL_API ImGuiLayer : public Layer
     {
     private:
         double time = 0;
