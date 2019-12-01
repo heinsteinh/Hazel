@@ -5,7 +5,7 @@ class Sandbox : public Hazel::Application
 public:
     Sandbox()
     {
-        PushOverlay(new Hazel::ImGuiLayer());
+        Hazel::Info("Sandox creation");
     };
 
     virtual ~Sandbox()
@@ -15,6 +15,5 @@ public:
 
 Hazel::Application *Hazel::CreateApplication()
 {
-    Hazel::Info("Sandbox application creation.");
     return new Sandbox();
 }

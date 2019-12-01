@@ -2,7 +2,7 @@
 
 #include "Core.h"
 #include "Window.h"
-#include "Hazel/Layers/Layer.h"
+#include "Layer.h"
 
 namespace Hazel
 {

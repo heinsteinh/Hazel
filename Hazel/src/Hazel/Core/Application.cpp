@@ -2,9 +2,10 @@
 
 #include <memory>
 
-#include "Hazel/Core/Logger.h"
+#include "Logger.h"
+#include "Hazel/ImGui/ImGuiLayer.h"
+#include "LayerStack.h"
 #include "Hazel/Events/Events.h"
-#include "Hazel/Layers/LayerStack.h"
 #include "Hazel/Utils/Reversed.h"
 
 namespace Hazel
@@ -13,12 +14,14 @@ namespace Hazel
     {
     private:
         std::unique_ptr<Window> window;
+        ImGuiLayer *imgui;
         bool running = false;
         LayerStack layers;
 
     public:
         ApplicationImplementation()
-            : window(Window::Create())
+            : window(Window::Create()),
+            imgui(new Hazel::ImGuiLayer(*window.get()))
         {
             Init();
         }
@@ -34,11 +37,8 @@ namespace Hazel
             running = true;
             while (running)
             {
-                CoreTrace("Update");
-                for (Layer *layer : Reversed(layers))
-                {
-                    layer->OnUpdate();
-                }
+                UpdateLayers();
+                RenderImGui();
                 window->OnUpdate();
             }
             CoreInfo("Application stopped.");
@@ -78,6 +78,7 @@ namespace Hazel
         {
             CoreDebug("Application initialization.");
             SetupWindow();
+            PushOverlay(imgui);
             CoreDebug("Application initialized.");
         }
 
@@ -86,6 +87,26 @@ namespace Hazel
             CoreDebug("Main window setup started.");
             window->SetEventListener(this);
             CoreDebug("Main window setup stopped.");
+        }
+
+        inline void UpdateLayers()
+        {
+            CoreTrace("Update Layers");
+            for (Layer *layer : Reversed(layers))
+            {
+                layer->OnUpdate();
+            }
+        }
+
+        inline void RenderImGui()
+        {
+            CoreTrace("Render ImGui");
+            imgui->Begin();
+            for (Layer *layer : Reversed(layers))
+            {
+                layer->OnImGuiRender();
+            }
+            imgui->End();
         }
     };
 
@@ -96,6 +117,7 @@ namespace Hazel
 
     Application::~Application()
     {
+        delete implementation;
     }
 
     const Window &Application::GetWindow()

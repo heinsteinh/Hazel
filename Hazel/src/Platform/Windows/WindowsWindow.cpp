@@ -48,11 +48,6 @@ namespace Hazel
         return vsync;
     }
 
-    Input &WindowsWindow::GetInput()
-    {
-        return *input;
-    }
-
     void WindowsWindow::SetTitle(const std::string &title)
     {
         this->title = title;
@@ -74,6 +69,16 @@ namespace Hazel
     void WindowsWindow::SetEventListener(EventListener *listener)
     {
         this->listener = listener;
+    }
+
+    Input &WindowsWindow::GetInput() const
+    {
+        return *input;
+    }
+
+    void *WindowsWindow::GetNativeWindow() const
+    {
+        return window;
     }
 
     WindowsWindow &WindowsWindow::GetWindow(GLFWwindow *window)

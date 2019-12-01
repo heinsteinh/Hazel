@@ -20,12 +20,6 @@ namespace Hazel
         {ImGuiKey_Backspace,    Key::Backspace},
         {ImGuiKey_Space,        Key::Space},
         {ImGuiKey_Enter,        Key::Enter},
-        {ImGuiKey_Escape,       Key::Escape},
-        {ImGuiKey_A,            Key::Up},
-        {ImGuiKey_C,            Key::Up},
-        {ImGuiKey_V,            Key::Up},
-        {ImGuiKey_X,            Key::Up},
-        {ImGuiKey_Y,            Key::Up},
-        {ImGuiKey_Z,            Key::Up}
+        {ImGuiKey_Escape,       Key::Escape}
     };
 }
