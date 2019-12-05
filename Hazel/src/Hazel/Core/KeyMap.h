@@ -13,10 +13,27 @@ namespace Hazel
         std::unordered_map<Key, int> reversedMapping;
 
     public:
-        KeyMap(std::initializer_list<std::pair<const int, Key>> mapping);
+        KeyMap(std::initializer_list<std::pair<const int, Key>> mapping)
+            : mapping(mapping)
+        {
+            Init();
+        }
 
-        Key GetHazelKey(int key) const;
-        int GetNativeKey(Key key) const;
+        inline Key GetHazelKey(int key) const
+        {
+            auto result = mapping.find(key);
+            return result == mapping.end()
+                ? Key::Invalid
+                : result->second;
+        }
+
+        inline int GetNativeKey(Key key) const
+        {
+            auto result = reversedMapping.find(key);
+            return result == reversedMapping.end()
+                ? 0
+                : result->second;
+        }
 
         inline Key operator[](int key) const
         {
@@ -29,6 +46,12 @@ namespace Hazel
         }
 
     private:
-        void Init();
+        void Init()
+        {
+            for (const auto keyValue : mapping)
+            {
+                reversedMapping[keyValue.second] = keyValue.first;
+            }
+        }
     };
 }

@@ -5,11 +5,10 @@
 
 namespace Hazel
 {
-    class HAZEL_API ImGuiLayer : public Layer
+    class ImGuiLayer : public Layer
     {
     private:
         const Window &parent;
-        double time = 0;
 
     public:
         ImGuiLayer(const Window &parent);

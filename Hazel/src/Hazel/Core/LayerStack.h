@@ -14,7 +14,7 @@ namespace Hazel
 
     private:
         std::vector<Layer *> layers;
-        std::vector<Layer *>::iterator insert;
+        int top = 0;
 
     public:
         LayerStack();

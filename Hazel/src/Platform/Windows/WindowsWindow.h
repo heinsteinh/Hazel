@@ -19,7 +19,7 @@ namespace Hazel
         int width = 1280;
         int height = 720;
         bool vsync = true;
-        EventListener *listener = nullptr;
+        EventDispatcher dispatcher;
         int count = 0;
 
     public:

@@ -13,7 +13,7 @@ namespace Hazel
         : logger(spdlog::stdout_color_mt(tag))
     {
         SetLevel(Level::Debug);
-        logger->set_pattern("%^[%l] [%T] %n: %v%$");
+        logger->set_pattern("%^[%l][%T] %n: %v%$");
     }
 
     Logger::Level Logger::GetLevel() const

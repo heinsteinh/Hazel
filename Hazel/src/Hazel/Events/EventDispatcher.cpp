@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 
-#define MAP(type) {typeid(type).hash_code(), &EventDispatcher::Dispatch##type}
+#define MAP(type) {typeid(##type).hash_code(), &EventDispatcher::Dispatch##type}
 
 namespace Hazel
 {
@@ -11,9 +11,14 @@ namespace Hazel
     {
     }
 
+    void EventDispatcher::SetListener(EventListener *listener)
+    {
+        this->listener = listener;
+    }
+
     void EventDispatcher::Dispatch(Event &e)
     {
-        static const std::unordered_map<int, bool (EventDispatcher:: *)(Event &)> methods = {
+        static const std::unordered_map<size_t, bool (EventDispatcher:: *)(Event &)> methods = {
             MAP(WindowClosedEvent),
             MAP(WindowResizedEvent),
             MAP(MouseButtonPressedEvent),

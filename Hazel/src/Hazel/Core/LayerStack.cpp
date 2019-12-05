@@ -3,7 +3,6 @@
 namespace Hazel
 {
     LayerStack::LayerStack()
-        : insert(layers.begin())
     {
     }
 
@@ -17,7 +16,8 @@ namespace Hazel
 
     void LayerStack::PushLayer(Layer *layer)
     {
-        insert = layers.emplace(insert, layer);
+        layers.emplace(layers.begin() + top, layer);
+        top++;
         layer->OnAttach();
     }
 
@@ -33,7 +33,7 @@ namespace Hazel
         if (i != layers.end())
         {
             layers.erase(i);
-            insert--;
+            top--;
             layer->OnDetach();
         }
     }

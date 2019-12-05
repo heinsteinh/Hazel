@@ -20,7 +20,7 @@ namespace Hazel
 
     const std::string &ImGuiLayer::GetName() const
     {
-        static const std::string name = "ImGuiLayer";
+        static const std::string name = "ImGui";
         return name;
     }
 

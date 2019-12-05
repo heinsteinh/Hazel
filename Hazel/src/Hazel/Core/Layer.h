@@ -15,7 +15,6 @@ namespace Hazel
         virtual ~Layer() = default;
 
         virtual const std::string &GetName() const = 0;
-
         virtual void OnImGuiRender() = 0;
     };
 }
