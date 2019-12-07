@@ -1,10 +1,11 @@
 #pragma once
 
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
+
 #include "Hazel/Core/Application.h"
 #include "Hazel/Core/Window.h"
 #include "WindowsInput.h"
-#include "GLFW/glfw3.h"
-#include "glad/glad.h"
 
 namespace Hazel
 {
@@ -42,7 +43,6 @@ namespace Hazel
         virtual void OnUpdate() override;
 
     private:
-        static WindowsWindow &GetWindow(GLFWwindow *window);
         static void OnError(int error, const char *description);
 
         void Init();

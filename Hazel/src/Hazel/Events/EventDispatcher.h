@@ -110,7 +110,7 @@ namespace Hazel
         template<typename T>
         inline bool TryHandle(void (EventListener:: *method)(T &), Event &e)
         {
-            (listener->*method)((T &)e);
+            (listener->*method)(static_cast<T &>(e));
             return e.IsHandled();
         }
     };

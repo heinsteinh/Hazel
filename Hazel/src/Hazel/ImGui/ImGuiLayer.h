@@ -15,7 +15,6 @@ namespace Hazel
         virtual ~ImGuiLayer();
 
         virtual const std::string &GetName() const override;
-
         virtual void OnAttach() override;
         virtual void OnDetach() override;
         virtual void OnUpdate() override;
@@ -26,6 +25,8 @@ namespace Hazel
 
     private:
         void Init();
+        void SetupConfigFlags();
+        void UpdatePlatforms();
         void Shutdown();
     };
 }

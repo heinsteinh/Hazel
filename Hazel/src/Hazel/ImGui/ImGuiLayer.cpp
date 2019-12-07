@@ -1,14 +1,19 @@
 #include "ImGuiLayer.h"
 
 #include "imgui.h"
-#include "examples/imgui_impl_opengl3.h"
 #include "examples/imgui_impl_glfw.h"
+#include "examples/imgui_impl_opengl3.h"
 
-#include <GLFW/glfw3.h>
-#include <glad/glad.h>
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 
 namespace Hazel
 {
+    static inline auto GetGlfwWindow(const Window &window)
+    {
+        return static_cast<GLFWwindow *>(window.GetNativeWindow());
+    }
+
     ImGuiLayer::ImGuiLayer(const Window &parent)
         : parent(parent)
     {
@@ -53,15 +58,9 @@ namespace Hazel
 
     void ImGuiLayer::End()
     {
-        ImGui::GetIO().DisplaySize = {(float)parent.GetWidth(), (float)parent.GetHeight()};
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        {
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-            glfwMakeContextCurrent(glfwGetCurrentContext());
-        }
+        UpdatePlatforms();
     }
 
     void ImGuiLayer::Init()
@@ -69,16 +68,30 @@ namespace Hazel
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGui::StyleColorsDark();
-        ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard
+        SetupConfigFlags();
+        ImGui_ImplGlfw_InitForOpenGL(GetGlfwWindow(parent), true);
+        ImGui_ImplOpenGL3_Init("#version 130");
+    }
+
+    void ImGuiLayer::SetupConfigFlags()
+    {
+        ImGui::GetIO().ConfigFlags = ImGuiConfigFlags_NavEnableKeyboard
             | ImGuiConfigFlags_DockingEnable
             | ImGuiConfigFlags_ViewportsEnable;
-        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        ImGui::GetStyle().WindowRounding = 0.0f;
+        ImGui::GetStyle().Colors[ImGuiCol_WindowBg].w = 1.0f;
+    }
+
+    void ImGuiLayer::UpdatePlatforms()
+    {
+        if (!(ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable))
         {
-            ImGui::GetStyle().WindowRounding = 0.0f;
-            ImGui::GetStyle().Colors[ImGuiCol_WindowBg].w = 1.0f;
+            return;
         }
-        ImGui_ImplGlfw_InitForOpenGL(static_cast<GLFWwindow *>(parent.GetNativeWindow()), true);
-        ImGui_ImplOpenGL3_Init();
+        GLFWwindow *backup = glfwGetCurrentContext();
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
+        glfwMakeContextCurrent(backup);
     }
 
     void ImGuiLayer::Shutdown()

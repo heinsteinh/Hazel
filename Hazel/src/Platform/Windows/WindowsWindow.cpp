@@ -5,6 +5,11 @@
 
 namespace Hazel
 {
+    static inline WindowsWindow &GetWindow(GLFWwindow *window)
+    {
+        return *(WindowsWindow *)glfwGetWindowUserPointer(window);
+    }
+
     Window *Window::Create()
     {
         return new WindowsWindow();
@@ -79,11 +84,6 @@ namespace Hazel
     void *WindowsWindow::GetNativeWindow() const
     {
         return window;
-    }
-
-    WindowsWindow &WindowsWindow::GetWindow(GLFWwindow *window)
-    {
-        return *(WindowsWindow *)glfwGetWindowUserPointer(window);
     }
 
     void WindowsWindow::OnError(int error, const char *description)

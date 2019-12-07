@@ -13,8 +13,7 @@ namespace Hazel
 
     bool WindowsInput::IsKeyPressed(Key key)
     {
-        int state = glfwGetKey(window, GlfwKeyMap::GetNativeKey(key));
-        return state == GLFW_PRESS || state == GLFW_REPEAT;
+        return glfwGetKey(window, GlfwKeyMap::GetNativeKey(key)) == GLFW_PRESS;
     }
 
     bool WindowsInput::IsButtonPressed(MouseButton button)
