@@ -11,8 +11,8 @@ namespace Hazel
         MouseButton button;
 
     protected:
-        MouseButtonEvent(int button)
-            : button(static_cast<MouseButton>(button))
+        MouseButtonEvent(MouseButton button)
+            : button(button)
         {
         }
 

@@ -236,10 +236,10 @@ namespace Hazel
         switch (action)
         {
         case GLFW_PRESS:
-            dispatcher.Dispatch(MouseButtonPressedEvent(button));
+            dispatcher.Dispatch(MouseButtonPressedEvent(static_cast<MouseButton>(button)));
             break;
         case GLFW_RELEASE:
-            dispatcher.Dispatch(MouseButtonReleasedEvent(button));
+            dispatcher.Dispatch(MouseButtonReleasedEvent(static_cast<MouseButton>(button)));
         }
     }
 
