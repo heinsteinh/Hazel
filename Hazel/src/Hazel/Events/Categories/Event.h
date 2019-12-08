@@ -1,14 +1,14 @@
 #pragma once
 
 #include "Hazel/Core/Core.h"
-#include "Hazel/Utils/Loggable.h"
+#include "Hazel/Utils/Printable.h"
 
 #include <string>
 #include <sstream>
 
 namespace Hazel
 {
-    class HAZEL_API Event : public Loggable
+    class HAZEL_API Event : public Printable
     {
     private:
         bool handled = false;

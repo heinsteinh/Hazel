@@ -1,21 +1,23 @@
 #pragma once
 
 #include "KeyEvent.h"
+#include "Hazel/Core/Key.h"
 
 namespace Hazel
 {
-    class HAZEL_API KeyTypedEvent : public KeyEvent
+    class HAZEL_API GenericKeyEvent : public KeyEvent
     {
     private:
-        int key;
+        Key key;
 
-    public:
-        KeyTypedEvent(int key)
+    protected:
+        GenericKeyEvent(Key key)
             : key(key)
         {
         }
 
-        inline int GetKey() const
+    public:
+        inline Key GetKey() const
         {
             return key;
         }
@@ -23,7 +25,7 @@ namespace Hazel
         virtual std::string ToString() const override
         {
             return (std::ostringstream()
-                << GetName() << ": " << key)
+                << GetName() << ": " << static_cast<int>(key))
                 .str();
         }
     };

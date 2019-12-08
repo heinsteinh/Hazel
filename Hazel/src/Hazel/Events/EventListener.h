@@ -33,15 +33,19 @@ namespace Hazel
         {
         }
 
+        virtual void OnKeyTyped(KeyTypedEvent &e)
+        {
+        }
+
+        virtual void OnGenericKeyEvent(GenericKeyEvent &e)
+        {
+        }
+
         virtual void OnKeyPressed(KeyPressedEvent &e)
         {
         }
 
         virtual void OnKeyReleased(KeyReleasedEvent &e)
-        {
-        }
-
-        virtual void OnKeyTyped(KeyTypedEvent &e)
         {
         }
 

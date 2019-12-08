@@ -1,17 +1,17 @@
 #pragma once
 
-#include "KeyEvent.h"
+#include "GenericKeyEvent.h"
 
 namespace Hazel
 {
-    class HAZEL_API KeyPressedEvent : public KeyEvent
+    class HAZEL_API KeyPressedEvent : public GenericKeyEvent
     {
     private:
         int repeatCount;
 
     public:
         KeyPressedEvent(Key key, int repeatCount)
-            : KeyEvent(key),
+            : GenericKeyEvent(key),
             repeatCount(repeatCount)
         {
         }

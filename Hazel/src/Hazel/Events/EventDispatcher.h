@@ -53,22 +53,28 @@ namespace Hazel
                 || TryHandle(&EventListener::OnKeyEvent, e);
         }
 
-        inline bool DispatchKeyPressedEvent(Event &e)
+        inline bool DispatchKeyTypedEvent(Event &e)
         {
             return DispatchKeyEvent(e)
+                || TryHandle(&EventListener::OnKeyTyped, e);
+        }
+
+        inline bool DispatchGenericKeyEvent(Event &e)
+        {
+            return DispatchKeyEvent(e)
+                || TryHandle(&EventListener::OnGenericKeyEvent, e);
+        }
+
+        inline bool DispatchKeyPressedEvent(Event &e)
+        {
+            return DispatchGenericKeyEvent(e)
                 || TryHandle(&EventListener::OnKeyPressed, e);
         }
 
         inline bool DispatchKeyReleasedEvent(Event &e)
         {
-            return DispatchKeyEvent(e)
+            return DispatchGenericKeyEvent(e)
                 || TryHandle(&EventListener::OnKeyReleased, e);
-        }
-
-        inline bool DispatchKeyTypedEvent(Event &e)
-        {
-            return DispatchKeyEvent(e)
-                || TryHandle(&EventListener::OnKeyTyped, e);
         }
 
         inline bool DispatchMouseEvent(Event &e)

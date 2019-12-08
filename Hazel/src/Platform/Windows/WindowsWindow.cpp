@@ -15,8 +15,6 @@ namespace Hazel
         return new WindowsWindow();
     }
 
-    bool WindowsWindow::glfwInitialized = false;
-
     WindowsWindow::WindowsWindow()
     {
         Init();
@@ -98,24 +96,26 @@ namespace Hazel
         CreateGlfwWindow();
         InitGladIfNotDone();
         SetupCallbacks();
-        glfwInitialized = true;
         CoreInfo("Window created {} ({}x{})", title, width, height);
     }
 
     void WindowsWindow::InitGlfwIfNotDone()
     {
+        static bool done = false;
         CoreTrace("GLFW initialization.");
-        if (glfwInitialized)
+        if (done)
         {
             CoreTrace("Already done");
             return;
         }
+        glfwSetErrorCallback(WindowsWindow::OnError);
         if (!glfwInit())
         {
             CoreError("GLFW cannot be initialized.");
+            return;
         }
-        glfwSetErrorCallback(WindowsWindow::OnError);
         CoreTrace("GLFW initialized.");
+        done = true;
     }
 
     void WindowsWindow::CreateGlfwWindow()
@@ -131,17 +131,20 @@ namespace Hazel
 
     void WindowsWindow::InitGladIfNotDone()
     {
+        static bool done = false;
         CoreTrace("Glad initialization.");
-        if (glfwInitialized)
+        if (done)
         {
             CoreTrace("Already done");
             return;
         }
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
-            throw std::exception("Glad cannot be initialized.");
+            CoreError("Glad cannot be initialized.");
+            return;
         }
         CoreTrace("Glad initialized.");
+        done = true;
     }
 
     void WindowsWindow::SetupCallbacks()
@@ -225,7 +228,7 @@ namespace Hazel
 
     void WindowsWindow::OnChar(int key)
     {
-        dispatcher.Dispatch(KeyTypedEvent(static_cast<Key>(key)));
+        dispatcher.Dispatch(KeyTypedEvent(key));
     }
 
     void WindowsWindow::OnMouseButton(int button, int action)

@@ -4,12 +4,12 @@ namespace Hazel
 {
     enum class Key
     {
-        Space,
-        Apostrophe,
-        Comma,
-        Minus,
-        Period,
-        Slash,
+        Space = ' ',
+        Apostrophe = '\'',
+        Comma = ',',
+        Minus = '-',
+        Period = '.',
+        Slash = '/',
         D0 = '0',
         D1,
         D2,
@@ -20,8 +20,8 @@ namespace Hazel
         D7,
         D8,
         D9,
-        Semicolon,
-        Equal,
+        Semicolon = ';',
+        Equal = '=',
         A = 'a',
         B,
         C,
@@ -48,16 +48,16 @@ namespace Hazel
         X,
         Y,
         Z,
-        LeftBracket,
-        Backslash,
-        RightBracket,
-        GraveAccent,
+        LeftBracket = '(',
+        Backslash = '\\',
+        RightBracket = ')',
+        GraveAccent = '`',
         World1,
         World2,
         Escape,
         Enter,
-        Tab,
-        Backspace,
+        Tab = '\t',
+        Backspace = '\r',
         Insert,
         Delete,
         Right,
@@ -127,4 +127,14 @@ namespace Hazel
         Invalid,
         Last = Menu
     };
+
+    inline bool operator==(Key hazel, int native)
+    {
+        return static_cast<int>(hazel) == native;
+    }
+
+    inline bool operator==(int native, Key hazel)
+    {
+        return static_cast<int>(hazel) == native;
+    }
 }

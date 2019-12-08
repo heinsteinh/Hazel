@@ -12,8 +12,6 @@ namespace Hazel
     class WindowsWindow : public Window
     {
     private:
-        static bool glfwInitialized;
-
         GLFWwindow *window = nullptr;
         WindowsInput *input = nullptr;
         std::string title = "Hazel Engine";

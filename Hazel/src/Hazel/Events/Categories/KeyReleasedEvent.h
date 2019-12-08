@@ -1,14 +1,14 @@
 #pragma once
 
-#include "KeyEvent.h"
+#include "GenericKeyEvent.h"
 
 namespace Hazel
 {
-    class HAZEL_API KeyReleasedEvent : public KeyEvent
+    class HAZEL_API KeyReleasedEvent : public GenericKeyEvent
     {
     public:
         KeyReleasedEvent(Key key)
-            : KeyEvent(key)
+            : GenericKeyEvent(key)
         {
         }
     };
