@@ -1,10 +1,9 @@
 #pragma once
 
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
-
 #include "Hazel/Core/Input.h"
 #include "GlfwKeyMap.h"
+
+struct GLFWwindow;
 
 namespace Hazel
 {

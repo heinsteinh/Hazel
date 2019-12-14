@@ -14,7 +14,7 @@ namespace Hazel
     public:
         EventDispatcher(EventListener *listener = nullptr);
 
-        void SetListener(EventListener *listener);
+        void SetEventListener(EventListener *listener);
         void Dispatch(Event &e);
 
     private:

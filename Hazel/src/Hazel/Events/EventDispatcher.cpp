@@ -9,7 +9,7 @@ namespace Hazel
     {
     }
 
-    void EventDispatcher::SetListener(EventListener *listener)
+    void EventDispatcher::SetEventListener(EventListener *listener)
     {
         this->listener = listener;
     }

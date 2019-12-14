@@ -1,25 +1,29 @@
 #pragma once
 
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
+#include <memory>
 
 #include "Hazel/Core/Application.h"
 #include "Hazel/Core/Window.h"
+#include "Hazel/Renderer/GraphicsContext.h"
 #include "WindowsInput.h"
+#include "WindowsEventManager.h"
+
+struct GLFWwindow;
 
 namespace Hazel
 {
     class WindowsWindow : public Window
     {
     private:
+        static const int defaultWidth = 1280;
+        static const int defaultHeight = 720;
+
         GLFWwindow *window = nullptr;
-        WindowsInput *input = nullptr;
+        std::unique_ptr<GraphicsContext> context;
+        std::unique_ptr<WindowsInput> input;
+        std::unique_ptr<WindowsEventManager> eventManager;
         std::string title = "Hazel Engine";
-        int width = 1280;
-        int height = 720;
         bool vsync = true;
-        EventDispatcher dispatcher;
-        int count = 0;
 
     public:
         WindowsWindow();
@@ -41,23 +45,9 @@ namespace Hazel
         virtual void OnUpdate() override;
 
     private:
-        static void OnError(int error, const char *description);
-
         void Init();
-        void InitGlfwIfNotDone();
         void CreateGlfwWindow();
-        void InitGladIfNotDone();
-        void SetupCallbacks();
-        void SetupWindowCallbacks();
-        void SetupKeyCallbacks();
-        void SetupMouseCallbacks();
-        void OnResize(int width, int height);
-        void OnClose();
-        void OnKey(int key, int action);
-        void OnChar(int key);
-        void OnMouseButton(int button, int action);
-        void OnMouseScrolled(double x, double y);
-        void OnMouseMoved(double x, double y);
+        void CreateContext();
         void Shutdown();
     };
 }
