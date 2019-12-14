@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Hazel/Renderer/GraphicsContext.h"
+#include "Hazel/Renderer/Context.h"
 
 struct GLFWwindow;
 
 namespace Hazel
 {
-    class OpenGLContext : public GraphicsContext
+    class OpenGLContext : public Context
     {
     private:
         GLFWwindow *window = nullptr;

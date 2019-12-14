@@ -94,6 +94,7 @@ namespace Hazel
         CoreInfo("Creating window");
         CreateGlfwWindow();
         CreateContext();
+        SetVSync(vsync);
         CoreInfo("Window created {}", title);
     }
 
@@ -101,15 +102,16 @@ namespace Hazel
     {
         CoreDebug("GLFW window creation start {}.", title);
         window = glfwCreateWindow(defaultWidth, defaultHeight, title.c_str(), nullptr, nullptr);
-        SetVSync(vsync);
         CoreDebug("GLFW window creation done {} ({}x{}).", title, GetWidth(), GetHeight());
     }
 
     void WindowsWindow::CreateContext()
     {
+        CoreDebug("Creating context for rendering, inputs and events.");
         context = std::make_unique<OpenGLContext>(window);
         input = std::make_unique<WindowsInput>(window);
         eventManager = std::make_unique<WindowsEventManager>(window);
+        CoreDebug("Context created.");
     }
 
     void WindowsWindow::Shutdown()

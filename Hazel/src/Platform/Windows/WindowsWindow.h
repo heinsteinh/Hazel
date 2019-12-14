@@ -4,7 +4,7 @@
 
 #include "Hazel/Core/Application.h"
 #include "Hazel/Core/Window.h"
-#include "Hazel/Renderer/GraphicsContext.h"
+#include "Hazel/Renderer/Context.h"
 #include "WindowsInput.h"
 #include "WindowsEventManager.h"
 
@@ -19,7 +19,7 @@ namespace Hazel
         static const int defaultHeight = 720;
 
         GLFWwindow *window = nullptr;
-        std::unique_ptr<GraphicsContext> context;
+        std::unique_ptr<Context> context;
         std::unique_ptr<WindowsInput> input;
         std::unique_ptr<WindowsEventManager> eventManager;
         std::string title = "Hazel Engine";

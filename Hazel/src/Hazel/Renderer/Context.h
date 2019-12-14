@@ -5,10 +5,10 @@
 
 namespace Hazel
 {
-    class HAZEL_API GraphicsContext : public Runnable
+    class HAZEL_API Context : public Runnable
     {
     public:
-        virtual ~GraphicsContext() = default;
+        virtual ~Context() = default;
 
         virtual void SwapBuffers() = 0;
     };
