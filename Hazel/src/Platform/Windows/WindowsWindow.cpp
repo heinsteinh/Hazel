@@ -9,11 +9,6 @@
 
 namespace Hazel
 {
-    Window *Window::Create()
-    {
-        return new WindowsWindow();
-    }
-
     WindowsWindow::WindowsWindow()
     {
         Init();
@@ -50,13 +45,14 @@ namespace Hazel
 
     void WindowsWindow::SetTitle(const std::string &title)
     {
+        CoreInfo("Window title changed to {}.", title);
         this->title = title;
         glfwSetWindowTitle(window, title.c_str());
     }
 
     void WindowsWindow::Resize(int width, int height)
     {
-        CoreInfo("Window resize command: {} {}", width, height);
+        CoreDebug("Window resized from code: {} {}", width, height);
         glfwSetWindowSize(window, width, height);
     }
 
@@ -95,14 +91,14 @@ namespace Hazel
         CreateGlfwWindow();
         CreateContext();
         SetVSync(vsync);
-        CoreInfo("Window created {}", title);
+        CoreInfo("Window created {} ({}x{}).", title, GetWidth(), GetHeight());
     }
 
     void WindowsWindow::CreateGlfwWindow()
     {
-        CoreDebug("GLFW window creation start {}.", title);
+        CoreDebug("GLFW window creation start.");
         window = glfwCreateWindow(defaultWidth, defaultHeight, title.c_str(), nullptr, nullptr);
-        CoreDebug("GLFW window creation done {} ({}x{}).", title, GetWidth(), GetHeight());
+        CoreDebug("GLFW window creation done.");
     }
 
     void WindowsWindow::CreateContext()
@@ -116,8 +112,8 @@ namespace Hazel
 
     void WindowsWindow::Shutdown()
     {
-        CoreInfo("Window destruction start {}.", title);
+        CoreInfo("Window {} destruction.", title);
         glfwDestroyWindow(window);
-        CoreInfo("Window destruction done {}.", title);
+        CoreInfo("Window {} destruction done.", title);
     }
 }

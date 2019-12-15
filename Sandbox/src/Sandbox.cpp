@@ -5,7 +5,7 @@ class Sandbox : public Hazel::Application
 public:
     Sandbox()
     {
-        Hazel::Info("Sandox creation");
+        Hazel::Info("Sandbox creation");
         PushLayer(new Hazel::BackgroundLayer());
     };
 

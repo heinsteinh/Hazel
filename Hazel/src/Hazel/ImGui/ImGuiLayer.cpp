@@ -25,7 +25,6 @@ namespace Hazel
 
     const std::string &ImGuiLayer::GetName() const
     {
-        static const std::string name = "ImGui";
         return name;
     }
 
@@ -45,8 +44,10 @@ namespace Hazel
 
     void ImGuiLayer::OnImGuiRender()
     {
-        static bool open = true;
-        ImGui::ShowDemoWindow(&open);
+        if (open)
+        {
+            ImGui::ShowDemoWindow(&open);
+        }
     }
 
     void ImGuiLayer::Begin()

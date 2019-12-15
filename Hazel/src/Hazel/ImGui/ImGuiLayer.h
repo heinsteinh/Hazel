@@ -8,6 +8,8 @@ namespace Hazel
     class ImGuiLayer : public Layer
     {
     private:
+        const std::string name = "ImGui";
+        bool open = true;
         const Window &parent;
 
     public:
