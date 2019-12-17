@@ -59,6 +59,7 @@ namespace Hazel
 
     void ImGuiLayer::End()
     {
+        ImGui::GetIO().DisplaySize = {(float)parent.GetWidth(), (float)parent.GetHeight()};
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         UpdatePlatforms();
@@ -71,7 +72,7 @@ namespace Hazel
         ImGui::StyleColorsDark();
         SetupConfigFlags();
         ImGui_ImplGlfw_InitForOpenGL(GetGlfwWindow(parent), true);
-        ImGui_ImplOpenGL3_Init("#version 130");
+        ImGui_ImplOpenGL3_Init("#version 410");
     }
 
     void ImGuiLayer::SetupConfigFlags()
@@ -85,14 +86,13 @@ namespace Hazel
 
     void ImGuiLayer::UpdatePlatforms()
     {
-        if (!(ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable))
+        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
-            return;
+            GLFWwindow *backup = glfwGetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            glfwMakeContextCurrent(backup);
         }
-        GLFWwindow *backup = glfwGetCurrentContext();
-        ImGui::UpdatePlatformWindows();
-        ImGui::RenderPlatformWindowsDefault();
-        glfwMakeContextCurrent(backup);
     }
 
     void ImGuiLayer::Shutdown()
