@@ -26,4 +26,14 @@ namespace Hazel
     {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
+
+    void OpenGLVertexBuffer::SetLayout(const BufferLayout &layout)
+    {
+        this->layout = layout;
+    }
+
+    const BufferLayout &OpenGLVertexBuffer::GetLayout() const
+    {
+        return layout;
+    }
 }

@@ -9,14 +9,11 @@ namespace Hazel
 {
     class HAZEL_API Shader : public Bindable
     {
-    private:
-        unsigned int rendererId = 0;
-
     public:
-        Shader(const std::string &vertexSource, const std::string &fragmentSource);
-        virtual ~Shader();
+        static Shader *Create(const std::string &vertexSource, const std::string &fragmentSource);
 
-        virtual void Bind() const override;
-        virtual void UnBind() const override;
+        virtual ~Shader() = default;
+
+        virtual bool IsBuilt() const = 0;
     };
 }

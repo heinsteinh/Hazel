@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Hazel/Core/Core.h"
+
 namespace Hazel
 {
-    class Renderer
+    class HAZEL_API Renderer
     {
     public:
         enum class Api

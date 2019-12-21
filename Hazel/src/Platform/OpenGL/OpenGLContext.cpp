@@ -13,7 +13,7 @@ namespace Hazel
         Init();
     }
 
-    void Hazel::OpenGLContext::SwapBuffers()
+    void OpenGLContext::SwapBuffers()
     {
         glfwSwapBuffers(window);
     }
@@ -23,7 +23,7 @@ namespace Hazel
         SwapBuffers();
     }
 
-    void Hazel::OpenGLContext::Init()
+    void OpenGLContext::Init()
     {
         glfwMakeContextCurrent(window);
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
