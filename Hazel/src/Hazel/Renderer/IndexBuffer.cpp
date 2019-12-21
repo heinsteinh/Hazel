@@ -5,7 +5,7 @@
 
 namespace Hazel
 {
-    IndexBuffer *IndexBuffer::Create(int indexes[], int count)
+    IndexBuffer *IndexBuffer::Create(unsigned int indexes[], size_t count)
     {
         switch (Renderer::GetApi())
         {

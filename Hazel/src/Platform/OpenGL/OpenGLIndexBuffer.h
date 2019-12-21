@@ -8,14 +8,14 @@ namespace Hazel
     {
     private:
         unsigned int rendererId = 0;
-        int count = 0;
+        size_t count = 0;
 
     public:
-        OpenGLIndexBuffer(int indexes[], int size);
+        OpenGLIndexBuffer(unsigned int indexes[], size_t count);
         virtual ~OpenGLIndexBuffer();
 
         virtual void Bind() const override;
         virtual void UnBind() const override;
-        virtual int GetCount() const override;
+        virtual size_t GetCount() const override;
     };
 }

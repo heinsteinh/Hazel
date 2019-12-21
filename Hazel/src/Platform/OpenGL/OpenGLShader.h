@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hazel/Renderer/Shader.h"
+#include "Hazel/Renderer/ShaderDataType.h"
 
 namespace Hazel
 {
@@ -11,6 +12,8 @@ namespace Hazel
         bool built = 0;
 
     public:
+        static unsigned int GetInternalType(const ShaderDataType &type);
+
         OpenGLShader(const std::string &vertexSource, const std::string &fragmentSource);
         virtual ~OpenGLShader();
 

@@ -1,7 +1,6 @@
 #include "OpenGLShaderCompiler.h"
 
 #include "glad/glad.h"
-#include "GLFW/glfw3.h"
 
 #include "Hazel/Core/Logger.h"
 

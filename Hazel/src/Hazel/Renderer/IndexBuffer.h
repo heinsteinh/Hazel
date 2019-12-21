@@ -7,10 +7,10 @@ namespace Hazel
     class IndexBuffer : public Bindable
     {
     public:
-        static IndexBuffer *Create(int indexes[], int count);
+        static IndexBuffer *Create(unsigned int indexes[], size_t count);
 
         virtual ~IndexBuffer() = default;
 
-        virtual int GetCount() const = 0;
+        virtual size_t GetCount() const = 0;
     };
 }

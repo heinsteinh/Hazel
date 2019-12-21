@@ -1,16 +1,15 @@
 #include "OpenGLIndexBuffer.h"
 
 #include "glad/glad.h"
-#include "GLFW/glfw3.h"
 
 namespace Hazel
 {
-    OpenGLIndexBuffer::OpenGLIndexBuffer(int indexes[], int count)
+    OpenGLIndexBuffer::OpenGLIndexBuffer(unsigned int indexes[], size_t count)
         : count(count)
     {
         glCreateBuffers(1, &rendererId);
         Bind();
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(int), indexes, GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), indexes, GL_STATIC_DRAW);
     }
 
     OpenGLIndexBuffer::~OpenGLIndexBuffer()
@@ -28,7 +27,7 @@ namespace Hazel
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    int OpenGLIndexBuffer::GetCount() const
+    size_t OpenGLIndexBuffer::GetCount() const
     {
         return count;
     }
