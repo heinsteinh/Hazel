@@ -4,12 +4,12 @@
 
 namespace Hazel
 {
-    OpenGLIndexBuffer::OpenGLIndexBuffer(unsigned int indexes[], size_t count)
-        : count(count)
+    OpenGLIndexBuffer::OpenGLIndexBuffer(const std::vector<unsigned int> &indexes)
+        : size(indexes.size())
     {
         glCreateBuffers(1, &rendererId);
         Bind();
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), indexes, GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(unsigned int), indexes.data(), GL_STATIC_DRAW);
     }
 
     OpenGLIndexBuffer::~OpenGLIndexBuffer()
@@ -27,8 +27,8 @@ namespace Hazel
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    size_t OpenGLIndexBuffer::GetCount() const
+    size_t OpenGLIndexBuffer::GetSize() const
     {
-        return count;
+        return size;
     }
 }

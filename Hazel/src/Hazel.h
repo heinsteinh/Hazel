@@ -6,4 +6,3 @@
 
 #include "Hazel/Core/Application.h"
 #include "Hazel/Core/Logger.h"
-#include "Hazel/Layers/BackgroundLayer.h"

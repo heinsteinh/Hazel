@@ -4,7 +4,7 @@
 
 #include "Hazel/Core/Logger.h"
 #include "Hazel/Events/Events.h"
-#include "Platform/OpenGL/OpenGLContext.h"
+#include "Hazel/Renderer/Renderer.h"
 #include "GlfwLoader.h"
 
 namespace Hazel
@@ -104,7 +104,7 @@ namespace Hazel
     void WindowsWindow::CreateContext()
     {
         CoreDebug("Creating context for rendering, inputs and events.");
-        context = std::make_unique<OpenGLContext>(window);
+        context.reset(Renderer::Get().CreateContext(*this));
         input = std::make_unique<WindowsInput>(window);
         eventManager = std::make_unique<WindowsEventManager>(window);
         CoreDebug("Context created.");

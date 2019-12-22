@@ -6,7 +6,6 @@ public:
     Sandbox()
     {
         Hazel::Info("Sandbox creation");
-        PushLayer(new Hazel::BackgroundLayer());
     };
 
     virtual ~Sandbox()

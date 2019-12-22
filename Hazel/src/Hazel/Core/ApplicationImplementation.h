@@ -11,11 +11,7 @@
 // TEST
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
-#include "Hazel/Renderer/Shader.h"
-#include "Hazel/Renderer/VertexBuffer.h"
-#include "Hazel/Renderer/IndexBuffer.h"
-#include "Hazel/Renderer/BufferLayout.h"
-#include "Hazel/Renderer/VertexArray.h"
+#include "Hazel/Renderer/Renderer.h"
 
 namespace Hazel
 {
@@ -29,7 +25,6 @@ namespace Hazel
 
         // TEST
         std::shared_ptr<Shader> shader;
-
         std::shared_ptr<VertexArray> triangleVertexArray;
         std::shared_ptr<VertexArray> squareVertexArray;
 
@@ -96,24 +91,21 @@ namespace Hazel
                  0.0f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
             };
 
-            triangleVertexArray.reset(VertexArray::Create());
+            triangleVertexArray.reset(Renderer::Get().CreateVertexArray());
 
             std::shared_ptr<VertexBuffer> vertexBuffer;
-            vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+            vertexBuffer.reset(Renderer::Get().CreateVertexBuffer({
+                -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+                 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+                 0.0f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f}));
             vertexBuffer->SetLayout({
                 {ShaderDataType::Float3, "a_Position"},
                 {ShaderDataType::Float4, "a_Color"}});
-
             triangleVertexArray->AddVertexBuffer(vertexBuffer);
 
-            unsigned int indexes[] = {0, 1, 2};
-
             std::shared_ptr<IndexBuffer> indexBuffer;
-            indexBuffer.reset(IndexBuffer::Create(indexes, sizeof(indexes) / sizeof(int)));
-
+            indexBuffer.reset(Renderer::Get().CreateIndexBuffer({0, 1, 2}));
             triangleVertexArray->SetIndexBuffer(indexBuffer);
-
-            squareVertexArray.reset(VertexArray::Create());
 
             std::string vertexSource = R"(
                 #version 330 core
@@ -148,7 +140,7 @@ namespace Hazel
 
             )";
 
-            shader.reset(Shader::Create(vertexSource, fragmentSource));
+            shader.reset(Renderer::Get().CreateShader(vertexSource, fragmentSource));
         }
 
         inline void Init()
@@ -172,6 +164,10 @@ namespace Hazel
 
         inline void Update()
         {
+            // TEST
+            glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
+            glClear(GL_COLOR_BUFFER_BIT);
+
             UpdateLayers();
 
             // TEST
@@ -179,7 +175,7 @@ namespace Hazel
             triangleVertexArray->Bind();
             glDrawElements(
                 GL_TRIANGLES,
-                (int)triangleVertexArray->GetIndexBuffer()->GetCount(),
+                (int)triangleVertexArray->GetIndexBuffer()->GetSize(),
                 GL_UNSIGNED_INT,
                 nullptr);
 

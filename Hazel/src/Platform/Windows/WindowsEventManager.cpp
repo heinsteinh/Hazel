@@ -1,6 +1,5 @@
 #include "WindowsEventManager.h"
 
-#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
 #include "Hazel/Core/Logger.h"
@@ -10,7 +9,7 @@ namespace Hazel
 {
     static inline WindowsEventManager &GetThis(GLFWwindow *window)
     {
-        return *(WindowsEventManager *)glfwGetWindowUserPointer(window);
+        return *static_cast<WindowsEventManager *>(glfwGetWindowUserPointer(window));
     }
 
     WindowsEventManager::WindowsEventManager(GLFWwindow *window)

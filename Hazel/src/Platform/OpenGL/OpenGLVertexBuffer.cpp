@@ -4,11 +4,12 @@
 
 namespace Hazel
 {
-    OpenGLVertexBuffer::OpenGLVertexBuffer(float vertices[], size_t size)
+    OpenGLVertexBuffer::OpenGLVertexBuffer(const std::vector<float> &vertices)
+        : size(vertices.size())
     {
         glCreateBuffers(1, &rendererId);
         Bind();
-        glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices.data(), GL_STATIC_DRAW);
     }
 
     OpenGLVertexBuffer::~OpenGLVertexBuffer()
@@ -34,5 +35,10 @@ namespace Hazel
     const BufferLayout &OpenGLVertexBuffer::GetLayout() const
     {
         return layout;
+    }
+
+    size_t OpenGLVertexBuffer::GetSize() const
+    {
+        return size;
     }
 }

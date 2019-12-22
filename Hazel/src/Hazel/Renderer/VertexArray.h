@@ -12,8 +12,6 @@ namespace Hazel
     class VertexArray : public Bindable
     {
     public:
-        static VertexArray *Create();
-
         virtual ~VertexArray() = default;
 
         virtual const std::vector<std::shared_ptr<VertexBuffer>> &GetVertexBuffers() const = 0;

@@ -43,8 +43,8 @@ namespace Hazel
         {
             CoreInfo("Shaders compilation success.");
         }
-        CoreInfo("Vertex shader info log: {}.", vertexData.GetInfoLog());
-        CoreInfo("Fragment shader info log: {}.", fragmentData.GetInfoLog());
+        CoreInfo("Vertex shader info log: {}", vertexData.GetInfoLog());
+        CoreInfo("Fragment shader info log: {}", fragmentData.GetInfoLog());
     }
 
     bool OpenGLShaderCompiler::CreateProgramAndLink()
