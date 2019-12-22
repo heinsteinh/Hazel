@@ -24,13 +24,13 @@ namespace Hazel
             {&ShaderDataType::Int4, GL_INT},
             {&ShaderDataType::Bool, GL_BOOL}
         };
-        auto i = types.find(&type);
-        if (i == types.end())
+        auto keyValue = types.find(&type);
+        if (keyValue == types.end())
         {
             CoreError("Unknown shader data type: {}", type.GetSize());
             return 0;
         }
-        return i->second;
+        return keyValue->second;
     }
 
     OpenGLShader::OpenGLShader(const std::string &vertexSource, const std::string &fragmentSource)

@@ -9,8 +9,6 @@
 #include "Hazel/Utils/Reversed.h"
 
 // TEST
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
 #include "Hazel/Renderer/Renderer.h"
 
 namespace Hazel
@@ -91,10 +89,10 @@ namespace Hazel
                  0.0f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
             };
 
-            triangleVertexArray.reset(Renderer::Get().CreateVertexArray());
+            triangleVertexArray.reset(Renderer::CreateVertexArray());
 
             std::shared_ptr<VertexBuffer> vertexBuffer;
-            vertexBuffer.reset(Renderer::Get().CreateVertexBuffer({
+            vertexBuffer.reset(Renderer::CreateVertexBuffer({
                 -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
                  0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
                  0.0f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f}));
@@ -104,7 +102,7 @@ namespace Hazel
             triangleVertexArray->AddVertexBuffer(vertexBuffer);
 
             std::shared_ptr<IndexBuffer> indexBuffer;
-            indexBuffer.reset(Renderer::Get().CreateIndexBuffer({0, 1, 2}));
+            indexBuffer.reset(Renderer::CreateIndexBuffer({0, 1, 2}));
             triangleVertexArray->SetIndexBuffer(indexBuffer);
 
             std::string vertexSource = R"(
@@ -140,7 +138,7 @@ namespace Hazel
 
             )";
 
-            shader.reset(Renderer::Get().CreateShader(vertexSource, fragmentSource));
+            shader.reset(Renderer::CreateShader(vertexSource, fragmentSource));
         }
 
         inline void Init()
@@ -164,20 +162,14 @@ namespace Hazel
 
         inline void Update()
         {
-            // TEST
-            glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
-            glClear(GL_COLOR_BUFFER_BIT);
+            Renderer::GetRenderApi().SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
+            Renderer::GetRenderApi().Clear();
 
             UpdateLayers();
 
             // TEST
             shader->Bind();
-            triangleVertexArray->Bind();
-            glDrawElements(
-                GL_TRIANGLES,
-                (int)triangleVertexArray->GetIndexBuffer()->GetSize(),
-                GL_UNSIGNED_INT,
-                nullptr);
+            Renderer::Submit(triangleVertexArray);
 
             RenderImGui();
             window->OnUpdate();

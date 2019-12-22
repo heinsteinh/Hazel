@@ -104,7 +104,7 @@ namespace Hazel
     void WindowsWindow::CreateContext()
     {
         CoreDebug("Creating context for rendering, inputs and events.");
-        context.reset(Renderer::Get().CreateContext(*this));
+        context.reset(Renderer::CreateContext(*this));
         input = std::make_unique<WindowsInput>(window);
         eventManager = std::make_unique<WindowsEventManager>(window);
         CoreDebug("Context created.");

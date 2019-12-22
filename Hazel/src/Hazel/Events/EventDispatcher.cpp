@@ -27,7 +27,7 @@ namespace Hazel
             MAP(MouseScrolledEvent),
             MAP(KeyPressedEvent),
             MAP(KeyReleasedEvent),
-            MAP(KeyTypedEvent),
+            MAP(KeyTypedEvent)
         };
         if (listener && !e.IsHandled())
         {

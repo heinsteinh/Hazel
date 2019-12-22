@@ -1,8 +1,6 @@
 #pragma once
 
-#include <vector>
-
-#include "Hazel/Renderer/Renderer.h"
+#include "Hazel/Renderer/ObjectFactory.h"
 #include "OpenGLContext.h"
 #include "OpenGLShader.h"
 #include "OpenGLVertexArray.h"
@@ -11,7 +9,7 @@
 
 namespace Hazel
 {
-    class OpenGLRenderer : public Renderer
+    class OpenGLObjectFactory : public ObjectFactory
     {
     public:
         virtual Context *CreateContext(const Window &window) override

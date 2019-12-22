@@ -3,13 +3,8 @@
 #include <vector>
 
 #include "Hazel/Core/Core.h"
-
-#include "Hazel/Core/Window.h"
-#include "Context.h"
-#include "Shader.h"
-#include "VertexArray.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
+#include "Hazel/Renderer/VertexArray.h"
+#include "Hazel/Renderer/RenderApi.h"
 
 namespace Hazel
 {
@@ -23,22 +18,42 @@ namespace Hazel
 
     private:
         static Api api;
-        static Renderer *activeRenderer;
+        static RenderApi *renderApi;
 
     public:
         static void SetApi(Api api);
         static Api GetApi();
-        static Renderer &Get();
+        static RenderApi &GetRenderApi();
 
-        virtual ~Renderer() = default;
+        static void BeginScene();
+        static void EndScene();
+        static void Submit(const std::shared_ptr<VertexArray> &vertexArray);
 
-        virtual Context *CreateContext(const Window &window) = 0;
-        virtual Shader *CreateShader(const std::string &vertexSource, const std::string &fragmentSource) = 0;
-        virtual VertexArray *CreateVertexArray() = 0;
-        virtual VertexBuffer *CreateVertexBuffer(const std::vector<float> &vertices) = 0;
-        virtual IndexBuffer *CreateIndexBuffer(const std::vector<unsigned int> &indexes) = 0;
+        static inline Context *CreateContext(const Window &window)
+        {
+            return Renderer::GetRenderApi().GetObjectFactory().CreateContext(window);
+        }
 
-    protected:
-        Renderer() = default;
+        static inline Shader *CreateShader(const std::string &vertexSource, const std::string &fragmentSource)
+        {
+            return Renderer::GetRenderApi().GetObjectFactory().CreateShader(vertexSource, fragmentSource);
+        }
+
+        static inline VertexArray *CreateVertexArray()
+        {
+            return Renderer::GetRenderApi().GetObjectFactory().CreateVertexArray();
+        }
+
+        static inline VertexBuffer *CreateVertexBuffer(const std::vector<float> &vertices)
+        {
+            return Renderer::GetRenderApi().GetObjectFactory().CreateVertexBuffer(vertices);
+        }
+
+        static inline IndexBuffer *CreateIndexBuffer(const std::vector<unsigned int> &indexes)
+        {
+            return Renderer::GetRenderApi().GetObjectFactory().CreateIndexBuffer(indexes);
+        }
+
+        Renderer() = delete;
     };
 }
