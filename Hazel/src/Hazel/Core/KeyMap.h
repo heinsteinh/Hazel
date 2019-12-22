@@ -21,18 +21,18 @@ namespace Hazel
 
         inline Key GetHazelKey(int key) const
         {
-            auto result = mapping.find(key);
-            return result == mapping.end()
+            auto nativeHazel = mapping.find(key);
+            return nativeHazel == mapping.end()
                 ? Key::Invalid
-                : result->second;
+                : nativeHazel->second;
         }
 
         inline int GetNativeKey(Key key) const
         {
-            auto result = reversedMapping.find(key);
-            return result == reversedMapping.end()
+            auto hazelNative = reversedMapping.find(key);
+            return hazelNative == reversedMapping.end()
                 ? 0
-                : result->second;
+                : hazelNative->second;
         }
 
         inline Key operator[](int key) const
@@ -48,9 +48,9 @@ namespace Hazel
     private:
         void Init()
         {
-            for (const auto keyValue : mapping)
+            for (auto [key, value] : mapping)
             {
-                reversedMapping[keyValue.second] = keyValue.first;
+                reversedMapping[value] = key;
             }
         }
     };
