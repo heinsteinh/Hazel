@@ -47,8 +47,8 @@ namespace Hazel
     void OpenGLShader::DisplayCompilationLog(const std::string &name, const OpenGLCompiledShader &shader)
     {
         shader.IsCompiled()
-            ? CoreInfo("Shader {} compilation succeeded.", name)
-            : CoreError("Shader {} compilation failed.", name);
+            ? CoreInfo("{} Shader compilation succeeded.", name)
+            : CoreError("{} Shader compilation failed.", name);
         CoreInfo("Info log: {}", shader.GetInfoLog());
     }
 
