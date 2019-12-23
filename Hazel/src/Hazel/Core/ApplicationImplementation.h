@@ -4,6 +4,7 @@
 
 #include "Logger.h"
 #include "Hazel/ImGui/ImGuiLayer.h"
+#include "Hazel/Renderer/Renderer.h"
 #include "LayerStack.h"
 #include "Hazel/Events/Events.h"
 #include "Hazel/Utils/Reversed.h"
@@ -75,20 +76,15 @@ namespace Hazel
         inline void Init()
         {
             CoreDebug("Application initialization.");
-            SetupWindow();
-            PushOverlay(imguiLayer);
-            CoreDebug("Application initialized.");
-        }
-
-        inline void SetupWindow()
-        {
-            CoreDebug("Main window setup started.");
             window->SetEventListener(this);
-            CoreDebug("Main window setup done.");
+            PushOverlay(imguiLayer);
+            Hazel::Renderer::GetRenderApi().SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
+            CoreDebug("Application initialized.");
         }
 
         inline void Update()
         {
+            Hazel::Renderer::GetRenderApi().Clear();
             UpdateLayers();
             RenderImGui();
             window->OnUpdate();

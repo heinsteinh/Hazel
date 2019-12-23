@@ -48,8 +48,6 @@ public:
 
     virtual void OnUpdate() override
     {
-        Hazel::Renderer::GetRenderApi().SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
-        Hazel::Renderer::GetRenderApi().Clear();
         shader->Bind();
         Hazel::Renderer::Submit(triangleVertexArray);
     }

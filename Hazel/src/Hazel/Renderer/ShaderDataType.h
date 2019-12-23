@@ -25,6 +25,8 @@ namespace Hazel
         size_t size = 0;
 
     public:
+        ShaderDataType(const ShaderDataType &other) = delete;
+        ShaderDataType &operator=(const ShaderDataType &other) = delete;
 
         inline size_t GetComponentSize() const
         {
@@ -41,10 +43,7 @@ namespace Hazel
             return size;
         }
 
-        ShaderDataType(const ShaderDataType &other) = delete;
-        ShaderDataType &operator=(const ShaderDataType &other) = delete;
-
-        inline bool operator==(const ShaderDataType &other)
+        inline bool operator==(const ShaderDataType &other) const
         {
             return this == &other;
         }

@@ -1,28 +1,30 @@
 #pragma once
 
 #include "Hazel/Renderer/Shader.h"
-#include "Hazel/Renderer/ShaderDataType.h"
+#include "OpenGLShaderProgram.h"
 
 namespace Hazel
 {
     class OpenGLShader : public Shader
     {
     private:
-        unsigned int rendererId = 0;
-        bool built = 0;
+        OpenGLShaderProgram program;
+        OpenGLCompiledShader vertexShader;
+        OpenGLCompiledShader fragmentShader;
 
     public:
-        static unsigned int GetInternalType(const ShaderDataType &type);
-
         OpenGLShader(const std::string &vertexSource, const std::string &fragmentSource);
         virtual ~OpenGLShader();
 
-        virtual bool IsBuilt() const override;
+        virtual bool IsExecutable() const override;
 
         virtual void Bind() const override;
         virtual void UnBind() const override;
 
     private:
-        void Init(const std::string &vertexSource, const std::string &fragmentSource);
+        void Init();
+        void DisplayCompilationLog(const std::string &name, const OpenGLCompiledShader &shader);
+        void CreateProgram();
+        void DisplayLinkLog();
     };
 }

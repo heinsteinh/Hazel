@@ -2,7 +2,7 @@
 
 #include "glad/glad.h"
 
-#include "OpenGLShader.h"
+#include "OpenGLDataType.h"
 
 namespace Hazel
 {
@@ -62,7 +62,7 @@ namespace Hazel
         glVertexAttribPointer(
             (int)index,
             (int)element.GetComponentCount(),
-            OpenGLShader::GetInternalType(element.GetType()),
+            OpenGLDataType::GetInternalType(element.GetType()),
             element.IsNormalized() ? GL_TRUE : GL_FALSE,
             (int)layout.GetStride(),
             (const void *)element.GetOffset());

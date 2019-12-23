@@ -12,6 +12,6 @@ namespace Hazel
     public:
         virtual ~Shader() = default;
 
-        virtual bool IsBuilt() const = 0;
+        virtual bool IsExecutable() const = 0;
     };
 }
