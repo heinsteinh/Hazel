@@ -9,7 +9,7 @@ namespace Hazel
     class OpenGLVertexArray : public VertexArray
     {
     private:
-        unsigned int rendererId = 0;
+        unsigned int id = 0;
         std::vector<std::shared_ptr<VertexBuffer>> vertexBuffers;
         std::shared_ptr<IndexBuffer> indexBuffer;
 

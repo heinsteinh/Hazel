@@ -6,9 +6,6 @@
 
 namespace Hazel
 {
-    Logger Logger::core("HAZEL");
-    Logger Logger::client("APP");
-
     Logger::Logger(const std::string &tag)
         : logger(spdlog::stdout_color_mt(tag))
     {

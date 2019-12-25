@@ -7,19 +7,19 @@ namespace Hazel
     OpenGLVertexBuffer::OpenGLVertexBuffer(const std::vector<float> &vertices)
         : size(vertices.size())
     {
-        glCreateBuffers(1, &rendererId);
+        glCreateBuffers(1, &id);
         Bind();
         glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices.data(), GL_STATIC_DRAW);
     }
 
     OpenGLVertexBuffer::~OpenGLVertexBuffer()
     {
-        glDeleteBuffers(1, &rendererId);
+        glDeleteBuffers(1, &id);
     }
 
     void OpenGLVertexBuffer::Bind() const
     {
-        glBindBuffer(GL_ARRAY_BUFFER, rendererId);
+        glBindBuffer(GL_ARRAY_BUFFER, id);
     }
 
     void OpenGLVertexBuffer::UnBind() const

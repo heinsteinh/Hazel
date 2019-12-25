@@ -2,7 +2,7 @@
 
 #include "glad/glad.h"
 
-#include "Hazel/Core/Logger.h"
+#include "Hazel/Core/Log.h"
 
 namespace Hazel
 {

@@ -7,7 +7,6 @@ namespace Hazel
     class OpenGLRenderApi : public RenderApi
     {
     public:
-        OpenGLRenderApi() = default;
         virtual ~OpenGLRenderApi() = default;
 
         virtual ObjectFactory &GetObjectFactory() override;

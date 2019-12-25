@@ -11,13 +11,13 @@ namespace Hazel
     {
     private:
         GLFWwindow *window = nullptr;
-        EventDispatcher dispatcher;
+        GenericEventListener *listener = nullptr;
         int repeatCount = 0;
 
     public:
         WindowsEventManager(GLFWwindow *window);
 
-        void SetEventListener(EventListener *listener);
+        void SetEventListener(GenericEventListener *listener);
 
         virtual void OnUpdate() override;
 
@@ -34,5 +34,6 @@ namespace Hazel
         void OnMouseButton(int button, int action);
         void OnMouseScrolled(double x, double y);
         void OnMouseMoved(double x, double y);
+        void SendEvent(Event &e);
     };
 }

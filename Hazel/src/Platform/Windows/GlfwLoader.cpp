@@ -2,7 +2,7 @@
 
 #include "GLFW/glfw3.h"
 
-#include "Hazel/Core/Logger.h"
+#include "Hazel/Core/Log.h"
 
 namespace Hazel
 {

@@ -2,7 +2,7 @@
 
 #include "GLFW/glfw3.h"
 
-#include "Hazel/Core/Logger.h"
+#include "Hazel/Core/Log.h"
 #include "Hazel/Events/Events.h"
 #include "Hazel/Renderer/Renderer.h"
 #include "GlfwLoader.h"
@@ -63,7 +63,7 @@ namespace Hazel
         vsync = enabled;
     }
 
-    void WindowsWindow::SetEventListener(EventListener *listener)
+    void WindowsWindow::SetEventListener(GenericEventListener *listener)
     {
         eventManager->SetEventListener(listener);
     }
@@ -86,7 +86,7 @@ namespace Hazel
 
     void WindowsWindow::Init()
     {
-        static const GlfwLoader loader;
+        static GlfwLoader loader;
         CoreInfo("Creating window");
         CreateGlfwWindow();
         CreateContext();

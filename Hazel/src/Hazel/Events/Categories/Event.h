@@ -32,7 +32,7 @@ namespace Hazel
             return handled;
         }
 
-        inline void SetHandled()
+        inline void Discard()
         {
             handled = true;
         }

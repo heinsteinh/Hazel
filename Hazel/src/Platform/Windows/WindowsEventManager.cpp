@@ -2,7 +2,7 @@
 
 #include "GLFW/glfw3.h"
 
-#include "Hazel/Core/Logger.h"
+#include "Hazel/Core/Log.h"
 #include "Platform/Windows/GlfwKeyMap.h"
 
 namespace Hazel
@@ -18,9 +18,9 @@ namespace Hazel
         Init();
     }
 
-    void WindowsEventManager::SetEventListener(EventListener *listener)
+    void WindowsEventManager::SetEventListener(GenericEventListener *listener)
     {
-        dispatcher.SetEventListener(listener);
+        this->listener = listener;
     }
 
     void WindowsEventManager::OnUpdate()
@@ -85,12 +85,12 @@ namespace Hazel
 
     void WindowsEventManager::OnResize(int width, int height)
     {
-        dispatcher.Dispatch(WindowResizedEvent(width, height));
+        SendEvent(WindowResizedEvent(width, height));
     }
 
     void WindowsEventManager::OnClose()
     {
-        dispatcher.Dispatch(WindowClosedEvent());
+        SendEvent(WindowClosedEvent());
     }
 
     void WindowsEventManager::OnKey(int key, int action)
@@ -98,22 +98,22 @@ namespace Hazel
         switch (action)
         {
         case GLFW_PRESS:
-            dispatcher.Dispatch(KeyPressedEvent(GlfwKeyMap::GetHazelKey(key), 0));
+            SendEvent(KeyPressedEvent(GlfwKeyMap::GetHazelKey(key), 0));
             repeatCount = 0;
             break;
         case GLFW_RELEASE:
-            dispatcher.Dispatch(KeyReleasedEvent(GlfwKeyMap::GetHazelKey(key)));
+            SendEvent(KeyReleasedEvent(GlfwKeyMap::GetHazelKey(key)));
             repeatCount = 0;
             break;
         case GLFW_REPEAT:
             repeatCount++;
-            dispatcher.Dispatch(KeyPressedEvent(GlfwKeyMap::GetHazelKey(key), repeatCount));
+            SendEvent(KeyPressedEvent(GlfwKeyMap::GetHazelKey(key), repeatCount));
         }
     }
 
     void WindowsEventManager::OnChar(int key)
     {
-        dispatcher.Dispatch(KeyTypedEvent(key));
+        SendEvent(KeyTypedEvent(key));
     }
 
     void WindowsEventManager::OnMouseButton(int button, int action)
@@ -121,20 +121,28 @@ namespace Hazel
         switch (action)
         {
         case GLFW_PRESS:
-            dispatcher.Dispatch(MouseButtonPressedEvent(static_cast<MouseButton>(button)));
+            SendEvent(MouseButtonPressedEvent(static_cast<MouseButton>(button)));
             break;
         case GLFW_RELEASE:
-            dispatcher.Dispatch(MouseButtonReleasedEvent(static_cast<MouseButton>(button)));
+            SendEvent(MouseButtonReleasedEvent(static_cast<MouseButton>(button)));
         }
     }
 
     void WindowsEventManager::OnMouseScrolled(double x, double y)
     {
-        dispatcher.Dispatch(MouseScrolledEvent(x, y));
+        SendEvent(MouseScrolledEvent(x, y));
     }
 
     void WindowsEventManager::OnMouseMoved(double x, double y)
     {
-        dispatcher.Dispatch(MouseMovedEvent(x, y));
+        SendEvent(MouseMovedEvent(x, y));
+    }
+
+    void WindowsEventManager::SendEvent(Event &e)
+    {
+        if (listener)
+        {
+            listener->OnEvent(e);
+        }
     }
 }

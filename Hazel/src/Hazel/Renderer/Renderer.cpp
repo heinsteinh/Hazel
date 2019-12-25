@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-#include "Hazel/Core/Logger.h"
+#include "Hazel/Core/Log.h"
 #include "Hazel/Renderer/RenderCommand.h"
 #include "Hazel/Utils/UniquePtrMap.h"
 #include "Platform/OpenGL/OpenGLRenderApi.h"

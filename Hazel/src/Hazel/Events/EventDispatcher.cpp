@@ -1,11 +1,32 @@
 #include "EventDispatcher.h"
 
 #include <unordered_map>
-
-#define MAP(type) {typeid(##type).hash_code(), &EventDispatcher::Dispatch##type}
+#include <functional>
 
 namespace Hazel
 {
+    using EventCallback = std::function<void(EventListener *, Event &)>;
+
+    template<typename T, void(EventListener:: * M)(T &)>
+    static void DispatchEvent(EventListener *listener, Event &e)
+    {
+        (listener->*M)((T &)e);
+    }
+
+#define MAP(type, method) {typeid(type).hash_code(), &DispatchEvent<type, &EventListener::method>}
+    static const std::unordered_map<size_t, EventCallback> callbacks = {
+        MAP(WindowClosedEvent, OnWindowClosed),
+        MAP(WindowResizedEvent, OnWindowResized),
+        MAP(KeyTypedEvent, OnKeyTyped),
+        MAP(KeyPressedEvent, OnKeyPressed),
+        MAP(KeyReleasedEvent, OnKeyReleased),
+        MAP(MouseMovedEvent, OnMouseMoved),
+        MAP(MouseScrolledEvent, OnMouseScrolled),
+        MAP(MouseButtonPressedEvent, OnMouseButtonPressed),
+        MAP(MouseButtonReleasedEvent, OnMouseButtonReleased)
+    };
+#undef MAP
+
     EventDispatcher::EventDispatcher(EventListener *listener)
         : listener(listener)
     {
@@ -18,22 +39,14 @@ namespace Hazel
 
     void EventDispatcher::Dispatch(Event &e)
     {
-        static const std::unordered_map<size_t, bool (EventDispatcher:: *)(Event &)> methods = {
-            MAP(WindowClosedEvent),
-            MAP(WindowResizedEvent),
-            MAP(MouseButtonPressedEvent),
-            MAP(MouseButtonReleasedEvent),
-            MAP(MouseMovedEvent),
-            MAP(MouseScrolledEvent),
-            MAP(KeyPressedEvent),
-            MAP(KeyReleasedEvent),
-            MAP(KeyTypedEvent)
-        };
-        if (listener && !e.IsHandled())
+        if (!listener || e.IsHandled())
         {
-            (this->*(methods.at(typeid(e).hash_code())))(e);
+            return;
+        }
+        auto typeAndCallback = callbacks.find(typeid(e).hash_code());
+        if (typeAndCallback != callbacks.end())
+        {
+            typeAndCallback->second(listener, e);
         }
     }
 }
-
-#undef MAP

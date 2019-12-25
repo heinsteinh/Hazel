@@ -10,7 +10,7 @@ namespace Hazel
     {
     private:
         size_t size = 0;
-        unsigned int rendererId = 0;
+        unsigned int id = 0;
 
     public:
         OpenGLIndexBuffer(const std::vector<unsigned int> &indexes);

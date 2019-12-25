@@ -1,19 +1,16 @@
 #pragma once
 
 #include "Hazel/Events/Categories/Categories.h"
+#include "Hazel/Events/GenericEventListener.h"
 
 namespace Hazel
 {
-    class HAZEL_API EventListener
+    class HAZEL_API EventListener : public GenericEventListener
     {
     public:
         virtual ~EventListener() = default;
 
         virtual void OnEvent(Event &e)
-        {
-        }
-
-        virtual void OnApplicationEvent(ApplicationEvent &e)
         {
         }
 
@@ -25,19 +22,7 @@ namespace Hazel
         {
         }
 
-        virtual void OnInputEvent(InputEvent &e)
-        {
-        }
-
-        virtual void OnKeyEvent(KeyEvent &e)
-        {
-        }
-
         virtual void OnKeyTyped(KeyTypedEvent &e)
-        {
-        }
-
-        virtual void OnGenericKeyEvent(GenericKeyEvent &e)
         {
         }
 
@@ -49,19 +34,11 @@ namespace Hazel
         {
         }
 
-        virtual void OnMouseEvent(MouseEvent &e)
-        {
-        }
-
         virtual void OnMouseMoved(MouseMovedEvent &e)
         {
         }
 
         virtual void OnMouseScrolled(MouseScrolledEvent &e)
-        {
-        }
-
-        virtual void OnMouseButtonEvent(MouseButtonEvent &e)
         {
         }
 
