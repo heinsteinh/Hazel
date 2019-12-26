@@ -6,9 +6,7 @@ namespace Hazel
 {
     class HAZEL_API InputEvent : public Event
     {
-    protected:
-        InputEvent()
-        {
-        }
+    public:
+        InputEvent() = default;
     };
 }

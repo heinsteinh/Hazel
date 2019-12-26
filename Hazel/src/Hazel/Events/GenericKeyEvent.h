@@ -10,13 +10,12 @@ namespace Hazel
     private:
         Key key;
 
-    protected:
+    public:
         GenericKeyEvent(Key key)
             : key(key)
         {
         }
 
-    public:
         inline Key GetKey() const
         {
             return key;

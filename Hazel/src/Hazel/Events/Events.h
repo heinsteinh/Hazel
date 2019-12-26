@@ -1,6 +1,15 @@
 #pragma once
 
-#include "Categories/Categories.h"
-#include "GenericEventListener.h"
 #include "EventListener.h"
-#include "EventDispatcher.h"
+
+#include "KeyPressedEvent.h"
+#include "KeyReleasedEvent.h"
+#include "KeyTypedEvent.h"
+
+#include "MouseMovedEvent.h"
+#include "MouseScrolledEvent.h"
+#include "MouseButtonPressedEvent.h"
+#include "MouseButtonReleasedEventh.h"
+
+#include "WindowResizedEvent.h"
+#include "WindowClosedEvent.h"

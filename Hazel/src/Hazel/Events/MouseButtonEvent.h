@@ -10,13 +10,12 @@ namespace Hazel
     private:
         MouseButton button;
 
-    protected:
+    public:
         MouseButtonEvent(MouseButton button)
             : button(button)
         {
         }
 
-    public:
         inline MouseButton GetButton() const
         {
             return button;

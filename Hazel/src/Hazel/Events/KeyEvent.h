@@ -7,9 +7,7 @@ namespace Hazel
 {
     class HAZEL_API KeyEvent : public InputEvent
     {
-    protected:
-        KeyEvent()
-        {
-        }
+    public:
+        KeyEvent() = default;
     };
 }

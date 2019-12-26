@@ -63,7 +63,7 @@ namespace Hazel
         vsync = enabled;
     }
 
-    void WindowsWindow::SetEventListener(GenericEventListener *listener)
+    void WindowsWindow::SetEventListener(EventListener *listener)
     {
         eventManager->SetEventListener(listener);
     }

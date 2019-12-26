@@ -1,11 +1,19 @@
 #pragma once
 
-#include "Hazel/Events/Categories/Categories.h"
-#include "Hazel/Events/GenericEventListener.h"
-
 namespace Hazel
 {
-    class HAZEL_API EventListener : public GenericEventListener
+    class Event;
+    class WindowClosedEvent;
+    class WindowResizedEvent;
+    class KeyTypedEvent;
+    class KeyPressedEvent;
+    class KeyReleasedEvent;
+    class MouseMovedEvent;
+    class MouseScrolledEvent;
+    class MouseButtonPressedEvent;
+    class MouseButtonReleasedEvent;
+
+    class HAZEL_API EventListener
     {
     public:
         virtual ~EventListener() = default;

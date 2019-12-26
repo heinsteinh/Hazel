@@ -26,7 +26,7 @@ namespace Hazel
     {
         glDrawElements(
             GL_TRIANGLES,
-            (int)vertexArray->GetNumIndexes(),
+            (int)vertexArray->GetIndexBuffer()->GetSize(),
             GL_UNSIGNED_INT,
             nullptr);
     }

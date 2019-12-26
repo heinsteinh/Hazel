@@ -2,8 +2,8 @@
 
 #include "Hazel/Core/Core.h"
 #include "Hazel/Utils/Printable.h"
+#include "EventListener.h"
 
-#include <string>
 #include <sstream>
 
 namespace Hazel
@@ -13,10 +13,8 @@ namespace Hazel
     private:
         bool handled = false;
 
-    protected:
-        Event() = default;
-
     public:
+        Event() = default;
         Event(const Event &other) = delete;
         virtual ~Event() = default;
 
@@ -37,9 +35,21 @@ namespace Hazel
             handled = true;
         }
 
+        inline void Dispatch(EventListener *listener)
+        {
+            if (listener && !handled)
+            {
+                listener->OnEvent(*this);
+                Handle(*listener);
+            }
+        }
+
         virtual std::string ToString() const override
         {
             return GetName();
         }
+
+    protected:
+        virtual void Handle(EventListener &listener) = 0;
     };
 }

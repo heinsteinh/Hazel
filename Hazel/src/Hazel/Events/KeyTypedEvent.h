@@ -26,5 +26,11 @@ namespace Hazel
                 << GetName() << ": " << key)
                 .str();
         }
+
+    protected:
+        virtual void Handle(EventListener &listener) override
+        {
+            listener.OnKeyTyped(*this);
+        }
     };
 }

@@ -6,9 +6,7 @@ namespace Hazel
 {
     class HAZEL_API ApplicationEvent : public Event
     {
-    protected:
-        ApplicationEvent()
-        {
-        }
+    public:
+        ApplicationEvent() = default;
     };
 }

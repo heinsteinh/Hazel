@@ -11,5 +11,11 @@ namespace Hazel
             : GenericKeyEvent(key)
         {
         }
+
+    protected:
+        virtual void Handle(EventListener &listener) override
+        {
+            listener.OnKeyReleased(*this);
+        }
     };
 }

@@ -49,10 +49,9 @@ namespace Hazel
     void Application::OnEvent(Event &e)
     {
         CoreDebug("{}", e);
-        EventDispatcher(this).Dispatch(e);
         for (Layer *layer : layers)
         {
-            EventDispatcher(layer).Dispatch(e);
+            e.Dispatch(layer);
         }
     }
 

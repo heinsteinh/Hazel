@@ -23,7 +23,7 @@ namespace Hazel
         virtual void SetTitle(const std::string &title) = 0;
         virtual void Resize(int width, int height) = 0;
         virtual void SetVSync(bool enable) = 0;
-        virtual void SetEventListener(GenericEventListener *listener) = 0;
+        virtual void SetEventListener(EventListener *listener) = 0;
 
         virtual Input &GetInput() const = 0;
         virtual void *GetNativeWindow() const = 0;

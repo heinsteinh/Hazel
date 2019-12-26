@@ -33,5 +33,11 @@ namespace Hazel
                 << GetName() << ": " << xOffset << ", " << yOffset)
                 .str();
         }
+
+    protected:
+        virtual void Handle(EventListener &listener) override
+        {
+            listener.OnMouseScrolled(*this);
+        }
     };
 }

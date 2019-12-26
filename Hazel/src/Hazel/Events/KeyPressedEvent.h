@@ -28,5 +28,11 @@ namespace Hazel
                 << " (" << repeatCount << " repeats)")
                 .str();
         }
+
+    protected:
+        virtual void Handle(EventListener &listener) override
+        {
+            listener.OnKeyPressed(*this);
+        }
     };
 }

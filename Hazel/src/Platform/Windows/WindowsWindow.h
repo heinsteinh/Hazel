@@ -36,7 +36,7 @@ namespace Hazel
         virtual void SetTitle(const std::string &title) override;
         virtual void Resize(int width, int height) override;
         virtual void SetVSync(bool enabled) override;
-        virtual void SetEventListener(GenericEventListener *listener) override;
+        virtual void SetEventListener(EventListener *listener) override;
 
         virtual Input &GetInput() const override;
         virtual void *GetNativeWindow() const override;

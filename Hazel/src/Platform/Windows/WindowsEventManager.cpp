@@ -18,7 +18,7 @@ namespace Hazel
         Init();
     }
 
-    void WindowsEventManager::SetEventListener(GenericEventListener *listener)
+    void WindowsEventManager::SetEventListener(EventListener *listener)
     {
         this->listener = listener;
     }
@@ -85,12 +85,12 @@ namespace Hazel
 
     void WindowsEventManager::OnResize(int width, int height)
     {
-        SendEvent(WindowResizedEvent(width, height));
+        WindowResizedEvent(width, height).Dispatch(listener);
     }
 
     void WindowsEventManager::OnClose()
     {
-        SendEvent(WindowClosedEvent());
+        WindowClosedEvent().Dispatch(listener);
     }
 
     void WindowsEventManager::OnKey(int key, int action)
@@ -98,22 +98,22 @@ namespace Hazel
         switch (action)
         {
         case GLFW_PRESS:
-            SendEvent(KeyPressedEvent(GlfwKeyMap::GetHazelKey(key), 0));
+            KeyPressedEvent(GlfwKeyMap::GetHazelKey(key), 0).Dispatch(listener);
             repeatCount = 0;
             break;
         case GLFW_RELEASE:
-            SendEvent(KeyReleasedEvent(GlfwKeyMap::GetHazelKey(key)));
+            KeyReleasedEvent(GlfwKeyMap::GetHazelKey(key)).Dispatch(listener);
             repeatCount = 0;
             break;
         case GLFW_REPEAT:
             repeatCount++;
-            SendEvent(KeyPressedEvent(GlfwKeyMap::GetHazelKey(key), repeatCount));
+            KeyPressedEvent(GlfwKeyMap::GetHazelKey(key), repeatCount).Dispatch(listener);
         }
     }
 
     void WindowsEventManager::OnChar(int key)
     {
-        SendEvent(KeyTypedEvent(key));
+        KeyTypedEvent(key).Dispatch(listener);
     }
 
     void WindowsEventManager::OnMouseButton(int button, int action)
@@ -121,28 +121,20 @@ namespace Hazel
         switch (action)
         {
         case GLFW_PRESS:
-            SendEvent(MouseButtonPressedEvent(static_cast<MouseButton>(button)));
+            MouseButtonPressedEvent(static_cast<MouseButton>(button)).Dispatch(listener);
             break;
         case GLFW_RELEASE:
-            SendEvent(MouseButtonReleasedEvent(static_cast<MouseButton>(button)));
+            MouseButtonReleasedEvent(static_cast<MouseButton>(button)).Dispatch(listener);
         }
     }
 
     void WindowsEventManager::OnMouseScrolled(double x, double y)
     {
-        SendEvent(MouseScrolledEvent(x, y));
+        MouseScrolledEvent(x, y).Dispatch(listener);
     }
 
     void WindowsEventManager::OnMouseMoved(double x, double y)
     {
-        SendEvent(MouseMovedEvent(x, y));
-    }
-
-    void WindowsEventManager::SendEvent(Event &e)
-    {
-        if (listener)
-        {
-            listener->OnEvent(e);
-        }
+        MouseMovedEvent(x, y).Dispatch(listener);
     }
 }

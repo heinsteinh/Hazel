@@ -33,5 +33,11 @@ namespace Hazel
                 << GetName() << ": " << width << ", " << height)
                 .str();
         }
+
+    protected:
+        virtual void Handle(EventListener &listener) override
+        {
+            listener.OnWindowResized(*this);
+        }
     };
 }
