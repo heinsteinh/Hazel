@@ -6,6 +6,8 @@ static const std::string vertexSource = R"(
     layout(location = 0) in vec3 a_Position;
     layout(location = 1) in vec4 a_Color;
 
+    uniform mat4 u_ViewProjection;
+
     out vec3 v_Position;
     out vec4 v_Color;
 
@@ -13,7 +15,7 @@ static const std::string vertexSource = R"(
     {
         v_Position = a_Position;
         v_Color = a_Color;
-        gl_Position = vec4(a_Position, 1.0);
+        gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
     }
 
 )";
@@ -42,6 +44,7 @@ private:
     Hazel::Renderer renderer;
     std::shared_ptr<Hazel::Shader> shader;
     std::shared_ptr<Hazel::VertexArray> triangleVertexArray;
+    Hazel::OrthographicCamera camera = {{-2.0f, 2.0f, -2.0f, 2.0f}};
 
 public:
     TriangleLayer(const Hazel::Window &parent)
@@ -52,8 +55,9 @@ public:
 
     virtual void OnUpdate() override
     {
-        shader->Bind();
-        renderer.Submit(triangleVertexArray);
+        renderer.BeginScene(camera);
+        renderer.Submit(shader, triangleVertexArray);
+        renderer.EndScene();
     }
 
     virtual void OnAttach() override
@@ -89,6 +93,38 @@ public:
 
     virtual void OnImGuiRender() override
     {
+    }
+
+    virtual void OnKeyPressed(Hazel::KeyPressedEvent &e) override
+    {
+        glm::vec3 position = camera.GetPosition();
+        switch (e.GetKey())
+        {
+        case Hazel::Key::Up:
+            position += glm::vec3(0.0f, 0.1f, 0.0f);
+            break;
+        case Hazel::Key::Down:
+            position += glm::vec3(0.0f, -0.1f, 0.0f);
+            break;
+        case Hazel::Key::Right:
+            position += glm::vec3(0.1f, 0.0f, 0.0f);
+            break;
+        case Hazel::Key::Left:
+            position += glm::vec3(-0.1f, 0.0f, 0.0f);
+            break;
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            if (position[i] > 1.0f)
+            {
+                position[i] = 1.0f;
+            }
+            else if (position[i] < -1.0f)
+            {
+                position[i] = -1.0f;
+            }
+        }
+        camera.SetPosition(position);
     }
 };
 

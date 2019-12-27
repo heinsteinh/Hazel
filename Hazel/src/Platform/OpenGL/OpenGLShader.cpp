@@ -3,6 +3,7 @@
 #include <unordered_map>
 
 #include "glad/glad.h"
+#include "glm/gtc/type_ptr.hpp"
 
 #include "Hazel/Core/Log.h"
 
@@ -22,6 +23,12 @@ namespace Hazel
     bool OpenGLShader::IsExecutable() const
     {
         return program.IsLinked() && vertexShader.IsCompiled() && fragmentShader.IsCompiled();
+    }
+
+    void OpenGLShader::UploadUniformMat4(const std::string &name, const glm::mat4 &uniform)
+    {
+        int location = glGetUniformLocation(program.GetId(), name.c_str());
+        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(uniform));
     }
 
     void OpenGLShader::Bind() const

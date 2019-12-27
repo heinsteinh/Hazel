@@ -17,7 +17,7 @@ namespace Hazel
         virtual ~OpenGLShader();
 
         virtual bool IsExecutable() const override;
-
+        virtual void UploadUniformMat4(const std::string &name, const glm::mat4 &uniform) override;
         virtual void Bind() const override;
         virtual void UnBind() const override;
 
