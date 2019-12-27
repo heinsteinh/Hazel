@@ -1,13 +1,12 @@
 #pragma once
 
 #include "Hazel/Events/Events.h"
-#include "Hazel/Utils/Runnable.h"
 
 struct GLFWwindow;
 
 namespace Hazel
 {
-    class WindowsEventManager : public Runnable
+    class WindowsEventManager
     {
     private:
         GLFWwindow *window = nullptr;
@@ -18,8 +17,7 @@ namespace Hazel
         WindowsEventManager(GLFWwindow *window);
 
         void SetEventListener(EventListener *listener);
-
-        virtual void OnUpdate() override;
+        void PollEvents();
 
     private:
         void Init();

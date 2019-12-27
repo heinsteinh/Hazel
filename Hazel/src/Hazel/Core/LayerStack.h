@@ -8,10 +8,6 @@ namespace Hazel
 {
     class LayerStack
     {
-    public:
-        using iterator = std::vector<Layer *>::reverse_iterator;
-        using reverse_iterator = std::vector<Layer *>::iterator;
-
     private:
         std::vector<Layer *> layers;
         int top = 0;
@@ -25,10 +21,24 @@ namespace Hazel
         void PopLayer(Layer *layer);
         void PopOverlay(Layer *overlay);
 
-        iterator begin();
-        iterator end();
+        inline auto begin()
+        {
+            return layers.rbegin();
+        }
 
-        reverse_iterator rbegin();
-        reverse_iterator rend();
+        inline auto end()
+        {
+            return layers.rend();
+        }
+
+        inline auto rbegin()
+        {
+            return layers.begin();
+        }
+
+        inline auto rend()
+        {
+            return layers.end();
+        }
     };
 }

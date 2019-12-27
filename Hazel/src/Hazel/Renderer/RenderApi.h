@@ -1,20 +1,20 @@
 #pragma once
 
-#include "glm/glm.hpp"
-
 #include "Hazel/Core/Core.h"
-#include "Hazel/Renderer/ObjectFactory.h"
+#include "Context.h"
+#include "VertexArray.h"
 
 namespace Hazel
 {
+    class Window;
+
     class HAZEL_API RenderApi
     {
     public:
+        static const RenderApi &OpenGL;
+
         virtual ~RenderApi() = default;
 
-        virtual ObjectFactory &GetObjectFactory() = 0;
-        virtual void SetClearColor(const glm::vec4 &color) = 0;
-        virtual void Clear() = 0;
-        virtual void DrawIndexed(const std::shared_ptr<VertexArray> &vertexArray) = 0;
+        virtual Context *CreateContext(const Window &window) const = 0;
     };
 }

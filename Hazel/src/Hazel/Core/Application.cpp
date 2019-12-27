@@ -9,8 +9,8 @@
 namespace Hazel
 {
     Application::Application()
-        : window(Window::Create()),
-        imguiLayer(new Hazel::ImGuiLayer(*window.get()))
+        : window(Window::Create(RenderApi::OpenGL)),
+        imguiLayer(new ImGuiLayer(*window.get()))
     {
         Init();
     }
@@ -46,6 +46,11 @@ namespace Hazel
         layers.PushOverlay(overlay);
     }
 
+    void Application::ShowImGui(bool show)
+    {
+        imguiLayer->Show(show);
+    }
+
     void Application::OnEvent(Event &e)
     {
         CoreDebug("{}", e);
@@ -64,17 +69,26 @@ namespace Hazel
     {
         CoreDebug("Application initialization.");
         window->SetEventListener(this);
+        window->GetContext().SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
         PushOverlay(imguiLayer);
-        Hazel::Renderer::GetRenderApi().SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
         CoreDebug("Application initialized.");
     }
 
     void Application::Update()
     {
-        Hazel::Renderer::GetRenderApi().Clear();
+        SetupViewport();
         UpdateLayers();
         RenderImGui();
         window->OnUpdate();
+    }
+
+    void Application::SetupViewport()
+    {
+        const Context &context = window->GetContext();
+        context.SetViewport(
+            window->GetFrameBufferWidth(),
+            window->GetFrameBufferHeight());
+        context.Clear();
     }
 
     void Application::UpdateLayers()

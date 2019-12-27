@@ -9,14 +9,19 @@
 
 namespace Hazel
 {
-    WindowsWindow::WindowsWindow()
+    WindowsWindow::WindowsWindow(const RenderApi &api)
     {
-        Init();
+        Init(api);
     }
 
     WindowsWindow::~WindowsWindow()
     {
         Shutdown();
+    }
+
+    const Context &WindowsWindow::GetContext() const
+    {
+        return *context.get();
     }
 
     const std::string &WindowsWindow::GetTitle() const
@@ -35,6 +40,20 @@ namespace Hazel
     {
         int height = 0;
         glfwGetWindowSize(window, nullptr, &height);
+        return height;
+    }
+
+    int WindowsWindow::GetFrameBufferWidth() const
+    {
+        int width = 0;
+        glfwGetFramebufferSize(window, &width, nullptr);
+        return width;
+    }
+
+    int WindowsWindow::GetFrameBufferHeight() const
+    {
+        int height = 0;
+        glfwGetFramebufferSize(window, nullptr, &height);
         return height;
     }
 
@@ -80,34 +99,27 @@ namespace Hazel
 
     void WindowsWindow::OnUpdate()
     {
-        eventManager->OnUpdate();
-        context->OnUpdate();
+        eventManager->PollEvents();
+        context->SwapBuffers();
     }
 
-    void WindowsWindow::Init()
+    void WindowsWindow::Init(const RenderApi &api)
     {
         static GlfwLoader loader;
         CoreInfo("Creating window");
-        CreateGlfwWindow();
-        CreateContext();
+        CreateGlfwWindow(api);
         SetVSync(vsync);
         CoreInfo("Window created {} ({}x{}).", title, GetWidth(), GetHeight());
     }
 
-    void WindowsWindow::CreateGlfwWindow()
+    void WindowsWindow::CreateGlfwWindow(const RenderApi &api)
     {
         CoreDebug("GLFW window creation start.");
-        window = glfwCreateWindow(defaultWidth, defaultHeight, title.c_str(), nullptr, nullptr);
-        CoreDebug("GLFW window creation done.");
-    }
-
-    void WindowsWindow::CreateContext()
-    {
-        CoreDebug("Creating context for rendering, inputs and events.");
-        context.reset(Renderer::CreateContext(*this));
+        window = glfwCreateWindow(1280, 720, title.c_str(), nullptr, nullptr);
+        context.reset(api.CreateContext(*this));
         input = std::make_unique<WindowsInput>(window);
         eventManager = std::make_unique<WindowsEventManager>(window);
-        CoreDebug("Context created.");
+        CoreDebug("GLFW window creation done.");
     }
 
     void WindowsWindow::Shutdown()

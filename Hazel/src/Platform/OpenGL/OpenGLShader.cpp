@@ -21,7 +21,7 @@ namespace Hazel
 
     bool OpenGLShader::IsExecutable() const
     {
-        return program.IsLinked();
+        return program.IsLinked() && vertexShader.IsCompiled() && fragmentShader.IsCompiled();
     }
 
     void OpenGLShader::Bind() const

@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "Hazel/Core/Window.h"
-#include "Hazel/Renderer/Context.h"
+#include "Hazel/Renderer/RenderApi.h"
 #include "WindowsInput.h"
 #include "WindowsEventManager.h"
 
@@ -14,9 +14,6 @@ namespace Hazel
     class WindowsWindow : public Window
     {
     private:
-        static const int defaultWidth = 1280;
-        static const int defaultHeight = 720;
-
         GLFWwindow *window = nullptr;
         std::unique_ptr<Context> context;
         std::unique_ptr<WindowsInput> input;
@@ -25,12 +22,15 @@ namespace Hazel
         bool vsync = true;
 
     public:
-        WindowsWindow();
+        WindowsWindow(const RenderApi &api);
         virtual ~WindowsWindow();
 
+        const Context &GetContext() const override;
         virtual const std::string &GetTitle() const override;
         virtual int GetWidth() const override;
         virtual int GetHeight() const override;
+        virtual int GetFrameBufferWidth() const override;
+        virtual int GetFrameBufferHeight() const override;
         virtual bool IsVSync() const override;
 
         virtual void SetTitle(const std::string &title) override;
@@ -44,9 +44,8 @@ namespace Hazel
         virtual void OnUpdate() override;
 
     private:
-        void Init();
-        void CreateGlfwWindow();
-        void CreateContext();
+        void Init(const RenderApi &api);
+        void CreateGlfwWindow(const RenderApi &api);
         void Shutdown();
     };
 }

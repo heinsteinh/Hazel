@@ -4,7 +4,6 @@
 #include "examples/imgui_impl_glfw.h"
 #include "examples/imgui_impl_opengl3.h"
 
-#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
 namespace Hazel
@@ -21,6 +20,34 @@ namespace Hazel
 
     ImGuiLayer::~ImGuiLayer()
     {
+    }
+
+    void ImGuiLayer::Begin()
+    {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+    }
+
+    void ImGuiLayer::End()
+    {
+        ImGui::GetIO().DisplaySize = {
+            (float)parent.GetWidth(),
+            (float)parent.GetHeight()
+        };
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        UpdatePlatforms();
+    }
+
+    void ImGuiLayer::Show(bool show)
+    {
+        this->show = show;
+    }
+
+    bool ImGuiLayer::IsShown() const
+    {
+        return show;
     }
 
     const std::string &ImGuiLayer::GetName() const
@@ -44,25 +71,10 @@ namespace Hazel
 
     void ImGuiLayer::OnImGuiRender()
     {
-        if (open)
+        if (show)
         {
-            ImGui::ShowDemoWindow(&open);
+            ImGui::ShowDemoWindow(&show);
         }
-    }
-
-    void ImGuiLayer::Begin()
-    {
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-    }
-
-    void ImGuiLayer::End()
-    {
-        ImGui::GetIO().DisplaySize = {(float)parent.GetWidth(), (float)parent.GetHeight()};
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        UpdatePlatforms();
     }
 
     void ImGuiLayer::Init()

@@ -23,7 +23,7 @@ namespace Hazel
         this->listener = listener;
     }
 
-    void WindowsEventManager::OnUpdate()
+    void WindowsEventManager::PollEvents()
     {
         glfwPollEvents();
     }

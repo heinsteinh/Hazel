@@ -47,24 +47,4 @@ namespace Hazel
             overlay->OnDetach();
         }
     }
-
-    LayerStack::iterator LayerStack::begin()
-    {
-        return layers.rbegin();
-    }
-
-    LayerStack::iterator LayerStack::end()
-    {
-        return layers.rend();
-    }
-
-    LayerStack::reverse_iterator LayerStack::rbegin()
-    {
-        return layers.begin();
-    }
-
-    LayerStack::reverse_iterator LayerStack::rend()
-    {
-        return layers.end();
-    }
 }

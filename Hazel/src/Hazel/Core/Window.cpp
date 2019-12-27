@@ -4,10 +4,10 @@
 
 namespace Hazel
 {
-    Window *Window::Create()
+    Window *Window::Create(const RenderApi &api)
     {
 #ifdef _WIN64
-        return new WindowsWindow();
+        return new WindowsWindow(api);
 #else
         return nullptr;
 #endif

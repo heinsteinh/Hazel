@@ -38,27 +38,30 @@ class TriangleLayer : public Hazel::Layer
 {
 private:
     std::string name = "TriangleLayer";
+    const Hazel::Window &parent;
+    Hazel::Renderer renderer;
     std::shared_ptr<Hazel::Shader> shader;
     std::shared_ptr<Hazel::VertexArray> triangleVertexArray;
 
 public:
-    TriangleLayer()
+    TriangleLayer(const Hazel::Window &parent)
+        : parent(parent),
+        renderer(parent)
     {
     }
 
     virtual void OnUpdate() override
     {
         shader->Bind();
-        Hazel::Renderer::Submit(triangleVertexArray);
+        renderer.Submit(triangleVertexArray);
     }
 
     virtual void OnAttach() override
     {
-        triangleVertexArray.reset(Hazel::Renderer::CreateVertexArray());
+        const Hazel::Context &context = parent.GetContext();
+        triangleVertexArray.reset(context.CreateVertexArray());
 
-        std::shared_ptr<Hazel::VertexBuffer> vertexBuffer;
-
-        vertexBuffer.reset(Hazel::Renderer::CreateVertexBuffer({
+        std::shared_ptr<Hazel::VertexBuffer> vertexBuffer(context.CreateVertexBuffer({
             -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
              0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
              0.0f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f}));
@@ -69,13 +72,10 @@ public:
 
         triangleVertexArray->AddVertexBuffer(vertexBuffer);
 
-        std::shared_ptr<Hazel::IndexBuffer> indexBuffer;
-
-        indexBuffer.reset(Hazel::Renderer::CreateIndexBuffer({0, 1, 2}));
-
+        std::shared_ptr<Hazel::IndexBuffer> indexBuffer(context.CreateIndexBuffer({0, 1, 2}));
         triangleVertexArray->SetIndexBuffer(indexBuffer);
 
-        shader.reset(Hazel::Renderer::CreateShader(vertexSource, fragmentSource));
+        shader.reset(context.CreateShader(vertexSource, fragmentSource));
     }
 
     virtual void OnDetach() override
@@ -98,11 +98,15 @@ public:
     Sandbox()
     {
         Hazel::Info("Sandbox creation");
-        PushLayer(new TriangleLayer());
+        PushLayer(new TriangleLayer(GetWindow()));
     };
 
-    virtual ~Sandbox()
+    virtual void OnKeyPressed(Hazel::KeyPressedEvent &e) override
     {
+        if (e.GetKey() == Hazel::Key::I)
+        {
+            ShowImGui(true);
+        }
     }
 };
 

@@ -9,21 +9,23 @@ namespace Hazel
     {
     private:
         const std::string name = "ImGui";
-        bool open = true;
+        bool show = false;
         const Window &parent;
 
     public:
         ImGuiLayer(const Window &parent);
         virtual ~ImGuiLayer();
 
+        void Begin();
+        void End();
+        void Show(bool open);
+        bool IsShown() const;
+
         virtual const std::string &GetName() const override;
         virtual void OnAttach() override;
         virtual void OnDetach() override;
         virtual void OnUpdate() override;
         virtual void OnImGuiRender() override;
-
-        void Begin();
-        void End();
 
     private:
         void Init();

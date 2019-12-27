@@ -26,6 +26,7 @@ namespace Hazel
         void Quit();
         void PushLayer(Layer *layer);
         void PushOverlay(Layer *overlay);
+        void ShowImGui(bool show);
 
         virtual void OnEvent(Event &e) override;
         virtual void OnWindowClosed(WindowClosedEvent &e) override;
@@ -33,6 +34,7 @@ namespace Hazel
     private:
         void Init();
         void Update();
+        void SetupViewport();
         void UpdateLayers();
         void RenderImGui();
     };

@@ -2,18 +2,24 @@
 
 #include "Hazel/Core/Core.h"
 
-#include "Renderer.h"
+#include "Hazel/Core/Window.h"
 
 namespace Hazel
 {
     class HAZEL_API RenderCommand
     {
+    private:
+        const Window &window;
+
     public:
-        static inline void DrawIndexed(const std::shared_ptr<VertexArray> &vertexArray)
+        constexpr RenderCommand(const Window &window)
+            : window(window)
         {
-            Renderer::GetRenderApi().DrawIndexed(vertexArray);
         }
 
-        RenderCommand() = delete;
+        inline void DrawIndexed(const std::shared_ptr<VertexArray> &vertexArray) const
+        {
+            window.GetContext().DrawIndexed(vertexArray);
+        }
     };
 }
