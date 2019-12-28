@@ -1,5 +1,7 @@
 #include "Hazel.h"
 
+#include <cmath>
+
 static const std::string vertexSource = R"(
     #version 330 core
 
@@ -44,7 +46,10 @@ private:
     Hazel::Renderer renderer;
     std::shared_ptr<Hazel::Shader> shader;
     std::shared_ptr<Hazel::VertexArray> triangleVertexArray;
-    Hazel::OrthographicCamera camera = {{-2.0f, 2.0f, -2.0f, 2.0f}};
+    Hazel::OrthographicCamera camera = {{-1.6f, 1.6f, -0.9f, 0.9f}};
+    glm::vec3 cameraPosition{0.0f};
+    float cameraRotation = 0.0f;
+    float cameraSpeed = 0.1f;
 
 public:
     TriangleLayer(const Hazel::Window &parent)
@@ -55,6 +60,48 @@ public:
 
     virtual void OnUpdate() override
     {
+        auto &input = parent.GetInput();
+        if (input.IsKeyPressed(Hazel::Key::Up))
+        {
+            cameraPosition.y += cameraSpeed;
+        }
+        if (input.IsKeyPressed(Hazel::Key::Down))
+        {
+            cameraPosition.y -= cameraSpeed;
+        }
+        if (input.IsKeyPressed(Hazel::Key::Right))
+        {
+            cameraPosition.x += cameraSpeed;
+        }
+        if (input.IsKeyPressed(Hazel::Key::Left))
+        {
+            cameraPosition.x -= cameraSpeed;
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (cameraPosition[i] > 1.0f)
+            {
+                cameraPosition[i] = 1.0f;
+            }
+            else if (cameraPosition[i] < -1.0f)
+            {
+                cameraPosition[i] = -1.0f;
+            }
+        }
+
+        if (input.IsButtonPressed(Hazel::MouseButton::B1))
+        {
+            cameraRotation += 10 * cameraSpeed;
+        }
+        if (input.IsButtonPressed(Hazel::MouseButton::B2))
+        {
+            cameraRotation -= 10 * cameraSpeed;
+        }
+        cameraRotation = std::remainderf(cameraRotation, 360.0f);
+
+        camera.SetPosition(cameraPosition);
+        camera.SetRotation(cameraRotation);
         renderer.BeginScene(camera);
         renderer.Submit(shader, triangleVertexArray);
         renderer.EndScene();
@@ -95,36 +142,9 @@ public:
     {
     }
 
-    virtual void OnKeyPressed(Hazel::KeyPressedEvent &e) override
+    virtual void OnMouseScrolled(Hazel::MouseScrolledEvent &e) override
     {
-        glm::vec3 position = camera.GetPosition();
-        switch (e.GetKey())
-        {
-        case Hazel::Key::Up:
-            position += glm::vec3(0.0f, 0.1f, 0.0f);
-            break;
-        case Hazel::Key::Down:
-            position += glm::vec3(0.0f, -0.1f, 0.0f);
-            break;
-        case Hazel::Key::Right:
-            position += glm::vec3(0.1f, 0.0f, 0.0f);
-            break;
-        case Hazel::Key::Left:
-            position += glm::vec3(-0.1f, 0.0f, 0.0f);
-            break;
-        }
-        for (int i = 0; i < 3; i++)
-        {
-            if (position[i] > 1.0f)
-            {
-                position[i] = 1.0f;
-            }
-            else if (position[i] < -1.0f)
-            {
-                position[i] = -1.0f;
-            }
-        }
-        camera.SetPosition(position);
+        camera.SetRotation(std::remainderf(camera.GetRotation() + (float)e.GetYOffset(), 360.0f));
     }
 };
 

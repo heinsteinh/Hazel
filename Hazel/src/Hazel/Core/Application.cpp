@@ -2,7 +2,6 @@
 
 #include "Log.h"
 #include "Hazel/ImGui/ImGuiLayer.h"
-#include "Hazel/Renderer/Renderer.h"
 #include "LayerStack.h"
 #include "Hazel/Utils/Reversed.h"
 
