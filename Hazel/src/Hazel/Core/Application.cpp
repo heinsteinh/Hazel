@@ -1,8 +1,9 @@
 #include "Application.h"
 
 #include "Log.h"
-#include "Hazel/ImGui/ImGuiLayer.h"
 #include "LayerStack.h"
+#include "Platform.h"
+#include "Hazel/ImGui/ImGuiLayer.h"
 #include "Hazel/Utils/Reversed.h"
 
 namespace Hazel
@@ -76,9 +77,19 @@ namespace Hazel
     void Application::Update()
     {
         SetupViewport();
-        UpdateLayers();
+        Timestep deltaTime = ComputeDeltaTime();
+        UpdateLayers(deltaTime);
         RenderImGui();
-        window->OnUpdate();
+        window->OnUpdate(deltaTime);
+    }
+
+    Timestep Application::ComputeDeltaTime()
+    {
+        double time = Platform::GetTime();
+        double deltaTime = time - lastTime;
+        lastTime = time;
+        CoreTrace("Frame Rate: {}", 1.0 / deltaTime);
+        return deltaTime;
     }
 
     void Application::SetupViewport()
@@ -90,12 +101,12 @@ namespace Hazel
         context.Clear();
     }
 
-    void Application::UpdateLayers()
+    void Application::UpdateLayers(Timestep deltaTime)
     {
         CoreTrace("Update Layers");
         for (Layer *layer : Reversed(layers))
         {
-            layer->OnUpdate();
+            layer->OnUpdate(deltaTime);
         }
     }
 

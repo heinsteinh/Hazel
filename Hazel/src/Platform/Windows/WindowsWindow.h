@@ -41,7 +41,7 @@ namespace Hazel
         virtual Input &GetInput() const override;
         virtual void *GetNativeWindow() const override;
 
-        virtual void OnUpdate() override;
+        virtual void OnUpdate(Timestep deltaTime) override;
 
     private:
         void Init(const RenderApi &api);

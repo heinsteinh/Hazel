@@ -112,6 +112,7 @@ project "Sandbox"
         "%{prj.name}/src",
         "Hazel/src",
         "Hazel/vendor/spdlog/include",
+        "Hazel/vendor/imgui",
         "Hazel/vendor/glm"
     }
 

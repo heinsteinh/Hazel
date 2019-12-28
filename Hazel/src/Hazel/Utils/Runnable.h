@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hazel/Core/Core.h"
+#include "Hazel/Core/Timestep.h"
 
 namespace Hazel
 {
@@ -9,6 +10,6 @@ namespace Hazel
     public:
         virtual ~Runnable() = default;
 
-        virtual void OnUpdate() = 0;
+        virtual void OnUpdate(Timestep deltaTime) = 0;
     };
 }

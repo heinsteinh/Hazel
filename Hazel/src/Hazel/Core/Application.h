@@ -2,9 +2,12 @@
 
 #include <memory>
 
+#include "imgui.h"
+
 #include "Core.h"
 #include "Window.h"
 #include "LayerStack.h"
+#include "Timestep.h"
 
 namespace Hazel
 {
@@ -15,8 +18,9 @@ namespace Hazel
     private:
         std::unique_ptr<Window> window;
         ImGuiLayer *imguiLayer;
-        bool running = false;
         LayerStack layers;
+        bool running = false;
+        double lastTime = 0.0;
 
     public:
         Application();
@@ -34,8 +38,9 @@ namespace Hazel
     private:
         void Init();
         void Update();
+        Timestep ComputeDeltaTime();
         void SetupViewport();
-        void UpdateLayers();
+        void UpdateLayers(Timestep deltaTime);
         void RenderImGui();
     };
 

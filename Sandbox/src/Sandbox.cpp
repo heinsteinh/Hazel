@@ -49,7 +49,9 @@ private:
     Hazel::OrthographicCamera camera = {{-1.6f, 1.6f, -0.9f, 0.9f}};
     glm::vec3 cameraPosition{0.0f};
     float cameraRotation = 0.0f;
-    float cameraSpeed = 0.1f;
+    float cameraTranslationSpeed = 1.0f;
+    float cameraRotationSpeed = 10.0f;
+    double framerate = 0.0;
 
 public:
     TriangleLayer(const Hazel::Window &parent)
@@ -58,24 +60,25 @@ public:
     {
     }
 
-    virtual void OnUpdate() override
+    virtual void OnUpdate(Hazel::Timestep deltaTime) override
     {
+        framerate = 1.0 / deltaTime;
         auto &input = parent.GetInput();
         if (input.IsKeyPressed(Hazel::Key::Up))
         {
-            cameraPosition.y += cameraSpeed;
+            cameraPosition.y += cameraTranslationSpeed * deltaTime;
         }
         if (input.IsKeyPressed(Hazel::Key::Down))
         {
-            cameraPosition.y -= cameraSpeed;
+            cameraPosition.y -= cameraTranslationSpeed * deltaTime;
         }
         if (input.IsKeyPressed(Hazel::Key::Right))
         {
-            cameraPosition.x += cameraSpeed;
+            cameraPosition.x += cameraTranslationSpeed * deltaTime;
         }
         if (input.IsKeyPressed(Hazel::Key::Left))
         {
-            cameraPosition.x -= cameraSpeed;
+            cameraPosition.x -= cameraTranslationSpeed * deltaTime;
         }
 
         for (int i = 0; i < 3; i++)
@@ -92,11 +95,11 @@ public:
 
         if (input.IsButtonPressed(Hazel::MouseButton::B1))
         {
-            cameraRotation += 10 * cameraSpeed;
+            cameraRotation += 10 * cameraRotationSpeed * deltaTime;
         }
         if (input.IsButtonPressed(Hazel::MouseButton::B2))
         {
-            cameraRotation -= 10 * cameraSpeed;
+            cameraRotation -= 10 * cameraRotationSpeed * deltaTime;
         }
         cameraRotation = std::remainderf(cameraRotation, 360.0f);
 
@@ -140,6 +143,9 @@ public:
 
     virtual void OnImGuiRender() override
     {
+        ImGui::Begin("Framerate");
+        ImGui::Text("%f FPS", framerate);
+        ImGui::End();
     }
 
     virtual void OnMouseScrolled(Hazel::MouseScrolledEvent &e) override

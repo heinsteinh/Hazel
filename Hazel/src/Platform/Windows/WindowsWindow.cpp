@@ -97,7 +97,7 @@ namespace Hazel
         return window;
     }
 
-    void WindowsWindow::OnUpdate()
+    void WindowsWindow::OnUpdate(Timestep deltaTime)
     {
         eventManager->PollEvents();
         context->SwapBuffers();

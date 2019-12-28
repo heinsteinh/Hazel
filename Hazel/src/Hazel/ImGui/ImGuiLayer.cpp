@@ -65,7 +65,7 @@ namespace Hazel
         Shutdown();
     }
 
-    void ImGuiLayer::OnUpdate()
+    void ImGuiLayer::OnUpdate(Timestep deltaTime)
     {
     }
 
