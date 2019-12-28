@@ -9,6 +9,7 @@ static const std::string vertexSource = R"(
     layout(location = 1) in vec4 a_Color;
 
     uniform mat4 u_ViewProjection;
+    uniform mat4 u_Transform;
 
     out vec3 v_Position;
     out vec4 v_Color;
@@ -17,7 +18,7 @@ static const std::string vertexSource = R"(
     {
         v_Position = a_Position;
         v_Color = a_Color;
-        gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+        gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
     }
 
 )";
@@ -32,7 +33,6 @@ static const std::string fragmentSource = R"(
 
     void main()
     {
-        color = vec4(v_Position * 0.5 + 0.5, 1.0);
         color = v_Color;
     }
 
@@ -48,6 +48,7 @@ private:
     std::shared_ptr<Hazel::VertexArray> triangleVertexArray;
     Hazel::OrthographicCamera camera = {{-1.6f, 1.6f, -0.9f, 0.9f}};
     glm::vec3 cameraPosition{0.0f};
+    glm::vec3 trianglePosition{0.0f};
     float cameraRotation = 0.0f;
     float cameraTranslationSpeed = 1.0f;
     float cameraRotationSpeed = 10.0f;
@@ -64,6 +65,8 @@ public:
     {
         framerate = 1.0 / deltaTime;
         auto &input = parent.GetInput();
+
+        // Test moving camera
         if (input.IsKeyPressed(Hazel::Key::Up))
         {
             cameraPosition.y += cameraTranslationSpeed * deltaTime;
@@ -81,18 +84,7 @@ public:
             cameraPosition.x -= cameraTranslationSpeed * deltaTime;
         }
 
-        for (int i = 0; i < 3; i++)
-        {
-            if (cameraPosition[i] > 1.0f)
-            {
-                cameraPosition[i] = 1.0f;
-            }
-            else if (cameraPosition[i] < -1.0f)
-            {
-                cameraPosition[i] = -1.0f;
-            }
-        }
-
+        // Test rotate camera
         if (input.IsButtonPressed(Hazel::MouseButton::B1))
         {
             cameraRotation += 10 * cameraRotationSpeed * deltaTime;
@@ -103,10 +95,37 @@ public:
         }
         cameraRotation = std::remainderf(cameraRotation, 360.0f);
 
+        // Test moving triangle
+        if (input.IsKeyPressed(Hazel::Key::D))
+        {
+            trianglePosition.x += cameraTranslationSpeed * deltaTime;
+        }
+        if (input.IsKeyPressed(Hazel::Key::A))
+        {
+            trianglePosition.x -= cameraTranslationSpeed * deltaTime;
+        }
+
+        // Set camera position
         camera.SetPosition(cameraPosition);
         camera.SetRotation(cameraRotation);
+
+        // Render
         renderer.BeginScene(camera);
-        renderer.Submit(shader, triangleVertexArray);
+
+        // Test multiple triangles
+        static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+        for (int y = 0; y < 20; y++)
+        {
+            for (int x = 0; x < 20; x++)
+            {
+                glm::mat4 transform = glm::translate(
+                    glm::mat4(1.0f),
+                    {0.11f * x + trianglePosition.x, 0.11f * y, 0.0f})
+                    * scale;
+                renderer.Submit(shader, triangleVertexArray, transform);
+            }
+        }
+
         renderer.EndScene();
     }
 

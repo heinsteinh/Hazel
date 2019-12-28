@@ -2,6 +2,9 @@
 
 #include <vector>
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
 #include "Hazel/Core/Core.h"
 #include "Hazel/Core/Window.h"
 #include "Hazel/Renderer/VertexArray.h"
@@ -21,6 +24,9 @@ namespace Hazel
 
         void BeginScene(const OrthographicCamera &camera);
         void EndScene();
-        void Submit(const std::shared_ptr<Shader> &shader, const std::shared_ptr<VertexArray> &vertexArray) const;
+        void Submit(
+            const std::shared_ptr<Shader> &shader,
+            const std::shared_ptr<VertexArray> &vertexArray,
+            const glm::mat4 &transform = glm::mat4(1.0f)) const;
     };
 }
