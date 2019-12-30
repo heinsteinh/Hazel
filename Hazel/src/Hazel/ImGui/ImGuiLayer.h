@@ -8,7 +8,6 @@ namespace Hazel
     class ImGuiLayer : public Layer
     {
     private:
-        const std::string name = "ImGui";
         bool show = false;
         const Window &parent;
 
@@ -21,7 +20,6 @@ namespace Hazel
         void Show(bool open);
         bool IsShown() const;
 
-        virtual const std::string &GetName() const override;
         virtual void OnAttach() override;
         virtual void OnDetach() override;
         virtual void OnUpdate(Timestep deltaTime) override;

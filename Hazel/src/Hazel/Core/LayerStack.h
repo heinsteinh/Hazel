@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-
 #include "Hazel/Core/Layer.h"
 
 namespace Hazel
@@ -13,7 +11,7 @@ namespace Hazel
         int top = 0;
 
     public:
-        LayerStack();
+        LayerStack() = default;
         ~LayerStack();
 
         void PushLayer(Layer *layer);

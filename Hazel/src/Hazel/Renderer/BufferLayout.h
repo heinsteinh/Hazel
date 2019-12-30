@@ -1,8 +1,5 @@
 #pragma once
 
-#include <vector>
-
-#include "Hazel/Core/Core.h"
 #include "Hazel/Renderer/BufferElement.h"
 
 namespace Hazel

@@ -1,7 +1,5 @@
 #include "Logger.h"
 
-#include <unordered_map>
-
 #include "spdlog/sinks/stdout_color_sinks.h"
 
 namespace Hazel

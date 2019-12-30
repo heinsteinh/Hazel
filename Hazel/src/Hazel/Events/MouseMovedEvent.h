@@ -11,7 +11,7 @@ namespace Hazel
         double yPosition;
 
     public:
-        MouseMovedEvent(double xPosition, double yPosition)
+        constexpr MouseMovedEvent(double xPosition, double yPosition)
             : xPosition(xPosition),
             yPosition(yPosition)
         {

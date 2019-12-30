@@ -18,9 +18,21 @@ namespace Hazel
         OpenGLShaderProgram();
         ~OpenGLShaderProgram();
 
-        unsigned int GetId() const;
-        bool IsLinked() const;
-        const std::string &GetInfoLog() const;
+        inline unsigned int GetId() const
+        {
+            return id;
+        }
+
+        inline bool IsLinked() const
+        {
+            return linked;
+        }
+
+        inline const std::string &GetInfoLog() const
+        {
+            return infoLog;
+        }
+
         void Attach(const OpenGLCompiledShader &shader);
         void Detach(const OpenGLCompiledShader &shader);
         void Link();

@@ -50,11 +50,6 @@ namespace Hazel
         return show;
     }
 
-    const std::string &ImGuiLayer::GetName() const
-    {
-        return name;
-    }
-
     void ImGuiLayer::OnAttach()
     {
         Init();

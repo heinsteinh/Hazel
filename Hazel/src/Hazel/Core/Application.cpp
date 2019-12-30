@@ -1,10 +1,7 @@
 #include "Application.h"
 
-#include "Log.h"
-#include "LayerStack.h"
 #include "Platform.h"
 #include "Hazel/ImGui/ImGuiLayer.h"
-#include "Hazel/Utils/Reversed.h"
 
 namespace Hazel
 {
@@ -15,7 +12,7 @@ namespace Hazel
         Init();
     }
 
-    const Window &Application::GetWindow()
+    Window &Application::GetWindow()
     {
         return *window.get();
     }
@@ -94,7 +91,7 @@ namespace Hazel
 
     void Application::SetupViewport()
     {
-        const Context &context = window->GetContext();
+        Context &context = window->GetContext();
         context.SetViewport(
             window->GetFrameBufferWidth(),
             window->GetFrameBufferHeight());

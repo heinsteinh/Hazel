@@ -7,7 +7,7 @@ namespace Hazel
     class HAZEL_API KeyReleasedEvent : public GenericKeyEvent
     {
     public:
-        KeyReleasedEvent(Key key)
+        constexpr KeyReleasedEvent(Key key)
             : GenericKeyEvent(key)
         {
         }

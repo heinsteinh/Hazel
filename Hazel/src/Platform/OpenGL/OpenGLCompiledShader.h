@@ -15,14 +15,25 @@ namespace Hazel
         OpenGLCompiledShader(unsigned int type, const std::string &source);
         ~OpenGLCompiledShader();
 
-        unsigned int GetId() const;
-        bool IsCompiled() const;
-        const std::string &GetInfoLog() const;
+        inline unsigned int GetId() const
+        {
+            return id;
+        }
+
+        inline bool IsCompiled() const
+        {
+            return compiled;
+        }
+
+        const std::string &GetInfoLog() const
+        {
+            return infoLog;
+        }
 
     private:
         void Init(unsigned int type, const std::string &source);
         void Compile(unsigned int type, const std::string &source);
-        void CheckCompilationStatus();
-        void CheckInfoLog();
+        void RetrieveCompilationStatus();
+        void RetrieveInfoLog();
     };
 }

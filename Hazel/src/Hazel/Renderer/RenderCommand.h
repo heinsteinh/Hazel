@@ -9,15 +9,15 @@ namespace Hazel
     class HAZEL_API RenderCommand
     {
     private:
-        const Window &window;
+        Window &window;
 
     public:
-        constexpr RenderCommand(const Window &window)
+        constexpr RenderCommand(Window &window)
             : window(window)
         {
         }
 
-        inline void DrawIndexed(const std::shared_ptr<VertexArray> &vertexArray) const
+        inline void DrawIndexed(const SharedPtr<VertexArray> &vertexArray) const
         {
             window.GetContext().DrawIndexed(vertexArray);
         }

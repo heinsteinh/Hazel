@@ -6,7 +6,7 @@ namespace Hazel
 {
     class HAZEL_API MouseEvent : public InputEvent
     {
-    protected:
-        MouseEvent() = default;
+    public:
+        constexpr MouseEvent() = default;
     };
 }

@@ -1,10 +1,5 @@
 #pragma once
 
-#include <memory>
-
-#include "imgui.h"
-
-#include "Core.h"
 #include "Window.h"
 #include "LayerStack.h"
 #include "Timestep.h"
@@ -16,7 +11,7 @@ namespace Hazel
     class HAZEL_API Application : public EventListener
     {
     private:
-        std::unique_ptr<Window> window;
+        UniquePtr<Window> window;
         ImGuiLayer *imguiLayer;
         LayerStack layers;
         bool running = false;
@@ -25,7 +20,7 @@ namespace Hazel
     public:
         Application();
 
-        const Window &GetWindow();
+        Window &GetWindow();
         void Run();
         void Quit();
         void PushLayer(Layer *layer);

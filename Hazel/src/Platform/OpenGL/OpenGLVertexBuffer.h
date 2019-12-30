@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-
 #include "Hazel/Renderer/VertexBuffer.h"
 
 namespace Hazel

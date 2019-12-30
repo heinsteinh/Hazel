@@ -13,24 +13,24 @@ namespace Hazel
     {
     }
 
-    bool WindowsInput::IsKeyPressed(Key key)
+    bool WindowsInput::IsKeyPressed(Key key) const
     {
         return glfwGetKey(window, GlfwKeyMap::GetNativeKey(key)) == GLFW_PRESS;
     }
 
-    bool WindowsInput::IsButtonPressed(MouseButton button)
+    bool WindowsInput::IsButtonPressed(MouseButton button) const
     {
         return glfwGetMouseButton(window, static_cast<int>(button)) == GLFW_PRESS;
     }
 
-    double WindowsInput::GetMouseX()
+    double WindowsInput::GetMouseX() const
     {
         double x, y;
         glfwGetCursorPos(window, &x, &y);
         return x;
     }
 
-    double WindowsInput::GetMouseY()
+    double WindowsInput::GetMouseY() const
     {
         double x, y;
         glfwGetCursorPos(window, &x, &y);

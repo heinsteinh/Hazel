@@ -1,10 +1,5 @@
 #pragma once
 
-#include <string>
-#include <utility>
-
-#include "Core.h"
-
 #include "spdlog/spdlog.h"
 
 namespace Hazel

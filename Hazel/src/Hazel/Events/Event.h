@@ -1,23 +1,24 @@
 #pragma once
 
-#include "Hazel/Core/Core.h"
-#include "Hazel/Utils/Printable.h"
-#include "EventListener.h"
-
 #include <sstream>
+
+#include "spdlog/fmt/ostr.h"
+
+#include "Hazel/Core/Core.h"
+#include "EventListener.h"
 
 namespace Hazel
 {
-    class HAZEL_API Event : public Printable
+    class HAZEL_API Event
     {
     private:
         bool handled = false;
 
     public:
-        Event() = default;
-        Event(const Event &other) = delete;
+        constexpr Event() = default;
         virtual ~Event() = default;
 
+        Event(const Event &other) = delete;
         Event &operator=(const Event &other) = delete;
 
         inline const char *GetName() const
@@ -44,7 +45,7 @@ namespace Hazel
             }
         }
 
-        virtual std::string ToString() const override
+        virtual std::string ToString() const
         {
             return GetName();
         }
@@ -52,4 +53,9 @@ namespace Hazel
     protected:
         virtual void Handle(EventListener &listener) = 0;
     };
+}
+
+inline std::ostream &operator<<(std::ostream &stream, const Hazel::Event &e)
+{
+    return stream << e.ToString();
 }

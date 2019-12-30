@@ -1,30 +1,34 @@
 #pragma once
 
+#include "glm/glm.hpp"
+
 #include "Hazel/Renderer/Shader.h"
-#include "OpenGLShaderProgram.h"
+#include "OpenGLShaderCompiler.h"
 
 namespace Hazel
 {
     class OpenGLShader : public Shader
     {
     private:
-        OpenGLShaderProgram program;
-        OpenGLCompiledShader vertexShader;
-        OpenGLCompiledShader fragmentShader;
+        OpenGLShaderCompiler compiler;
 
     public:
         OpenGLShader(const std::string &vertexSource, const std::string &fragmentSource);
-        virtual ~OpenGLShader();
+        virtual ~OpenGLShader() = default;
+
+        void UploadUniformInt(const std::string &name, int value);
+        void UploadUniformFloat(const std::string &name, float value);
+        void UploadUniformFloat2(const std::string &name, const glm::vec2 &value);
+        void UploadUniformFloat3(const std::string &name, const glm::vec3 &value);
+        void UploadUniformFloat4(const std::string &name, const glm::vec4 &value);
+        void UploadUniformMat3(const std::string &name, const glm::mat3 &value);
+        void UploadUniformMat4(const std::string &name, const glm::mat4 &value);
 
         virtual bool IsExecutable() const override;
-        virtual void UploadUniformMat4(const std::string &name, const glm::mat4 &uniform) override;
         virtual void Bind() const override;
         virtual void UnBind() const override;
 
     private:
-        void Init();
-        void DisplayCompilationLog(const std::string &name, const OpenGLCompiledShader &shader);
-        void CreateProgram();
-        void DisplayLinkLog();
+        int GetUniformLocation(const std::string &name);
     };
 }

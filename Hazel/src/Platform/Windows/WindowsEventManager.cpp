@@ -2,7 +2,6 @@
 
 #include "GLFW/glfw3.h"
 
-#include "Hazel/Core/Log.h"
 #include "Platform/Windows/GlfwKeyMap.h"
 
 namespace Hazel

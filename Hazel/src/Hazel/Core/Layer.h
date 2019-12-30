@@ -1,8 +1,5 @@
 #pragma once
 
-#include <string>
-
-#include "Hazel/Core/Window.h"
 #include "Hazel/Events/Events.h"
 #include "Hazel/Utils/Attachable.h"
 #include "Hazel/Utils/Runnable.h"
@@ -14,7 +11,6 @@ namespace Hazel
     public:
         virtual ~Layer() = default;
 
-        virtual const std::string &GetName() const = 0;
         virtual void OnImGuiRender() = 0;
     };
 }

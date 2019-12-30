@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Hazel/Core/Core.h"
-
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <fstream>
@@ -19,3 +17,7 @@
 #ifdef _WIN64
 #include <Windows.h>
 #endif
+
+#include "Hazel/Core/Core.h"
+#include "Hazel/Core/Log.h"
+#include "Hazel/Utils/Utils.h"

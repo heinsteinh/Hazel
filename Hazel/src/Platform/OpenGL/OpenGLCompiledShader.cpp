@@ -2,8 +2,6 @@
 
 #include "glad/glad.h"
 
-#include "Hazel/Core/Log.h"
-
 namespace Hazel
 {
     OpenGLCompiledShader::OpenGLCompiledShader(unsigned int type, const std::string &source)
@@ -16,26 +14,11 @@ namespace Hazel
         glDeleteShader(id);
     }
 
-    unsigned int OpenGLCompiledShader::GetId() const
-    {
-        return id;
-    }
-
-    bool OpenGLCompiledShader::IsCompiled() const
-    {
-        return compiled;
-    }
-
-    const std::string &OpenGLCompiledShader::GetInfoLog() const
-    {
-        return infoLog;
-    }
-
     void OpenGLCompiledShader::Init(unsigned int type, const std::string &source)
     {
         Compile(type, source);
-        CheckCompilationStatus();
-        CheckInfoLog();
+        RetrieveCompilationStatus();
+        RetrieveInfoLog();
     }
 
     void OpenGLCompiledShader::Compile(unsigned int type, const std::string &source)
@@ -46,14 +29,14 @@ namespace Hazel
         glCompileShader(id);
     }
 
-    void OpenGLCompiledShader::CheckCompilationStatus()
+    void OpenGLCompiledShader::RetrieveCompilationStatus()
     {
         int result = 0;
         glGetShaderiv(id, GL_COMPILE_STATUS, &result);
         compiled = result == GL_TRUE;
     }
 
-    void OpenGLCompiledShader::CheckInfoLog()
+    void OpenGLCompiledShader::RetrieveInfoLog()
     {
         int maxLength = 0;
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &maxLength);

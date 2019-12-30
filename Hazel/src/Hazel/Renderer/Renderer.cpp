@@ -1,11 +1,13 @@
 #include "Renderer.h"
 
-#include "Hazel/Core/Log.h"
 #include "Hazel/Renderer/RenderCommand.h"
+
+// TEMPORARY
+#include "Platform/OpenGL/OpenGLShader.h"
 
 namespace Hazel
 {
-    Renderer::Renderer(const Window &window)
+    Renderer::Renderer(Window &window)
         : window(window)
     {
     }
@@ -20,13 +22,14 @@ namespace Hazel
     }
 
     void Renderer::Submit(
-        const std::shared_ptr<Shader> &shader,
-        const std::shared_ptr<VertexArray> &vertexArray,
+        const SharedPtr<Shader> &shader,
+        const SharedPtr<VertexArray> &vertexArray,
         const glm::mat4 &transform) const
     {
-        shader->Bind();
-        shader->UploadUniformMat4("u_ViewProjection", camera->GetViewProjectionMatrix());
-        shader->UploadUniformMat4("u_Transform", transform);
+        auto openGLShader = std::dynamic_pointer_cast<OpenGLShader>(shader);
+        openGLShader->Bind();
+        openGLShader->UploadUniformMat4("u_ViewProjection", camera->GetViewProjectionMatrix());
+        openGLShader->UploadUniformMat4("u_Transform", transform);
         vertexArray->Bind();
         RenderCommand(window).DrawIndexed(vertexArray);
     }

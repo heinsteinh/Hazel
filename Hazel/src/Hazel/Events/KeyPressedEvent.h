@@ -10,7 +10,7 @@ namespace Hazel
         int repeatCount;
 
     public:
-        KeyPressedEvent(Key key, int repeatCount)
+        constexpr KeyPressedEvent(Key key, int repeatCount)
             : GenericKeyEvent(key),
             repeatCount(repeatCount)
         {

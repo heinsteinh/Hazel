@@ -10,7 +10,7 @@ namespace Hazel
         int key;
 
     public:
-        KeyTypedEvent(int key)
+        constexpr KeyTypedEvent(int key)
             : key(key)
         {
         }

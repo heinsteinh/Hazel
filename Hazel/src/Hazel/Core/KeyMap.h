@@ -1,7 +1,5 @@
 #pragma once
 
-#include <unordered_map>
-
 #include "Hazel/Core/Key.h"
 
 namespace Hazel
@@ -46,7 +44,7 @@ namespace Hazel
         }
 
     private:
-        void Init()
+        inline void Init()
         {
             for (auto [key, value] : mapping)
             {

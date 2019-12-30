@@ -16,7 +16,10 @@ namespace Hazel
 
         virtual ~Window() = default;
 
-        virtual const Context &GetContext() const = 0;
+        virtual Context &GetContext() const = 0;
+        virtual const Input &GetInput() const = 0;
+        virtual void *GetNativeWindow() const = 0;
+
         virtual const std::string &GetTitle() const = 0;
         virtual int GetWidth() const = 0;
         virtual int GetHeight() const = 0;
@@ -28,8 +31,5 @@ namespace Hazel
         virtual void Resize(int width, int height) = 0;
         virtual void SetVSync(bool enable) = 0;
         virtual void SetEventListener(EventListener *listener) = 0;
-
-        virtual Input &GetInput() const = 0;
-        virtual void *GetNativeWindow() const = 0;
     };
 }

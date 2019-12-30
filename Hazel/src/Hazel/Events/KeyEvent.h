@@ -8,6 +8,6 @@ namespace Hazel
     class HAZEL_API KeyEvent : public InputEvent
     {
     public:
-        KeyEvent() = default;
+        constexpr KeyEvent() = default;
     };
 }

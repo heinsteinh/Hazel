@@ -9,6 +9,7 @@ namespace Hazel
 #ifdef _WIN64
         return new WindowsWindow(api);
 #else
+#error Hazel only supports Windows x64 !
         return nullptr;
 #endif
     }

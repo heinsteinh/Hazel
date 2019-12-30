@@ -11,7 +11,7 @@ namespace Hazel
         Key key;
 
     public:
-        GenericKeyEvent(Key key)
+        constexpr GenericKeyEvent(Key key)
             : key(key)
         {
         }

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-
 #include "Hazel/Renderer/VertexArray.h"
 
 namespace Hazel
@@ -10,8 +8,8 @@ namespace Hazel
     {
     private:
         unsigned int id = 0;
-        std::vector<std::shared_ptr<VertexBuffer>> vertexBuffers;
-        std::shared_ptr<IndexBuffer> indexBuffer;
+        std::vector<SharedPtr<VertexBuffer>> vertexBuffers;
+        SharedPtr<IndexBuffer> indexBuffer;
 
     public:
         OpenGLVertexArray();
@@ -20,10 +18,10 @@ namespace Hazel
         virtual void Bind() const override;
         virtual void UnBind() const override;
 
-        virtual const std::vector<std::shared_ptr<VertexBuffer>> &GetVertexBuffers() const override;
-        virtual const std::shared_ptr<IndexBuffer> &GetIndexBuffer() const override;
-        virtual void AddVertexBuffer(const std::shared_ptr<VertexBuffer> &buffer) override;
-        virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer> &buffer) override;
+        virtual const std::vector<SharedPtr<VertexBuffer>> &GetVertexBuffers() const override;
+        virtual const SharedPtr<IndexBuffer> &GetIndexBuffer() const override;
+        virtual void AddVertexBuffer(const SharedPtr<VertexBuffer> &buffer) override;
+        virtual void SetIndexBuffer(const SharedPtr<IndexBuffer> &buffer) override;
 
     private:
         void SetupVertexAttributes(const BufferLayout &layout, size_t index);

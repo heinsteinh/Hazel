@@ -1,9 +1,5 @@
 #pragma once
 
-#include <string>
-#include <unordered_map>
-
-#include "Hazel/Core/Core.h"
 #include "ShaderDataType.h"
 
 namespace Hazel

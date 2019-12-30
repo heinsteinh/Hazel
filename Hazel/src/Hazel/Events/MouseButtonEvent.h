@@ -11,7 +11,7 @@ namespace Hazel
         MouseButton button;
 
     public:
-        MouseButtonEvent(MouseButton button)
+        constexpr MouseButtonEvent(MouseButton button)
             : button(button)
         {
         }

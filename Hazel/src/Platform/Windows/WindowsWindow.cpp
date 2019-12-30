@@ -19,7 +19,7 @@ namespace Hazel
         Shutdown();
     }
 
-    const Context &WindowsWindow::GetContext() const
+    Context &WindowsWindow::GetContext() const
     {
         return *context.get();
     }

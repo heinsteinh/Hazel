@@ -1,39 +1,58 @@
 #include "OpenGLShader.h"
 
-#include <unordered_map>
-
 #include "glad/glad.h"
 #include "glm/gtc/type_ptr.hpp"
-
-#include "Hazel/Core/Log.h"
 
 namespace Hazel
 {
     OpenGLShader::OpenGLShader(const std::string &vertexSource, const std::string &fragmentSource)
-        : vertexShader(GL_VERTEX_SHADER, vertexSource),
-        fragmentShader(GL_FRAGMENT_SHADER, fragmentSource)
+        : compiler(vertexSource, fragmentSource)
     {
-        Init();
     }
 
-    OpenGLShader::~OpenGLShader()
+    void OpenGLShader::UploadUniformInt(const std::string &name, int value)
     {
+        glUniform1i(GetUniformLocation(name), value);
+    }
+
+    void OpenGLShader::UploadUniformFloat(const std::string &name, float value)
+    {
+        glUniform1f(GetUniformLocation(name), value);
+    }
+
+    void OpenGLShader::UploadUniformFloat2(const std::string &name, const glm::vec2 &value)
+    {
+        glUniform2f(GetUniformLocation(name), value[0], value[1]);
+    }
+
+    void OpenGLShader::UploadUniformFloat3(const std::string &name, const glm::vec3 &value)
+    {
+        glUniform3f(GetUniformLocation(name), value[0], value[1], value[3]);
+    }
+
+    void OpenGLShader::UploadUniformFloat4(const std::string &name, const glm::vec4 &value)
+    {
+        glUniform4f(GetUniformLocation(name), value[0], value[1], value[2], value[3]);
+    }
+
+    void OpenGLShader::UploadUniformMat3(const std::string &name, const glm::mat3 &value)
+    {
+        glUniformMatrix3fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
+    }
+
+    void OpenGLShader::UploadUniformMat4(const std::string &name, const glm::mat4 &value)
+    {
+        glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
     }
 
     bool OpenGLShader::IsExecutable() const
     {
-        return program.IsLinked() && vertexShader.IsCompiled() && fragmentShader.IsCompiled();
-    }
-
-    void OpenGLShader::UploadUniformMat4(const std::string &name, const glm::mat4 &uniform)
-    {
-        int location = glGetUniformLocation(program.GetId(), name.c_str());
-        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(uniform));
+        return compiler.HasSucceeded();
     }
 
     void OpenGLShader::Bind() const
     {
-        glUseProgram(program.GetId());
+        glUseProgram(compiler.GetProgramId());
     }
 
     void OpenGLShader::UnBind() const
@@ -41,37 +60,8 @@ namespace Hazel
         glUseProgram(0);
     }
 
-    void OpenGLShader::Init()
+    int OpenGLShader::GetUniformLocation(const std::string &name)
     {
-        DisplayCompilationLog("Vertex", vertexShader);
-        DisplayCompilationLog("Fragment", fragmentShader);
-        if (vertexShader.IsCompiled() && fragmentShader.IsCompiled())
-        {
-            CreateProgram();
-        }
-    }
-
-    void OpenGLShader::DisplayCompilationLog(const std::string &name, const OpenGLCompiledShader &shader)
-    {
-        shader.IsCompiled()
-            ? CoreInfo("{} Shader compilation succeeded.", name)
-            : CoreError("{} Shader compilation failed.", name);
-        CoreInfo("Info log: {}", shader.GetInfoLog());
-    }
-
-    void OpenGLShader::CreateProgram()
-    {
-        program.Attach(vertexShader);
-        program.Attach(fragmentShader);
-        program.Link();
-        DisplayLinkLog();
-    }
-
-    void OpenGLShader::DisplayLinkLog()
-    {
-        program.IsLinked()
-            ? CoreInfo("Shader program link succeeded.")
-            : CoreError("Shader program link failed.");
-        CoreInfo("Info log: {}", program.GetInfoLog());
+        return glGetUniformLocation(compiler.GetProgramId(), name.c_str());
     }
 }

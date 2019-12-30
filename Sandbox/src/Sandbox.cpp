@@ -1,6 +1,7 @@
 #include "Hazel.h"
 
-#include <cmath>
+//TEMPORARY
+#include "../../Hazel/src/Platform/OpenGL/OpenGLShader.h"
 
 static const std::string vertexSource = R"(
     #version 330 core
@@ -28,12 +29,14 @@ static const std::string fragmentSource = R"(
 
     layout(location = 0) out vec4 color;
 
+    uniform vec4 u_Color;
+
     in vec3 v_Position;
     in vec4 v_Color;
 
     void main()
     {
-        color = v_Color;
+        color = u_Color;
     }
 
 )";
@@ -41,11 +44,10 @@ static const std::string fragmentSource = R"(
 class TriangleLayer : public Hazel::Layer
 {
 private:
-    std::string name = "TriangleLayer";
-    const Hazel::Window &parent;
+    Hazel::Window &parent;
     Hazel::Renderer renderer;
-    std::shared_ptr<Hazel::Shader> shader;
-    std::shared_ptr<Hazel::VertexArray> triangleVertexArray;
+    Hazel::SharedPtr<Hazel::Shader> shader;
+    Hazel::SharedPtr<Hazel::VertexArray> triangleVertexArray;
     Hazel::OrthographicCamera camera = {{-1.6f, 1.6f, -0.9f, 0.9f}};
     glm::vec3 cameraPosition{0.0f};
     glm::vec3 trianglePosition{0.0f};
@@ -53,9 +55,10 @@ private:
     float cameraTranslationSpeed = 1.0f;
     float cameraRotationSpeed = 10.0f;
     double framerate = 0.0;
+    glm::vec4 color = {0.2f, 0.3f, 0.8f, 1.0f};
 
 public:
-    TriangleLayer(const Hazel::Window &parent)
+    TriangleLayer(Hazel::Window &parent)
         : parent(parent),
         renderer(parent)
     {
@@ -83,17 +86,18 @@ public:
         {
             cameraPosition.x -= cameraTranslationSpeed * deltaTime;
         }
+        cameraPosition = glm::clamp(cameraPosition, -1.0f, 1.0f);
 
         // Test rotate camera
-        if (input.IsButtonPressed(Hazel::MouseButton::B1))
+        if (input.IsKeyPressed(Hazel::Key::A))
         {
             cameraRotation += 10 * cameraRotationSpeed * deltaTime;
         }
-        if (input.IsButtonPressed(Hazel::MouseButton::B2))
+        if (input.IsKeyPressed(Hazel::Key::D))
         {
             cameraRotation -= 10 * cameraRotationSpeed * deltaTime;
         }
-        cameraRotation = std::remainderf(cameraRotation, 360.0f);
+        cameraRotation = glm::clamp(cameraRotation, 0.0f, 360.0f);
 
         // Test moving triangle
         if (input.IsKeyPressed(Hazel::Key::D))
@@ -112,6 +116,11 @@ public:
         // Render
         renderer.BeginScene(camera);
 
+        auto openGLShader = std::dynamic_pointer_cast<Hazel::OpenGLShader>(shader);
+
+        openGLShader->Bind();
+        openGLShader->UploadUniformFloat4("u_Color", color);
+
         // Test multiple triangles
         static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
         for (int y = 0; y < 20; y++)
@@ -120,8 +129,8 @@ public:
             {
                 glm::mat4 transform = glm::translate(
                     glm::mat4(1.0f),
-                    {0.11f * x + trianglePosition.x, 0.11f * y, 0.0f})
-                    * scale;
+                    {0.11f * x + trianglePosition.x, 0.11f * y, 0.0f}
+                ) * scale;
                 renderer.Submit(shader, triangleVertexArray, transform);
             }
         }
@@ -131,10 +140,10 @@ public:
 
     virtual void OnAttach() override
     {
-        const Hazel::Context &context = parent.GetContext();
-        triangleVertexArray.reset(context.CreateVertexArray());
+        Hazel::ObjectFactory &factory = parent.GetContext().GetFactory();
+        triangleVertexArray.reset(factory.CreateVertexArray());
 
-        std::shared_ptr<Hazel::VertexBuffer> vertexBuffer(context.CreateVertexBuffer({
+        Hazel::SharedPtr<Hazel::VertexBuffer> vertexBuffer(factory.CreateVertexBuffer({
             -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
              0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
              0.0f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f}));
@@ -145,25 +154,24 @@ public:
 
         triangleVertexArray->AddVertexBuffer(vertexBuffer);
 
-        std::shared_ptr<Hazel::IndexBuffer> indexBuffer(context.CreateIndexBuffer({0, 1, 2}));
+        Hazel::SharedPtr<Hazel::IndexBuffer> indexBuffer(factory.CreateIndexBuffer({0, 1, 2}));
         triangleVertexArray->SetIndexBuffer(indexBuffer);
 
-        shader.reset(context.CreateShader(vertexSource, fragmentSource));
+        shader.reset(factory.CreateShader(vertexSource, fragmentSource));
     }
 
     virtual void OnDetach() override
     {
     }
 
-    virtual const std::string &GetName() const override
-    {
-        return name;
-    }
-
     virtual void OnImGuiRender() override
     {
         ImGui::Begin("Framerate");
         ImGui::Text("%f FPS", framerate);
+        ImGui::End();
+
+        ImGui::Begin("Settings");
+        ImGui::ColorPicker4("Color", glm::value_ptr(color));
         ImGui::End();
     }
 

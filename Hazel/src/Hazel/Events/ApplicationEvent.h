@@ -7,6 +7,6 @@ namespace Hazel
     class HAZEL_API ApplicationEvent : public Event
     {
     public:
-        ApplicationEvent() = default;
+        constexpr ApplicationEvent() = default;
     };
 }

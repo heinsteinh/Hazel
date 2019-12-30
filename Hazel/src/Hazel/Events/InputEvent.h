@@ -7,6 +7,6 @@ namespace Hazel
     class HAZEL_API InputEvent : public Event
     {
     public:
-        InputEvent() = default;
+        constexpr InputEvent() = default;
     };
 }

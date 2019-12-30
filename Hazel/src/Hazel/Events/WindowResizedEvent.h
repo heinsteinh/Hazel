@@ -11,7 +11,7 @@ namespace Hazel
         int height;
 
     public:
-        WindowResizedEvent(int width, int height)
+        constexpr WindowResizedEvent(int width, int height)
             : width(width),
             height(height)
         {

@@ -7,7 +7,7 @@ namespace Hazel
     class HAZEL_API MouseButtonPressedEvent : public MouseButtonEvent
     {
     public:
-        MouseButtonPressedEvent(MouseButton button)
+        constexpr MouseButtonPressedEvent(MouseButton button)
             : MouseButtonEvent(button)
         {
         }

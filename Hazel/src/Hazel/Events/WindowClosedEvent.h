@@ -7,7 +7,7 @@ namespace Hazel
     class HAZEL_API WindowClosedEvent : public ApplicationEvent
     {
     public:
-        WindowClosedEvent() = default;
+        constexpr WindowClosedEvent() = default;
 
     protected:
         virtual void Handle(EventListener &listener) override

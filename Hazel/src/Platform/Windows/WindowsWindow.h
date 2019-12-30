@@ -25,7 +25,7 @@ namespace Hazel
         WindowsWindow(const RenderApi &api);
         virtual ~WindowsWindow();
 
-        const Context &GetContext() const override;
+        Context &GetContext() const override;
         virtual const std::string &GetTitle() const override;
         virtual int GetWidth() const override;
         virtual int GetHeight() const override;

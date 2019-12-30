@@ -11,7 +11,7 @@ namespace Hazel
         double yOffset;
 
     public:
-        MouseScrolledEvent(double xOffset, double yOffset)
+        constexpr MouseScrolledEvent(double xOffset, double yOffset)
             : xOffset(xOffset),
             yOffset(yOffset)
         {
