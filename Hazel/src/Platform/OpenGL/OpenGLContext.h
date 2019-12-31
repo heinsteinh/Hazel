@@ -19,6 +19,7 @@ namespace Hazel
         OpenGLContext(GLFWwindow *window);
 
         virtual ObjectFactory &GetFactory() override;
+        virtual void MakeCurrent() override;
         virtual void SwapBuffers() override;
         virtual void SetViewport(int width, int height) override;
         virtual void SetClearColor(const glm::vec4 &color) override;

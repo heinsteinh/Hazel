@@ -12,6 +12,7 @@ namespace Hazel
         virtual ~Context() = default;
 
         virtual ObjectFactory &GetFactory() = 0;
+        virtual void MakeCurrent() = 0;
         virtual void SwapBuffers() = 0;
         virtual void SetViewport(int width, int height) = 0;
         virtual void SetClearColor(const glm::vec4 &color) = 0;

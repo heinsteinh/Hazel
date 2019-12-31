@@ -7,7 +7,7 @@ namespace Hazel
 {
     OpenGLContext::OpenGLContext(GLFWwindow *window)
         : window(window),
-        factory(window)
+        factory(*this)
     {
         Init();
     }
@@ -17,32 +17,43 @@ namespace Hazel
         return factory;
     }
 
+    void OpenGLContext::MakeCurrent()
+    {
+        static Context *current = nullptr;
+        if (current != this)
+        {
+            glfwMakeContextCurrent(window);
+            current = this;
+        }
+    }
+
     void OpenGLContext::SwapBuffers()
     {
+        MakeCurrent();
         glfwSwapBuffers(window);
     }
 
     void OpenGLContext::SetViewport(int width, int height)
     {
-        glfwMakeContextCurrent(window);
+        MakeCurrent();
         glViewport(0, 0, width, height);
     }
 
     void OpenGLContext::SetClearColor(const glm::vec4 &color)
     {
-        glfwMakeContextCurrent(window);
+        MakeCurrent();
         glClearColor(color.r, color.g, color.b, color.a);
     }
 
     void OpenGLContext::Clear()
     {
-        glfwMakeContextCurrent(window);
+        MakeCurrent();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
     void OpenGLContext::DrawIndexed(const SharedPtr<VertexArray> &vertexArray)
     {
-        glfwMakeContextCurrent(window);
+        MakeCurrent();
         glDrawElements(
             GL_TRIANGLES,
             (int)vertexArray->GetIndexBuffer()->GetSize(),
@@ -52,7 +63,7 @@ namespace Hazel
 
     void OpenGLContext::Init()
     {
-        glfwMakeContextCurrent(window);
+        MakeCurrent();
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
             CoreCritical("Glad cannot be initialized.");

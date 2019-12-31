@@ -39,7 +39,11 @@ project "Hazel"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/stb_image/**.h",
+        "%{prj.name}/vendor/stb_image/**.cpp",
+        "%{prj.name}/vendor/glm/**.hpp",
+        "%{prj.name}/vendor/glm/**.inl"
     }
 
     includedirs
@@ -49,6 +53,7 @@ project "Hazel"
         "Hazel/vendor/GLFW/include",
         "Hazel/vendor/Glad/include",
         "Hazel/vendor/imgui",
+        "Hazel/vendor/stb_image",
         "Hazel/vendor/glm"
     }
 

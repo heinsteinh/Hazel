@@ -10,15 +10,4 @@ namespace Hazel
         SetLevel(Level::Debug);
         logger->set_pattern("%^[%l][%T] %n: %v%$");
     }
-
-    Logger::Level Logger::GetLevel() const
-    {
-        return level;
-    }
-
-    void Logger::SetLevel(Level level)
-    {
-        this->level = level;
-        logger->set_level(static_cast<spdlog::level::level_enum>(level));
-    }
 }

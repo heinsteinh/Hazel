@@ -6,37 +6,42 @@
 #include "OpenGLVertexArray.h"
 #include "OpenGLVertexBuffer.h"
 #include "OpenGLIndexBuffer.h"
+#include "OpenGLTexture2D.h"
 
 namespace Hazel
 {
-    OpenGLObjectFactory::OpenGLObjectFactory(GLFWwindow *window)
-        : window(window)
+    OpenGLObjectFactory::OpenGLObjectFactory(Context &context)
+        : context(context)
     {
     }
 
-    Shader *OpenGLObjectFactory::CreateShader(
-        const std::string &vertexSource,
-        const std::string &fragmentSource)
+    SharedPtr<Shader> OpenGLObjectFactory::CreateShader(const std::string &vertexSource, const std::string &fragmentSource)
     {
-        glfwMakeContextCurrent(window);
-        return new OpenGLShader(vertexSource, fragmentSource);
+        context.MakeCurrent();
+        return std::make_shared<OpenGLShader>(vertexSource, fragmentSource);
     }
 
-    VertexArray *OpenGLObjectFactory::CreateVertexArray()
+    SharedPtr<VertexArray> OpenGLObjectFactory::CreateVertexArray()
     {
-        glfwMakeContextCurrent(window);
-        return new OpenGLVertexArray();
+        context.MakeCurrent();
+        return std::make_shared<OpenGLVertexArray>();
     }
 
-    VertexBuffer *OpenGLObjectFactory::CreateVertexBuffer(const std::vector<float> &vertices)
+    SharedPtr<VertexBuffer> OpenGLObjectFactory::CreateVertexBuffer(const std::vector<float> &vertices)
     {
-        glfwMakeContextCurrent(window);
-        return new OpenGLVertexBuffer(vertices);
+        context.MakeCurrent();
+        return std::make_shared<OpenGLVertexBuffer>(vertices);
     }
 
-    IndexBuffer *OpenGLObjectFactory::CreateIndexBuffer(const std::vector<unsigned int> &indexes)
+    SharedPtr<IndexBuffer> OpenGLObjectFactory::CreateIndexBuffer(const std::vector<unsigned int> &indexes)
     {
-        glfwMakeContextCurrent(window);
-        return new OpenGLIndexBuffer(indexes);
+        context.MakeCurrent();
+        return std::make_shared<OpenGLIndexBuffer>(indexes);
+    }
+
+    SharedPtr<Texture2D> OpenGLObjectFactory::CreateTexture2D(const std::string &filename)
+    {
+        context.MakeCurrent();
+        return std::make_shared<OpenGLTexture2D>(filename);
     }
 }

@@ -7,18 +7,12 @@ static const std::string vertexSource = R"(
     #version 330 core
 
     layout(location = 0) in vec3 a_Position;
-    layout(location = 1) in vec4 a_Color;
 
     uniform mat4 u_ViewProjection;
     uniform mat4 u_Transform;
 
-    out vec3 v_Position;
-    out vec4 v_Color;
-
     void main()
     {
-        v_Position = a_Position;
-        v_Color = a_Color;
         gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
     }
 
@@ -31,9 +25,6 @@ static const std::string fragmentSource = R"(
 
     uniform vec4 u_Color;
 
-    in vec3 v_Position;
-    in vec4 v_Color;
-
     void main()
     {
         color = u_Color;
@@ -41,16 +32,54 @@ static const std::string fragmentSource = R"(
 
 )";
 
-class TriangleLayer : public Hazel::Layer
+static const std::string textureVertexSource = R"(
+    #version 330 core
+
+    layout(location = 0) in vec3 a_Position;
+    layout(location = 1) in vec2 a_TexCoord;
+
+    out vec2 v_TexCoord;
+
+    uniform mat4 u_ViewProjection;
+    uniform mat4 u_Transform;
+
+    void main()
+    {
+        v_TexCoord = a_TexCoord;
+        gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
+    }
+
+)";
+
+static const std::string textureFragmentSource = R"(
+    #version 330 core
+
+    layout(location = 0) out vec4 color;
+
+    in vec2 v_TexCoord;
+
+    uniform sampler2D u_Texture;
+
+    void main()
+    {
+        color = texture(u_Texture, v_TexCoord);
+    }
+
+)";
+
+class TestLayer : public Hazel::Layer
 {
 private:
     Hazel::Window &parent;
     Hazel::Renderer renderer;
-    Hazel::SharedPtr<Hazel::Shader> shader;
-    Hazel::SharedPtr<Hazel::VertexArray> triangleVertexArray;
+
+    Hazel::SharedPtr<Hazel::Shader> uniformShader;
+    Hazel::SharedPtr<Hazel::Shader> textureShader;
+    Hazel::SharedPtr<Hazel::VertexArray> squareVertexArray;
+    Hazel::SharedPtr<Hazel::Texture2D> texture;
     Hazel::OrthographicCamera camera = {{-1.6f, 1.6f, -0.9f, 0.9f}};
     glm::vec3 cameraPosition{0.0f};
-    glm::vec3 trianglePosition{0.0f};
+    glm::vec3 gridPosition{0.0f};
     float cameraRotation = 0.0f;
     float cameraTranslationSpeed = 1.0f;
     float cameraRotationSpeed = 10.0f;
@@ -58,7 +87,7 @@ private:
     glm::vec4 color = {0.2f, 0.3f, 0.8f, 1.0f};
 
 public:
-    TriangleLayer(Hazel::Window &parent)
+    TestLayer(Hazel::Window &parent)
         : parent(parent),
         renderer(parent)
     {
@@ -66,7 +95,12 @@ public:
 
     virtual void OnUpdate(Hazel::Timestep deltaTime) override
     {
-        framerate = 1.0 / deltaTime;
+        static std::vector<double> buffer(60, 0.0);
+        double temp = 1.0 / deltaTime;
+        buffer.erase(buffer.begin());
+        buffer.push_back(temp);
+        framerate = std::accumulate(buffer.begin(), buffer.end(), 0.0) / buffer.size();
+
         auto &input = parent.GetInput();
 
         // Test moving camera
@@ -86,27 +120,35 @@ public:
         {
             cameraPosition.x -= cameraTranslationSpeed * deltaTime;
         }
-        cameraPosition = glm::clamp(cameraPosition, -1.0f, 1.0f);
+        //cameraPosition = glm::clamp(cameraPosition, -1.0f, 1.0f);
 
         // Test rotate camera
-        if (input.IsKeyPressed(Hazel::Key::A))
+        /*if (input.IsKeyPressed(Hazel::Key::A))
         {
             cameraRotation += 10 * cameraRotationSpeed * deltaTime;
         }
         if (input.IsKeyPressed(Hazel::Key::D))
         {
             cameraRotation -= 10 * cameraRotationSpeed * deltaTime;
-        }
-        cameraRotation = glm::clamp(cameraRotation, 0.0f, 360.0f);
+        }*/
+        //cameraRotation = glm::clamp(cameraRotation, 0.0f, 360.0f);
 
-        // Test moving triangle
+        // Test moving grid
         if (input.IsKeyPressed(Hazel::Key::D))
         {
-            trianglePosition.x += cameraTranslationSpeed * deltaTime;
+            gridPosition.x += cameraTranslationSpeed * deltaTime;
         }
         if (input.IsKeyPressed(Hazel::Key::A))
         {
-            trianglePosition.x -= cameraTranslationSpeed * deltaTime;
+            gridPosition.x -= cameraTranslationSpeed * deltaTime;
+        }
+        if (input.IsKeyPressed(Hazel::Key::W))
+        {
+            gridPosition.y += cameraTranslationSpeed * deltaTime;
+        }
+        if (input.IsKeyPressed(Hazel::Key::S))
+        {
+            gridPosition.y -= cameraTranslationSpeed * deltaTime;
         }
 
         // Set camera position
@@ -116,24 +158,26 @@ public:
         // Render
         renderer.BeginScene(camera);
 
-        auto openGLShader = std::dynamic_pointer_cast<Hazel::OpenGLShader>(shader);
+        auto openGLShader = std::dynamic_pointer_cast<Hazel::OpenGLShader>(uniformShader);
 
         openGLShader->Bind();
         openGLShader->UploadUniformFloat4("u_Color", color);
 
         // Test multiple triangles
         static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
-        for (int y = 0; y < 20; y++)
+        for (int y = 0; y < 3; y++)
         {
-            for (int x = 0; x < 20; x++)
+            for (int x = 0; x < 3; x++)
             {
                 glm::mat4 transform = glm::translate(
                     glm::mat4(1.0f),
-                    {0.11f * x + trianglePosition.x, 0.11f * y, 0.0f}
+                    {0.11f * x + gridPosition.x, 0.11f * y + gridPosition.y, 0.0f}
                 ) * scale;
-                renderer.Submit(shader, triangleVertexArray, transform);
+                renderer.Submit(uniformShader, squareVertexArray, transform);
             }
         }
+        texture->Bind();
+        renderer.Submit(textureShader, squareVertexArray, glm::mat4(1.0f));
 
         renderer.EndScene();
     }
@@ -141,23 +185,30 @@ public:
     virtual void OnAttach() override
     {
         Hazel::ObjectFactory &factory = parent.GetContext().GetFactory();
-        triangleVertexArray.reset(factory.CreateVertexArray());
+        squareVertexArray = factory.CreateVertexArray();
 
         Hazel::SharedPtr<Hazel::VertexBuffer> vertexBuffer(factory.CreateVertexBuffer({
-            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-             0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-             0.0f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f}));
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+             0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+             0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f}));
 
         vertexBuffer->SetLayout({
             {Hazel::ShaderDataType::Float3, "a_Position"},
-            {Hazel::ShaderDataType::Float4, "a_Color"}});
+            {Hazel::ShaderDataType::Float2, "a_TexCoord"}});
 
-        triangleVertexArray->AddVertexBuffer(vertexBuffer);
+        squareVertexArray->AddVertexBuffer(vertexBuffer);
 
-        Hazel::SharedPtr<Hazel::IndexBuffer> indexBuffer(factory.CreateIndexBuffer({0, 1, 2}));
-        triangleVertexArray->SetIndexBuffer(indexBuffer);
+        Hazel::SharedPtr<Hazel::IndexBuffer> indexBuffer(factory.CreateIndexBuffer({0, 1, 2, 2, 3, 0}));
+        squareVertexArray->SetIndexBuffer(indexBuffer);
 
-        shader.reset(factory.CreateShader(vertexSource, fragmentSource));
+        uniformShader = factory.CreateShader(vertexSource, fragmentSource);
+        textureShader = factory.CreateShader(textureVertexSource, textureFragmentSource);
+        texture = factory.CreateTexture2D("assets\\textures\\Test.jpg");
+
+        auto openGLShader = std::dynamic_pointer_cast<Hazel::OpenGLShader>(textureShader);
+        openGLShader->Bind();
+        openGLShader->UploadUniformInt("u_Texture", 0);
     }
 
     virtual void OnDetach() override
@@ -187,7 +238,7 @@ public:
     Sandbox()
     {
         Hazel::Info("Sandbox creation");
-        PushLayer(new TriangleLayer(GetWindow()));
+        PushLayer(new TestLayer(GetWindow()));
     };
 
     virtual void OnKeyPressed(Hazel::KeyPressedEvent &e) override

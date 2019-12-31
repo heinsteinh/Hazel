@@ -1,26 +1,22 @@
 #pragma once
 
-#include "Hazel/Renderer/ObjectFactory.h"
-
-struct GLFWwindow;
+#include "Hazel/Renderer/Context.h"
 
 namespace Hazel
 {
     class OpenGLObjectFactory : public ObjectFactory
     {
     private:
-        GLFWwindow *window = nullptr;
+        Context &context;
 
     public:
-        OpenGLObjectFactory(GLFWwindow *window);
+        OpenGLObjectFactory(Context &context);
         virtual ~OpenGLObjectFactory() = default;
 
-        virtual Shader *CreateShader(
-            const std::string &vertexSource,
-            const std::string &fragmentSource
-        ) override;
-        virtual VertexArray *CreateVertexArray() override;
-        virtual VertexBuffer *CreateVertexBuffer(const std::vector<float> &vertices) override;
-        virtual IndexBuffer *CreateIndexBuffer(const std::vector<unsigned int> &indexes) override;
+        virtual SharedPtr<Shader> CreateShader(const std::string &vertexSource, const std::string &fragmentSource) override;
+        virtual SharedPtr<VertexArray> CreateVertexArray() override;
+        virtual SharedPtr<VertexBuffer> CreateVertexBuffer(const std::vector<float> &vertices) override;
+        virtual SharedPtr<IndexBuffer> CreateIndexBuffer(const std::vector<unsigned int> &indexes) override;
+        virtual SharedPtr<Texture2D> CreateTexture2D(const std::string &filename) override;
     };
 }

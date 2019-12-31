@@ -24,6 +24,26 @@ namespace Hazel
         Log() = delete;
     };
 
+    inline Logger::Level GetCoreLevel()
+    {
+        return Log::GetCoreLogger().GetLevel();
+    }
+
+    inline Logger::Level GetClientLevel()
+    {
+        return Log::GetClientLogger().GetLevel();
+    }
+
+    inline void SetCoreLevel(Logger::Level level)
+    {
+        Log::GetCoreLogger().SetLevel(level);
+    }
+
+    inline void SetClientLevel(Logger::Level level)
+    {
+        Log::GetClientLogger().SetLevel(level);
+    }
+
     template<typename ...Args>
     constexpr auto CoreTrace(Args &&...args)
     {

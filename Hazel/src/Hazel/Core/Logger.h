@@ -28,8 +28,16 @@ namespace Hazel
         Logger(const Logger &other) = delete;
         Logger &operator=(const Logger &other) = delete;
 
-        Level GetLevel() const;
-        void SetLevel(Level level);
+        inline Level GetLevel() const
+        {
+            return level;
+        }
+
+        inline void SetLevel(Level level)
+        {
+            this->level = level;
+            logger->set_level(static_cast<spdlog::level::level_enum>(level));
+        }
 
         template<typename ...Args>
         inline void Log(Level level, const Args &...args)
