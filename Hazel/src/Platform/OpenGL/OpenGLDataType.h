@@ -7,7 +7,8 @@ namespace Hazel
     class OpenGLDataType
     {
     public:
-        static unsigned int GetInternalType(const ShaderDataType &type);
+        static unsigned int GetShaderDataType(const ShaderDataType &type);
+        static unsigned int GetShaderType(const std::string &name);
 
         OpenGLDataType() = delete;
     };

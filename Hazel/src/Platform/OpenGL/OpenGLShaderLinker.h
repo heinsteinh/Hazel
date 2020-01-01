@@ -6,24 +6,24 @@
 
 namespace Hazel
 {
-    class OpenGLShaderProgram
+    class OpenGLShaderLinker
     {
     private:
-        unsigned int id;
+        unsigned int programId = 0;
         bool linked = false;
         std::string infoLog;
         std::unordered_set<unsigned int> shaders;
 
     public:
-        OpenGLShaderProgram();
-        ~OpenGLShaderProgram();
+        OpenGLShaderLinker() = default;
+        ~OpenGLShaderLinker() = default;
 
-        inline unsigned int GetId() const
+        inline unsigned int GetProgramId() const
         {
-            return id;
+            return programId;
         }
 
-        inline bool IsLinked() const
+        inline bool HasSucceeded() const
         {
             return linked;
         }
@@ -35,11 +35,13 @@ namespace Hazel
 
         void Attach(const OpenGLCompiledShader &shader);
         void Detach(const OpenGLCompiledShader &shader);
-        void Link();
+        unsigned int CreateProgram();
 
     private:
-        void CheckLinkStatus();
-        void CheckInfoLog();
+        void AttachAndLink();
+        void RetreiveLinkStatus();
+        void RetreiveInfoLog();
+        void DisplayInfoLog();
         void Cleanup();
     };
 }

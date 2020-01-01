@@ -13,6 +13,7 @@ namespace Hazel
         OpenGLObjectFactory(Context &context);
         virtual ~OpenGLObjectFactory() = default;
 
+        virtual SharedPtr<Shader> CreateShader(const std::string &filename) override;
         virtual SharedPtr<Shader> CreateShader(const std::string &vertexSource, const std::string &fragmentSource) override;
         virtual SharedPtr<VertexArray> CreateVertexArray() override;
         virtual SharedPtr<VertexBuffer> CreateVertexBuffer(const std::vector<float> &vertices) override;

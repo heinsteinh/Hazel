@@ -3,18 +3,18 @@
 #include "glm/glm.hpp"
 
 #include "Hazel/Renderer/Shader.h"
-#include "OpenGLShaderCompiler.h"
 
 namespace Hazel
 {
     class OpenGLShader : public Shader
     {
     private:
-        OpenGLShaderCompiler compiler;
+        unsigned int id = 0;
 
     public:
+        OpenGLShader(const std::string &filename);
         OpenGLShader(const std::string &vertexSource, const std::string &fragmentSource);
-        virtual ~OpenGLShader() = default;
+        virtual ~OpenGLShader();
 
         void UploadUniformInt(const std::string &name, int value);
         void UploadUniformFloat(const std::string &name, float value);

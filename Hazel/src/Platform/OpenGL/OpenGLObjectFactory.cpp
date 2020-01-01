@@ -15,6 +15,12 @@ namespace Hazel
     {
     }
 
+    SharedPtr<Shader> OpenGLObjectFactory::CreateShader(const std::string &filename)
+    {
+        context.MakeCurrent();
+        return std::make_shared<OpenGLShader>(filename);
+    }
+
     SharedPtr<Shader> OpenGLObjectFactory::CreateShader(const std::string &vertexSource, const std::string &fragmentSource)
     {
         context.MakeCurrent();

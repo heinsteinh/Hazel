@@ -64,12 +64,30 @@ namespace Hazel
     void OpenGLContext::Init()
     {
         MakeCurrent();
+        LoadGlad();
+        DisplayOpenGLInfo();
+        SetupParameters();
+    }
+
+    void OpenGLContext::LoadGlad()
+    {
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
             CoreCritical("Glad cannot be initialized.");
+            exit(-1);
         }
+    }
+
+    void OpenGLContext::DisplayOpenGLInfo()
+    {
         CoreInfo("OpenGL version: {}", glGetString(GL_VERSION));
         CoreInfo("OpenGL vendor: {}", glGetString(GL_VENDOR));
         CoreInfo("OpenGL renderer: {}", glGetString(GL_RENDERER));
+    }
+
+    void OpenGLContext::SetupParameters()
+    {
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 }

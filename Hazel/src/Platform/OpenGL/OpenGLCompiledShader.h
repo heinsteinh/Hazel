@@ -13,6 +13,8 @@ namespace Hazel
 
     public:
         OpenGLCompiledShader(unsigned int type, const std::string &source);
+        OpenGLCompiledShader(const OpenGLCompiledShader &other) = delete;
+        OpenGLCompiledShader(OpenGLCompiledShader &&other) = default;
         ~OpenGLCompiledShader();
 
         inline unsigned int GetId() const
@@ -35,5 +37,6 @@ namespace Hazel
         void Compile(unsigned int type, const std::string &source);
         void RetrieveCompilationStatus();
         void RetrieveInfoLog();
+        void DisplayInfoLog(unsigned int type);
     };
 }

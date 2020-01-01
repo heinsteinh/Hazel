@@ -1,9 +1,16 @@
 #include "OpenGLCompiledShader.h"
 
+#include <unordered_map>
+
 #include "glad/glad.h"
 
 namespace Hazel
 {
+    static const std::unordered_map<unsigned int, std::string> names = {
+        {GL_VERTEX_SHADER, "Vertex Shader"},
+        {GL_FRAGMENT_SHADER, "Fragment Shader"}
+    };
+
     OpenGLCompiledShader::OpenGLCompiledShader(unsigned int type, const std::string &source)
     {
         Init(type, source);
@@ -19,6 +26,7 @@ namespace Hazel
         Compile(type, source);
         RetrieveCompilationStatus();
         RetrieveInfoLog();
+        DisplayInfoLog(type);
     }
 
     void OpenGLCompiledShader::Compile(unsigned int type, const std::string &source)
@@ -40,8 +48,17 @@ namespace Hazel
     {
         int maxLength = 0;
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &maxLength);
-        std::vector<char> message((size_t)maxLength + 1);
-        glGetShaderInfoLog(id, maxLength, &maxLength, message.data());
-        infoLog = message.data();
+        infoLog.resize(maxLength);
+        glGetShaderInfoLog(id, maxLength, &maxLength, infoLog.data());
+        infoLog.resize(maxLength);
+    }
+
+    void OpenGLCompiledShader::DisplayInfoLog(unsigned int type)
+    {
+        const std::string &name = names.at(type);
+        compiled
+            ? CoreInfo("Compilation of {} succeeded.", name)
+            : CoreError("Compilation of {} failed.", name);
+        CoreInfo("Info log: {}", infoLog);
     }
 }

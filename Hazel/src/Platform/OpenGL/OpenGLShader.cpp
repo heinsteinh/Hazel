@@ -3,11 +3,23 @@
 #include "glad/glad.h"
 #include "glm/gtc/type_ptr.hpp"
 
+#include "OpenGLShaderCompiler.h"
+
 namespace Hazel
 {
-    OpenGLShader::OpenGLShader(const std::string &vertexSource, const std::string &fragmentSource)
-        : compiler(vertexSource, fragmentSource)
+    OpenGLShader::OpenGLShader(const std::string &filename)
     {
+        id = OpenGLShaderCompiler().Compile(filename);
+    }
+
+    OpenGLShader::OpenGLShader(const std::string &vertexSource, const std::string &fragmentSource)
+    {
+        id = OpenGLShaderCompiler().Compile(vertexSource, fragmentSource);
+    }
+
+    OpenGLShader::~OpenGLShader()
+    {
+        glDeleteProgram(id);
     }
 
     void OpenGLShader::UploadUniformInt(const std::string &name, int value)
@@ -47,12 +59,12 @@ namespace Hazel
 
     bool OpenGLShader::IsExecutable() const
     {
-        return compiler.HasSucceeded();
+        return id != 0;
     }
 
     void OpenGLShader::Bind() const
     {
-        glUseProgram(compiler.GetProgramId());
+        glUseProgram(id);
     }
 
     void OpenGLShader::UnBind() const
@@ -62,6 +74,6 @@ namespace Hazel
 
     int OpenGLShader::GetUniformLocation(const std::string &name)
     {
-        return glGetUniformLocation(compiler.GetProgramId(), name.c_str());
+        return glGetUniformLocation(id, name.c_str());
     }
 }

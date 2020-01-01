@@ -13,6 +13,7 @@ namespace Hazel
     public:
         virtual ~ObjectFactory() = default;
 
+        virtual SharedPtr<Shader> CreateShader(const std::string &filename) = 0;
         virtual SharedPtr<Shader> CreateShader(const std::string &vertexSource, const std::string &fragmentSource) = 0;
         virtual SharedPtr<VertexArray> CreateVertexArray() = 0;
         virtual SharedPtr<VertexBuffer> CreateVertexBuffer(const std::vector<float> &vertices) = 0;

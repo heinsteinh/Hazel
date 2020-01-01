@@ -1,33 +1,29 @@
 #pragma once
 
-#include "OpenGLShaderProgram.h"
-
 namespace Hazel
 {
     class OpenGLShaderCompiler
     {
     private:
-        OpenGLShaderProgram program;
-        OpenGLCompiledShader vertexShader;
-        OpenGLCompiledShader fragmentShader;
+        unsigned int programId = 0;
 
     public:
-        OpenGLShaderCompiler(const std::string &vertexSource, const std::string &fragmentSource);
+        OpenGLShaderCompiler() = default;
+
+        unsigned int Compile(const std::string &filename);
+        unsigned int Compile(const std::string &vertexSource, const std::string &fragmentSource);
 
         inline bool HasSucceeded() const
         {
-            return program.IsLinked() && vertexShader.IsCompiled() && fragmentShader.IsCompiled();
+            return programId != 0;
         }
 
         unsigned int GetProgramId() const
         {
-            return program.GetId();
+            return programId;
         }
 
     private:
-        void Init();
-        void DisplayCompilationLog(const std::string &name, const OpenGLCompiledShader &shader);
-        void CreateProgram();
-        void DisplayLinkLog();
+        unsigned int Compile(const std::unordered_map<unsigned int, std::string> &sources);
     };
 }

@@ -32,41 +32,6 @@ static const std::string fragmentSource = R"(
 
 )";
 
-static const std::string textureVertexSource = R"(
-    #version 330 core
-
-    layout(location = 0) in vec3 a_Position;
-    layout(location = 1) in vec2 a_TexCoord;
-
-    out vec2 v_TexCoord;
-
-    uniform mat4 u_ViewProjection;
-    uniform mat4 u_Transform;
-
-    void main()
-    {
-        v_TexCoord = a_TexCoord;
-        gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
-    }
-
-)";
-
-static const std::string textureFragmentSource = R"(
-    #version 330 core
-
-    layout(location = 0) out vec4 color;
-
-    in vec2 v_TexCoord;
-
-    uniform sampler2D u_Texture;
-
-    void main()
-    {
-        color = texture(u_Texture, v_TexCoord);
-    }
-
-)";
-
 class TestLayer : public Hazel::Layer
 {
 private:
@@ -77,6 +42,7 @@ private:
     Hazel::SharedPtr<Hazel::Shader> textureShader;
     Hazel::SharedPtr<Hazel::VertexArray> squareVertexArray;
     Hazel::SharedPtr<Hazel::Texture2D> texture;
+    Hazel::SharedPtr<Hazel::Texture2D> overlay;
     Hazel::OrthographicCamera camera = {{-1.6f, 1.6f, -0.9f, 0.9f}};
     glm::vec3 cameraPosition{0.0f};
     glm::vec3 gridPosition{0.0f};
@@ -178,6 +144,8 @@ public:
         }
         texture->Bind();
         renderer.Submit(textureShader, squareVertexArray, glm::mat4(1.0f));
+        overlay->Bind();
+        renderer.Submit(textureShader, squareVertexArray, glm::mat4(1.0f));
 
         renderer.EndScene();
     }
@@ -203,8 +171,9 @@ public:
         squareVertexArray->SetIndexBuffer(indexBuffer);
 
         uniformShader = factory.CreateShader(vertexSource, fragmentSource);
-        textureShader = factory.CreateShader(textureVertexSource, textureFragmentSource);
+        textureShader = factory.CreateShader("assets\\shaders\\Texture.glsl");
         texture = factory.CreateTexture2D("assets\\textures\\Test.jpg");
+        overlay = factory.CreateTexture2D("assets\\textures\\TestOverlay.png");
 
         auto openGLShader = std::dynamic_pointer_cast<Hazel::OpenGLShader>(textureShader);
         openGLShader->Bind();

@@ -2,46 +2,45 @@
 
 #include "glad/glad.h"
 
+#include "OpenGLShaderParser.h"
+#include "OpenGLShaderLinker.h"
+
 namespace Hazel
 {
-    OpenGLShaderCompiler::OpenGLShaderCompiler(const std::string &vertexSource, const std::string &fragmentSource)
-        : vertexShader(GL_VERTEX_SHADER, vertexSource),
-        fragmentShader(GL_FRAGMENT_SHADER, fragmentSource)
+    unsigned int OpenGLShaderCompiler::Compile(const std::string &filename)
     {
-        Init();
-    }
-
-    void OpenGLShaderCompiler::Init()
-    {
-        DisplayCompilationLog("Vertex", vertexShader);
-        DisplayCompilationLog("Fragment", fragmentShader);
-        if (vertexShader.IsCompiled() && fragmentShader.IsCompiled())
+        OpenGLShaderParser parser;
+        parser.Parse(filename);
+        if (parser.HasFailed())
         {
-            CreateProgram();
+            CoreError("Shaders compilation from {} failed.", filename);
+            return programId = 0;
         }
+        CoreInfo("Shader compilation from {} succeeded.", filename);
+        return programId = Compile(parser.GetSources());
     }
 
-    void OpenGLShaderCompiler::DisplayCompilationLog(const std::string &name, const OpenGLCompiledShader &shader)
+    unsigned int OpenGLShaderCompiler::Compile(const std::string &vertexSource, const std::string &fragmentSource)
     {
-        shader.IsCompiled()
-            ? CoreInfo("{} Shader compilation succeeded.", name)
-            : CoreError("{} Shader compilation failed.", name);
-        CoreInfo("Info log: {}", shader.GetInfoLog());
+        return Compile({
+            {GL_VERTEX_SHADER, vertexSource},
+            {GL_FRAGMENT_SHADER, fragmentSource}});
     }
 
-    void OpenGLShaderCompiler::CreateProgram()
+    unsigned int OpenGLShaderCompiler::Compile(const std::unordered_map<unsigned int, std::string> &sources)
     {
-        program.Attach(vertexShader);
-        program.Attach(fragmentShader);
-        program.Link();
-        DisplayLinkLog();
-    }
-
-    void OpenGLShaderCompiler::DisplayLinkLog()
-    {
-        program.IsLinked()
-            ? CoreInfo("Shader program link succeeded.")
-            : CoreError("Shader program link failed.");
-        CoreInfo("Info log: {}", program.GetInfoLog());
+        programId = 0;
+        std::vector<OpenGLCompiledShader> shaders;
+        shaders.reserve(sources.size());
+        OpenGLShaderLinker linker;
+        for (const auto &[type, source] : sources)
+        {
+            auto &shader = shaders.emplace_back(type, source);
+            if (shader.IsCompiled())
+            {
+                linker.Attach(shader);
+            }
+        }
+        return programId = linker.CreateProgram();
     }
 }

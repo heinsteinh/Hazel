@@ -124,8 +124,7 @@ namespace Hazel
 
     void WindowsWindow::Shutdown()
     {
-        CoreInfo("Window {} destruction.", title);
+        CoreDebug("Window {} destruction.", title);
         glfwDestroyWindow(window);
-        CoreInfo("Window {} destruction done.", title);
     }
 }
