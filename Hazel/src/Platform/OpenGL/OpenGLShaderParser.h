@@ -11,7 +11,7 @@ namespace Hazel
     public:
         OpenGLShaderParser() = default;
 
-        void Parse(const std::string &filename);
+        bool Parse(const std::string &filename);
 
         inline bool HasFailed() const
         {

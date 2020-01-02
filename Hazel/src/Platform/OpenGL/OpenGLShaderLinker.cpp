@@ -4,23 +4,9 @@
 
 namespace Hazel
 {
-    void OpenGLShaderLinker::Attach(const OpenGLCompiledShader &shader)
+    unsigned int OpenGLShaderLinker::CreateProgram(const std::unordered_map<unsigned int, std::string> &sources)
     {
-        shaders.insert(shader.GetId());
-    }
-
-    void OpenGLShaderLinker::Detach(const OpenGLCompiledShader &shader)
-    {
-        auto i = shaders.find(shader.GetId());
-        if (i != shaders.end())
-        {
-            shaders.erase(i);
-        }
-    }
-
-    unsigned int OpenGLShaderLinker::CreateProgram()
-    {
-        AttachAndLink();
+        AttachAndLink(sources);
         RetreiveLinkStatus();
         RetreiveInfoLog();
         Cleanup();
@@ -28,14 +14,27 @@ namespace Hazel
         return programId;
     }
 
-    void OpenGLShaderLinker::AttachAndLink()
+    void OpenGLShaderLinker::AttachAndLink(const std::unordered_map<unsigned int, std::string> &sources)
     {
         programId = glCreateProgram();
-        for (auto shader : shaders)
+        for (const auto &[type, source] : sources)
         {
-            glAttachShader(programId, shader);
+            Attach(type, source);
         }
         glLinkProgram(programId);
+    }
+
+    void OpenGLShaderLinker::Attach(unsigned int type, const std::string &source)
+    {
+        auto &shader = shaders.emplace_back(type, source);
+        if (shader.IsCompiled())
+        {
+            glAttachShader(programId, shader.GetId());
+        }
+        else
+        {
+            shaders.pop_back();
+        }
     }
 
     void OpenGLShaderLinker::RetreiveLinkStatus()
@@ -66,9 +65,9 @@ namespace Hazel
     {
         if (linked)
         {
-            for (auto shader : shaders)
+            for (const auto &shader : shaders)
             {
-                glDetachShader(programId, shader);
+                glDetachShader(programId, shader.GetId());
             }
         }
         else

@@ -1,17 +1,18 @@
 #include "OpenGLShaderParser.h"
 
 #include <fstream>
-#include <regex>
 
 #include "OpenGLDataType.h"
+#include "Hazel/Utils/Regex.h"
 
 namespace Hazel
 {
-    void OpenGLShaderParser::Parse(const std::string &filename)
+    bool OpenGLShaderParser::Parse(const std::string &filename)
     {
         failed = false;
         sources.clear();
         SplitShaders(ReadFile(filename));
+        return !failed;
     }
 
     std::string OpenGLShaderParser::ReadFile(const std::string &filename)
@@ -35,14 +36,11 @@ namespace Hazel
 
     void OpenGLShaderParser::SplitShaders(const std::string &source)
     {
-        static const std::regex pattern(R"(\#\s*type\s*(\w+)\s*)");
-        std::sregex_iterator i(source.begin(), source.end(), pattern);
-        std::sregex_iterator endIterator;
+        static const Regex pattern(R"(\#\s*type\s*(\w+)\s*)");
         size_t start = 0;
         unsigned int type = 0;
-        for (; i != endIterator; i++)
+        for (const auto &match : pattern.Search(source))
         {
-            std::smatch match = *i;
             if (start && type)
             {
                 sources[type] = source.substr(start, match.position(0) - start);

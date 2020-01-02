@@ -22,8 +22,5 @@ namespace Hazel
         {
             return programId;
         }
-
-    private:
-        unsigned int Compile(const std::unordered_map<unsigned int, std::string> &sources);
     };
 }

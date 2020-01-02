@@ -14,7 +14,7 @@ namespace Hazel
     public:
         OpenGLCompiledShader(unsigned int type, const std::string &source);
         OpenGLCompiledShader(const OpenGLCompiledShader &other) = delete;
-        OpenGLCompiledShader(OpenGLCompiledShader &&other) = default;
+        OpenGLCompiledShader(OpenGLCompiledShader &&other);
         ~OpenGLCompiledShader();
 
         inline unsigned int GetId() const

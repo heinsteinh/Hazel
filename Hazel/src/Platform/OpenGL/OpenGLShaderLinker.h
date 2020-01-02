@@ -1,7 +1,5 @@
 #pragma once
 
-#include <unordered_set>
-
 #include "OpenGLCompiledShader.h"
 
 namespace Hazel
@@ -12,11 +10,10 @@ namespace Hazel
         unsigned int programId = 0;
         bool linked = false;
         std::string infoLog;
-        std::unordered_set<unsigned int> shaders;
+        std::vector<OpenGLCompiledShader> shaders;
 
     public:
         OpenGLShaderLinker() = default;
-        ~OpenGLShaderLinker() = default;
 
         inline unsigned int GetProgramId() const
         {
@@ -33,12 +30,11 @@ namespace Hazel
             return infoLog;
         }
 
-        void Attach(const OpenGLCompiledShader &shader);
-        void Detach(const OpenGLCompiledShader &shader);
-        unsigned int CreateProgram();
+        unsigned int CreateProgram(const std::unordered_map<unsigned int, std::string> &sources);
 
     private:
-        void AttachAndLink();
+        void AttachAndLink(const std::unordered_map<unsigned int, std::string> &sources);
+        void Attach(unsigned int type, const std::string &source);
         void RetreiveLinkStatus();
         void RetreiveInfoLog();
         void DisplayInfoLog();

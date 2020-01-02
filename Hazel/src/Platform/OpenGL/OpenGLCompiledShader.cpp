@@ -16,6 +16,14 @@ namespace Hazel
         Init(type, source);
     }
 
+    OpenGLCompiledShader::OpenGLCompiledShader(OpenGLCompiledShader &&other)
+        : id(other.id),
+        compiled(other.compiled),
+        infoLog(std::move(other.infoLog))
+    {
+        other.id = 0;
+    }
+
     OpenGLCompiledShader::~OpenGLCompiledShader()
     {
         glDeleteShader(id);
