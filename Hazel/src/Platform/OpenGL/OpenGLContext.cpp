@@ -3,6 +3,8 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
+#include "OpenGLDebugger.h"
+
 namespace Hazel
 {
     OpenGLContext::OpenGLContext(GLFWwindow *window)
@@ -77,6 +79,7 @@ namespace Hazel
 
     void OpenGLContext::SetupParameters()
     {
+        static OpenGLDebugger debugger;
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
