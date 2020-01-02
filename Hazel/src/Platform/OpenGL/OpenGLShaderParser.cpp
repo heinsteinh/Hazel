@@ -29,6 +29,7 @@ namespace Hazel
         result.resize(size);
         rewind(f);
         fread(result.data(), sizeof(char), size, f);
+        fclose(f);
         return result;
     }
 

@@ -1,16 +1,13 @@
 #pragma once
 
-#include "Hazel/Renderer/Context.h"
+#include "Hazel/Renderer/ObjectFactory.h"
 
 namespace Hazel
 {
     class OpenGLObjectFactory : public ObjectFactory
     {
-    private:
-        Context &context;
-
     public:
-        OpenGLObjectFactory(Context &context);
+        OpenGLObjectFactory() = default;
         virtual ~OpenGLObjectFactory() = default;
 
         virtual SharedPtr<Shader> CreateShader(const std::string &filename) override;
