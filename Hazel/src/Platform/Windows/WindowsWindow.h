@@ -22,7 +22,7 @@ namespace Hazel
         bool vsync = true;
 
     public:
-        WindowsWindow(const RenderApi &api);
+        WindowsWindow(RenderApi &api);
         virtual ~WindowsWindow();
 
         Context &GetContext() const override;
@@ -44,8 +44,8 @@ namespace Hazel
         virtual void OnUpdate(Timestep deltaTime) override;
 
     private:
-        void Init(const RenderApi &api);
-        void CreateGlfwWindow(const RenderApi &api);
+        void Init(RenderApi &api);
+        void CreateGlfwWindow(RenderApi &api);
         void Shutdown();
     };
 }

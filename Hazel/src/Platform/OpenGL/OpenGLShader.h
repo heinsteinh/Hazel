@@ -9,11 +9,17 @@ namespace Hazel
     class OpenGLShader : public Shader
     {
     private:
+        std::string name;
         unsigned int id = 0;
 
     public:
-        OpenGLShader(const std::string &filename);
-        OpenGLShader(const std::string &vertexSource, const std::string &fragmentSource);
+        OpenGLShader(
+            const std::string &name,
+            const std::string &vertexSource,
+            const std::string &fragmentSource);
+        OpenGLShader(
+            const std::string &name,
+            const std::string &filename);
         virtual ~OpenGLShader();
 
         void UploadUniformInt(const std::string &name, int value);
@@ -25,6 +31,7 @@ namespace Hazel
         void UploadUniformMat4(const std::string &name, const glm::mat4 &value);
 
         virtual bool IsExecutable() const override;
+        virtual const std::string &GetName() const override;
         virtual void Bind() const override;
         virtual void UnBind() const override;
 

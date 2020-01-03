@@ -1,19 +1,15 @@
 #pragma once
 
-#include <string>
-
-#include "Hazel/Events/Events.h"
 #include "Hazel/Core/Input.h"
+#include "Hazel/Events/Events.h"
+#include "Hazel/Renderer/Context.h"
 #include "Hazel/Utils/Runnable.h"
-#include "Hazel/Renderer/RenderApi.h"
 
 namespace Hazel
 {
     class HAZEL_API Window : public Runnable
     {
     public:
-        static Window *Create(const RenderApi &api);
-
         virtual ~Window() = default;
 
         virtual Context &GetContext() const = 0;

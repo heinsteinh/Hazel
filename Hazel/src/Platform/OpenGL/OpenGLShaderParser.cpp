@@ -1,7 +1,5 @@
 #include "OpenGLShaderParser.h"
 
-#include <fstream>
-
 #include "OpenGLDataType.h"
 #include "Hazel/Utils/Regex.h"
 

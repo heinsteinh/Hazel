@@ -10,5 +10,6 @@ namespace Hazel
         virtual ~Shader() = default;
 
         virtual bool IsExecutable() const = 0;
+        virtual const std::string &GetName() const = 0;
     };
 }

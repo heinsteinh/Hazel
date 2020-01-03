@@ -1,11 +1,16 @@
 #include "Platform.h"
 
-#include "GLFW/glfw3.h"
+#include "Platform/Windows/WindowsPlatform.h"
 
 namespace Hazel
 {
-    double Platform::GetTime()
+    Platform &Platform::Get()
     {
-        return glfwGetTime();
+#ifdef _WIN64
+        static WindowsPlatform platform;
+#else
+#error Platform not implemented
+#endif
+        return platform;
     }
 }

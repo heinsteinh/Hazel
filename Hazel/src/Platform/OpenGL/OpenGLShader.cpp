@@ -7,14 +7,21 @@
 
 namespace Hazel
 {
-    OpenGLShader::OpenGLShader(const std::string &filename)
-    {
-        id = OpenGLShaderCompiler().Compile(filename);
-    }
-
-    OpenGLShader::OpenGLShader(const std::string &vertexSource, const std::string &fragmentSource)
+    OpenGLShader::OpenGLShader(
+        const std::string &name,
+        const std::string &vertexSource,
+        const std::string &fragmentSource)
+        : name(name)
     {
         id = OpenGLShaderCompiler().Compile(vertexSource, fragmentSource);
+    }
+
+    OpenGLShader::OpenGLShader(
+        const std::string &name,
+        const std::string &filename)
+        : name(name)
+    {
+        id = OpenGLShaderCompiler().Compile(filename);
     }
 
     OpenGLShader::~OpenGLShader()
@@ -60,6 +67,11 @@ namespace Hazel
     bool OpenGLShader::IsExecutable() const
     {
         return id != 0;
+    }
+
+    const std::string &OpenGLShader::GetName() const
+    {
+        return name;
     }
 
     void OpenGLShader::Bind() const

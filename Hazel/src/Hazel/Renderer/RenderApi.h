@@ -11,10 +11,10 @@ namespace Hazel
     class HAZEL_API RenderApi
     {
     public:
-        static const RenderApi &OpenGL;
+        static RenderApi &OpenGL;
 
         virtual ~RenderApi() = default;
 
-        virtual Context *CreateContext(const Window &window) const = 0;
+        virtual Context *CreateContext(const Window &window) = 0;
     };
 }

@@ -11,7 +11,7 @@ namespace Hazel
         T &iterable;
 
     public:
-        Reversed(T &iterable)
+        constexpr Reversed(T &iterable)
             : iterable(iterable)
         {
         }

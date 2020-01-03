@@ -6,16 +6,29 @@
 #include "OpenGLIndexBuffer.h"
 #include "OpenGLTexture2D.h"
 
+#include "Hazel/Utils/Path.h"
+
 namespace Hazel
 {
-    SharedPtr<Shader> OpenGLObjectFactory::CreateShader(const std::string &filename)
+    SharedPtr<Shader> OpenGLObjectFactory::CreateShader(
+        const std::string &name,
+        const std::string &vertexSource,
+        const std::string &fragmentSource)
     {
-        return std::make_shared<OpenGLShader>(filename);
+        return std::make_shared<OpenGLShader>(name, vertexSource, fragmentSource);
     }
 
-    SharedPtr<Shader> OpenGLObjectFactory::CreateShader(const std::string &vertexSource, const std::string &fragmentSource)
+    SharedPtr<Shader> OpenGLObjectFactory::CreateShader(
+        const std::string &filename)
     {
-        return std::make_shared<OpenGLShader>(vertexSource, fragmentSource);
+        return std::make_shared<OpenGLShader>(Path(filename).GetFilename(), filename);
+    }
+
+    SharedPtr<Shader> OpenGLObjectFactory::CreateShader(
+        const std::string &name,
+        const std::string &filename)
+    {
+        return std::make_shared<OpenGLShader>(name, filename);
     }
 
     SharedPtr<VertexArray> OpenGLObjectFactory::CreateVertexArray()

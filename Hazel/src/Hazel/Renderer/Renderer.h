@@ -7,6 +7,9 @@
 #include "Hazel/Renderer/OrthographicCamera.h"
 #include "Hazel/Renderer/Shader.h"
 
+//TEST
+#include "Hazel/Renderer/ShaderLibrary.h"
+
 namespace Hazel
 {
     class HAZEL_API Renderer

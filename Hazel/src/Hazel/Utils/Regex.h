@@ -43,7 +43,7 @@ namespace Hazel
 
         inline AllMatches Search(const std::string &source) const
         {
-            return AllMatches(source, pattern);
+            return {source, pattern};
         }
     };
 }

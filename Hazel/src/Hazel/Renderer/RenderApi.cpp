@@ -4,6 +4,6 @@
 
 namespace Hazel
 {
-    static const OpenGLRenderApi openGL;
-    const RenderApi &RenderApi::OpenGL = openGL;
+    static OpenGLRenderApi openGL;
+    RenderApi &RenderApi::OpenGL = openGL;
 }

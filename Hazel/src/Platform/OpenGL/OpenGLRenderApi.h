@@ -11,7 +11,7 @@ namespace Hazel
     public:
         virtual ~OpenGLRenderApi() = default;
 
-        virtual Context *CreateContext(const Window &window) const override
+        virtual Context *CreateContext(const Window &window) override
         {
             return new OpenGLContext(static_cast<GLFWwindow *>(window.GetNativeWindow()));
         }

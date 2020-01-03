@@ -9,7 +9,7 @@
 
 namespace Hazel
 {
-    WindowsWindow::WindowsWindow(const RenderApi &api)
+    WindowsWindow::WindowsWindow(RenderApi &api)
     {
         Init(api);
     }
@@ -103,7 +103,7 @@ namespace Hazel
         context->SwapBuffers();
     }
 
-    void WindowsWindow::Init(const RenderApi &api)
+    void WindowsWindow::Init(RenderApi &api)
     {
         static GlfwLoader loader;
         CoreInfo("Creating window");
@@ -112,7 +112,7 @@ namespace Hazel
         CoreInfo("Window created {} ({}x{}).", title, GetWidth(), GetHeight());
     }
 
-    void WindowsWindow::CreateGlfwWindow(const RenderApi &api)
+    void WindowsWindow::CreateGlfwWindow(RenderApi &api)
     {
         CoreDebug("GLFW window creation start.");
         window = glfwCreateWindow(1280, 720, title.c_str(), nullptr, nullptr);

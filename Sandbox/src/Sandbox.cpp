@@ -38,53 +38,60 @@ private:
     Hazel::Window &parent;
     Hazel::Renderer renderer;
 
+    Hazel::ShaderLibrary library;
     Hazel::SharedPtr<Hazel::Shader> uniformShader;
-    Hazel::SharedPtr<Hazel::Shader> textureShader;
+
     Hazel::SharedPtr<Hazel::VertexArray> squareVertexArray;
+
     Hazel::SharedPtr<Hazel::Texture2D> texture;
     Hazel::SharedPtr<Hazel::Texture2D> overlay;
+
     Hazel::OrthographicCamera camera = {{-1.6f, 1.6f, -0.9f, 0.9f}};
+
     glm::vec3 cameraPosition{0.0f};
-    glm::vec3 gridPosition{0.0f};
     float cameraRotation = 0.0f;
-    float cameraTranslationSpeed = 1.0f;
-    float cameraRotationSpeed = 10.0f;
+    glm::vec3 gridPosition{0.0f};
+    glm::vec4 gridColor = {0.2f, 0.3f, 0.8f, 1.0f};
+
+    float translationSpeed = 1.0f;
+    float rotationSpeed = 10.0f;
+
     double framerate = 0.0;
-    glm::vec4 color = {0.2f, 0.3f, 0.8f, 1.0f};
 
 public:
     TestLayer(Hazel::Window &parent)
         : parent(parent),
-        renderer(parent)
+        renderer(parent),
+        library(parent.GetContext().GetFactory())
     {
     }
 
     virtual void OnUpdate(Hazel::Timestep deltaTime) override
     {
-        static std::vector<double> buffer(60, 0.0);
-        double temp = 1.0 / deltaTime;
-        buffer.erase(buffer.begin());
-        buffer.push_back(temp);
-        framerate = std::accumulate(buffer.begin(), buffer.end(), 0.0) / buffer.size();
+        static double alpha = 0.05;
+        static double previous = 0.0;
+        double value = 1.0 / deltaTime;
+        framerate = alpha * value + (1.0 - alpha) * previous;
+        previous = framerate;
 
         auto &input = parent.GetInput();
 
         // Test moving camera
         if (input.IsKeyPressed(Hazel::Key::Up))
         {
-            cameraPosition.y += cameraTranslationSpeed * deltaTime;
+            cameraPosition.y += translationSpeed * deltaTime;
         }
         if (input.IsKeyPressed(Hazel::Key::Down))
         {
-            cameraPosition.y -= cameraTranslationSpeed * deltaTime;
+            cameraPosition.y -= translationSpeed * deltaTime;
         }
         if (input.IsKeyPressed(Hazel::Key::Right))
         {
-            cameraPosition.x += cameraTranslationSpeed * deltaTime;
+            cameraPosition.x += translationSpeed * deltaTime;
         }
         if (input.IsKeyPressed(Hazel::Key::Left))
         {
-            cameraPosition.x -= cameraTranslationSpeed * deltaTime;
+            cameraPosition.x -= translationSpeed * deltaTime;
         }
         //cameraPosition = glm::clamp(cameraPosition, -1.0f, 1.0f);
 
@@ -102,19 +109,19 @@ public:
         // Test moving grid
         if (input.IsKeyPressed(Hazel::Key::D))
         {
-            gridPosition.x += cameraTranslationSpeed * deltaTime;
+            gridPosition.x += translationSpeed * deltaTime;
         }
         if (input.IsKeyPressed(Hazel::Key::A))
         {
-            gridPosition.x -= cameraTranslationSpeed * deltaTime;
+            gridPosition.x -= translationSpeed * deltaTime;
         }
         if (input.IsKeyPressed(Hazel::Key::W))
         {
-            gridPosition.y += cameraTranslationSpeed * deltaTime;
+            gridPosition.y += translationSpeed * deltaTime;
         }
         if (input.IsKeyPressed(Hazel::Key::S))
         {
-            gridPosition.y -= cameraTranslationSpeed * deltaTime;
+            gridPosition.y -= translationSpeed * deltaTime;
         }
 
         // Set camera position
@@ -126,8 +133,9 @@ public:
 
         auto openGLShader = std::dynamic_pointer_cast<Hazel::OpenGLShader>(uniformShader);
 
+        static const std::string uniformName = "u_Color";
         openGLShader->Bind();
-        openGLShader->UploadUniformFloat4("u_Color", color);
+        openGLShader->UploadUniformFloat4(uniformName, gridColor);
 
         // Test multiple triangles
         static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
@@ -142,6 +150,8 @@ public:
                 renderer.Submit(uniformShader, squareVertexArray, transform);
             }
         }
+        static const std::string textureName = "Texture";
+        auto textureShader = library.Get(textureName);
         texture->Bind();
         renderer.Submit(textureShader, squareVertexArray, glm::mat4(1.0f));
         overlay->Bind();
@@ -153,13 +163,14 @@ public:
     virtual void OnAttach() override
     {
         Hazel::ObjectFactory &factory = parent.GetContext().GetFactory();
+
         squareVertexArray = factory.CreateVertexArray();
 
-        Hazel::SharedPtr<Hazel::VertexBuffer> vertexBuffer(factory.CreateVertexBuffer({
+        auto vertexBuffer = factory.CreateVertexBuffer({
             -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
              0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
              0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f}));
+            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f});
 
         vertexBuffer->SetLayout({
             {Hazel::ShaderDataType::Float3, "a_Position"},
@@ -167,14 +178,15 @@ public:
 
         squareVertexArray->AddVertexBuffer(vertexBuffer);
 
-        Hazel::SharedPtr<Hazel::IndexBuffer> indexBuffer(factory.CreateIndexBuffer({0, 1, 2, 2, 3, 0}));
+        auto indexBuffer = factory.CreateIndexBuffer({0, 1, 2, 2, 3, 0});
         squareVertexArray->SetIndexBuffer(indexBuffer);
 
-        uniformShader = factory.CreateShader(vertexSource, fragmentSource);
-        textureShader = factory.CreateShader("assets\\shaders\\Texture.glsl");
+        uniformShader = factory.CreateShader("Uniform", vertexSource, fragmentSource);
+        auto textureShader = library.Load("assets\\shaders\\Texture.glsl");
         texture = factory.CreateTexture2D("assets\\textures\\Test.jpg");
         overlay = factory.CreateTexture2D("assets\\textures\\TestOverlay.png");
 
+        // TEST
         auto openGLShader = std::dynamic_pointer_cast<Hazel::OpenGLShader>(textureShader);
         openGLShader->Bind();
         openGLShader->UploadUniformInt("u_Texture", 0);
@@ -187,17 +199,17 @@ public:
     virtual void OnImGuiRender() override
     {
         ImGui::Begin("Framerate");
-        ImGui::Text("%f FPS", framerate);
+        ImGui::Text("%.2f FPS", framerate);
         ImGui::End();
 
         ImGui::Begin("Settings");
-        ImGui::ColorPicker4("Color", glm::value_ptr(color));
+        ImGui::ColorPicker4("Color", glm::value_ptr(gridColor));
         ImGui::End();
     }
 
     virtual void OnMouseScrolled(Hazel::MouseScrolledEvent &e) override
     {
-        camera.SetRotation(std::remainderf(camera.GetRotation() + (float)e.GetYOffset(), 360.0f));
+        camera.SetRotation(cameraRotation += 10 * (float)e.GetYOffset());
     }
 };
 

@@ -6,7 +6,7 @@
 namespace Hazel
 {
     Application::Application()
-        : window(Window::Create(RenderApi::OpenGL)),
+        : window(Platform::Get().CreateNewWindow()),
         imguiLayer(new ImGuiLayer(*window.get()))
     {
         Init();
@@ -82,7 +82,7 @@ namespace Hazel
 
     Timestep Application::ComputeDeltaTime()
     {
-        double time = Platform::GetTime();
+        double time = Platform::Get().GetTime();
         double deltaTime = time - lastTime;
         lastTime = time;
         CoreTrace("Frame Rate: {}", 1.0 / deltaTime);
