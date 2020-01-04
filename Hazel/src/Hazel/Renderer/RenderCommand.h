@@ -19,7 +19,7 @@ namespace Hazel
 
         inline void DrawIndexed(const SharedPtr<VertexArray> &vertexArray) const
         {
-            window.GetContext().DrawIndexed(vertexArray);
+            window.GetContext().GetDrawer().DrawIndexed(vertexArray);
         }
     };
 }

@@ -3,6 +3,7 @@
 #include "glm/glm.hpp"
 
 #include "ObjectFactory.h"
+#include "Drawer.h"
 
 namespace Hazel
 {
@@ -11,12 +12,8 @@ namespace Hazel
     public:
         virtual ~Context() = default;
 
-        virtual ObjectFactory &GetFactory() = 0;
         virtual void MakeCurrent() = 0;
-        virtual void SwapBuffers() = 0;
-        virtual void SetViewport(int width, int height) = 0;
-        virtual void SetClearColor(const glm::vec4 &color) = 0;
-        virtual void Clear() = 0;
-        virtual void DrawIndexed(const SharedPtr<VertexArray> &vertexArray) = 0;
+        virtual ObjectFactory &GetFactory() = 0;
+        virtual Drawer &GetDrawer() = 0;
     };
 }

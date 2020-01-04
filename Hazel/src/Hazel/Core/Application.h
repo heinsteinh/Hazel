@@ -12,6 +12,7 @@ namespace Hazel
     {
     private:
         UniquePtr<Window> window;
+        Drawer &drawer;
         ImGuiLayer *imguiLayer;
         LayerStack layers;
         bool running = false;

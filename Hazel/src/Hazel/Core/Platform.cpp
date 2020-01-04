@@ -4,13 +4,14 @@
 
 namespace Hazel
 {
-    Platform &Platform::Get()
-    {
 #ifdef _WIN64
-        static WindowsPlatform platform;
+    static WindowsPlatform platform;
 #else
 #error Platform not implemented
 #endif
+
+    Platform &Platform::Get()
+    {
         return platform;
     }
 }

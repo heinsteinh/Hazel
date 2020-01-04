@@ -9,7 +9,7 @@ namespace Hazel
 {
     OpenGLContext::OpenGLContext(GLFWwindow *window)
         : window(window),
-        factory()
+        drawer(window)
     {
         Init();
     }
@@ -19,38 +19,14 @@ namespace Hazel
         return factory;
     }
 
+    Drawer &OpenGLContext::GetDrawer()
+    {
+        return drawer;
+    }
+
     void OpenGLContext::MakeCurrent()
     {
         glfwMakeContextCurrent(window);
-    }
-
-    void OpenGLContext::SwapBuffers()
-    {
-        glfwSwapBuffers(window);
-    }
-
-    void OpenGLContext::SetViewport(int width, int height)
-    {
-        glViewport(0, 0, width, height);
-    }
-
-    void OpenGLContext::SetClearColor(const glm::vec4 &color)
-    {
-        glClearColor(color.r, color.g, color.b, color.a);
-    }
-
-    void OpenGLContext::Clear()
-    {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    }
-
-    void OpenGLContext::DrawIndexed(const SharedPtr<VertexArray> &vertexArray)
-    {
-        glDrawElements(
-            GL_TRIANGLES,
-            (int)vertexArray->GetIndexBuffer()->GetSize(),
-            GL_UNSIGNED_INT,
-            nullptr);
     }
 
     void OpenGLContext::Init()

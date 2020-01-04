@@ -100,7 +100,7 @@ namespace Hazel
     void WindowsWindow::OnUpdate(Timestep deltaTime)
     {
         eventManager->PollEvents();
-        context->SwapBuffers();
+        context->GetDrawer().SwapBuffers();
     }
 
     void WindowsWindow::Init(RenderApi &api)

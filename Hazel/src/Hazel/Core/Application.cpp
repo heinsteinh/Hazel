@@ -7,6 +7,7 @@ namespace Hazel
 {
     Application::Application()
         : window(Platform::Get().CreateNewWindow()),
+        drawer(window->GetContext().GetDrawer()),
         imguiLayer(new ImGuiLayer(*window.get()))
     {
         Init();
@@ -66,7 +67,7 @@ namespace Hazel
     {
         CoreDebug("Application initialization.");
         window->SetEventListener(this);
-        window->GetContext().SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
+        drawer.SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
         PushOverlay(imguiLayer);
         CoreDebug("Application initialized.");
     }
@@ -91,11 +92,10 @@ namespace Hazel
 
     void Application::SetupViewport()
     {
-        Context &context = window->GetContext();
-        context.SetViewport(
+        drawer.SetViewport(
             window->GetFrameBufferWidth(),
             window->GetFrameBufferHeight());
-        context.Clear();
+        drawer.Clear();
     }
 
     void Application::UpdateLayers(Timestep deltaTime)
