@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Hazel/Core/Core.h"
-
 namespace Hazel
 {
     template<typename T>

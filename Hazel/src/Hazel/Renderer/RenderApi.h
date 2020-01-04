@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Hazel/Core/Core.h"
 #include "Context.h"
 #include "VertexArray.h"
 

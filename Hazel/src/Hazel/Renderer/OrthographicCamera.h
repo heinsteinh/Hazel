@@ -1,22 +1,14 @@
 #pragma once
 
 #include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
-#include "Hazel/Core/Core.h"
+#include "Viewport.h"
 
 namespace Hazel
 {
     class HAZEL_API OrthographicCamera
     {
-    public:
-        struct Viewport
-        {
-            float Left = 0.0f;
-            float Right = 0.0f;
-            float Bottom = 0.0f;
-            float Top = 0.0f;
-        };
-
     private:
         glm::vec3 position = {0.0f, 0.0f, 0.0f};
         float rotation = 0.0f;
@@ -25,7 +17,11 @@ namespace Hazel
         glm::mat4 viewProjectionMatrix{1.0f};
 
     public:
-        OrthographicCamera(const Viewport &viewport = {-1.0f, 1.0f, -1.0f, 1.0f});
+        OrthographicCamera(const Viewport &viewport = {})
+            : projectionMatrix(viewport.GetProjectionMatrix())
+        {
+            RecalculateViewProjectionMatrix();
+        }
 
         inline const glm::vec3 &GetPosition() const
         {
@@ -35,6 +31,12 @@ namespace Hazel
         inline float GetRotation() const
         {
             return rotation;
+        }
+
+        inline void SetViewport(const Viewport &viewport)
+        {
+            projectionMatrix = viewport.GetProjectionMatrix();
+            RecalculateViewProjectionMatrix();
         }
 
         inline void SetPosition(const glm::vec3 &position)
@@ -65,6 +67,20 @@ namespace Hazel
         }
 
     private:
-        void RecalculateViewMatrix();
+        inline void RecalculateViewMatrix()
+        {
+            viewMatrix = glm::inverse(
+                glm::translate(glm::mat4(1.0f), position)
+                * glm::rotate(
+                    glm::mat4(1.0f),
+                    glm::radians(rotation),
+                    {0.0f, 0.0f, 1.0f}));
+            RecalculateViewProjectionMatrix();
+        }
+
+        inline void RecalculateViewProjectionMatrix()
+        {
+            viewProjectionMatrix = projectionMatrix * viewMatrix;
+        }
     };
 }

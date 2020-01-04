@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Hazel/Core/BuildSettings.h"
+
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <fstream>
@@ -21,6 +23,5 @@
 #include <Windows.h>
 #endif
 
-#include "Hazel/Core/Core.h"
-#include "Hazel/Core/Log.h"
 #include "Hazel/Utils/Utils.h"
+#include "Hazel/Core/Log.h"

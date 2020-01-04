@@ -1,10 +1,8 @@
 #pragma once
 
-#include "Hazel/Core/Core.h"
-
 namespace Hazel
 {
-    class ShaderDataType
+    class HAZEL_API ShaderDataType
     {
     public:
         static const ShaderDataType Float;

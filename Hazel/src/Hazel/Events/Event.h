@@ -1,10 +1,7 @@
 #pragma once
 
-#include <sstream>
-
 #include "spdlog/fmt/ostr.h"
 
-#include "Hazel/Core/Core.h"
 #include "EventListener.h"
 
 namespace Hazel

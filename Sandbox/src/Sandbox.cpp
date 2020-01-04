@@ -38,6 +38,8 @@ private:
     Hazel::Window &parent;
     Hazel::Renderer renderer;
 
+    Hazel::OrthographicCameraController cameraController;
+
     Hazel::ShaderLibrary library;
     Hazel::SharedPtr<Hazel::Shader> uniformShader;
 
@@ -46,15 +48,8 @@ private:
     Hazel::SharedPtr<Hazel::Texture2D> texture;
     Hazel::SharedPtr<Hazel::Texture2D> overlay;
 
-    Hazel::OrthographicCamera camera = {{-1.6f, 1.6f, -0.9f, 0.9f}};
-
-    glm::vec3 cameraPosition{0.0f};
-    float cameraRotation = 0.0f;
     glm::vec3 gridPosition{0.0f};
     glm::vec4 gridColor = {0.2f, 0.3f, 0.8f, 1.0f};
-
-    float translationSpeed = 1.0f;
-    float rotationSpeed = 10.0f;
 
     double framerate = 0.0;
 
@@ -62,8 +57,22 @@ public:
     TestLayer(Hazel::Window &parent)
         : parent(parent),
         renderer(parent),
+        cameraController(parent),
         library(parent.GetContext().GetFactory())
     {
+    }
+
+    virtual void OnEvent(Hazel::Event &e) override
+    {
+        e.Dispatch(&cameraController);
+    }
+
+    virtual void OnKeyPressed(Hazel::KeyPressedEvent &e) override
+    {
+        if (e.GetKey() == Hazel::Key::R)
+        {
+            cameraController.SetRotationEnabled(!cameraController.HasRotationEnabled());
+        }
     }
 
     virtual void OnUpdate(Hazel::Timestep deltaTime) override
@@ -74,65 +83,33 @@ public:
         framerate = alpha * value + (1.0 - alpha) * previous;
         previous = framerate;
 
-        auto &input = parent.GetInput();
-
-        // Test moving camera
-        if (input.IsKeyPressed(Hazel::Key::Up))
-        {
-            cameraPosition.y += translationSpeed * deltaTime;
-        }
-        if (input.IsKeyPressed(Hazel::Key::Down))
-        {
-            cameraPosition.y -= translationSpeed * deltaTime;
-        }
-        if (input.IsKeyPressed(Hazel::Key::Right))
-        {
-            cameraPosition.x += translationSpeed * deltaTime;
-        }
-        if (input.IsKeyPressed(Hazel::Key::Left))
-        {
-            cameraPosition.x -= translationSpeed * deltaTime;
-        }
-        //cameraPosition = glm::clamp(cameraPosition, -1.0f, 1.0f);
-
-        // Test rotate camera
-        /*if (input.IsKeyPressed(Hazel::Key::A))
-        {
-            cameraRotation += 10 * cameraRotationSpeed * deltaTime;
-        }
-        if (input.IsKeyPressed(Hazel::Key::D))
-        {
-            cameraRotation -= 10 * cameraRotationSpeed * deltaTime;
-        }*/
-        //cameraRotation = glm::clamp(cameraRotation, 0.0f, 360.0f);
+        cameraController.OnUpdate(deltaTime);
 
         // Test moving grid
-        if (input.IsKeyPressed(Hazel::Key::D))
+        static const float translationSpeed = 1.0f;
+        auto &input = parent.GetInput();
+        if (input.IsKeyPressed(Hazel::Key::Right))
         {
             gridPosition.x += translationSpeed * deltaTime;
         }
-        if (input.IsKeyPressed(Hazel::Key::A))
+        if (input.IsKeyPressed(Hazel::Key::Left))
         {
             gridPosition.x -= translationSpeed * deltaTime;
         }
-        if (input.IsKeyPressed(Hazel::Key::W))
+        if (input.IsKeyPressed(Hazel::Key::Up))
         {
             gridPosition.y += translationSpeed * deltaTime;
         }
-        if (input.IsKeyPressed(Hazel::Key::S))
+        if (input.IsKeyPressed(Hazel::Key::Down))
         {
             gridPosition.y -= translationSpeed * deltaTime;
         }
-
-        // Set camera position
-        camera.SetPosition(cameraPosition);
-        camera.SetRotation(cameraRotation);
 
         // Clear color
         parent.GetContext().GetDrawer().Clear();
 
         // Render
-        renderer.BeginScene(camera);
+        renderer.BeginScene(cameraController.GetCamera());
 
         auto openGLShader = std::dynamic_pointer_cast<Hazel::OpenGLShader>(uniformShader);
 
@@ -168,15 +145,17 @@ public:
         static const glm::vec4 clearColor = {0.45f, 0.55f, 0.60f, 1.00f};
         parent.GetContext().GetDrawer().SetClearColor(clearColor);
 
+        cameraController.SetRotationEnabled(true);
+
         Hazel::ObjectFactory &factory = parent.GetContext().GetFactory();
 
         squareVertexArray = factory.CreateVertexArray();
 
         auto vertexBuffer = factory.CreateVertexBuffer({
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-             0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-             0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f});
+            -0.8f, -0.45f, 0.0f, 0.0f, 0.0f,
+             0.8f, -0.45f, 0.0f, 1.0f, 0.0f,
+             0.8f,  0.45f, 0.0f, 1.0f, 1.0f,
+            -0.8f,  0.45f, 0.0f, 0.0f, 1.0f});
 
         vertexBuffer->SetLayout({
             {Hazel::ShaderDataType::Float3, "a_Position"},
@@ -212,11 +191,6 @@ public:
         ImGui::ColorPicker4("Color", glm::value_ptr(gridColor));
         ImGui::End();
     }
-
-    virtual void OnMouseScrolled(Hazel::MouseScrolledEvent &e) override
-    {
-        camera.SetRotation(cameraRotation += 10 * (float)e.GetYOffset());
-    }
 };
 
 class Sandbox : public Hazel::Application
@@ -228,6 +202,7 @@ public:
         PushLayer(new TestLayer(GetWindow()));
     };
 
+    // TEST
     virtual void OnKeyPressed(Hazel::KeyPressedEvent &e) override
     {
         if (e.GetKey() == Hazel::Key::I)

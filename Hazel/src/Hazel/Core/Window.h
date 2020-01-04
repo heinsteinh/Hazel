@@ -12,6 +12,11 @@ namespace Hazel
     public:
         virtual ~Window() = default;
 
+        inline float GetAspectRatio() const
+        {
+            return (float)GetWidth() / (float)GetHeight();
+        }
+
         virtual Context &GetContext() const = 0;
         virtual const Input &GetInput() const = 0;
         virtual void *GetNativeWindow() const = 0;

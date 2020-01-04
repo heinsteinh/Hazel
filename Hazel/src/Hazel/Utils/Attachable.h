@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Hazel/Core/Core.h"
-
 namespace Hazel
 {
     class HAZEL_API Attachable
