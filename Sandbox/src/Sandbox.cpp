@@ -128,6 +128,9 @@ public:
         camera.SetPosition(cameraPosition);
         camera.SetRotation(cameraRotation);
 
+        // Clear color
+        parent.GetContext().GetDrawer().Clear();
+
         // Render
         renderer.BeginScene(camera);
 
@@ -137,7 +140,7 @@ public:
         openGLShader->Bind();
         openGLShader->UploadUniformFloat4(uniformName, gridColor);
 
-        // Test multiple triangles
+        // Test multiple squares
         static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
         for (int y = 0; y < 3; y++)
         {
@@ -162,6 +165,9 @@ public:
 
     virtual void OnAttach() override
     {
+        static const glm::vec4 clearColor = {0.45f, 0.55f, 0.60f, 1.00f};
+        parent.GetContext().GetDrawer().SetClearColor(clearColor);
+
         Hazel::ObjectFactory &factory = parent.GetContext().GetFactory();
 
         squareVertexArray = factory.CreateVertexArray();

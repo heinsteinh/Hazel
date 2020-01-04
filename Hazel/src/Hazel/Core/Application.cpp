@@ -67,7 +67,6 @@ namespace Hazel
     {
         CoreDebug("Application initialization.");
         window->SetEventListener(this);
-        drawer.SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
         PushOverlay(imguiLayer);
         CoreDebug("Application initialized.");
     }
@@ -95,7 +94,6 @@ namespace Hazel
         drawer.SetViewport(
             window->GetFrameBufferWidth(),
             window->GetFrameBufferHeight());
-        drawer.Clear();
     }
 
     void Application::UpdateLayers(Timestep deltaTime)
