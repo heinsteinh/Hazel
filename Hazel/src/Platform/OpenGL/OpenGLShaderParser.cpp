@@ -15,20 +15,21 @@ namespace Hazel
 
     std::string OpenGLShaderParser::ReadFile(const std::string &filename)
     {
-        FILE *f = fopen(filename.c_str(), "rb");
-        if (!f)
+        FILE *stream = nullptr;
+        fopen_s(&stream, filename.c_str(), "rb");
+        if (!stream)
         {
             CoreError("Cannot open shader source file {}", filename);
             failed = true;
             return "";
         }
         std::string result;
-        fseek(f, 0, SEEK_END);
-        size_t size = ftell(f);
+        fseek(stream, 0, SEEK_END);
+        size_t size = ftell(stream);
         result.resize(size);
-        rewind(f);
-        fread(result.data(), sizeof(char), size, f);
-        fclose(f);
+        rewind(stream);
+        fread(result.data(), sizeof(char), size, stream);
+        fclose(stream);
         return result;
     }
 

@@ -43,6 +43,7 @@ private:
     Hazel::ShaderLibrary library;
     Hazel::SharedPtr<Hazel::Shader> uniformShader;
 
+    Hazel::SharedPtr<Hazel::VertexArray> textureVertexArray;
     Hazel::SharedPtr<Hazel::VertexArray> squareVertexArray;
 
     Hazel::SharedPtr<Hazel::Texture2D> texture;
@@ -79,7 +80,7 @@ public:
     {
         static double alpha = 0.05;
         static double previous = 0.0;
-        double value = 1.0 / deltaTime;
+        double value = 1.0 / deltaTime.ToSeconds();
         framerate = alpha * value + (1.0 - alpha) * previous;
         previous = framerate;
 
@@ -90,19 +91,19 @@ public:
         auto &input = parent.GetInput();
         if (input.IsKeyPressed(Hazel::Key::Right))
         {
-            gridPosition.x += translationSpeed * deltaTime;
+            gridPosition.x += translationSpeed * deltaTime.ToSeconds();
         }
         if (input.IsKeyPressed(Hazel::Key::Left))
         {
-            gridPosition.x -= translationSpeed * deltaTime;
+            gridPosition.x -= translationSpeed * deltaTime.ToSeconds();
         }
         if (input.IsKeyPressed(Hazel::Key::Up))
         {
-            gridPosition.y += translationSpeed * deltaTime;
+            gridPosition.y += translationSpeed * deltaTime.ToSeconds();
         }
         if (input.IsKeyPressed(Hazel::Key::Down))
         {
-            gridPosition.y -= translationSpeed * deltaTime;
+            gridPosition.y -= translationSpeed * deltaTime.ToSeconds();
         }
 
         // Clear color
@@ -133,9 +134,9 @@ public:
         static const std::string textureName = "Texture";
         auto textureShader = library.Get(textureName);
         texture->Bind();
-        renderer.Submit(textureShader, squareVertexArray, glm::mat4(1.0f));
+        renderer.Submit(textureShader, textureVertexArray, glm::mat4(1.0f));
         overlay->Bind();
-        renderer.Submit(textureShader, squareVertexArray, glm::mat4(1.0f));
+        renderer.Submit(textureShader, textureVertexArray, glm::mat4(1.0f));
 
         renderer.EndScene();
     }
@@ -149,6 +150,7 @@ public:
 
         Hazel::ObjectFactory &factory = parent.GetContext().GetFactory();
 
+        textureVertexArray = factory.CreateVertexArray();
         squareVertexArray = factory.CreateVertexArray();
 
         auto vertexBuffer = factory.CreateVertexBuffer({
@@ -156,14 +158,22 @@ public:
              0.8f, -0.45f, 0.0f, 1.0f, 0.0f,
              0.8f,  0.45f, 0.0f, 1.0f, 1.0f,
             -0.8f,  0.45f, 0.0f, 0.0f, 1.0f});
-
         vertexBuffer->SetLayout({
             {Hazel::ShaderDataType::Float3, "a_Position"},
             {Hazel::ShaderDataType::Float2, "a_TexCoord"}});
 
-        squareVertexArray->AddVertexBuffer(vertexBuffer);
+        auto vertexBuffer2 = factory.CreateVertexBuffer({
+            -0.5f, -0.5f, 0.0f,
+             0.5f, -0.5f, 0.0f,
+             0.5f,  0.5f, 0.0f,
+            -0.5f,  0.5f, 0.0f});
+        vertexBuffer2->SetLayout({{Hazel::ShaderDataType::Float3, "a_Position"}});
+
+        textureVertexArray->AddVertexBuffer(vertexBuffer);
+        squareVertexArray->AddVertexBuffer(vertexBuffer2);
 
         auto indexBuffer = factory.CreateIndexBuffer({0, 1, 2, 2, 3, 0});
+        textureVertexArray->SetIndexBuffer(indexBuffer);
         squareVertexArray->SetIndexBuffer(indexBuffer);
 
         uniformShader = factory.CreateShader("Uniform", vertexSource, fragmentSource);

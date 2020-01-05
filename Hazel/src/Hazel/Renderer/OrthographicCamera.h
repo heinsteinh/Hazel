@@ -11,14 +11,14 @@ namespace Hazel
     {
     private:
         glm::vec3 position = {0.0f, 0.0f, 0.0f};
-        float rotation = 0.0f;
+        Angle rotation;
         glm::mat4 projectionMatrix{1.0f};
         glm::mat4 viewMatrix{1.0f};
         glm::mat4 viewProjectionMatrix{1.0f};
 
     public:
         OrthographicCamera(const Viewport &viewport = {})
-            : projectionMatrix(viewport.GetProjectionMatrix())
+            : projectionMatrix(viewport.ToProjectionMatrix())
         {
             RecalculateViewProjectionMatrix();
         }
@@ -28,27 +28,9 @@ namespace Hazel
             return position;
         }
 
-        inline float GetRotation() const
+        inline Angle GetRotation() const
         {
             return rotation;
-        }
-
-        inline void SetViewport(const Viewport &viewport)
-        {
-            projectionMatrix = viewport.GetProjectionMatrix();
-            RecalculateViewProjectionMatrix();
-        }
-
-        inline void SetPosition(const glm::vec3 &position)
-        {
-            this->position = position;
-            RecalculateViewMatrix();
-        }
-
-        inline void SetRotation(float rotation)
-        {
-            this->rotation = rotation;
-            RecalculateViewMatrix();
         }
 
         inline const glm::mat4 &GetProjectionMatrix() const
@@ -66,15 +48,33 @@ namespace Hazel
             return viewProjectionMatrix;
         }
 
+        inline void SetViewport(const Viewport &viewport)
+        {
+            projectionMatrix = viewport.ToProjectionMatrix();
+            RecalculateViewProjectionMatrix();
+        }
+
+        inline void SetPosition(const glm::vec3 &position)
+        {
+            this->position = position;
+            RecalculateViewMatrix();
+        }
+
+        inline void SetRotation(Angle rotation)
+        {
+            this->rotation = rotation;
+            RecalculateViewMatrix();
+        }
+
     private:
         inline void RecalculateViewMatrix()
         {
-            viewMatrix = glm::inverse(
-                glm::translate(glm::mat4(1.0f), position)
-                * glm::rotate(
+            viewMatrix = glm::translate(
+                glm::rotate(
                     glm::mat4(1.0f),
-                    glm::radians(rotation),
-                    {0.0f, 0.0f, 1.0f}));
+                    -rotation.ToRadians(),
+                    {0.0f, 0.0f, 1.0f}),
+                -position);
             RecalculateViewProjectionMatrix();
         }
 

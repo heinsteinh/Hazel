@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Hazel/Core/Timestep.h"
-
 namespace Hazel
 {
     class HAZEL_API Runnable

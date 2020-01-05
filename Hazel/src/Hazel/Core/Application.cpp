@@ -2,6 +2,7 @@
 
 #include "Platform.h"
 #include "Hazel/ImGui/ImGuiLayer.h"
+#include "Hazel/Utils/Reversed.h"
 
 namespace Hazel
 {
@@ -86,7 +87,7 @@ namespace Hazel
         double deltaTime = time - lastTime;
         lastTime = time;
         CoreTrace("Frame Rate: {}", 1.0 / deltaTime);
-        return deltaTime;
+        return Timestep::FromSeconds((float)deltaTime);
     }
 
     void Application::SetupViewport()

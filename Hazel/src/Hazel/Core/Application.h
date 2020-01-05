@@ -2,7 +2,6 @@
 
 #include "Window.h"
 #include "LayerStack.h"
-#include "Timestep.h"
 
 namespace Hazel
 {

@@ -14,7 +14,7 @@ namespace Hazel
         float aspectRatio = 1.0f;
         float zoomLevel = 1.0f;
         float translationSpeed = 1.0f;
-        float rotationSpeed = 90.0f;
+        Angle rotationSpeed = 90_deg;
         bool rotationEnabled = false;
         OrthographicCamera camera;
 
@@ -36,7 +36,7 @@ namespace Hazel
             return translationSpeed;
         }
 
-        inline float GetRotationSpeed() const
+        inline Angle GetRotationSpeed() const
         {
             return rotationSpeed;
         }
@@ -51,7 +51,7 @@ namespace Hazel
             this->translationSpeed = translationSpeed;
         }
 
-        inline void SetRotationSpeed(float rotationSpeed)
+        inline void SetRotationSpeed(Angle rotationSpeed)
         {
             this->rotationSpeed = rotationSpeed;
         }

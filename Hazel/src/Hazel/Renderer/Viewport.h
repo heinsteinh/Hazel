@@ -21,7 +21,7 @@ namespace Hazel
             };
         }
 
-        inline glm::mat4 GetProjectionMatrix() const
+        inline glm::mat4 ToProjectionMatrix() const
         {
             return glm::ortho(Left, Right, Bottom, Top);
         }
