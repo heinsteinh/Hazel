@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Renderer/ObjectFactory.h"
+#include "Hazel/Rendering/ObjectFactory.h"
 
 namespace Hazel
 {

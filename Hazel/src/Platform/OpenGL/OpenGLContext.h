@@ -2,7 +2,7 @@
 
 #include "glm/glm.hpp"
 
-#include "Hazel/Renderer/Context.h"
+#include "Hazel/Rendering/Context.h"
 #include "OpenGLObjectFactory.h"
 #include "OpenGLDrawer.h"
 

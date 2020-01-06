@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel/Core/Window.h"
-#include "Hazel/Renderer/OrthographicCamera.h"
+#include "Hazel/Rendering/OrthographicCamera.h"
 #include "Hazel/Utils/Runnable.h"
 #include "Hazel/Events/EventListener.h"
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Renderer/ShaderDataType.h"
+#include "Hazel/Rendering/ShaderDataType.h"
 
 namespace Hazel
 {

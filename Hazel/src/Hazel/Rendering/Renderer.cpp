@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-#include "Hazel/Renderer/RenderCommand.h"
+#include "Hazel/Rendering/RenderCommand.h"
 
 // TEMPORARY
 #include "Platform/OpenGL/OpenGLShader.h"

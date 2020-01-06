@@ -8,8 +8,7 @@
 
 #include "imgui.h"
 
-#include "Hazel/Utils/Utils.h"
-#include "Hazel/Core/EntryPoint.h"
 #include "Hazel/Core/Core.h"
 #include "Hazel/Events/Events.h"
-#include "Hazel/Renderer/Renderer.h"
+#include "Hazel/Rendering/Rendering.h"
+#include "Hazel/Utils/Utils.h"

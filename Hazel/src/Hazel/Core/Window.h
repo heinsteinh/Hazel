@@ -2,7 +2,7 @@
 
 #include "Hazel/Core/Input.h"
 #include "Hazel/Events/Events.h"
-#include "Hazel/Renderer/Context.h"
+#include "Hazel/Rendering/Context.h"
 #include "Hazel/Utils/Runnable.h"
 
 namespace Hazel

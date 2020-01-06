@@ -3,12 +3,9 @@
 #include "glm/glm.hpp"
 
 #include "Hazel/Core/Window.h"
-#include "Hazel/Renderer/VertexArray.h"
-#include "Hazel/Renderer/OrthographicCamera.h"
-#include "Hazel/Renderer/Shader.h"
-
-//TEST
-#include "Hazel/Renderer/ShaderLibrary.h"
+#include "Hazel/Rendering/VertexArray.h"
+#include "Hazel/Rendering/OrthographicCamera.h"
+#include "Hazel/Rendering/Shader.h"
 
 namespace Hazel
 {

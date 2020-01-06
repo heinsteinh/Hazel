@@ -3,6 +3,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "Hazel/Utils/Angle.h"
 #include "Viewport.h"
 
 namespace Hazel

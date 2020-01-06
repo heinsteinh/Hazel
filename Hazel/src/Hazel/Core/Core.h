@@ -1,5 +1,8 @@
 #pragma once
 
-#include "Hazel/Core/Application.h"
-#include "Hazel/Core/OrthographicCameraController.h"
-#include "Hazel/Core/Log.h"
+#include "UniquePtr.h"
+#include "SharedPtr.h"
+#include "EntryPoint.h"
+#include "Application.h"
+#include "Log.h"
+#include "OrthographicCameraController.h"

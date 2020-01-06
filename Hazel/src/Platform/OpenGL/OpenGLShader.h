@@ -2,7 +2,7 @@
 
 #include "glm/glm.hpp"
 
-#include "Hazel/Renderer/Shader.h"
+#include "Hazel/Rendering/Shader.h"
 
 namespace Hazel
 {

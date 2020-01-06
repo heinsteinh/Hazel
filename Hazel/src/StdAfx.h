@@ -24,5 +24,6 @@
 #include <Windows.h>
 #endif
 
-#include "Hazel/Utils/Utils.h"
+#include "Hazel/Core/UniquePtr.h"
+#include "Hazel/Core/SharedPtr.h"
 #include "Hazel/Core/Log.h"

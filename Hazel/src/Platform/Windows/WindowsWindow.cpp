@@ -4,7 +4,7 @@
 
 #include "Hazel/Core/Log.h"
 #include "Hazel/Events/Events.h"
-#include "Hazel/Renderer/Renderer.h"
+#include "Hazel/Rendering/Renderer.h"
 #include "GlfwLoader.h"
 
 namespace Hazel

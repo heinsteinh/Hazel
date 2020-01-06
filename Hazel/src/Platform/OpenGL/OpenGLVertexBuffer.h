@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Renderer/VertexBuffer.h"
+#include "Hazel/Rendering/VertexBuffer.h"
 
 namespace Hazel
 {

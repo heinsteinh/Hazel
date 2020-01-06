@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "Hazel/Core/Window.h"
-#include "Hazel/Renderer/RenderApi.h"
+#include "Hazel/Rendering/RenderApi.h"
 #include "WindowsInput.h"
 #include "WindowsEventManager.h"
 

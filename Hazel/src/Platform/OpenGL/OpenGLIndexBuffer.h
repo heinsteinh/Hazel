@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Hazel/Renderer/IndexBuffer.h"
+#include "Hazel/Rendering/IndexBuffer.h"
 
 namespace Hazel
 {
