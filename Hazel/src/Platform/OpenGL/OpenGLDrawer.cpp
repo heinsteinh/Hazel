@@ -15,9 +15,13 @@ namespace Hazel
         glfwSwapBuffers(window);
     }
 
-    void OpenGLDrawer::SetViewport(int width, int height)
+    void OpenGLDrawer::SetViewport(const Viewport &viewport)
     {
-        glViewport(0, 0, width, height);
+        glViewport(
+            (int)viewport.Left,
+            (int)viewport.Bottom,
+            (int)viewport.GetWidth(),
+            (int)viewport.GetHeight());
     }
 
     void OpenGLDrawer::SetClearColor(const glm::vec4 &color)

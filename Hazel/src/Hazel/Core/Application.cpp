@@ -1,6 +1,7 @@
 #include "Application.h"
 
 #include "Platform.h"
+#include "Hazel/Rendering/RenderCommand.h"
 #include "Hazel/ImGui/ImGuiLayer.h"
 #include "Hazel/Utils/Reversed.h"
 
@@ -8,7 +9,6 @@ namespace Hazel
 {
     Application::Application()
         : window(Platform::Get().CreateNewWindow()),
-        drawer(window->GetContext().GetDrawer()),
         imguiLayer(new ImGuiLayer(*window.get()))
     {
         Init();
@@ -64,6 +64,12 @@ namespace Hazel
         Quit();
     }
 
+    void Application::OnWindowResized(WindowResizedEvent &e)
+    {
+        CheckMinimized(e);
+        ResetViewport(e);
+    }
+
     void Application::Init()
     {
         CoreDebug("Application initialization.");
@@ -74,9 +80,11 @@ namespace Hazel
 
     void Application::Update()
     {
-        SetupViewport();
         Timestep deltaTime = ComputeDeltaTime();
-        UpdateLayers(deltaTime);
+        if (!minimized)
+        {
+            UpdateLayers(deltaTime);
+        }
         RenderImGui();
         window->OnUpdate(deltaTime);
     }
@@ -90,11 +98,16 @@ namespace Hazel
         return Timestep::FromSeconds((float)deltaTime);
     }
 
-    void Application::SetupViewport()
+    void Application::CheckMinimized(WindowResizedEvent &e)
     {
-        drawer.SetViewport(
-            window->GetFrameBufferWidth(),
-            window->GetFrameBufferHeight());
+        minimized = e.GetWidth() == 0 || e.GetHeight() == 0;
+    }
+
+    void Application::ResetViewport(WindowResizedEvent &e)
+    {
+        RenderCommand(window->GetContext().GetDrawer())
+            .SetViewport(Viewport::FromDimensions(
+            (float)e.GetWidth(), (float)e.GetHeight()));
     }
 
     void Application::UpdateLayers(Timestep deltaTime)

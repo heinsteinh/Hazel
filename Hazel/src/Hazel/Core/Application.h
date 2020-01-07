@@ -11,10 +11,10 @@ namespace Hazel
     {
     private:
         UniquePtr<Window> window;
-        Drawer &drawer;
         ImGuiLayer *imguiLayer;
         LayerStack layers;
         bool running = false;
+        bool minimized = false;
         double lastTime = 0.0;
 
     public:
@@ -29,12 +29,14 @@ namespace Hazel
 
         virtual void OnEvent(Event &e) override;
         virtual void OnWindowClosed(WindowClosedEvent &e) override;
+        virtual void OnWindowResized(WindowResizedEvent &e) override;
 
     private:
         void Init();
         void Update();
         Timestep ComputeDeltaTime();
-        void SetupViewport();
+        void CheckMinimized(WindowResizedEvent &e);
+        void ResetViewport(WindowResizedEvent &e);
         void UpdateLayers(Timestep deltaTime);
         void RenderImGui();
     };

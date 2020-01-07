@@ -1,23 +1,28 @@
 #pragma once
 
-#include "Hazel/Core/Window.h"
+#include "Hazel/Rendering/Drawer.h"
 
 namespace Hazel
 {
     class HAZEL_API RenderCommand
     {
     private:
-        Window &window;
+        Drawer &drawer;
 
     public:
-        constexpr RenderCommand(Window &window)
-            : window(window)
+        constexpr RenderCommand(Drawer &drawer)
+            : drawer(drawer)
         {
         }
 
-        inline void DrawIndexed(const SharedPtr<VertexArray> &vertexArray) const
+        constexpr void SetViewport(const Viewport &viewport) const
         {
-            window.GetContext().GetDrawer().DrawIndexed(vertexArray);
+            drawer.SetViewport(viewport);
+        }
+
+        constexpr void DrawIndexed(const SharedPtr<VertexArray> &vertexArray) const
+        {
+            drawer.DrawIndexed(vertexArray);
         }
     };
 }
