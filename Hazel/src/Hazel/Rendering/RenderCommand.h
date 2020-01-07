@@ -15,12 +15,12 @@ namespace Hazel
         {
         }
 
-        constexpr void SetViewport(const Viewport &viewport) const
+        inline void SetViewport(const Viewport &viewport) const
         {
             drawer.SetViewport(viewport);
         }
 
-        constexpr void DrawIndexed(const SharedPtr<VertexArray> &vertexArray) const
+        inline void DrawIndexed(const SharedPtr<VertexArray> &vertexArray) const
         {
             drawer.DrawIndexed(vertexArray);
         }
