@@ -35,8 +35,8 @@ namespace Hazel
         void Init();
         void Update();
         Timestep ComputeDeltaTime();
-        void CheckMinimized(WindowResizedEvent &e);
-        void ResetViewport(WindowResizedEvent &e);
+        void CheckIfMinimized(WindowResizedEvent &e);
+        void ResetViewport();
         void UpdateLayers(Timestep deltaTime);
         void RenderImGui();
     };

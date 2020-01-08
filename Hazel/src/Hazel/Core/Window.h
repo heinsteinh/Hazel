@@ -17,6 +17,11 @@ namespace Hazel
             return (float)GetWidth() / (float)GetHeight();
         }
 
+        inline Viewport GetViewport() const
+        {
+            return Viewport::FromDimensions((float)GetWidth(), (float)GetHeight());
+        }
+
         virtual Context &GetContext() const = 0;
         virtual const Input &GetInput() const = 0;
         virtual void *GetNativeWindow() const = 0;
@@ -24,8 +29,6 @@ namespace Hazel
         virtual const std::string &GetTitle() const = 0;
         virtual int GetWidth() const = 0;
         virtual int GetHeight() const = 0;
-        virtual int GetFrameBufferWidth() const = 0;
-        virtual int GetFrameBufferHeight() const = 0;
         virtual bool IsVSync() const = 0;
 
         virtual void SetTitle(const std::string &title) = 0;

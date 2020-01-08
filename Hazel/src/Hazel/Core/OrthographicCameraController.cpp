@@ -35,19 +35,19 @@ namespace Hazel
     {
         auto &input = window.GetInput();
         auto cameraPosition = camera.GetPosition();
-        if (input.IsKeyPressed(Hazel::Key::W))
+        if (input.IsKeyPressed(Key::W))
         {
             cameraPosition.y += translationSpeed * deltaTime.ToSeconds();
         }
-        if (input.IsKeyPressed(Hazel::Key::S))
+        if (input.IsKeyPressed(Key::S))
         {
             cameraPosition.y -= translationSpeed * deltaTime.ToSeconds();
         }
-        if (input.IsKeyPressed(Hazel::Key::D))
+        if (input.IsKeyPressed(Key::D))
         {
             cameraPosition.x += translationSpeed * deltaTime.ToSeconds();
         }
-        if (input.IsKeyPressed(Hazel::Key::A))
+        if (input.IsKeyPressed(Key::A))
         {
             cameraPosition.x -= translationSpeed * deltaTime.ToSeconds();
         }
@@ -58,11 +58,11 @@ namespace Hazel
     {
         auto &input = window.GetInput();
         auto cameraRotation = camera.GetRotation();
-        if (input.IsKeyPressed(Hazel::Key::Q))
+        if (input.IsKeyPressed(Key::Q))
         {
             cameraRotation += rotationSpeed * deltaTime.ToSeconds();
         }
-        if (input.IsKeyPressed(Hazel::Key::E))
+        if (input.IsKeyPressed(Key::E))
         {
             cameraRotation -= rotationSpeed * deltaTime.ToSeconds();
         }

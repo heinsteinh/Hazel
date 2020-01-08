@@ -31,6 +31,6 @@ namespace Hazel
         openGLShader->UploadUniformMat4("u_ViewProjection", camera->GetViewProjectionMatrix());
         openGLShader->UploadUniformMat4("u_Transform", transform);
         vertexArray->Bind();
-        RenderCommand(window.GetContext().GetDrawer()).DrawIndexed(vertexArray);
+        RenderCommand(window).DrawIndexed(vertexArray);
     }
 }

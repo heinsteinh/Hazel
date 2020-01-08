@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Rendering/Drawer.h"
+#include "Hazel/Core/Window.h"
 
 namespace Hazel
 {
@@ -10,8 +10,8 @@ namespace Hazel
         Drawer &drawer;
 
     public:
-        constexpr RenderCommand(Drawer &drawer)
-            : drawer(drawer)
+        RenderCommand(Window &window)
+            : drawer(window.GetContext().GetDrawer())
         {
         }
 

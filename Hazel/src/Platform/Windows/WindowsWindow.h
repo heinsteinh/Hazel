@@ -29,8 +29,6 @@ namespace Hazel
         virtual const std::string &GetTitle() const override;
         virtual int GetWidth() const override;
         virtual int GetHeight() const override;
-        virtual int GetFrameBufferWidth() const override;
-        virtual int GetFrameBufferHeight() const override;
         virtual bool IsVSync() const override;
 
         virtual void SetTitle(const std::string &title) override;

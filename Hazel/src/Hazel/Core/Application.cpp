@@ -66,8 +66,8 @@ namespace Hazel
 
     void Application::OnWindowResized(WindowResizedEvent &e)
     {
-        CheckMinimized(e);
-        ResetViewport(e);
+        CheckIfMinimized(e);
+        ResetViewport();
     }
 
     void Application::Init()
@@ -98,16 +98,14 @@ namespace Hazel
         return Timestep::FromSeconds((float)deltaTime);
     }
 
-    void Application::CheckMinimized(WindowResizedEvent &e)
+    void Application::CheckIfMinimized(WindowResizedEvent &e)
     {
         minimized = e.GetWidth() == 0 || e.GetHeight() == 0;
     }
 
-    void Application::ResetViewport(WindowResizedEvent &e)
+    void Application::ResetViewport()
     {
-        RenderCommand(window->GetContext().GetDrawer())
-            .SetViewport(Viewport::FromDimensions(
-            (float)e.GetWidth(), (float)e.GetHeight()));
+        RenderCommand(*window.get()).SetViewport(window->GetViewport());
     }
 
     void Application::UpdateLayers(Timestep deltaTime)

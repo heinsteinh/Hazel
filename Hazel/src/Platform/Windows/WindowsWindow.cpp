@@ -43,20 +43,6 @@ namespace Hazel
         return height;
     }
 
-    int WindowsWindow::GetFrameBufferWidth() const
-    {
-        int width = 0;
-        glfwGetFramebufferSize(window, &width, nullptr);
-        return width;
-    }
-
-    int WindowsWindow::GetFrameBufferHeight() const
-    {
-        int height = 0;
-        glfwGetFramebufferSize(window, nullptr, &height);
-        return height;
-    }
-
     bool WindowsWindow::IsVSync() const
     {
         return vsync;

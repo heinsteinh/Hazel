@@ -42,9 +42,9 @@ namespace Hazel
             return Top - Bottom;
         }
 
-        constexpr auto GetMiddlePoint() const
+        constexpr glm::vec2 GetMiddle() const
         {
-            return std::make_pair((Top + Bottom) / 2, (Right - Left) / 2);
+            return {(Top + Bottom) / 2, (Right - Left) / 2};
         }
     };
 }
