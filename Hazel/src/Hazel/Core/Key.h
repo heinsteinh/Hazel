@@ -128,12 +128,12 @@ namespace Hazel
         Last = Menu
     };
 
-    inline bool operator==(Key hazel, int native)
+    constexpr bool operator==(Key hazel, int native)
     {
         return static_cast<int>(hazel) == native;
     }
 
-    inline bool operator==(int native, Key hazel)
+    constexpr bool operator==(int native, Key hazel)
     {
         return static_cast<int>(hazel) == native;
     }

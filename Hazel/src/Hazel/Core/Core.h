@@ -5,4 +5,3 @@
 #include "EntryPoint.h"
 #include "Application.h"
 #include "Log.h"
-#include "OrthographicCameraController.h"

@@ -19,6 +19,7 @@ namespace Hazel
 
     public:
         Application();
+        virtual ~Application() = default;
 
         Window &GetWindow();
         void Run();

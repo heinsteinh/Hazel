@@ -1,8 +1,8 @@
 #include "Application.h"
 
 #include "Platform.h"
-#include "Hazel/Rendering/RenderCommand.h"
 #include "Hazel/ImGui/ImGuiLayer.h"
+#include "Hazel/Rendering/RenderCommand.h"
 #include "Hazel/Utils/Reversed.h"
 
 namespace Hazel
