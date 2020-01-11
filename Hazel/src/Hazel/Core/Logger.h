@@ -40,9 +40,9 @@ namespace Hazel
         }
 
         template<typename ...Args>
-        inline void Log(Level level, const Args &...args)
+        inline void Log(Level level, Args &&...args)
         {
-            logger->log(static_cast<spdlog::level::level_enum>(level), args...);
+            logger->log(static_cast<spdlog::level::level_enum>(level), std::forward<Args>(args)...);
         }
 
         template<typename ...Args>
