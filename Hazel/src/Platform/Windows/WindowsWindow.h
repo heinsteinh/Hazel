@@ -27,12 +27,12 @@ namespace Hazel
 
         Context &GetContext() const override;
         virtual const std::string &GetTitle() const override;
-        virtual int GetWidth() const override;
-        virtual int GetHeight() const override;
+        virtual float GetWidth() const override;
+        virtual float GetHeight() const override;
         virtual bool IsVSync() const override;
 
         virtual void SetTitle(const std::string &title) override;
-        virtual void Resize(int width, int height) override;
+        virtual void Resize(float width, float height) override;
         virtual void SetVSync(bool enabled) override;
         virtual void SetEventListener(EventListener *listener) override;
 

@@ -42,6 +42,12 @@ namespace Hazel
             return Top - Bottom;
         }
 
+        constexpr float GetAspectRatio() const
+        {
+            auto height = GetHeight();
+            return height ? GetWidth() / height : 0.0f;
+        }
+
         constexpr glm::vec2 GetMiddle() const
         {
             return {(Top + Bottom) / 2, (Right - Left) / 2};

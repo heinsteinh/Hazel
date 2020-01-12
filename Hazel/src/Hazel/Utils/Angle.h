@@ -1,5 +1,7 @@
 #pragma once
 
+#include "glm/glm.hpp"
+
 namespace Hazel
 {
     class Angle
@@ -15,7 +17,7 @@ namespace Hazel
 
         static constexpr Angle FromDegrees(float value)
         {
-            return value * std::atan(1.0f) / 45.0f;
+            return glm::radians(value);
         }
 
         constexpr Angle() = default;

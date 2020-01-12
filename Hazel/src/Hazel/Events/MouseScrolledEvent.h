@@ -7,22 +7,22 @@ namespace Hazel
     class HAZEL_API MouseScrolledEvent : public MouseEvent
     {
     private:
-        double xOffset;
-        double yOffset;
+        float xOffset;
+        float yOffset;
 
     public:
-        constexpr MouseScrolledEvent(double xOffset, double yOffset)
+        constexpr MouseScrolledEvent(float xOffset, float yOffset)
             : xOffset(xOffset),
             yOffset(yOffset)
         {
         }
 
-        inline double GetXOffset() const
+        inline float GetXOffset() const
         {
             return xOffset;
         }
 
-        inline double GetYOffset() const
+        inline float GetYOffset() const
         {
             return yOffset;
         }

@@ -18,10 +18,6 @@ namespace Hazel
     {
     }
 
-    ImGuiLayer::~ImGuiLayer()
-    {
-    }
-
     void ImGuiLayer::Begin()
     {
         ImGui_ImplOpenGL3_NewFrame();
@@ -32,22 +28,12 @@ namespace Hazel
     void ImGuiLayer::End()
     {
         ImGui::GetIO().DisplaySize = {
-            (float)parent.GetWidth(),
-            (float)parent.GetHeight()
+            parent.GetWidth(),
+            parent.GetHeight()
         };
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         UpdatePlatforms();
-    }
-
-    void ImGuiLayer::Show(bool show)
-    {
-        this->show = show;
-    }
-
-    bool ImGuiLayer::IsShown() const
-    {
-        return show;
     }
 
     void ImGuiLayer::OnAttach()
@@ -66,10 +52,6 @@ namespace Hazel
 
     void ImGuiLayer::OnImGuiRender()
     {
-        if (show)
-        {
-            ImGui::ShowDemoWindow(&show);
-        }
     }
 
     void ImGuiLayer::Init()

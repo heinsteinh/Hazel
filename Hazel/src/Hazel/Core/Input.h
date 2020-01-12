@@ -12,7 +12,7 @@ namespace Hazel
 
         virtual bool IsKeyPressed(Key key) const = 0;
         virtual bool IsButtonPressed(MouseButton button) const = 0;
-        virtual double GetMouseX() const = 0;
-        virtual double GetMouseY() const = 0;
+        virtual float GetMouseX() const = 0;
+        virtual float GetMouseY() const = 0;
     };
 }

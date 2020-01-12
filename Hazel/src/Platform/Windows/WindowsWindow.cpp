@@ -2,7 +2,6 @@
 
 #include "GLFW/glfw3.h"
 
-#include "Hazel/Core/Log.h"
 #include "Hazel/Events/Events.h"
 #include "Hazel/Rendering/Renderer.h"
 #include "GlfwLoader.h"
@@ -29,18 +28,18 @@ namespace Hazel
         return title;
     }
 
-    int WindowsWindow::GetWidth() const
+    float WindowsWindow::GetWidth() const
     {
         int width = 0;
         glfwGetWindowSize(window, &width, nullptr);
-        return width;
+        return (float)width;
     }
 
-    int WindowsWindow::GetHeight() const
+    float WindowsWindow::GetHeight() const
     {
         int height = 0;
         glfwGetWindowSize(window, nullptr, &height);
-        return height;
+        return (float)height;
     }
 
     bool WindowsWindow::IsVSync() const
@@ -50,20 +49,20 @@ namespace Hazel
 
     void WindowsWindow::SetTitle(const std::string &title)
     {
-        CoreInfo("Window title changed to {}.", title);
+        CoreInfo("Window title set to {}.", title);
         this->title = title;
         glfwSetWindowTitle(window, title.c_str());
     }
 
-    void WindowsWindow::Resize(int width, int height)
+    void WindowsWindow::Resize(float width, float height)
     {
-        CoreDebug("Window resized from code: {} {}", width, height);
-        glfwSetWindowSize(window, width, height);
+        CoreDebug("Window resized to ({}, {})", width, height);
+        glfwSetWindowSize(window, (int)width, (int)height);
     }
 
     void WindowsWindow::SetVSync(bool enabled)
     {
-        CoreInfo("VSync enabled: {}", enabled);
+        CoreInfo("VSync enabled {}", enabled);
         glfwSwapInterval(enabled ? 1 : 0);
         vsync = enabled;
     }

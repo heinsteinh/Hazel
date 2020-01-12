@@ -7,22 +7,22 @@ namespace Hazel
     class HAZEL_API MouseMovedEvent : public MouseEvent
     {
     private:
-        double xPosition;
-        double yPosition;
+        float xPosition;
+        float yPosition;
 
     public:
-        constexpr MouseMovedEvent(double xPosition, double yPosition)
+        constexpr MouseMovedEvent(float xPosition, float yPosition)
             : xPosition(xPosition),
             yPosition(yPosition)
         {
         }
 
-        inline double GetXPosition() const
+        inline float GetXPosition() const
         {
             return xPosition;
         }
 
-        inline double GetYPosition() const
+        inline float GetYPosition() const
         {
             return yPosition;
         }

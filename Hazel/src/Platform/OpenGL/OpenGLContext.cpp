@@ -55,7 +55,9 @@ namespace Hazel
 
     void OpenGLContext::SetupParameters()
     {
+#ifdef _DEBUG
         static OpenGLDebugger debugger;
+#endif
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }

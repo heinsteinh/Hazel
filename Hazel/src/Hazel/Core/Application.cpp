@@ -47,7 +47,7 @@ namespace Hazel
 
     void Application::ShowImGui(bool show)
     {
-        imguiLayer->Show(show);
+        showImGui = show;
     }
 
     void Application::OnEvent(Event &e)
@@ -66,8 +66,10 @@ namespace Hazel
 
     void Application::OnWindowResized(WindowResizedEvent &e)
     {
-        CheckIfMinimized(e);
-        ResetViewport();
+        RenderCommand(*window.get()).SetViewport(
+            Viewport::FromDimensions(
+                e.GetWidth(),
+                e.GetHeight()));
     }
 
     void Application::Init()
@@ -81,11 +83,14 @@ namespace Hazel
     void Application::Update()
     {
         Timestep deltaTime = ComputeDeltaTime();
-        if (!minimized)
+        if (!window->IsMinimized())
         {
             UpdateLayers(deltaTime);
         }
-        RenderImGui();
+        if (showImGui)
+        {
+            RenderImGui();
+        }
         window->OnUpdate(deltaTime);
     }
 
@@ -96,16 +101,6 @@ namespace Hazel
         lastTime = time;
         CoreTrace("Frame Rate: {}", 1.0 / deltaTime);
         return Timestep::FromSeconds((float)deltaTime);
-    }
-
-    void Application::CheckIfMinimized(WindowResizedEvent &e)
-    {
-        minimized = e.GetWidth() == 0 || e.GetHeight() == 0;
-    }
-
-    void Application::ResetViewport()
-    {
-        RenderCommand(*window.get()).SetViewport(window->GetViewport());
     }
 
     void Application::UpdateLayers(Timestep deltaTime)

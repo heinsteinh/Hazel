@@ -6,9 +6,7 @@ namespace Hazel
 {
     OpenGLDebugger::OpenGLDebugger()
     {
-#ifdef _DEBUG
         Init();
-#endif
     }
 
     static const std::unordered_map<GLenum, std::string> sources = {
@@ -66,7 +64,13 @@ namespace Hazel
     void OpenGLDebugger::Init()
     {
         glEnable(GL_DEBUG_OUTPUT);
-        glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, nullptr, GL_FALSE);
+        glDebugMessageControl(
+            GL_DONT_CARE,
+            GL_DONT_CARE,
+            GL_DEBUG_SEVERITY_NOTIFICATION,
+            0,
+            nullptr,
+            GL_FALSE);
         glDebugMessageCallback(OnError, this);
     }
 }

@@ -84,7 +84,7 @@ namespace Hazel
 
     void WindowsEventManager::OnResize(int width, int height)
     {
-        WindowResizedEvent(width, height).Dispatch(listener);
+        WindowResizedEvent((float)width, (float)height).Dispatch(listener);
     }
 
     void WindowsEventManager::OnClose()
@@ -129,11 +129,11 @@ namespace Hazel
 
     void WindowsEventManager::OnMouseScrolled(double x, double y)
     {
-        MouseScrolledEvent(x, y).Dispatch(listener);
+        MouseScrolledEvent((float)x, (float)y).Dispatch(listener);
     }
 
     void WindowsEventManager::OnMouseMoved(double x, double y)
     {
-        MouseMovedEvent(x, y).Dispatch(listener);
+        MouseMovedEvent((float)x, (float)y).Dispatch(listener);
     }
 }

@@ -8,17 +8,14 @@ namespace Hazel
     class ImGuiLayer : public Layer
     {
     private:
-        bool show = false;
         const Window &parent;
 
     public:
         ImGuiLayer(const Window &parent);
-        virtual ~ImGuiLayer();
+        virtual ~ImGuiLayer() = default;
 
         void Begin();
         void End();
-        void Show(bool open);
-        bool IsShown() const;
 
         virtual void OnAttach() override;
         virtual void OnDetach() override;

@@ -18,7 +18,7 @@ namespace Hazel
 
         virtual bool IsKeyPressed(Key key) const override;
         virtual bool IsButtonPressed(MouseButton button) const override;
-        virtual double GetMouseX() const override;
-        virtual double GetMouseY() const override;
+        virtual float GetMouseX() const override;
+        virtual float GetMouseY() const override;
     };
 }

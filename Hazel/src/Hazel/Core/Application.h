@@ -14,7 +14,7 @@ namespace Hazel
         ImGuiLayer *imguiLayer;
         LayerStack layers;
         bool running = false;
-        bool minimized = false;
+        bool showImGui = true;
         double lastTime = 0.0;
 
     public:
@@ -36,8 +36,6 @@ namespace Hazel
         void Init();
         void Update();
         Timestep ComputeDeltaTime();
-        void CheckIfMinimized(WindowResizedEvent &e);
-        void ResetViewport();
         void UpdateLayers(Timestep deltaTime);
         void RenderImGui();
     };

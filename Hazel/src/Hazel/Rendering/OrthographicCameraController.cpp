@@ -26,7 +26,7 @@ namespace Hazel
 
     void OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent &e)
     {
-        zoomLevel -= (float)e.GetYOffset() * 0.2f;
+        zoomLevel -= e.GetYOffset() * 0.2f;
         zoomLevel = std::max(zoomLevel, 0.1f);
         UpdateCameraViewport();
     }

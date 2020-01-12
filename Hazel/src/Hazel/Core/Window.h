@@ -12,14 +12,20 @@ namespace Hazel
     public:
         virtual ~Window() = default;
 
+        inline bool IsMinimized() const
+        {
+            return GetWidth() == 0.0f || GetHeight() == 0.0f;
+        }
+
         inline float GetAspectRatio() const
         {
-            return (float)GetWidth() / (float)GetHeight();
+            auto height = GetHeight();
+            return height ? GetWidth() / height : 0.0f;
         }
 
         inline Viewport GetViewport() const
         {
-            return Viewport::FromDimensions((float)GetWidth(), (float)GetHeight());
+            return Viewport::FromDimensions(GetWidth(), GetHeight());
         }
 
         virtual Context &GetContext() const = 0;
@@ -27,12 +33,12 @@ namespace Hazel
         virtual void *GetNativeWindow() const = 0;
 
         virtual const std::string &GetTitle() const = 0;
-        virtual int GetWidth() const = 0;
-        virtual int GetHeight() const = 0;
+        virtual float GetWidth() const = 0;
+        virtual float GetHeight() const = 0;
         virtual bool IsVSync() const = 0;
 
         virtual void SetTitle(const std::string &title) = 0;
-        virtual void Resize(int width, int height) = 0;
+        virtual void Resize(float width, float height) = 0;
         virtual void SetVSync(bool enable) = 0;
         virtual void SetEventListener(EventListener *listener) = 0;
     };

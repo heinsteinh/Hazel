@@ -7,22 +7,22 @@ namespace Hazel
     class HAZEL_API WindowResizedEvent : public ApplicationEvent
     {
     private:
-        int width;
-        int height;
+        float width;
+        float height;
 
     public:
-        constexpr WindowResizedEvent(int width, int height)
+        constexpr WindowResizedEvent(float width, float height)
             : width(width),
             height(height)
         {
         }
 
-        inline int GetWidth() const
+        inline float GetWidth() const
         {
             return width;
         }
 
-        inline int GetHeight() const
+        inline float GetHeight() const
         {
             return height;
         }

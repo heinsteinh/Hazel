@@ -12,5 +12,5 @@ namespace Hazel
     const ShaderDataType ShaderDataType::Int2(sizeof(float), 2);
     const ShaderDataType ShaderDataType::Int3(sizeof(float), 3);
     const ShaderDataType ShaderDataType::Int4(sizeof(float), 4);
-    const ShaderDataType ShaderDataType::Bool(sizeof(float), 1);
+    const ShaderDataType ShaderDataType::Bool(1, 1);
 }
