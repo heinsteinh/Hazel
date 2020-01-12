@@ -5,35 +5,6 @@
 //TEMPORARY
 #include "../../Hazel/src/Platform/OpenGL/OpenGLShader.h"
 
-static const std::string vertexSource = R"(
-    #version 330 core
-
-    layout(location = 0) in vec3 a_Position;
-
-    uniform mat4 u_ViewProjection;
-    uniform mat4 u_Transform;
-
-    void main()
-    {
-        gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
-    }
-
-)";
-
-static const std::string fragmentSource = R"(
-    #version 330 core
-
-    layout(location = 0) out vec4 color;
-
-    uniform vec4 u_Color;
-
-    void main()
-    {
-        color = u_Color;
-    }
-
-)";
-
 namespace Sandbox
 {
     class TestLayer : public Hazel::Layer
@@ -88,9 +59,6 @@ namespace Sandbox
 
         virtual void OnAttach() override
         {
-            static const glm::vec4 clearColor = {0.45f, 0.55f, 0.60f, 1.00f};
-            parent.GetContext().GetDrawer().SetClearColor(clearColor);
-
             cameraController.SetRotationEnabled(true);
 
             Hazel::ObjectFactory &factory = parent.GetContext().GetFactory();
@@ -121,7 +89,7 @@ namespace Sandbox
             textureVertexArray->SetIndexBuffer(indexBuffer);
             squareVertexArray->SetIndexBuffer(indexBuffer);
 
-            uniformShader = factory.CreateShader("Uniform", vertexSource, fragmentSource);
+            uniformShader = factory.CreateShader("FlatColor", "assets\\shaders\\FlatColor.glsl");
             auto textureShader = library.Load("assets\\shaders\\Texture.glsl");
             texture = factory.CreateTexture2D("assets\\textures\\Test.jpg");
             overlay = factory.CreateTexture2D("assets\\textures\\TestOverlay.png");

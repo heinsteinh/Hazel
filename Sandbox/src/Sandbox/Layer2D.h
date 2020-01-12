@@ -8,11 +8,28 @@ namespace Sandbox
     {
     private:
         Hazel::Window &parent;
+        Hazel::Renderer renderer;
+
+        Hazel::OrthographicCameraController cameraController;
+
+        Hazel::SharedPtr<Hazel::Shader> flatColorShader;
+        Hazel::SharedPtr<Hazel::VertexArray> squareVertexArray;
+
+        float framerate = 0.0f;
+        glm::vec4 color = {0.0f, 0.0f, 1.0f, 1.0f};
+
+        bool showFps = true;
+        bool showColorPicker = true;
 
     public:
-        Layer2D(Hazel::Window &parent)
-            : parent(parent)
-        {
-        }
+        Layer2D(Hazel::Window &parent);
+        virtual ~Layer2D() = default;
+
+        virtual void OnAttach() override;
+        virtual void OnDetach() override;
+        virtual void OnUpdate(Hazel::Timestep deltaTime) override;
+        virtual void OnImGuiRender() override;
+        virtual void OnEvent(Hazel::Event &e) override;
+        virtual void OnKeyPressed(Hazel::KeyPressedEvent &e) override;
     };
 }
