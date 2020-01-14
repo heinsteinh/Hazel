@@ -23,9 +23,9 @@ namespace Hazel
             return height ? GetWidth() / height : 0.0f;
         }
 
-        inline Viewport GetViewport() const
+        inline Rectangle GetViewport() const
         {
-            return Viewport::FromDimensions(GetWidth(), GetHeight());
+            return Rectangle::FromSize(GetWidth(), GetHeight());
         }
 
         virtual Context &GetContext() const = 0;

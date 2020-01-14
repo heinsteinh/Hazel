@@ -5,7 +5,7 @@ namespace Hazel
     OrthographicCameraController::OrthographicCameraController(const Window &window)
         : window(window),
         aspectRatio(window.GetAspectRatio()),
-        camera(Viewport::FromAspectRatio(aspectRatio, zoomLevel))
+        camera(Rectangle::FromAspectRatio(aspectRatio, zoomLevel))
     {
     }
 
@@ -71,6 +71,6 @@ namespace Hazel
 
     void OrthographicCameraController::UpdateCameraViewport()
     {
-        camera.SetViewport(Viewport::FromAspectRatio(aspectRatio, zoomLevel));
+        camera.SetViewport(Rectangle::FromAspectRatio(aspectRatio, zoomLevel));
     }
 }

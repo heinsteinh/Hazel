@@ -15,7 +15,7 @@ namespace Hazel
         {
         }
 
-        inline void SetViewport(const Viewport &viewport) const
+        inline void SetViewport(const Rectangle &viewport) const
         {
             drawer.SetViewport(viewport);
         }

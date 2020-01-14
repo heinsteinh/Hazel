@@ -67,7 +67,7 @@ namespace Hazel
     void Application::OnWindowResized(WindowResizedEvent &e)
     {
         RenderCommand(*window.get()).SetViewport(
-            Viewport::FromDimensions(
+            Rectangle::FromSize(
                 e.GetWidth(),
                 e.GetHeight()));
     }

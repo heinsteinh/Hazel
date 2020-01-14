@@ -8,7 +8,7 @@ namespace Sandbox
     {
     private:
         Hazel::Window &parent;
-        Hazel::Renderer renderer;
+        Hazel::Renderer2D renderer;
 
         Hazel::OrthographicCameraController cameraController;
 
@@ -16,7 +16,7 @@ namespace Sandbox
         Hazel::SharedPtr<Hazel::VertexArray> squareVertexArray;
 
         float framerate = 0.0f;
-        glm::vec4 color = {0.0f, 0.0f, 1.0f, 1.0f};
+        glm::vec4 color = {1.0f, 0.0f, 0.0f, 1.0f};
 
         bool showFps = true;
         bool showColorPicker = true;

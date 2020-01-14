@@ -1,8 +1,5 @@
 #include "Layer2D.h"
 
-//TEMPORARY
-#include "../../Hazel/src/Platform/OpenGL/OpenGLShader.h"
-
 namespace Sandbox
 {
     Layer2D::Layer2D(Hazel::Window &parent)
@@ -14,21 +11,6 @@ namespace Sandbox
 
     void Layer2D::OnAttach()
     {
-        Hazel::ObjectFactory &factory = parent.GetContext().GetFactory();
-        squareVertexArray = factory.CreateVertexArray();
-
-        auto vertexBuffer = factory.CreateVertexBuffer({
-            -0.5f, -0.5f, 0.0f,
-             0.5f, -0.5f, 0.0f,
-             0.5f,  0.5f, 0.0f,
-            -0.5f,  0.5f, 0.0f});
-
-        vertexBuffer->SetLayout({{Hazel::ShaderDataType::Float3, "a_Position"}});
-        squareVertexArray->AddVertexBuffer(vertexBuffer);
-        auto indexBuffer = factory.CreateIndexBuffer({0, 1, 2, 2, 3, 0});
-        squareVertexArray->SetIndexBuffer(indexBuffer);
-
-        flatColorShader = factory.CreateShader("FlatColor", "assets\\shaders\\FlatColor.glsl");
     }
 
     void Layer2D::OnDetach()
@@ -38,16 +20,13 @@ namespace Sandbox
     void Layer2D::OnUpdate(Hazel::Timestep deltaTime)
     {
         framerate = 1.0f / deltaTime.ToSeconds();
+
         parent.GetContext().GetDrawer().Clear();
+
         cameraController.OnUpdate(deltaTime);
 
         renderer.BeginScene(cameraController.GetCamera());
-
-        auto openGLShader = std::dynamic_pointer_cast<Hazel::OpenGLShader>(flatColorShader);
-        openGLShader->Bind();
-        openGLShader->UploadUniformFloat4("u_Color", color);
-        renderer.Submit(flatColorShader, squareVertexArray, glm::mat4(1.0f));
-
+        renderer.DrawQuad({0.0f, 0.0f}, {1.0f, 1.0f}, color);
         renderer.EndScene();
     }
 

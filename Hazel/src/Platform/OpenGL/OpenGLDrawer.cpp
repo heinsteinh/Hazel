@@ -15,11 +15,11 @@ namespace Hazel
         glfwSwapBuffers(window);
     }
 
-    void OpenGLDrawer::SetViewport(const Viewport &viewport)
+    void OpenGLDrawer::SetViewport(const Rectangle &viewport)
     {
         glViewport(
-            (int)viewport.Left,
-            (int)viewport.Bottom,
+            (int)viewport.GetLeft(),
+            (int)viewport.GetBottom(),
             (int)viewport.GetWidth(),
             (int)viewport.GetHeight());
     }

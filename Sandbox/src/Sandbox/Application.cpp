@@ -14,8 +14,7 @@ namespace Sandbox
             Hazel::Info("Sandbox application creation");
             //PushLayer(new TestLayer(GetWindow()));
             PushLayer(new Layer2D(GetWindow()));
-            static const glm::vec4 clearColor = {0.45f, 0.55f, 0.60f, 1.00f};
-            GetWindow().GetContext().GetDrawer().SetClearColor(clearColor);
+            GetWindow().GetContext().GetDrawer().SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
         };
 
         virtual void OnKeyPressed(Hazel::KeyPressedEvent &e) override

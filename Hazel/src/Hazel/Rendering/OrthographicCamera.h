@@ -4,7 +4,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "Hazel/Utils/Angle.h"
-#include "Viewport.h"
+#include "Rectangle.h"
 
 namespace Hazel
 {
@@ -18,7 +18,7 @@ namespace Hazel
         glm::mat4 viewProjectionMatrix{1.0f};
 
     public:
-        OrthographicCamera(const Viewport &viewport = {})
+        OrthographicCamera(const Rectangle &viewport = {-1.0f, 1.0f, -1.0f, 1.0f})
             : projectionMatrix(viewport.ToProjectionMatrix())
         {
             RecalculateViewProjectionMatrix();
@@ -49,7 +49,7 @@ namespace Hazel
             return viewProjectionMatrix;
         }
 
-        inline void SetViewport(const Viewport &viewport)
+        inline void SetViewport(const Rectangle &viewport)
         {
             projectionMatrix = viewport.ToProjectionMatrix();
             RecalculateViewProjectionMatrix();
