@@ -19,6 +19,6 @@ namespace Hazel
 
         void BeginScene(const OrthographicCamera &camera);
         void EndScene();
-        void DrawQuad(const glm::vec2 &position, const glm::vec2 &size, const glm::vec4 &color);
+        void DrawQuad(const Rectangle &rectangle, const glm::vec4 &color);
     };
 }

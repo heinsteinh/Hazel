@@ -9,14 +9,14 @@ namespace Hazel
 {
     Application::Application()
         : window(Platform::Get().CreateNewWindow()),
-        imguiLayer(new ImGuiLayer(*window.get()))
+        imguiLayer(new ImGuiLayer(*window))
     {
         Init();
     }
 
     Window &Application::GetWindow()
     {
-        return *window.get();
+        return *window;
     }
 
     void Application::Run()
@@ -66,10 +66,7 @@ namespace Hazel
 
     void Application::OnWindowResized(WindowResizedEvent &e)
     {
-        RenderCommand(*window.get()).SetViewport(
-            Rectangle::FromSize(
-                e.GetWidth(),
-                e.GetHeight()));
+        RenderCommand(*window).SetViewport({0.0f, e.GetWidth(), 0.0f, e.GetHeight()});
     }
 
     void Application::Init()

@@ -1,4 +1,5 @@
 #pragma once
 
-#include "Hazel/Utils/Angle.h"
-#include "Hazel/Utils/Timestep.h"
+#include "Angle.h"
+#include "Timestep.h"
+#include "Rectangle.h"

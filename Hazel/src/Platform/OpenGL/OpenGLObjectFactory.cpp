@@ -15,39 +15,39 @@ namespace Hazel
         const std::string &vertexSource,
         const std::string &fragmentSource)
     {
-        return std::make_shared<OpenGLShader>(name, vertexSource, fragmentSource);
+        return MakeShared<OpenGLShader>(name, vertexSource, fragmentSource);
     }
 
     SharedPtr<Shader> OpenGLObjectFactory::CreateShader(
         const std::string &filename)
     {
-        return std::make_shared<OpenGLShader>(Path(filename).GetFilename(), filename);
+        return MakeShared<OpenGLShader>(Path(filename).GetFilename(), filename);
     }
 
     SharedPtr<Shader> OpenGLObjectFactory::CreateShader(
         const std::string &name,
         const std::string &filename)
     {
-        return std::make_shared<OpenGLShader>(name, filename);
+        return MakeShared<OpenGLShader>(name, filename);
     }
 
     SharedPtr<VertexArray> OpenGLObjectFactory::CreateVertexArray()
     {
-        return std::make_shared<OpenGLVertexArray>();
+        return MakeShared<OpenGLVertexArray>();
     }
 
     SharedPtr<VertexBuffer> OpenGLObjectFactory::CreateVertexBuffer(const std::vector<float> &vertices)
     {
-        return std::make_shared<OpenGLVertexBuffer>(vertices);
+        return MakeShared<OpenGLVertexBuffer>(vertices);
     }
 
     SharedPtr<IndexBuffer> OpenGLObjectFactory::CreateIndexBuffer(const std::vector<unsigned int> &indexes)
     {
-        return std::make_shared<OpenGLIndexBuffer>(indexes);
+        return MakeShared<OpenGLIndexBuffer>(indexes);
     }
 
     SharedPtr<Texture2D> OpenGLObjectFactory::CreateTexture2D(const std::string &filename)
     {
-        return std::make_shared<OpenGLTexture2D>(filename);
+        return MakeShared<OpenGLTexture2D>(filename);
     }
 }

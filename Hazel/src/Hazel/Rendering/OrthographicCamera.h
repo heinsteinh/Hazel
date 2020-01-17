@@ -4,7 +4,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "Hazel/Utils/Angle.h"
-#include "Rectangle.h"
+#include "Hazel/Utils/Rectangle.h"
 
 namespace Hazel
 {

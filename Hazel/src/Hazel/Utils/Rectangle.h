@@ -26,12 +26,10 @@ namespace Hazel
 
         static constexpr Rectangle FromSize(float width, float height)
         {
-            return {0.0f, width, 0.0f, height};
+            return {-width / 2.0f, width / 2.0f, -height / 2.0f, height / 2.0f};
         }
 
-        constexpr Rectangle()
-        {
-        }
+        constexpr Rectangle() = default;
 
         constexpr Rectangle(float left, float right, float bottom, float top)
             : left(left),
@@ -61,9 +59,14 @@ namespace Hazel
             return top;
         }
 
-        inline glm::mat4 ToProjectionMatrix() const
+        constexpr float GetX() const
         {
-            return glm::ortho(left, right, bottom, top);
+            return (right - left) / 2.0f;
+        }
+
+        constexpr float GetY() const
+        {
+            return (top + bottom) / 2.0f;
         }
 
         constexpr float GetWidth() const
@@ -92,9 +95,18 @@ namespace Hazel
             return height ? GetWidth() / height : 0.0f;
         }
 
-        constexpr glm::vec2 GetMiddle() const
+        inline glm::mat4 ToProjectionMatrix() const
         {
-            return {(top + bottom) / 2.0f, (right - left) / 2.0f};
+            return glm::ortho(left, right, bottom, top);
+        }
+
+        inline glm::mat4 GetTransform() const
+        {
+            return glm::scale(
+                glm::translate(
+                    glm::mat4(1.0f),
+                    {GetX(), GetY(), 0.0f}),
+                {GetWidth(), GetHeight(), 1.0f});
         }
 
         constexpr bool operator==(const Rectangle &other) const = default;

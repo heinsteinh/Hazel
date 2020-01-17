@@ -3,7 +3,7 @@
 #include "glm/glm.hpp"
 
 #include "VertexArray.h"
-#include "Rectangle.h"
+#include "Hazel/Utils/Rectangle.h"
 
 namespace Hazel
 {

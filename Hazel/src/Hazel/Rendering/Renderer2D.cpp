@@ -38,13 +38,11 @@ namespace Hazel
     {
     }
 
-    void Renderer2D::DrawQuad(const glm::vec2 &position, const glm::vec2 &size, const glm::vec4 &color)
+    void Renderer2D::DrawQuad(const Rectangle &rectangle, const glm::vec4 &color)
     {
         auto openGLShader = std::dynamic_pointer_cast<OpenGLShader>(shader);
         openGLShader->UploadUniformFloat4("u_Color", color);
-        openGLShader->UploadUniformMat4("u_Transform", glm::translate(
-            glm::mat4(1.0f),
-            {position.x, position.y, 0.0f}));
+        openGLShader->UploadUniformMat4("u_Transform", rectangle.GetTransform());
         RenderCommand(window).DrawIndexed(vertexArray);
     }
 }

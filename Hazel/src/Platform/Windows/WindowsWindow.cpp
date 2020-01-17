@@ -20,7 +20,7 @@ namespace Hazel
 
     Context &WindowsWindow::GetContext() const
     {
-        return *context.get();
+        return *context;
     }
 
     const std::string &WindowsWindow::GetTitle() const
@@ -102,8 +102,8 @@ namespace Hazel
         CoreDebug("GLFW window creation start.");
         window = glfwCreateWindow(1280, 720, title.c_str(), nullptr, nullptr);
         context.reset(api.CreateContext(*this));
-        input = std::make_unique<WindowsInput>(window);
-        eventManager = std::make_unique<WindowsEventManager>(window);
+        input = MakeUnique<WindowsInput>(window);
+        eventManager = MakeUnique<WindowsEventManager>(window);
         CoreDebug("GLFW window creation done.");
     }
 

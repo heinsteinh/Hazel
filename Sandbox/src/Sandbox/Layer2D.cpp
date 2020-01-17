@@ -26,7 +26,7 @@ namespace Sandbox
         cameraController.OnUpdate(deltaTime);
 
         renderer.BeginScene(cameraController.GetCamera());
-        renderer.DrawQuad({0.0f, 0.0f}, {1.0f, 1.0f}, color);
+        renderer.DrawQuad(Hazel::Rectangle::FromSize(1.0f, 1.0f), color);
         renderer.EndScene();
     }
 
