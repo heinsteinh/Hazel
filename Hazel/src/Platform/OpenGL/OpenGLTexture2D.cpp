@@ -54,19 +54,22 @@ namespace Hazel
         Create(data);
     }
 
+    static const std::unordered_map<int, std::pair<unsigned int, unsigned int>> formats = {
+        {3, {GL_RGB8, GL_RGB}},
+        {4, {GL_RGBA8, GL_RGBA}}
+    };
+
     bool OpenGLTexture2D::CheckFormat()
     {
-        switch (numChannels)
+        auto i = formats.find(numChannels);
+        if (i == formats.end())
         {
-        case 3:
-            internalFormat = GL_RGB8;
-            dataFormat = GL_RGB;
-            break;
-        case 4:
-            internalFormat = GL_RGBA8;
-            dataFormat = GL_RGBA;
+            internalFormat = dataFormat = 0;
+            return false;
         }
-        return internalFormat && dataFormat;
+        internalFormat = i->second.first;
+        dataFormat = i->second.second;
+        return true;
     }
 
     void OpenGLTexture2D::Create(const void *data)

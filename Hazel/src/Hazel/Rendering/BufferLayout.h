@@ -65,12 +65,10 @@ namespace Hazel
     private:
         inline void CalculateOffsetsAndStride()
         {
-            size_t offset = 0;
             stride = 0;
             for (auto &element : elements)
             {
-                element.SetOffset(offset);
-                offset += element.GetSize();
+                element.SetOffset(stride);
                 stride += element.GetSize();
             }
         }
