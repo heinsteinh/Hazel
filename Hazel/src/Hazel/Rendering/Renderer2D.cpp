@@ -2,9 +2,6 @@
 
 #include "RenderCommand.h"
 
-//TEMPORARY
-#include "../../Hazel/src/Platform/OpenGL/OpenGLShader.h"
-
 namespace Hazel
 {
     Renderer2D::Renderer2D(Window &window)
@@ -28,10 +25,9 @@ namespace Hazel
 
     void Renderer2D::BeginScene(const OrthographicCamera &camera)
     {
-        shader->Bind();
         vertexArray->Bind();
-        auto openGLShader = std::dynamic_pointer_cast<OpenGLShader>(shader);
-        openGLShader->UploadUniformMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
+        shader->Bind();
+        shader->Put("u_ViewProjection", camera.GetViewProjectionMatrix());
     }
 
     void Renderer2D::EndScene()
@@ -40,9 +36,8 @@ namespace Hazel
 
     void Renderer2D::DrawQuad(const Rectangle &rectangle, const glm::vec4 &color)
     {
-        auto openGLShader = std::dynamic_pointer_cast<OpenGLShader>(shader);
-        openGLShader->UploadUniformFloat4("u_Color", color);
-        openGLShader->UploadUniformMat4("u_Transform", rectangle.GetTransform());
+        shader->Put("u_Color", color);
+        shader->Put("u_Transform", rectangle.GetTransform());
         RenderCommand(window).DrawIndexed(vertexArray);
     }
 }

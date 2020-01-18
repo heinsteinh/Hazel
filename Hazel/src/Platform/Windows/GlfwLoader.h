@@ -10,5 +10,12 @@ namespace Hazel
     public:
         GlfwLoader();
         ~GlfwLoader();
+
+    private:
+        void Init();
+        void SetupDebugging();
+        void InitGlfw();
+        void SetupConfiguration();
+        void Shutdown();
     };
 }

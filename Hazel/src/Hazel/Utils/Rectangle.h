@@ -3,6 +3,8 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "Hazel/Utils/Angle.h"
+
 namespace Hazel
 {
     class Rectangle
@@ -61,7 +63,7 @@ namespace Hazel
 
         constexpr float GetX() const
         {
-            return (right - left) / 2.0f;
+            return (right + left) / 2.0f;
         }
 
         constexpr float GetY() const
@@ -100,12 +102,15 @@ namespace Hazel
             return glm::ortho(left, right, bottom, top);
         }
 
-        inline glm::mat4 GetTransform() const
+        inline glm::mat4 GetTransform(Angle rotation = 0.0_deg) const
         {
             return glm::scale(
-                glm::translate(
-                    glm::mat4(1.0f),
-                    {GetX(), GetY(), 0.0f}),
+                glm::rotate(
+                    glm::translate(
+                        glm::mat4(1.0f),
+                        {GetX(), GetY(), 0.0f}),
+                    rotation.ToRadians(),
+                    {0.0f, 0.0f, 1.0f}),
                 {GetWidth(), GetHeight(), 1.0f});
         }
 

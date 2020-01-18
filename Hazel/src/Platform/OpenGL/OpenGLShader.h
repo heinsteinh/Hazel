@@ -22,18 +22,21 @@ namespace Hazel
             const std::string &filename);
         virtual ~OpenGLShader();
 
-        void UploadUniformInt(const std::string &name, int value);
-        void UploadUniformFloat(const std::string &name, float value);
-        void UploadUniformFloat2(const std::string &name, const glm::vec2 &value);
-        void UploadUniformFloat3(const std::string &name, const glm::vec3 &value);
-        void UploadUniformFloat4(const std::string &name, const glm::vec4 &value);
-        void UploadUniformMat3(const std::string &name, const glm::mat3 &value);
-        void UploadUniformMat4(const std::string &name, const glm::mat4 &value);
+        void UploadUniform(const std::string &name, int value);
+        void UploadUniform(const std::string &name, float value);
+        void UploadUniform(const std::string &name, const glm::vec2 &value);
+        void UploadUniform(const std::string &name, const glm::vec3 &value);
+        void UploadUniform(const std::string &name, const glm::vec4 &value);
+        void UploadUniform(const std::string &name, const glm::mat3 &value);
+        void UploadUniform(const std::string &name, const glm::mat4 &value);
 
         virtual bool IsExecutable() const override;
         virtual const std::string &GetName() const override;
         virtual void Bind() const override;
         virtual void UnBind() const override;
+        virtual void Put(const std::string &name, const glm::vec3 &value) override;
+        virtual void Put(const std::string &name, const glm::vec4 &value) override;
+        virtual void Put(const std::string &name, const glm::mat4 &value) override;
 
     private:
         int GetUniformLocation(const std::string &name);

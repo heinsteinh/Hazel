@@ -2,9 +2,6 @@
 
 #include "Hazel.h"
 
-//TEMPORARY
-#include "../../Hazel/src/Platform/OpenGL/OpenGLShader.h"
-
 namespace Sandbox
 {
     class TestLayer : public Hazel::Layer
@@ -95,9 +92,8 @@ namespace Sandbox
             overlay = factory.CreateTexture2D("assets\\textures\\TestOverlay.png");
 
             // TEST
-            auto openGLShader = std::dynamic_pointer_cast<Hazel::OpenGLShader>(textureShader);
-            openGLShader->Bind();
-            openGLShader->UploadUniformInt("u_Texture", 0);
+            textureShader->Bind();
+            //textureShader->Upd("u_Texture", 0);
         }
 
         virtual void OnDetach() override
@@ -140,11 +136,9 @@ namespace Sandbox
             // Render
             renderer.BeginScene(cameraController.GetCamera());
 
-            auto openGLShader = std::dynamic_pointer_cast<Hazel::OpenGLShader>(uniformShader);
-
             static const std::string uniformName = "u_Color";
-            openGLShader->Bind();
-            openGLShader->UploadUniformFloat4(uniformName, gridColor);
+            uniformShader->Bind();
+            uniformShader->Put(uniformName, gridColor);
 
             // Test multiple squares
             static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));

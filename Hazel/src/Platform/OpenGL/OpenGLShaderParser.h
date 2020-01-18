@@ -36,6 +36,7 @@ namespace Hazel
         }
 
     private:
+        void Reset();
         std::string ReadFile(const std::string &filename);
         void SplitShaders(const std::string &source);
     };

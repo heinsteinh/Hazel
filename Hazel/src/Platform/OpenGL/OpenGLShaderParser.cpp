@@ -7,10 +7,15 @@ namespace Hazel
 {
     bool OpenGLShaderParser::Parse(const std::string &filename)
     {
-        failed = false;
-        sources.clear();
+        Reset();
         SplitShaders(ReadFile(filename));
         return !failed;
+    }
+
+    void OpenGLShaderParser::Reset()
+    {
+        failed = false;
+        sources.clear();
     }
 
     std::string OpenGLShaderParser::ReadFile(const std::string &filename)

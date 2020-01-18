@@ -13,17 +13,43 @@ namespace Hazel
 
     GlfwLoader::GlfwLoader()
     {
+        Init();
+    }
+
+    GlfwLoader::~GlfwLoader()
+    {
+        Shutdown();
+    }
+
+    void GlfwLoader::Init()
+    {
         CoreDebug("GLFW initialization.");
+        SetupDebugging();
+        InitGlfw();
+        SetupConfiguration();
+        CoreDebug("GLFW initialized.");
+    }
+
+    void GlfwLoader::SetupDebugging()
+    {
         glfwSetErrorCallback(&OnError);
+    }
+
+    void GlfwLoader::InitGlfw()
+    {
         if (!glfwInit())
         {
             CoreCritical("GLFW cannot be initialized.");
             exit(-1);
         }
-        CoreDebug("GLFW initialized.");
     }
 
-    GlfwLoader::~GlfwLoader()
+    void GlfwLoader::SetupConfiguration()
+    {
+        glfwWindowHint(GLFW_SAMPLES, 4);
+    }
+
+    void GlfwLoader::Shutdown()
     {
         CoreDebug("GLFW terminate.");
         glfwTerminate();

@@ -2,9 +2,6 @@
 
 #include "Hazel/Rendering/RenderCommand.h"
 
-// TEMPORARY
-#include "Platform/OpenGL/OpenGLShader.h"
-
 namespace Hazel
 {
     Renderer::Renderer(Window &window)
@@ -26,10 +23,9 @@ namespace Hazel
         const SharedPtr<VertexArray> &vertexArray,
         const glm::mat4 &transform) const
     {
-        auto openGLShader = std::dynamic_pointer_cast<OpenGLShader>(shader);
-        openGLShader->Bind();
-        openGLShader->UploadUniformMat4("u_ViewProjection", camera->GetViewProjectionMatrix());
-        openGLShader->UploadUniformMat4("u_Transform", transform);
+        shader->Bind();
+        shader->Put("u_ViewProjection", camera->GetViewProjectionMatrix());
+        shader->Put("u_Transform", transform);
         vertexArray->Bind();
         RenderCommand(window).DrawIndexed(vertexArray);
     }
