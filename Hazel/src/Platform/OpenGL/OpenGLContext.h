@@ -26,8 +26,6 @@ namespace Hazel
 
     private:
         void Init();
-        void LoadGlad();
-        void DisplayOpenGLInfo();
-        void SetupParameters();
+        void LoadOpenGL();
     };
 }

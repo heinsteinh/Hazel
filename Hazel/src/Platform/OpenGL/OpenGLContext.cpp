@@ -3,7 +3,7 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
-#include "OpenGLDebugger.h"
+#include "OpenGLLoader.h"
 
 namespace Hazel
 {
@@ -32,33 +32,11 @@ namespace Hazel
     void OpenGLContext::Init()
     {
         MakeCurrent();
-        LoadGlad();
-        DisplayOpenGLInfo();
-        SetupParameters();
+        LoadOpenGL();
     }
 
-    void OpenGLContext::LoadGlad()
+    void OpenGLContext::LoadOpenGL()
     {
-        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-        {
-            CoreCritical("Glad cannot be initialized.");
-            exit(-1);
-        }
-    }
-
-    void OpenGLContext::DisplayOpenGLInfo()
-    {
-        CoreInfo("OpenGL version: {}", glGetString(GL_VERSION));
-        CoreInfo("OpenGL vendor: {}", glGetString(GL_VENDOR));
-        CoreInfo("OpenGL renderer: {}", glGetString(GL_RENDERER));
-    }
-
-    void OpenGLContext::SetupParameters()
-    {
-#ifdef _DEBUG
-        static OpenGLDebugger debugger;
-#endif
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        static OpenGLLoader loader;
     }
 }

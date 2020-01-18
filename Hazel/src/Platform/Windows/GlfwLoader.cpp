@@ -15,9 +15,12 @@ namespace Hazel
     {
         CoreDebug("GLFW initialization.");
         glfwSetErrorCallback(&OnError);
-        glfwInit()
-            ? CoreDebug("GLFW initialized.")
-            : CoreError("GLFW cannot be initialized.");
+        if (!glfwInit())
+        {
+            CoreCritical("GLFW cannot be initialized.");
+            exit(-1);
+        }
+        CoreDebug("GLFW initialized.");
     }
 
     GlfwLoader::~GlfwLoader()
