@@ -84,6 +84,11 @@ namespace Hazel
         glUseProgram(0);
     }
 
+    void OpenGLShader::Put(const std::string &name, int value)
+    {
+        UploadUniform(name, value);
+    }
+
     void OpenGLShader::Put(const std::string &name, const glm::vec3 &value)
     {
         UploadUniform(name, value);

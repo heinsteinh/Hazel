@@ -4,6 +4,7 @@
 #include "OrthographicCamera.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "Texture.h"
 
 namespace Hazel
 {
@@ -12,7 +13,8 @@ namespace Hazel
     private:
         Window &window;
         SharedPtr<VertexArray> vertexArray;
-        SharedPtr<Shader> shader;
+        SharedPtr<Shader> colorShader;
+        SharedPtr<Shader> textureShader;
 
     public:
         Renderer2D(Window &window);
@@ -20,5 +22,6 @@ namespace Hazel
         void BeginScene(const OrthographicCamera &camera);
         void EndScene();
         void DrawQuad(const Rectangle &rectangle, const glm::vec4 &color);
+        void DrawQuad(const Rectangle &rectangle, const SharedPtr<Texture> &texture);
     };
 }

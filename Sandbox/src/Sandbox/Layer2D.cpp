@@ -11,6 +11,7 @@ namespace Sandbox
 
     void Layer2D::OnAttach()
     {
+        texture = parent.GetContext().GetFactory().CreateTexture2D("assets\\textures\\Test.jpg");
     }
 
     void Layer2D::OnDetach()
@@ -26,8 +27,8 @@ namespace Sandbox
         cameraController.OnUpdate(deltaTime);
 
         renderer.BeginScene(cameraController.GetCamera());
-        renderer.DrawQuad({-0.5f, 0.5f, -0.5f, 0.5f}, red);
-        renderer.DrawQuad({-2.0f, -1.0f, -1.0f, 1.0f}, green);
+        renderer.DrawQuad({-0.5f, 0.5f, -0.5f, 0.5f}, color);
+        renderer.DrawQuad({-2.6f, -1.0f, 0.0f, 0.9f}, texture);
         renderer.EndScene();
     }
 

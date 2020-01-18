@@ -75,6 +75,8 @@ namespace Hazel
         glTextureStorage2D(id, 1, internalFormat, width, height);
         glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTextureParameteri(id, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTextureParameteri(id, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTextureSubImage2D(id, 0, 0, 0, width, height, dataFormat, GL_UNSIGNED_BYTE, data);
         CoreInfo("Texture {} loaded successfuly from file {}", id, filename);
     }

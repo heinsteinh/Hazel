@@ -12,14 +12,14 @@ namespace Sandbox
 
         Hazel::OrthographicCameraController cameraController;
 
-        Hazel::SharedPtr<Hazel::Shader> flatColorShader;
-        Hazel::SharedPtr<Hazel::VertexArray> squareVertexArray;
-
         float framerate = 0.0f;
+
         glm::vec4 red = {1.0f, 0.0f, 0.0f, 1.0f};
         glm::vec4 green = {0.0f, 1.0f, 0.0f, 1.0f};
         glm::vec4 blue = {0.0f, 0.0f, 1.0f, 1.0f};
         glm::vec4 color = red;
+
+        Hazel::SharedPtr<Hazel::Texture> texture;
 
         bool showFps = true;
         bool showColorPicker = true;
