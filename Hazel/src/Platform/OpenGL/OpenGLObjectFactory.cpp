@@ -46,6 +46,11 @@ namespace Hazel
         return MakeShared<OpenGLIndexBuffer>(indexes);
     }
 
+    SharedPtr<Texture2D> OpenGLObjectFactory::CreateTexture2D(int width, int height)
+    {
+        return MakeShared<OpenGLTexture2D>(width, height);
+    }
+
     SharedPtr<Texture2D> OpenGLObjectFactory::CreateTexture2D(const std::string &filename)
     {
         return MakeShared<OpenGLTexture2D>(filename);

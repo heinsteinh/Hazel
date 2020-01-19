@@ -15,7 +15,7 @@ namespace Hazel
 
         static constexpr Timestep FromMilliseconds(float value)
         {
-            return 1000 * value;
+            return value / 1000.0f;
         }
 
         constexpr Timestep() = default;
@@ -27,7 +27,7 @@ namespace Hazel
 
         constexpr float ToMilliseconds() const
         {
-            return FromSeconds(valueSeconds).ToMilliseconds();
+            return valueSeconds * 1000.0f;
         }
 
         constexpr Timestep operator+(const Timestep &other) const

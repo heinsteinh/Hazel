@@ -28,6 +28,7 @@ namespace Hazel
         virtual SharedPtr<VertexArray> CreateVertexArray() = 0;
         virtual SharedPtr<VertexBuffer> CreateVertexBuffer(const std::vector<float> &vertices) = 0;
         virtual SharedPtr<IndexBuffer> CreateIndexBuffer(const std::vector<unsigned int> &indexes) = 0;
+        virtual SharedPtr<Texture2D> CreateTexture2D(int width, int height) = 0;
         virtual SharedPtr<Texture2D> CreateTexture2D(const std::string &filename) = 0;
     };
 }

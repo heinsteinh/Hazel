@@ -35,6 +35,7 @@ namespace Hazel
         virtual void Bind() const override;
         virtual void UnBind() const override;
         virtual void Put(const std::string &name, int value) override;
+        virtual void Put(const std::string &name, float value) override;
         virtual void Put(const std::string &name, const glm::vec3 &value) override;
         virtual void Put(const std::string &name, const glm::vec4 &value) override;
         virtual void Put(const std::string &name, const glm::mat4 &value) override;

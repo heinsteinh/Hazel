@@ -10,6 +10,6 @@ namespace Hazel
     template<typename T, typename ...Args>
     constexpr auto MakeUnique(Args &&...args)
     {
-        return std::make_unique<T>(args...);
+        return std::make_unique<T>(std::forward<Args>(args)...);
     }
 }

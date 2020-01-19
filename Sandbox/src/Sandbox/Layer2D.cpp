@@ -20,6 +20,7 @@ namespace Sandbox
 
     void Layer2D::OnUpdate(Hazel::Timestep deltaTime)
     {
+        Hazel::Timer timer("OnUpdate", this);
         framerate = 1.0f / deltaTime.ToSeconds();
 
         parent.GetContext().GetDrawer().Clear();
@@ -63,5 +64,10 @@ namespace Sandbox
         {
             showFps = showColorPicker = true;
         }
+    }
+
+    void Layer2D::OnResult(std::string_view name, Hazel::Timestep duration)
+    {
+        Hazel::Debug("{} duration: {}ms", name, duration.ToMilliseconds());
     }
 }

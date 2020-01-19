@@ -10,6 +10,6 @@ namespace Hazel
     template<typename T, typename ...Args>
     constexpr auto MakeShared(Args &&...args)
     {
-        return std::make_shared<T>(args...);
+        return std::make_shared<T>(std::forward<Args>(args)...);
     }
 }

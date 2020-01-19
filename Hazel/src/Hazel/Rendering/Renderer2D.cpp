@@ -8,6 +8,7 @@ namespace Hazel
         : window(window)
     {
         auto &factory = window.GetContext().GetFactory();
+
         vertexArray = factory.CreateVertexArray();
 
         auto vertexBuffer = factory.CreateVertexBuffer({
@@ -23,18 +24,18 @@ namespace Hazel
         vertexArray->AddVertexBuffer(vertexBuffer);
         vertexArray->SetIndexBuffer(factory.CreateIndexBuffer({0, 1, 2, 2, 3, 0}));
 
-        colorShader = factory.CreateShader("FlatColor", "assets\\shaders\\FlatColor.glsl");
         textureShader = factory.CreateShader("Texture", "assets\\shaders\\Texture.glsl");
+        whiteTexture = factory.CreateTexture2D(1, 1);
+        unsigned int data = 0xffffffff;
+        whiteTexture->SetData(&data);
     }
 
     void Renderer2D::BeginScene(const OrthographicCamera &camera)
     {
         vertexArray->Bind();
-        auto viewProjection = camera.GetViewProjectionMatrix();
-        colorShader->Bind();
-        colorShader->Put("u_ViewProjection", viewProjection);
         textureShader->Bind();
-        textureShader->Put("u_ViewProjection", viewProjection);
+        textureShader->Put("u_ViewProjection", camera.GetViewProjectionMatrix());
+        textureShader->Put("u_Scale", 1.0f);
     }
 
     void Renderer2D::EndScene()
@@ -43,15 +44,15 @@ namespace Hazel
 
     void Renderer2D::DrawQuad(const Rectangle &rectangle, const glm::vec4 &color)
     {
-        colorShader->Bind();
-        colorShader->Put("u_Color", color);
-        colorShader->Put("u_Transform", rectangle.GetTransform());
+        textureShader->Put("u_Color", color);
+        whiteTexture->Bind();
+        textureShader->Put("u_Transform", rectangle.GetTransform());
         RenderCommand(window).DrawIndexed(vertexArray);
     }
 
     void Renderer2D::DrawQuad(const Rectangle &rectangle, const SharedPtr<Texture> &texture)
     {
-        textureShader->Bind();
+        textureShader->Put("u_Color", glm::vec4(1.0f));
         textureShader->Put("u_Texture", 0);
         textureShader->Put("u_Transform", rectangle.GetTransform());
         texture->Bind();

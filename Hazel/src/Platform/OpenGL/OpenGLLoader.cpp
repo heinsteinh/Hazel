@@ -36,8 +36,8 @@ namespace Hazel
     static const std::string &Get(const std::unordered_map<GLenum, std::string> &dictionary, GLenum key)
     {
         static const std::string empty;
-        auto i = dictionary.find(key);
-        return i == dictionary.end() ? empty : i->second;
+        auto keyValue = dictionary.find(key);
+        return keyValue == dictionary.end() ? empty : keyValue->second;
     }
 
     static void GLAPIENTRY OnError(
