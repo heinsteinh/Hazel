@@ -8,7 +8,7 @@
 namespace Hazel
 {
     Application::Application()
-        : window(Platform::Get().CreateNewWindow()),
+        : window(Platform::Get().CreateNewWindow(RenderApi::OpenGL)),
         imguiLayer(new ImGuiLayer(*window))
     {
         Init();
@@ -38,11 +38,13 @@ namespace Hazel
     void Application::PushLayer(Layer *layer)
     {
         layers.PushLayer(layer);
+        layer->OnAttach();
     }
 
     void Application::PushOverlay(Layer *overlay)
     {
         layers.PushOverlay(overlay);
+        overlay->OnAttach();
     }
 
     void Application::ShowImGui(bool show)

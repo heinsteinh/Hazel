@@ -4,7 +4,7 @@
 
 namespace Sandbox
 {
-    class Layer2D : public Hazel::Layer, public Hazel::Timer::Listener
+    class Layer2D : public Hazel::Layer, public Hazel::TimerListener
     {
     private:
         Hazel::Window &parent;
@@ -34,6 +34,6 @@ namespace Sandbox
         virtual void OnImGuiRender() override;
         virtual void OnEvent(Hazel::Event &e) override;
         virtual void OnKeyPressed(Hazel::KeyPressedEvent &e) override;
-        virtual void OnResult(std::string_view name, Hazel::Timestep duration) override;
+        virtual void OnMeasurement(const std::string &name, Hazel::Timestep duration) override;
     };
 }

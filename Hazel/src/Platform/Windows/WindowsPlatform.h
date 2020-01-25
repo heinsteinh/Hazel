@@ -9,7 +9,7 @@ namespace Hazel
     public:
         virtual ~WindowsPlatform() = default;
 
-        virtual Window *CreateNewWindow(RenderApi &api = RenderApi::OpenGL) override;
+        virtual Window *CreateNewWindow(RenderApi &api) override;
         virtual double GetTime() override;
     };
 }

@@ -26,7 +26,7 @@ namespace Hazel
 
         textureShader = factory.CreateShader("Texture", "assets\\shaders\\Texture.glsl");
         whiteTexture = factory.CreateTexture2D(1, 1);
-        unsigned int data = 0xffffffff;
+        unsigned int data = ~0;
         whiteTexture->SetData(&data);
     }
 

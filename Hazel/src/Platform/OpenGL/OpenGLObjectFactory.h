@@ -16,9 +16,6 @@ namespace Hazel
             const std::string &fragmentSource
         ) override;
         virtual SharedPtr<Shader> CreateShader(
-            const std::string &filename
-        ) override;
-        virtual SharedPtr<Shader> CreateShader(
             const std::string &name,
             const std::string &filename
         ) override;

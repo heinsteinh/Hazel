@@ -19,12 +19,6 @@ namespace Hazel
     }
 
     SharedPtr<Shader> OpenGLObjectFactory::CreateShader(
-        const std::string &filename)
-    {
-        return MakeShared<OpenGLShader>(Path(filename).GetFilename(), filename);
-    }
-
-    SharedPtr<Shader> OpenGLObjectFactory::CreateShader(
         const std::string &name,
         const std::string &filename)
     {

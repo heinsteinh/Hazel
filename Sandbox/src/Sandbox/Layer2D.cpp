@@ -20,7 +20,9 @@ namespace Sandbox
 
     void Layer2D::OnUpdate(Hazel::Timestep deltaTime)
     {
-        Hazel::Timer timer("OnUpdate", this);
+        static const std::string section = __FUNCTION__;
+        Hazel::Timer timer(section, this);
+
         framerate = 1.0f / deltaTime.ToSeconds();
 
         parent.GetContext().GetDrawer().Clear();
@@ -66,7 +68,7 @@ namespace Sandbox
         }
     }
 
-    void Layer2D::OnResult(std::string_view name, Hazel::Timestep duration)
+    void Layer2D::OnMeasurement(const std::string &name, Hazel::Timestep duration)
     {
         Hazel::Debug("{} duration: {}ms", name, duration.ToMilliseconds());
     }

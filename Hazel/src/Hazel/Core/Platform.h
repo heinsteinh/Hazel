@@ -12,7 +12,7 @@ namespace Hazel
 
         virtual ~Platform() = default;
 
-        virtual Window *CreateNewWindow(RenderApi &api = RenderApi::OpenGL) = 0;
+        virtual Window *CreateNewWindow(RenderApi &api) = 0;
         virtual double GetTime() = 0;
     };
 }

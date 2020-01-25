@@ -1,28 +1,18 @@
 #pragma once
 
-#include "Timestep.h"
+#include "TimerListener.h"
 
 namespace Hazel
 {
     class Timer
     {
-    public:
-        class Listener
-        {
-        public:
-            virtual ~Listener() = default;
-
-            virtual void OnResult(std::string_view name, Timestep duration) = 0;
-        };
-
     private:
-        std::string_view name;
-        Listener *listener = nullptr;
-        bool running = true;
+        const std::string &name;
+        TimerListener *listener = nullptr;
         std::chrono::time_point<std::chrono::steady_clock> start;
 
     public:
-        Timer(std::string_view name, Listener *listener)
+        Timer(const std::string &name, TimerListener *listener)
             : name(name),
             listener(listener),
             start(std::chrono::high_resolution_clock::now())
@@ -34,15 +24,22 @@ namespace Hazel
             Stop();
         }
 
-        void Stop()
+        inline void Stop()
         {
             auto end = std::chrono::high_resolution_clock::now();
-            if (!listener || !running)
+            if (listener)
             {
-                return;
+                listener->OnMeasurement(name, GetDuration(end - start));
+                listener = nullptr;
             }
-            running = false;
-            listener->OnResult(name, Timestep::FromMilliseconds((end - start).count() / 1000000.0f));
+        }
+
+    private:
+        constexpr Timestep GetDuration(std::chrono::nanoseconds duration) const
+        {
+            return Timestep::FromSeconds(
+                std::chrono::duration_cast<std::chrono::duration<float>>(duration)
+                .count());
         }
     };
 }

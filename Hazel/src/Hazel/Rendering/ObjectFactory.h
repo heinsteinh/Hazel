@@ -6,6 +6,8 @@
 #include "IndexBuffer.h"
 #include "Texture2D.h"
 
+#include "Hazel/Utils/Path.h"
+
 namespace Hazel
 {
     class HAZEL_API ObjectFactory
@@ -19,9 +21,6 @@ namespace Hazel
             const std::string &fragmentSource
         ) = 0;
         virtual SharedPtr<Shader> CreateShader(
-            const std::string &filename
-        ) = 0;
-        virtual SharedPtr<Shader> CreateShader(
             const std::string &name,
             const std::string &filename
         ) = 0;
@@ -30,5 +29,10 @@ namespace Hazel
         virtual SharedPtr<IndexBuffer> CreateIndexBuffer(const std::vector<unsigned int> &indexes) = 0;
         virtual SharedPtr<Texture2D> CreateTexture2D(int width, int height) = 0;
         virtual SharedPtr<Texture2D> CreateTexture2D(const std::string &filename) = 0;
+
+        inline SharedPtr<Shader> CreateShader(const std::string &filename)
+        {
+            return CreateShader(Path(filename).GetFilename(), filename);
+        }
     };
 }
