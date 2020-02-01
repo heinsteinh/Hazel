@@ -21,6 +21,8 @@ namespace Hazel
         virtual void OnDetach() override;
         virtual void OnUpdate(Timestep deltaTime) override;
         virtual void OnImGuiRender() override;
+        virtual void OnKeyEvent(KeyEvent &e) override;
+        virtual void OnMouseEvent(MouseEvent &e) override;
 
     private:
         void Init();

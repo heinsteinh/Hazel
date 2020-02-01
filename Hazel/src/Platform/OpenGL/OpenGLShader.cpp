@@ -7,18 +7,13 @@
 
 namespace Hazel
 {
-    OpenGLShader::OpenGLShader(
-        const std::string &name,
-        const std::string &vertexSource,
-        const std::string &fragmentSource)
+    OpenGLShader::OpenGLShader(const std::string &name, const std::string &vertexSource, const std::string &fragmentSource)
         : name(name)
     {
         id = OpenGLShaderCompiler().Compile(vertexSource, fragmentSource);
     }
 
-    OpenGLShader::OpenGLShader(
-        const std::string &name,
-        const std::string &filename)
+    OpenGLShader::OpenGLShader(const std::string &name, const std::string &filename)
         : name(name)
     {
         id = OpenGLShaderCompiler().Compile(filename);
@@ -27,41 +22,6 @@ namespace Hazel
     OpenGLShader::~OpenGLShader()
     {
         glDeleteProgram(id);
-    }
-
-    void OpenGLShader::UploadUniform(const std::string &name, int value)
-    {
-        glUniform1i(GetUniformLocation(name), value);
-    }
-
-    void OpenGLShader::UploadUniform(const std::string &name, float value)
-    {
-        glUniform1f(GetUniformLocation(name), value);
-    }
-
-    void OpenGLShader::UploadUniform(const std::string &name, const glm::vec2 &value)
-    {
-        glUniform2f(GetUniformLocation(name), value[0], value[1]);
-    }
-
-    void OpenGLShader::UploadUniform(const std::string &name, const glm::vec3 &value)
-    {
-        glUniform3f(GetUniformLocation(name), value[0], value[1], value[3]);
-    }
-
-    void OpenGLShader::UploadUniform(const std::string &name, const glm::vec4 &value)
-    {
-        glUniform4f(GetUniformLocation(name), value[0], value[1], value[2], value[3]);
-    }
-
-    void OpenGLShader::UploadUniform(const std::string &name, const glm::mat3 &value)
-    {
-        glUniformMatrix3fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
-    }
-
-    void OpenGLShader::UploadUniform(const std::string &name, const glm::mat4 &value)
-    {
-        glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
     }
 
     bool OpenGLShader::IsExecutable() const
@@ -86,27 +46,37 @@ namespace Hazel
 
     void OpenGLShader::Put(const std::string &name, int value)
     {
-        UploadUniform(name, value);
+        glUniform1i(GetUniformLocation(name), value);
     }
 
     void OpenGLShader::Put(const std::string &name, float value)
     {
-        UploadUniform(name, value);
+        glUniform1f(GetUniformLocation(name), value);
+    }
+
+    void OpenGLShader::Put(const std::string &name, const glm::vec2 &value)
+    {
+        glUniform2f(GetUniformLocation(name), value[0], value[1]);
     }
 
     void OpenGLShader::Put(const std::string &name, const glm::vec3 &value)
     {
-        UploadUniform(name, value);
+        glUniform3f(GetUniformLocation(name), value[0], value[1], value[2]);
     }
 
     void OpenGLShader::Put(const std::string &name, const glm::vec4 &value)
     {
-        UploadUniform(name, value);
+        glUniform4f(GetUniformLocation(name), value[0], value[1], value[2], value[3]);
+    }
+
+    void OpenGLShader::Put(const std::string &name, const glm::mat3 &value)
+    {
+        glUniformMatrix3fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
     }
 
     void OpenGLShader::Put(const std::string &name, const glm::mat4 &value)
     {
-        UploadUniform(name, value);
+        glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
     }
 
     int OpenGLShader::GetUniformLocation(const std::string &name)

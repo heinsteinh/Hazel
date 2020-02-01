@@ -13,6 +13,12 @@ namespace Hazel
         {
         }
 
+        inline std::string GetDirectory() const
+        {
+            size_t offset = path.find_last_of("/\\");
+            return offset == std::string::npos ? "" : path.substr(0, offset);
+        }
+
         inline std::string GetFilename() const
         {
             size_t start = path.find_last_of("/\\");
@@ -24,8 +30,8 @@ namespace Hazel
 
         inline std::string GetExtension() const
         {
-            size_t dot = path.rfind('.');
-            return dot == std::string::npos ? "" : path.substr(dot + 1, path.size() - dot);
+            size_t offset = path.rfind('.');
+            return offset == std::string::npos ? "" : path.substr(offset + 1, path.size() - offset);
         }
     };
 }

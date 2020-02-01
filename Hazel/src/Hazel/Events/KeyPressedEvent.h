@@ -32,6 +32,8 @@ namespace Hazel
     protected:
         virtual void Handle(EventListener &listener) override
         {
+            listener.OnInputEvent(*this);
+            listener.OnKeyEvent(*this);
             listener.OnKeyPressed(*this);
         }
     };

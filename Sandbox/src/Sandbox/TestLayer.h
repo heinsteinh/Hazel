@@ -93,7 +93,6 @@ namespace Sandbox
 
             // TEST
             textureShader->Bind();
-            //textureShader->Upd("u_Texture", 0);
         }
 
         virtual void OnDetach() override

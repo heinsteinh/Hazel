@@ -15,6 +15,9 @@ namespace Hazel
     protected:
         virtual void Handle(EventListener &listener) override
         {
+            listener.OnInputEvent(*this);
+            listener.OnMouseEvent(*this);
+            listener.OnMouseButtonEvent(*this);
             listener.OnMouseButtonPressed(*this);
         }
     };

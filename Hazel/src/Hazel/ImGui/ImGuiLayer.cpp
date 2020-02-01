@@ -54,6 +54,22 @@ namespace Hazel
     {
     }
 
+    void ImGuiLayer::OnKeyEvent(KeyEvent &e)
+    {
+        if (ImGui::GetIO().WantCaptureKeyboard)
+        {
+            e.Discard();
+        }
+    }
+
+    void ImGuiLayer::OnMouseEvent(MouseEvent &e)
+    {
+        if (ImGui::GetIO().WantCaptureMouse)
+        {
+            e.Discard();
+        }
+    }
+
     void ImGuiLayer::Init()
     {
         IMGUI_CHECKVERSION();

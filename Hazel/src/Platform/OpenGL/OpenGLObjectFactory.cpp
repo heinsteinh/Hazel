@@ -10,17 +10,12 @@
 
 namespace Hazel
 {
-    SharedPtr<Shader> OpenGLObjectFactory::CreateShader(
-        const std::string &name,
-        const std::string &vertexSource,
-        const std::string &fragmentSource)
+    SharedPtr<Shader> OpenGLObjectFactory::CreateShader(const std::string &name, const std::string &vertexSource, const std::string &fragmentSource)
     {
         return MakeShared<OpenGLShader>(name, vertexSource, fragmentSource);
     }
 
-    SharedPtr<Shader> OpenGLObjectFactory::CreateShader(
-        const std::string &name,
-        const std::string &filename)
+    SharedPtr<Shader> OpenGLObjectFactory::CreateShader(const std::string &name, const std::string &filename)
     {
         return MakeShared<OpenGLShader>(name, filename);
     }

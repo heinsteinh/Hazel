@@ -12,6 +12,7 @@ namespace Hazel
     protected:
         virtual void Handle(EventListener &listener) override
         {
+            listener.OnApplicationEvent(*this);
             listener.OnWindowClosed(*this);
         }
     };

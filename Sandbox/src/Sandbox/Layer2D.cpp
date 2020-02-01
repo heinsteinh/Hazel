@@ -66,6 +66,10 @@ namespace Sandbox
         {
             showFps = showColorPicker = true;
         }
+        if (e.GetKey() == Hazel::Key::Up)
+        {
+            color = {1.0f, 0.0f, 0.0f, 1.0f};
+        }
     }
 
     void Layer2D::OnMeasurement(const std::string &name, Hazel::Timestep duration)
