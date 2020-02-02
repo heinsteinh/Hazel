@@ -7,14 +7,14 @@ namespace Hazel
     class Regex
     {
     public:
-        class AllMatches
+        class Matches
         {
         private:
             const std::string &source;
             const std::regex &pattern;
 
         public:
-            constexpr AllMatches(const std::string &source, const std::regex &pattern)
+            constexpr Matches(const std::string &source, const std::regex &pattern)
                 : source(source),
                 pattern(pattern)
             {
@@ -41,7 +41,7 @@ namespace Hazel
         {
         }
 
-        inline AllMatches Search(const std::string &source) const
+        inline Matches Search(const std::string &source) const
         {
             return {source, pattern};
         }

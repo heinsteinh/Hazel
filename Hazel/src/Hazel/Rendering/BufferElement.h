@@ -7,7 +7,7 @@ namespace Hazel
     class HAZEL_API BufferElement
     {
     private:
-        const ShaderDataType *type;
+        ShaderDataType type = ShaderDataType::Float;
         std::string name;
         size_t offset = 0;
         bool normalized = false;
@@ -15,51 +15,51 @@ namespace Hazel
     public:
         BufferElement() = default;
 
-        BufferElement(const ShaderDataType &type, const std::string &name, bool normalized = false)
-            : type(&type),
+        BufferElement(ShaderDataType type, const std::string &name, bool normalized = false)
+            : type(type),
             name(name),
             normalized(normalized)
         {
         }
 
-        inline void SetOffset(size_t offset)
+        inline ShaderDataType GetType() const
         {
-            this->offset = offset;
+            return type;
         }
 
-        inline const ShaderDataType &GetType() const
-        {
-            return *type;
-        }
-
-        inline const std::string &GetName() const
+        constexpr const std::string &GetName() const
         {
             return name;
         }
 
-        inline size_t GetOffset() const
+        constexpr size_t GetOffset() const
         {
             return offset;
         }
 
-        inline bool IsNormalized() const
+        constexpr bool IsNormalized() const
         {
             return normalized;
         }
 
-        inline size_t GetComponentSize() const
+        constexpr size_t GetComponentSize() const
         {
-            return type->GetComponentSize();
+            return type.GetComponentSize();
         }
 
-        inline size_t GetComponentCount() const
+        constexpr size_t GetComponentCount() const
         {
-            return type->GetComponentCount();
+            return type.GetComponentCount();
         }
 
-        inline size_t GetSize() const
+        constexpr size_t GetSize() const
         {
-            return type->GetSize();
+            return type.GetSize();
+        }
+
+        constexpr void SetOffset(size_t offset)
+        {
+            this->offset = offset;
         }
     };
 }

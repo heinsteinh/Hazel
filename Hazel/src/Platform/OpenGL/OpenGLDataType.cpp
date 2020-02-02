@@ -4,23 +4,15 @@
 
 namespace Hazel
 {
-    static const std::unordered_map<const ShaderDataType *, unsigned int> shaderDataTypes = {
-        {&ShaderDataType::Float, GL_FLOAT},
-        {&ShaderDataType::Float2, GL_FLOAT},
-        {&ShaderDataType::Float3, GL_FLOAT},
-        {&ShaderDataType::Float4, GL_FLOAT},
-        {&ShaderDataType::Matrix3, GL_FLOAT},
-        {&ShaderDataType::Matrix4, GL_FLOAT},
-        {&ShaderDataType::Int, GL_INT},
-        {&ShaderDataType::Int2, GL_INT},
-        {&ShaderDataType::Int3, GL_INT},
-        {&ShaderDataType::Int4, GL_INT},
-        {&ShaderDataType::Bool, GL_BOOL}
+    static const std::unordered_map<DataType, unsigned int> shaderDataTypes = {
+        {DataType::Float, GL_FLOAT},
+        {DataType::Integer, GL_INT},
+        {DataType::Bool, GL_BOOL}
     };
 
-    unsigned int Hazel::OpenGLDataType::GetShaderDataType(const ShaderDataType &type)
+    unsigned int Hazel::OpenGLDataType::GetShaderDataType(ShaderDataType type)
     {
-        auto keyValue = shaderDataTypes.find(&type);
+        auto keyValue = shaderDataTypes.find(type.GetComponentType());
         if (keyValue == shaderDataTypes.end())
         {
             CoreError("Unknown shader data type: {}", type.GetSize());

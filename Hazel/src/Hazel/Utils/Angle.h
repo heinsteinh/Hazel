@@ -7,7 +7,7 @@ namespace Hazel
     class Angle
     {
     private:
-        float valueRadians = 0.0f;
+        float radians = 0.0f;
 
     public:
         static constexpr Angle FromRadians(float value)
@@ -24,78 +24,78 @@ namespace Hazel
 
         constexpr float ToRadians() const
         {
-            return valueRadians;
+            return radians;
         }
 
         constexpr float ToDegrees() const
         {
-            return FromRadians(valueRadians).ToDegrees();
+            return FromRadians(radians).ToDegrees();
         }
 
         constexpr Angle operator+(const Angle &other) const
         {
-            return valueRadians + other.valueRadians;
+            return radians + other.radians;
         }
 
         constexpr Angle operator+=(const Angle &other)
         {
-            return valueRadians += other.valueRadians;
+            return radians += other.radians;
         }
 
         constexpr Angle operator-(const Angle &other) const
         {
-            return valueRadians - other.valueRadians;
+            return radians - other.radians;
         }
 
         constexpr Angle operator-=(const Angle &other)
         {
-            return valueRadians -= other.valueRadians;
+            return radians -= other.radians;
         }
 
         constexpr Angle operator*(float factor) const
         {
-            return valueRadians * factor;
+            return radians * factor;
         }
 
         constexpr Angle operator*=(float factor)
         {
-            return valueRadians *= factor;
+            return radians *= factor;
         }
 
         constexpr Angle operator/(float factor) const
         {
-            return valueRadians / factor;
+            return radians / factor;
         }
 
         constexpr Angle operator/=(float factor)
         {
-            return valueRadians /= factor;
+            return radians /= factor;
         }
 
     private:
-        constexpr Angle(float valueRadians)
-            : valueRadians(valueRadians)
+        constexpr Angle(float radians)
+            : radians(radians)
         {
         }
     };
 
     constexpr Angle operator""_rad(long double value)
     {
-        return Angle::FromRadians((float)value);
+        return Angle::FromRadians(static_cast<float>(value));
     }
 
     constexpr Angle operator""_rad(unsigned long long value)
     {
-        return Angle::FromRadians((float)value);
+        return Angle::FromRadians(static_cast<float>(value));
     }
 
     constexpr Angle operator""_deg(long double value)
     {
-        return Angle::FromDegrees((float)value);
+        return Angle::FromDegrees(static_cast<float>(value));
     }
 
     constexpr Angle operator""_deg(unsigned long long value)
     {
-        return Angle::FromDegrees((float)value);
+        return Angle::FromDegrees(static_cast<float>(value));
     }
 }
