@@ -9,10 +9,6 @@ namespace Hazel
     {
     }
 
-    WindowsInput::~WindowsInput()
-    {
-    }
-
     bool WindowsInput::IsKeyPressed(Key key) const
     {
         return glfwGetKey(window, GlfwKeyMap::GetNativeKey(key)) == GLFW_PRESS;

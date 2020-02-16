@@ -11,7 +11,11 @@ namespace Sandbox
 
     void Layer2D::OnAttach()
     {
-        texture = parent.GetContext().GetFactory().CreateTexture2D("assets\\textures\\Test.jpg");
+        Hazel::ImageLoader loader;
+        texture = parent.GetContext()
+            .GetFactory()
+            .CreateTexture2D(Hazel::TextureInfo::FromImage(
+                loader.Load("assets\\textures\\Test.jpg")));
     }
 
     void Layer2D::OnDetach()
@@ -20,9 +24,6 @@ namespace Sandbox
 
     void Layer2D::OnUpdate(Hazel::Timestep deltaTime)
     {
-        static const std::string section = __FUNCTION__;
-        Hazel::Timer timer(section, this);
-
         framerate = 1.0f / deltaTime.ToSeconds();
 
         parent.GetContext().GetDrawer().Clear();

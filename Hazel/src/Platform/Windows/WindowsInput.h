@@ -14,7 +14,6 @@ namespace Hazel
 
     public:
         WindowsInput(GLFWwindow *window);
-        virtual ~WindowsInput();
 
         virtual bool IsKeyPressed(Key key) const override;
         virtual bool IsButtonPressed(MouseButton button) const override;

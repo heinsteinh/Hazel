@@ -32,6 +32,21 @@ namespace Hazel
             return FromRadians(radians).ToDegrees();
         }
 
+        constexpr operator bool() const
+        {
+            return radians;
+        }
+
+        constexpr bool operator==(const Angle &other) const
+        {
+            return radians == other.radians;
+        }
+
+        constexpr bool operator!=(const Angle &other) const
+        {
+            return radians != other.radians;
+        }
+
         constexpr Angle operator+(const Angle &other) const
         {
             return radians + other.radians;

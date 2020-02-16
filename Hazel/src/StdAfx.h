@@ -12,6 +12,7 @@
 #include <cmath>
 #include <functional>
 #include <chrono>
+#include <regex>
 
 #include <string>
 #include <string_view>

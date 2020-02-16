@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Renderer.h"
-#include "Renderer2D.h"
-#include "ShaderLibrary.h"
-#include "OrthographicCamera.h"
-#include "OrthographicCameraController.h"
+#include "Drawing/Renderer.h"
+#include "Drawing/Renderer2D.h"
+#include "Drawing/ObjectFactory.h"
+#include "Shaders/ShaderLibrary.h"
+#include "Textures/ImageLoader.h"
+#include "Camera/OrthographicCameraController.h"

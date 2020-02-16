@@ -10,25 +10,22 @@ namespace Hazel
         class Matches
         {
         private:
-            const std::string &source;
-            const std::regex &pattern;
+            std::sregex_iterator iterator;
 
         public:
-            constexpr Matches(const std::string &source, const std::regex &pattern)
-                : source(source),
-                pattern(pattern)
+            Matches(std::sregex_iterator iterator)
+                : iterator(iterator)
             {
             }
 
             inline auto begin() const
             {
-                return std::sregex_iterator(source.begin(), source.end(), pattern);
+                return iterator;
             }
 
-            inline const auto &end() const
+            inline auto end() const
             {
-                static const std::sregex_iterator result;
-                return result;
+                return std::sregex_iterator();
             }
         };
 
@@ -36,14 +33,14 @@ namespace Hazel
         std::regex pattern;
 
     public:
-        Regex(const char *pattern)
+        Regex(const std::string &pattern)
             : pattern(pattern)
         {
         }
 
-        inline Matches Search(const std::string &source) const
+        inline Matches FindAll(const std::string &source) const
         {
-            return {source, pattern};
+            return {{source.begin(), source.end(), pattern}};
         }
     };
 }

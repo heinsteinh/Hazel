@@ -2,7 +2,7 @@
 
 #include "Platform.h"
 #include "Hazel/ImGui/ImGuiLayer.h"
-#include "Hazel/Rendering/RenderCommand.h"
+#include "Hazel/Rendering/Drawing/RenderCommand.h"
 #include "Hazel/Utils/Reversed.h"
 
 namespace Hazel

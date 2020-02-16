@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "Hazel/Core/Window.h"
-#include "Hazel/Rendering/RenderApi.h"
+#include "Hazel/Rendering/Drawing/RenderApi.h"
 #include "WindowsInput.h"
 #include "WindowsEventManager.h"
 
@@ -19,7 +19,7 @@ namespace Hazel
         std::unique_ptr<WindowsInput> input;
         std::unique_ptr<WindowsEventManager> eventManager;
         std::string title = "Hazel Engine";
-        bool vsync = true;
+        bool verticalSynchronization = true;
 
     public:
         WindowsWindow(RenderApi &api);
@@ -29,11 +29,11 @@ namespace Hazel
         virtual const std::string &GetTitle() const override;
         virtual float GetWidth() const override;
         virtual float GetHeight() const override;
-        virtual bool IsVSync() const override;
+        virtual bool HasVerticalSynchronization() const override;
 
         virtual void SetTitle(const std::string &title) override;
         virtual void Resize(float width, float height) override;
-        virtual void SetVSync(bool enabled) override;
+        virtual void SetVerticalSynchronization(bool enabled) override;
         virtual void SetEventListener(EventListener *listener) override;
 
         virtual Input &GetInput() const override;

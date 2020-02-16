@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Window.h"
-#include "Hazel/Rendering/RenderApi.h"
+#include "Hazel/Rendering/Drawing/RenderApi.h"
 
 namespace Hazel
 {

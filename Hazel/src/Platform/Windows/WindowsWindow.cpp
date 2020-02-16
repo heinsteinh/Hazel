@@ -3,7 +3,6 @@
 #include "GLFW/glfw3.h"
 
 #include "Hazel/Events/Events.h"
-#include "Hazel/Rendering/Renderer.h"
 #include "GlfwLoader.h"
 
 namespace Hazel
@@ -42,9 +41,9 @@ namespace Hazel
         return (float)height;
     }
 
-    bool WindowsWindow::IsVSync() const
+    bool WindowsWindow::HasVerticalSynchronization() const
     {
-        return vsync;
+        return verticalSynchronization;
     }
 
     void WindowsWindow::SetTitle(const std::string &title)
@@ -60,11 +59,11 @@ namespace Hazel
         glfwSetWindowSize(window, (int)width, (int)height);
     }
 
-    void WindowsWindow::SetVSync(bool enabled)
+    void WindowsWindow::SetVerticalSynchronization(bool enabled)
     {
         CoreInfo("VSync enabled {}", enabled);
         glfwSwapInterval(enabled ? 1 : 0);
-        vsync = enabled;
+        verticalSynchronization = enabled;
     }
 
     void WindowsWindow::SetEventListener(EventListener *listener)
@@ -93,7 +92,7 @@ namespace Hazel
         static GlfwLoader loader;
         CoreInfo("Creating window");
         CreateGlfwWindow(api);
-        SetVSync(vsync);
+        SetVerticalSynchronization(verticalSynchronization);
         CoreInfo("Window created {} ({}x{}).", title, GetWidth(), GetHeight());
     }
 

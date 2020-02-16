@@ -68,16 +68,18 @@ namespace Sandbox
                  0.8f, -0.45f, 0.0f, 1.0f, 0.0f,
                  0.8f,  0.45f, 0.0f, 1.0f, 1.0f,
                 -0.8f,  0.45f, 0.0f, 0.0f, 1.0f});
+
             vertexBuffer->SetLayout({
-                {Hazel::ShaderDataType::Float3, "a_Position"},
-                {Hazel::ShaderDataType::Float2, "a_TexCoord"}});
+                {"a_Position", Hazel::ShaderDataType::Float3},
+                {"a_TexCoord", Hazel::ShaderDataType::Float2}});
 
             auto vertexBuffer2 = factory.CreateVertexBuffer({
                 -0.5f, -0.5f, 0.0f,
                  0.5f, -0.5f, 0.0f,
                  0.5f,  0.5f, 0.0f,
                 -0.5f,  0.5f, 0.0f});
-            vertexBuffer2->SetLayout({{Hazel::ShaderDataType::Float3, "a_Position"}});
+
+            vertexBuffer2->SetLayout({{"a_Position", Hazel::ShaderDataType::Float3}});
 
             textureVertexArray->AddVertexBuffer(vertexBuffer);
             squareVertexArray->AddVertexBuffer(vertexBuffer2);
@@ -86,10 +88,16 @@ namespace Sandbox
             textureVertexArray->SetIndexBuffer(indexBuffer);
             squareVertexArray->SetIndexBuffer(indexBuffer);
 
-            uniformShader = factory.CreateShader("FlatColor", "assets\\shaders\\FlatColor.glsl");
-            auto textureShader = library.Load("assets\\shaders\\Texture.glsl");
-            texture = factory.CreateTexture2D("assets\\textures\\Test.jpg");
-            overlay = factory.CreateTexture2D("assets\\textures\\TestOverlay.png");
+            uniformShader = factory.CreateShader(Hazel::ShaderInfo::FromFile(
+                "assets\\shaders\\FlatColor.glsl"));
+            auto textureShader = library.Load(Hazel::ShaderInfo::FromFile(
+                "assets\\shaders\\Texture.glsl"));
+
+            Hazel::ImageLoader loader;
+            texture = factory.CreateTexture2D(Hazel::TextureInfo::FromImage(
+                loader.Load("assets\\textures\\Test.jpg")));
+            overlay = factory.CreateTexture2D(Hazel::TextureInfo::FromImage(
+                loader.Load("assets\\textures\\TestOverlay.png")));
 
             // TEST
             textureShader->Bind();
@@ -135,9 +143,8 @@ namespace Sandbox
             // Render
             renderer.BeginScene(cameraController.GetCamera());
 
-            static const std::string uniformName = "u_Color";
             uniformShader->Bind();
-            uniformShader->Put(uniformName, gridColor);
+            uniformShader->Set("u_Color", gridColor);
 
             // Test multiple squares
             static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
