@@ -1,7 +1,5 @@
 #include "ShaderLibrary.h"
 
-#include "Hazel/Utils/FileInfo.h"
-
 namespace Hazel
 {
     ShaderLibrary::ShaderLibrary(ObjectFactory &factory)

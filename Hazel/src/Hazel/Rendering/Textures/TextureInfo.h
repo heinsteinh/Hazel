@@ -2,31 +2,20 @@
 
 #include "Image.h"
 #include "ColorFormat.h"
+#include "TextureFiltering.h"
+#include "TextureWrapping.h"
 
 namespace Hazel
 {
     struct HAZEL_API TextureInfo
     {
-        enum class Filter
-        {
-            Nearest,
-            Linear
-        };
-
-        enum class Wrap
-        {
-            ClampToEdge,
-            MirroredRepeat,
-            Repeat
-        };
-
         int Width = 0;
         int Height = 0;
         ColorFormat Format = ColorFormat::Rgba;
-        Filter MinFilter = Filter::Linear;
-        Filter MagFilter = Filter::Linear;
-        Wrap SWrap = Wrap::Repeat;
-        Wrap TWrap = Wrap::Repeat;
+        TextureFiltering MinFilter = TextureFiltering::Linear;
+        TextureFiltering MagFilter = TextureFiltering::Linear;
+        TextureWrapping SWrap = TextureWrapping::Repeat;
+        TextureWrapping TWrap = TextureWrapping::Repeat;
 
         static TextureInfo FromImage(const Image &image)
         {

@@ -23,7 +23,6 @@ namespace Hazel
         }
 
     private:
-        std::string ReadFile(const std::string &filename);
         std::unordered_map<ShaderType, std::string> SplitShaders(const std::string &source);
     };
 }

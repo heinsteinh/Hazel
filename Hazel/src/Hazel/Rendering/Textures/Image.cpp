@@ -2,13 +2,15 @@
 
 #include "stb_image.h"
 
+#include "ColorFormatInfo.h"
+
 namespace Hazel
 {
     Image::Image(const std::string &filename)
     {
         int numChannels = 0;
         data = stbi_load(filename.c_str(), &width, &height, &numChannels, 0);
-        format = ColorFormat::FromNumChannels(numChannels);
+        format = ColorFormatInfo::FromNumChannels(numChannels);
     }
 
     Image::Image(Image &&other) noexcept

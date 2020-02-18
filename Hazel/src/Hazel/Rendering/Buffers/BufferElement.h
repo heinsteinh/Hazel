@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Rendering/Shaders/ShaderDataType.h"
+#include "Hazel/Rendering/Shaders/ShaderDataTypeInfo.h"
 
 namespace Hazel
 {
@@ -8,7 +8,7 @@ namespace Hazel
     {
     private:
         std::string name;
-        ShaderDataType type = ShaderDataType::Float;
+        ShaderDataTypeInfo type = ShaderDataType::Unknown;
         size_t offset = 0;
         bool normalized = false;
 
@@ -40,6 +40,11 @@ namespace Hazel
         constexpr bool IsNormalized() const
         {
             return normalized;
+        }
+
+        constexpr DataType GetComponentType() const
+        {
+            return type.GetComponentType();
         }
 
         constexpr size_t GetComponentSize() const

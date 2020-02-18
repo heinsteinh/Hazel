@@ -15,15 +15,15 @@ namespace Hazel
         {ShaderType::Pixel, GL_FRAGMENT_SHADER}
     };
 
-    const std::unordered_map<TextureInfo::Filter, unsigned int> OpenGLConvert::filters = {
-        {TextureInfo::Filter::Nearest, GL_NEAREST},
-        {TextureInfo::Filter::Linear, GL_LINEAR}
+    const std::unordered_map<TextureFiltering, unsigned int> OpenGLConvert::filters = {
+        {TextureFiltering::Nearest, GL_NEAREST},
+        {TextureFiltering::Linear, GL_LINEAR}
     };
 
-    const std::unordered_map<TextureInfo::Wrap, unsigned int> OpenGLConvert::wraps = {
-        {TextureInfo::Wrap::ClampToEdge, GL_CLAMP_TO_EDGE},
-        {TextureInfo::Wrap::MirroredRepeat, GL_MIRRORED_REPEAT},
-        {TextureInfo::Wrap::Repeat, GL_REPEAT}
+    const std::unordered_map<TextureWrapping, unsigned int> OpenGLConvert::wraps = {
+        {TextureWrapping::Repeat, GL_REPEAT},
+        {TextureWrapping::MirroredRepeat, GL_MIRRORED_REPEAT},
+        {TextureWrapping::ClampToEdge, GL_CLAMP_TO_EDGE}
     };
 
     const std::unordered_map<ColorFormat, unsigned int> OpenGLConvert::colorFormats = {

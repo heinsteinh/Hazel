@@ -66,7 +66,7 @@ namespace Hazel
         glVertexAttribPointer(
             (int)index,
             (int)element.GetComponentCount(),
-            OpenGLConvert::ToInternal(element.GetType().GetComponentType()),
+            OpenGLConvert::ToInternal(element.GetComponentType()),
             element.IsNormalized() ? GL_TRUE : GL_FALSE,
             (int)layout.GetStride(),
             (const void *)element.GetOffset());

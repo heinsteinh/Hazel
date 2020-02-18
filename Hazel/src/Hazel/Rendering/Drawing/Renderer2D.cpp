@@ -57,7 +57,7 @@ namespace Hazel
     {
         auto vertexBuffer = CreateVertexBuffer();
         SetVertexBufferLayout(vertexBuffer);
-        vertexArray->AddVertexBuffer(CreateVertexBuffer());
+        vertexArray->AddVertexBuffer(vertexBuffer);
     }
 
     SharedPtr<VertexBuffer> Renderer2D::CreateVertexBuffer()

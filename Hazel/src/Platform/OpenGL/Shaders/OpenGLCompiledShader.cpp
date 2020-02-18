@@ -4,6 +4,7 @@
 
 #include "glad/glad.h"
 
+#include "Hazel/Rendering/Shaders/ShaderTypeInfo.h"
 #include "Platform/OpenGL/Utils/OpenGLConvert.h"
 
 namespace Hazel
@@ -72,9 +73,10 @@ namespace Hazel
 
     void OpenGLCompiledShader::DisplayInfoLog()
     {
+        const auto &vertexType = ShaderTypeInfo::GetKey(type);
         compiled
-            ? CoreInfo("Compilation of {} shader succeeded (id = {}).", type.GetKey(), id)
-            : CoreError("Compilation of {} shader failed.", type.GetKey());
+            ? CoreInfo("Compilation of {} shader succeeded (id = {}).", vertexType, id)
+            : CoreError("Compilation of {} shader failed.", vertexType);
         CoreInfo("Info log: {}", infoLog);
     }
 }

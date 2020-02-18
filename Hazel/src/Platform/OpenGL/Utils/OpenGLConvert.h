@@ -1,8 +1,9 @@
 #pragma once
 
+#include "Hazel/Core/DataType.h"
 #include "Hazel/Rendering/Shaders/ShaderType.h"
-#include "Hazel/Rendering/Shaders/ShaderDataType.h"
-#include "Hazel/Rendering/Textures/TextureInfo.h"
+#include "Hazel/Rendering/Textures/TextureFiltering.h"
+#include "Hazel/Rendering/Textures/TextureWrapping.h"
 #include "Hazel/Rendering/Textures/ColorFormat.h"
 
 namespace Hazel
@@ -12,8 +13,8 @@ namespace Hazel
     private:
         static const std::unordered_map<DataType, unsigned int> dataTypes;
         static const std::unordered_map<ShaderType, unsigned int> shaderTypes;
-        static const std::unordered_map<TextureInfo::Filter, unsigned int> filters;
-        static const std::unordered_map<TextureInfo::Wrap, unsigned int> wraps;
+        static const std::unordered_map<TextureFiltering, unsigned int> filters;
+        static const std::unordered_map<TextureWrapping, unsigned int> wraps;
         static const std::unordered_map<ColorFormat, unsigned int> colorFormats;
 
     public:
@@ -29,13 +30,13 @@ namespace Hazel
             return i == shaderTypes.end() ? 0 : i->second;
         }
 
-        static inline unsigned int ToInternal(TextureInfo::Filter filter)
+        static inline unsigned int ToInternal(TextureFiltering filter)
         {
             auto i = filters.find(filter);
             return i == filters.end() ? 0 : i->second;
         }
 
-        static inline unsigned int ToInternal(TextureInfo::Wrap wrap)
+        static inline unsigned int ToInternal(TextureWrapping wrap)
         {
             auto i = wraps.find(wrap);
             return i == wraps.end() ? 0 : i->second;
