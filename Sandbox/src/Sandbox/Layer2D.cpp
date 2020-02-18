@@ -11,11 +11,8 @@ namespace Sandbox
 
     void Layer2D::OnAttach()
     {
-        Hazel::ImageLoader loader;
-        texture = parent.GetContext()
-            .GetFactory()
-            .CreateTexture2D(Hazel::TextureInfo::FromImage(
-                loader.Load("assets\\textures\\Test.jpg")));
+        texture = Hazel::TextureLoader(parent)
+            .LoadFromImage("assets\\textures\\Test.jpg");
     }
 
     void Layer2D::OnDetach()
