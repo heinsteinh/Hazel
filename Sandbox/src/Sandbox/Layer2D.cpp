@@ -5,7 +5,8 @@ namespace Sandbox
     Layer2D::Layer2D(Hazel::Window &parent)
         : parent(parent),
         renderer(parent),
-        cameraController(parent)
+        cameraController(parent),
+        texturedSquare({-0.9f, 0.9f, -0.45f, 0.45f})
     {
     }
 
@@ -13,6 +14,7 @@ namespace Sandbox
     {
         texture = Hazel::TextureLoader(parent)
             .LoadFromImage("assets\\textures\\Test.jpg");
+        texturedSquare.SetTexture(texture);
     }
 
     void Layer2D::OnDetach()
@@ -27,9 +29,32 @@ namespace Sandbox
 
         cameraController.OnUpdate(deltaTime);
 
+        float speed = 0.1f;
+
+        auto &input = parent.GetInput();
+        if (input.IsKeyPressed(Hazel::Key::Up))
+        {
+            transform.TranslateY(speed);
+        }
+        if (input.IsKeyPressed(Hazel::Key::Down))
+        {
+            transform.TranslateY(-speed);
+        }
+        if (input.IsKeyPressed(Hazel::Key::Right))
+        {
+            transform.TranslateX(speed);
+        }
+        if (input.IsKeyPressed(Hazel::Key::Left))
+        {
+            transform.TranslateX(-speed);
+        }
+
+        colorSquare.SetTransform(transform.ToMatrixWithoutRotation());
+        colorSquare.SetColor(color);
+
         renderer.BeginScene(cameraController.GetCamera());
-        renderer.DrawQuad({-0.5f, 0.5f, -0.5f, 0.5f}, color);
-        renderer.DrawQuad({-2.6f, -1.0f, 0.0f, 0.9f}, texture);
+        renderer.Draw(colorSquare);
+        renderer.Draw(texturedSquare);
         renderer.EndScene();
     }
 
@@ -56,15 +81,16 @@ namespace Sandbox
 
     void Layer2D::OnKeyPressed(Hazel::KeyPressedEvent &e)
     {
-        if (e.GetKey() == Hazel::Key::R)
+        auto key = e.GetKey();
+        if (key == Hazel::Key::R)
         {
             cameraController.SetRotationEnabled(!cameraController.HasRotationEnabled());
         }
-        if (e.GetKey() == Hazel::Key::I)
+        if (key == Hazel::Key::I)
         {
             showFps = showColorPicker = true;
         }
-        if (e.GetKey() == Hazel::Key::Up)
+        if (key == Hazel::Key::Backspace)
         {
             color = {1.0f, 0.0f, 0.0f, 1.0f};
         }

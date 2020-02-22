@@ -7,9 +7,9 @@
 namespace Hazel
 {
     OpenGLTexture2D::OpenGLTexture2D(const TextureInfo &info)
-        : width(info.Width),
-        height(info.Height),
-        colorFormat(info.Format)
+        : width(info.width),
+        height(info.height),
+        colorFormat(info.colorFormat)
     {
         Init(info);
     }
@@ -55,10 +55,10 @@ namespace Hazel
 
     void OpenGLTexture2D::SetParameters(const TextureInfo &info)
     {
-        glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, OpenGLConvert::ToInternal(info.MinFilter));
-        glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, OpenGLConvert::ToInternal(info.MagFilter));
-        glTextureParameteri(id, GL_TEXTURE_WRAP_S, OpenGLConvert::ToInternal(info.SWrap));
-        glTextureParameteri(id, GL_TEXTURE_WRAP_T, OpenGLConvert::ToInternal(info.TWrap));
+        glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, OpenGLConvert::ToInternal(info.minFilter));
+        glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, OpenGLConvert::ToInternal(info.magFilter));
+        glTextureParameteri(id, GL_TEXTURE_WRAP_S, OpenGLConvert::ToInternal(info.sWrap));
+        glTextureParameteri(id, GL_TEXTURE_WRAP_T, OpenGLConvert::ToInternal(info.tWrap));
     }
 
     static const std::unordered_map<ColorFormat, unsigned int> internalFormats = {

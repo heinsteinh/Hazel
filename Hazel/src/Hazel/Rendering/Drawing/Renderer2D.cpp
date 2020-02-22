@@ -22,20 +22,13 @@ namespace Hazel
     {
     }
 
-    void Renderer2D::DrawQuad(const Rectangle &rectangle, const glm::vec4 &color)
+    void Renderer2D::Draw(const RectangularSprite &sprite)
     {
-        shader->Set("u_Color", color);
-        whiteTexture->Bind();
-        shader->Set("u_Transform", rectangle.GetTransform());
-        RenderCommand(window).DrawIndexed(vertexArray);
-    }
-
-    void Renderer2D::DrawQuad(const Rectangle &rectangle, const SharedPtr<Texture> &texture)
-    {
-        shader->Set("u_Color", glm::vec4(1.0f));
+        shader->Set("u_Color", sprite.GetColor());
         shader->Set("u_Texture", 0);
-        shader->Set("u_Transform", rectangle.GetTransform());
-        texture->Bind();
+        shader->Set("u_Transform", sprite.GetTransform());
+        auto &texture = sprite.GetTexture();
+        texture ? texture->Bind() : whiteTexture->Bind();
         RenderCommand(window).DrawIndexed(vertexArray);
     }
 

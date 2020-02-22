@@ -6,6 +6,8 @@
 #include "Hazel/Rendering/Shaders/Shader.h"
 #include "Hazel/Rendering/Textures/Texture2D.h"
 
+#include "RectangularSprite.h"
+
 namespace Hazel
 {
     class Renderer2D
@@ -21,8 +23,7 @@ namespace Hazel
 
         void BeginScene(const OrthographicCamera &camera);
         void EndScene();
-        void DrawQuad(const Rectangle &rectangle, const glm::vec4 &color);
-        void DrawQuad(const Rectangle &rectangle, const SharedPtr<Texture> &texture);
+        void Draw(const RectangularSprite &sprite);
 
     private:
         void Init();

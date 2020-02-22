@@ -20,6 +20,9 @@ namespace Sandbox
         glm::vec4 color = red;
 
         Hazel::SharedPtr<Hazel::Texture> texture;
+        Hazel::Transform transform;
+        Hazel::RectangularSprite colorSquare;
+        Hazel::RectangularSprite texturedSquare;
 
         bool showFps = true;
         bool showColorPicker = true;
