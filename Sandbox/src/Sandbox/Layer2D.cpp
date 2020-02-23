@@ -12,8 +12,7 @@ namespace Sandbox
 
     void Layer2D::OnAttach()
     {
-        texture = Hazel::TextureLoader(parent)
-            .LoadFromImage("assets\\textures\\Test.jpg");
+        texture = Hazel::TextureBuilder(parent).Build("assets\\textures\\Test.jpg");
         texturedSquare.SetTexture(texture);
     }
 

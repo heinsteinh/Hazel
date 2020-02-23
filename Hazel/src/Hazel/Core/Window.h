@@ -3,11 +3,11 @@
 #include "Hazel/Core/Input.h"
 #include "Hazel/Events/Events.h"
 #include "Hazel/Rendering/Drawing/Context.h"
-#include "Hazel/Utils/Runnable.h"
+#include "Hazel/Utils/Updatable.h"
 
 namespace Hazel
 {
-    class HAZEL_API Window : public Runnable
+    class HAZEL_API Window : public Updatable
     {
     public:
         virtual ~Window() = default;

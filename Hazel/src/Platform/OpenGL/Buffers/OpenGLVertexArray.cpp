@@ -55,13 +55,13 @@ namespace Hazel
     {
         for (size_t i = 0; i < layout.GetSize(); i++)
         {
-            glEnableVertexAttribArray((int)i);
-            SetVertexAttributes(layout, i);
+            AddVertexAttribute(layout, i);
         }
     }
 
-    void OpenGLVertexArray::SetVertexAttributes(const BufferLayout &layout, size_t index)
+    void OpenGLVertexArray::AddVertexAttribute(const BufferLayout &layout, size_t index)
     {
+        glEnableVertexAttribArray((int)index);
         const auto &element = layout.GetElement(index);
         glVertexAttribPointer(
             (int)index,

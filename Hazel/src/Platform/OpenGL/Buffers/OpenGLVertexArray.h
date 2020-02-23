@@ -25,6 +25,6 @@ namespace Hazel
 
     private:
         void SetVerticesAttributes(const BufferLayout &layout);
-        void SetVertexAttributes(const BufferLayout &layout, size_t index);
+        void AddVertexAttribute(const BufferLayout &layout, size_t index);
     };
 }

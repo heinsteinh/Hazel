@@ -4,5 +4,5 @@
 #include "Drawing/Renderer2D.h"
 #include "Drawing/ObjectFactory.h"
 #include "Shaders/ShaderLibrary.h"
-#include "Textures/TextureLoader.h"
+#include "Textures/TextureBuilder.h"
 #include "Camera/OrthographicCameraController.h"

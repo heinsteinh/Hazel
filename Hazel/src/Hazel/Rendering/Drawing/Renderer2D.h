@@ -34,6 +34,5 @@ namespace Hazel
         void AddIndexBuffer();
         void CreateTextureShader();
         void CreateTexture();
-        void FillTexture();
     };
 }

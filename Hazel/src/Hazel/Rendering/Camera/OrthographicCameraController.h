@@ -2,12 +2,12 @@
 
 #include "Hazel/Core/Window.h"
 #include "OrthographicCamera.h"
-#include "Hazel/Utils/Runnable.h"
+#include "Hazel/Utils/Updatable.h"
 #include "Hazel/Events/EventListener.h"
 
 namespace Hazel
 {
-    class OrthographicCameraController : public EventListener, public Runnable
+    class OrthographicCameraController : public EventListener, public Updatable
     {
     private:
         const Window &window;

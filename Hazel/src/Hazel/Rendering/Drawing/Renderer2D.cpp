@@ -1,6 +1,7 @@
 #include "Renderer2D.h"
 
 #include "RenderCommand.h"
+#include "Hazel/Rendering/Textures/TextureBuilder.h"
 
 namespace Hazel
 {
@@ -85,14 +86,6 @@ namespace Hazel
 
     void Renderer2D::CreateTexture()
     {
-        whiteTexture = window.GetContext().GetFactory().CreateTexture2D(
-            TextureInfo::FromSize(1, 1));
-        FillTexture();
-    }
-
-    void Renderer2D::FillTexture()
-    {
-        unsigned int data = ~0;
-        whiteTexture->SetData(&data);
+        whiteTexture = TextureBuilder(window).Build(glm::vec4(1.0f));
     }
 }

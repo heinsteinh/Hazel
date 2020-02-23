@@ -4,10 +4,10 @@
 
 namespace Hazel
 {
-    class HAZEL_API Runnable
+    class HAZEL_API Updatable
     {
     public:
-        virtual ~Runnable() = default;
+        virtual ~Updatable() = default;
 
         virtual void OnUpdate(Timestep deltaTime) = 0;
     };

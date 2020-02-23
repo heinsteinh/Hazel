@@ -16,19 +16,5 @@ namespace Hazel
         TextureFiltering magFilter = TextureFiltering::Linear;
         TextureWrapping sWrap = TextureWrapping::Repeat;
         TextureWrapping tWrap = TextureWrapping::Repeat;
-
-        static TextureInfo FromImage(const Image &image)
-        {
-            return {
-                image.GetWidth(),
-                image.GetHeight(),
-                image.GetFormat()
-            };
-        }
-
-        static TextureInfo FromSize(int width, int height)
-        {
-            return {width, height};
-        }
     };
 }

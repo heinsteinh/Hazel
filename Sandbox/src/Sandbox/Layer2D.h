@@ -19,7 +19,7 @@ namespace Sandbox
         glm::vec4 blue = {0.0f, 0.0f, 1.0f, 1.0f};
         glm::vec4 color = red;
 
-        Hazel::SharedPtr<Hazel::Texture> texture;
+        Hazel::SharedPtr<Hazel::Texture2D> texture;
         Hazel::Transform transform;
         Hazel::RectangularSprite colorSquare;
         Hazel::RectangularSprite texturedSquare;
