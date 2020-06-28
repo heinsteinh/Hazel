@@ -10,7 +10,7 @@ namespace Hazel
 	public:
 		static inline BatchInfo Create(RenderApiFactory &factory)
 		{
-			return {factory, 40000, 10000, 48, Vertex::Layout};
+			return {factory, 40000, 10000, 32, Vertex::Layout};
 		}
 
 		DefaultBatchInfo() = delete;

@@ -8,11 +8,13 @@ namespace Hazel
 	{
 	private:
 		size_t size = 0;
+		size_t maxTextures = 0;
 		std::unordered_map<std::shared_ptr<Texture>, size_t> textures;
 
 	public:
 		inline TextureBatch(size_t maxTextures)
-			: textures(maxTextures)
+			: maxTextures(maxTextures),
+			textures(maxTextures)
 		{
 		}
 
@@ -26,7 +28,7 @@ namespace Hazel
 			auto i = textures.find(texture);
 			if (i == textures.end())
 			{
-				assert(size < textures.size());
+				assert(size < maxTextures);
 				return textures[texture] = size++;
 			}
 			return i->second;
