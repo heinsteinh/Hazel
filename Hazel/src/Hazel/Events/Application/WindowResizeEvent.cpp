@@ -7,7 +7,7 @@ namespace Hazel
 	std::string WindowResizeEvent::ToString() const
 	{
 		return (std::ostringstream()
-			<< GetName() << ": " << width << ", " << height)
+			<< GetName() << ": " << size.Width << ", " << size.Height)
 			.str();
 	}
 

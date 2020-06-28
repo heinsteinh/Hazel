@@ -7,7 +7,7 @@ namespace Hazel
 	class LayerStack
 	{
 	private:
-		std::vector<SharedPtr<Layer>> layers;
+		std::vector<std::shared_ptr<Layer>> layers;
 		int top = 0;
 
 	public:
@@ -31,18 +31,18 @@ namespace Hazel
 			return layers.end();
 		}
 
-		void LayerStack::PushLayer(const SharedPtr<Layer> &layer)
+		void LayerStack::PushLayer(const std::shared_ptr<Layer> &layer)
 		{
 			layers.emplace(layers.begin() + top, layer);
 			top++;
 		}
 
-		void LayerStack::PushOverlay(const SharedPtr<Layer> &overlay)
+		void LayerStack::PushOverlay(const std::shared_ptr<Layer> &overlay)
 		{
 			layers.emplace_back(overlay);
 		}
 
-		void LayerStack::PopLayer(const SharedPtr<Layer> &layer)
+		void LayerStack::PopLayer(const std::shared_ptr<Layer> &layer)
 		{
 			auto i = std::find(layers.begin(), layers.end(), layer);
 			if (i != layers.end())
@@ -52,7 +52,7 @@ namespace Hazel
 			}
 		}
 
-		void LayerStack::PopOverlay(const SharedPtr<Layer> &overlay)
+		void LayerStack::PopOverlay(const std::shared_ptr<Layer> &overlay)
 		{
 			auto i = std::find(layers.begin(), layers.end(), overlay);
 			if (i != layers.end())

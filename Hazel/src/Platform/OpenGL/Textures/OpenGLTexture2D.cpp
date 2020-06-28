@@ -34,7 +34,7 @@ namespace Hazel
 
 	void OpenGLTexture2D::SetData(const void *data)
 	{
-		glTextureSubImage2D(id, 0, 0, 0, width, height,
+		glTextureSubImage2D(id, 0, 0, 0, static_cast<int>(width), static_cast<int>(height),
 			OpenGLColorFormat::FromColorFormat(colorFormat), GL_UNSIGNED_BYTE, data);
 	}
 
@@ -53,7 +53,12 @@ namespace Hazel
 	void OpenGLTexture2D::Create()
 	{
 		glCreateTextures(GL_TEXTURE_2D, 1, &id);
-		glTextureStorage2D(id, 1, OpenGLStorageColorFormat::FromColorFormat(colorFormat), width, height);
+		glTextureStorage2D(
+			id,
+			1,
+			OpenGLStorageColorFormat::FromColorFormat(colorFormat),
+			static_cast<int>(width),
+			static_cast<int>(height));
 	}
 
 	void OpenGLTexture2D::SetParameters(const TextureInfo &info)

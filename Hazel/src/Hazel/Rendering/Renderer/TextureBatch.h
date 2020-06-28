@@ -8,7 +8,7 @@ namespace Hazel
 	{
 	private:
 		size_t size = 0;
-		std::unordered_map<SharedPtr<Texture>, size_t> textures;
+		std::unordered_map<std::shared_ptr<Texture>, size_t> textures;
 
 	public:
 		inline TextureBatch(size_t maxTextures)
@@ -21,7 +21,7 @@ namespace Hazel
 			size = 0;
 		}
 
-		inline size_t Add(const SharedPtr<Texture> &texture)
+		inline size_t Add(const std::shared_ptr<Texture> &texture)
 		{
 			auto i = textures.find(texture);
 			if (i == textures.end())

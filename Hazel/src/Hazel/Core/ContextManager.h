@@ -12,7 +12,7 @@ namespace Hazel
 		Context context;
 		EventManager eventManager;
 		LayerManager layerManager;
-		SharedPtr<GraphicsContext> graphicsContext;
+		std::shared_ptr<GraphicsContext> graphicsContext;
 		bool windowClosed = false;
 
 	public:
@@ -20,7 +20,7 @@ namespace Hazel
 
 		Context &GetContext();
 		LayerManager &GetLayerManager();
-		bool HasWindowClosed() const;
+		bool ShouldCloseWindow() const;
 		void OnUpdate();
 		void MakeCurrent();
 

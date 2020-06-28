@@ -13,14 +13,14 @@ namespace Hazel
 		const Window &window;
 		Chrono chrono;
 		LayerStack layers;
-		SharedPtr<ImGuiLayer> imGuiLayer;
+		std::shared_ptr<ImGuiLayer> imGuiLayer;
 		bool showImGui = true;
 
 	public:
 		LayerManager(const Window &window);
 
-		void PushLayer(const SharedPtr<Layer> &layer);
-		void PushOverlay(const SharedPtr<Layer> &overlay);
+		void PushLayer(const std::shared_ptr<Layer> &layer);
+		void PushOverlay(const std::shared_ptr<Layer> &overlay);
 		void OnUpdate();
 		void OnContextCurrent();
 		void OnEvent(Event &e);

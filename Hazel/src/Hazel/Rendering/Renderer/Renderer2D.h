@@ -11,8 +11,8 @@ namespace Hazel
 	{
 	private:
 		const Context &context;
-		SharedPtr<Shader> shader;
-		SharedPtr<Texture> whiteTexture;
+		std::shared_ptr<Shader> shader;
+		std::shared_ptr<Texture> whiteTexture;
 		BatchInfo batchInfo;
 		Batch batch;
 

@@ -9,7 +9,7 @@ namespace Hazel
 {
 	OpenGLShader::OpenGLShader(const ShaderInfo &info)
 		: name(info.Name),
-		id(OpenGLShaderBuilder::Build(info).Release())
+		id(OpenGLShaderBuilder::Build(info))
 	{
 	}
 

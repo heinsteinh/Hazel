@@ -17,7 +17,7 @@ namespace Hazel
 		{
 		}
 
-		inline SharedPtr<Texture2D> Build(const std::string &filename)
+		inline std::shared_ptr<Texture2D> Build(const std::string &filename)
 		{
 			Image image(filename);
 			auto texture = factory.CreateTexture2D({
@@ -28,7 +28,7 @@ namespace Hazel
 			return texture;
 		}
 
-		inline SharedPtr<Texture2D> Build(const glm::vec4 &data)
+		inline std::shared_ptr<Texture2D> Build(const glm::vec4 &data)
 		{
 			auto texture = factory.CreateTexture2D({1, 1, ColorFormat::Rgba});
 			unsigned char color[4] = {

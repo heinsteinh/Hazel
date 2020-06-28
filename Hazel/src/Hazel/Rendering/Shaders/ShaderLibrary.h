@@ -9,13 +9,13 @@ namespace Hazel
 	{
 	private:
 		RenderApiFactory &factory;
-		std::unordered_map<std::string, SharedPtr<Shader>> shaders;
+		std::unordered_map<std::string, std::shared_ptr<Shader>> shaders;
 
 	public:
 		ShaderLibrary(RenderApiFactory &factory);
 
-		SharedPtr<Shader> Get(const std::string &name);
-		SharedPtr<Shader> &Add(const SharedPtr<Shader> &shader);
-		SharedPtr<Shader> &Load(const ShaderInfo &info);
+		std::shared_ptr<Shader> Get(const std::string &name);
+		std::shared_ptr<Shader> &Add(const std::shared_ptr<Shader> &shader);
+		std::shared_ptr<Shader> &Load(const ShaderInfo &info);
 	};
 }

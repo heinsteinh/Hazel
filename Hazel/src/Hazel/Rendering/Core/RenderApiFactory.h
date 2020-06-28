@@ -19,11 +19,11 @@ namespace Hazel
 	public:
 		virtual ~RenderApiFactory() = default;
 
-		virtual SharedPtr<GraphicsContext> CreateContext(const Window &window) = 0;
-		virtual SharedPtr<Shader> CreateShader(const ShaderInfo &info) = 0;
-		virtual SharedPtr<VertexArray> CreateVertexArray() = 0;
-		virtual SharedPtr<VertexBuffer> CreateVertexBuffer(size_t size) = 0;
-		virtual SharedPtr<IndexBuffer> CreateIndexBuffer(size_t size) = 0;
-		virtual SharedPtr<Texture2D> CreateTexture2D(const TextureInfo &info) = 0;
+		virtual std::shared_ptr<GraphicsContext> CreateContext(const Window &window) = 0;
+		virtual std::shared_ptr<Shader> CreateShader(const ShaderInfo &info) = 0;
+		virtual std::shared_ptr<VertexArray> CreateVertexArray() = 0;
+		virtual std::shared_ptr<VertexBuffer> CreateVertexBuffer(size_t size) = 0;
+		virtual std::shared_ptr<IndexBuffer> CreateIndexBuffer(size_t size) = 0;
+		virtual std::shared_ptr<Texture2D> CreateTexture2D(const TextureInfo &info) = 0;
 	};
 }

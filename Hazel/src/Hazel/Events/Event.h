@@ -18,7 +18,7 @@ namespace Hazel
 		Event(const Event &other) = delete;
 		Event &operator=(const Event &other) = delete;
 
-		constexpr const char *GetName() const
+		inline const char *GetName() const
 		{
 			return typeid(*this).name() + 13;
 		}

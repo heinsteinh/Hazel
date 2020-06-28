@@ -9,33 +9,33 @@
 
 namespace Hazel
 {
-	SharedPtr<GraphicsContext> OpenGLFactory::CreateContext(const Window &window)
+	std::shared_ptr<GraphicsContext> OpenGLFactory::CreateContext(const Window &window)
 	{
-		return MakeShared<OpenGLContext>(window);
+		return std::make_shared<OpenGLContext>(window);
 	}
 
-	SharedPtr<Shader> OpenGLFactory::CreateShader(const ShaderInfo &info)
+	std::shared_ptr<Shader> OpenGLFactory::CreateShader(const ShaderInfo &info)
 	{
-		return MakeShared<OpenGLShader>(info);
+		return std::make_shared<OpenGLShader>(info);
 	}
 
-	SharedPtr<VertexArray> OpenGLFactory::CreateVertexArray()
+	std::shared_ptr<VertexArray> OpenGLFactory::CreateVertexArray()
 	{
-		return MakeShared<OpenGLVertexArray>();
+		return std::make_shared<OpenGLVertexArray>();
 	}
 
-	SharedPtr<VertexBuffer> OpenGLFactory::CreateVertexBuffer(size_t size)
+	std::shared_ptr<VertexBuffer> OpenGLFactory::CreateVertexBuffer(size_t size)
 	{
-		return MakeShared<OpenGLVertexBuffer>(size);
+		return std::make_shared<OpenGLVertexBuffer>(size);
 	}
 
-	SharedPtr<IndexBuffer> OpenGLFactory::CreateIndexBuffer(size_t size)
+	std::shared_ptr<IndexBuffer> OpenGLFactory::CreateIndexBuffer(size_t size)
 	{
-		return MakeShared<OpenGLIndexBuffer>(size);
+		return std::make_shared<OpenGLIndexBuffer>(size);
 	}
 
-	SharedPtr<Texture2D> OpenGLFactory::CreateTexture2D(const TextureInfo &info)
+	std::shared_ptr<Texture2D> OpenGLFactory::CreateTexture2D(const TextureInfo &info)
 	{
-		return MakeShared<OpenGLTexture2D>(info);
+		return std::make_shared<OpenGLTexture2D>(info);
 	}
 }

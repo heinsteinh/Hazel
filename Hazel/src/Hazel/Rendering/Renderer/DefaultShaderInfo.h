@@ -9,8 +9,8 @@ namespace Hazel
 	private:
 		static inline const ShaderInfo info = {
 			"DefaultShader",
-			R"(C:\Users\christian\source\repos\Hazel\Hazel\assets\shaders\DefaultShader.vert)",
-			R"(C:\Users\christian\source\repos\Hazel\Hazel\assets\shaders\DefaultShader.frag)"
+			{{ShaderType::Vertex, R"(C:\Users\christian\source\repos\Hazel\Hazel\assets\shaders\DefaultShader.vert)"},
+			{ShaderType::Pixel, R"(C:\Users\christian\source\repos\Hazel\Hazel\assets\shaders\DefaultShader.frag)"}}
 		};
 
 	public:

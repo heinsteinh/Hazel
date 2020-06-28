@@ -3,8 +3,6 @@
 #include "ApplicationInfo.h"
 #include "Context.h"
 #include "Hazel/Layers/Layer.h"
-#include "UniquePtr.h"
-#include "SharedPtr.h"
 
 namespace Hazel
 {
@@ -13,7 +11,7 @@ namespace Hazel
 	class Application
 	{
 	private:
-		UniquePtr<ContextManager> contextManager;
+		std::unique_ptr<ContextManager> contextManager;
 		bool running = false;
 
 	public:
@@ -23,10 +21,10 @@ namespace Hazel
 		Context &GetContext();
 		void Run();
 		void Quit();
-		void PushLayer(const SharedPtr<Layer> &layer);
-		void PushOverlay(const SharedPtr<Layer> &overlay);
+		void PushLayer(const std::shared_ptr<Layer> &layer);
+		void PushOverlay(const std::shared_ptr<Layer> &overlay);
 		void ShowImGui(bool show);
 	};
 
-	UniquePtr<Application> CreateApplication();
+	std::unique_ptr<Application> CreateApplication();
 }

@@ -5,7 +5,7 @@
 namespace Hazel
 {
 	Application::Application(const ApplicationInfo &info)
-		: contextManager(MakeUnique<ContextManager>(info))
+		: contextManager(std::make_unique<ContextManager>(info))
 	{
 		Log::Debug("Application created.");
 	}
@@ -25,9 +25,9 @@ namespace Hazel
 	{
 		Log::Info("Application started.");
 		running = true;
-		while (running && !contextManager->HasWindowClosed())
+		while (running && !contextManager->ShouldCloseWindow())
 		{
-			Log::Trace("Updating application.");
+			Log::Trace("New update.");
 			contextManager->OnUpdate();
 		}
 		Log::Info("Application stopped.");
@@ -39,13 +39,13 @@ namespace Hazel
 		running = false;
 	}
 
-	void Application::PushLayer(const SharedPtr<Layer> &layer)
+	void Application::PushLayer(const std::shared_ptr<Layer> &layer)
 	{
 		Log::Info("Push layer {}.", layer->GetName());
 		contextManager->GetLayerManager().PushLayer(layer);
 	}
 
-	void Application::PushOverlay(const SharedPtr<Layer> &overlay)
+	void Application::PushOverlay(const std::shared_ptr<Layer> &overlay)
 	{
 		Log::Info("Push overlay {}.", overlay->GetName());
 		contextManager->GetLayerManager().PushOverlay(overlay);

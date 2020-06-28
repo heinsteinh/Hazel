@@ -6,18 +6,18 @@ namespace Hazel
 {
 	LayerManager::LayerManager(const Window &window)
 		: window(window),
-		imGuiLayer(MakeShared<ImGuiLayer>(window))
+		imGuiLayer(std::make_shared<ImGuiLayer>(window))
 	{
 		PushOverlay(imGuiLayer);
 	}
 
-	void LayerManager::PushLayer(const SharedPtr<Layer> &layer)
+	void LayerManager::PushLayer(const std::shared_ptr<Layer> &layer)
 	{
 		layers.PushLayer(layer);
 		layer->OnAttach();
 	}
 
-	void LayerManager::PushOverlay(const SharedPtr<Layer> &overlay)
+	void LayerManager::PushOverlay(const std::shared_ptr<Layer> &overlay)
 	{
 		layers.PushOverlay(overlay);
 		overlay->OnAttach();

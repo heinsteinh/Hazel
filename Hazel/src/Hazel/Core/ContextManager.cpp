@@ -9,7 +9,7 @@ namespace Hazel
 		graphicsContext(context.Factory.CreateContext(context.Window))
 	{
 		eventManager.SetEventListener(this);
-		context.Drawer.SetClearColor({255.0f, 0.0f, 255.0f, 1.0f});
+		context.Drawer.SetClearColor({1.0f, 0.0f, 1.0f, 1.0f});
 	}
 
 	Context &ContextManager::GetContext()
@@ -22,7 +22,7 @@ namespace Hazel
 		return layerManager;
 	}
 
-	bool ContextManager::HasWindowClosed() const
+	bool ContextManager::ShouldCloseWindow() const
 	{
 		return windowClosed;
 	}

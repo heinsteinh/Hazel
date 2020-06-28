@@ -8,9 +8,9 @@ namespace Hazel
 	class BatchBuffer
 	{
 	private:
-		SharedPtr<VertexArray> vertexArray;
-		SharedPtr<IndexBuffer> indexBuffer;
-		SharedPtr<VertexBuffer> vertexBuffer;
+		std::shared_ptr<VertexArray> vertexArray;
+		std::shared_ptr<IndexBuffer> indexBuffer;
+		std::shared_ptr<VertexBuffer> vertexBuffer;
 
 	public:
 		inline BatchBuffer(const BatchInfo &info)

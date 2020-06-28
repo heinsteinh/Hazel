@@ -26,17 +26,17 @@ namespace Hazel
 		glBindVertexArray(0);
 	}
 
-	const std::vector<SharedPtr<VertexBuffer>> &OpenGLVertexArray::GetVertexBuffers() const
+	const std::vector<std::shared_ptr<VertexBuffer>> &OpenGLVertexArray::GetVertexBuffers() const
 	{
 		return vertexBuffers;
 	}
 
-	const SharedPtr<IndexBuffer> &OpenGLVertexArray::GetIndexBuffer() const
+	const std::shared_ptr<IndexBuffer> &OpenGLVertexArray::GetIndexBuffer() const
 	{
 		return indexBuffer;
 	}
 
-	void OpenGLVertexArray::AddVertexBuffer(const SharedPtr<VertexBuffer> &buffer)
+	void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer> &buffer)
 	{
 		vertexBuffers.push_back(buffer);
 		Bind();
@@ -44,7 +44,7 @@ namespace Hazel
 		SetupVerticesAttributes(buffer->GetLayout());
 	}
 
-	void OpenGLVertexArray::SetIndexBuffer(const SharedPtr<IndexBuffer> &buffer)
+	void OpenGLVertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer> &buffer)
 	{
 		indexBuffer = buffer;
 	}
