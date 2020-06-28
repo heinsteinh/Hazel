@@ -4,31 +4,35 @@
 
 namespace Hazel
 {
-    OpenGLIndexBuffer::OpenGLIndexBuffer(const std::vector<unsigned int> &indexes)
-        : size(indexes.size())
-    {
-        glCreateBuffers(1, &id);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(unsigned int), indexes.data(), GL_STATIC_DRAW);
-    }
+	OpenGLIndexBuffer::OpenGLIndexBuffer(size_t size)
+		: size(size)
+	{
+		glCreateBuffers(1, &id);
+		glNamedBufferData(id, size, nullptr, GL_DYNAMIC_DRAW);
+	}
 
-    OpenGLIndexBuffer::~OpenGLIndexBuffer()
-    {
-        glDeleteBuffers(1, &id);
-    }
+	OpenGLIndexBuffer::~OpenGLIndexBuffer()
+	{
+		glDeleteBuffers(1, &id);
+	}
 
-    void OpenGLIndexBuffer::Bind() const
-    {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
-    }
+	void OpenGLIndexBuffer::Bind() const
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
+	}
 
-    void OpenGLIndexBuffer::UnBind() const
-    {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
+	void OpenGLIndexBuffer::Unbind() const
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
 
-    size_t OpenGLIndexBuffer::GetSize() const
-    {
-        return size;
-    }
+	size_t OpenGLIndexBuffer::GetSize() const
+	{
+		return size;
+	}
+
+	void OpenGLIndexBuffer::SetData(const void *data, size_t size)
+	{
+		glNamedBufferSubData(id, 0, std::min(this->size, size), data);
+	}
 }

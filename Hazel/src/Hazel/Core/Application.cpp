@@ -1,124 +1,59 @@
 #include "Application.h"
 
-#include "Platform.h"
-#include "Hazel/ImGui/ImGuiLayer.h"
-#include "Hazel/Rendering/Drawing/RenderCommand.h"
-#include "Hazel/Utils/Reversed.h"
+#include "ContextManager.h"
 
 namespace Hazel
 {
-    Application::Application()
-        : window(Platform::Get().CreateNewWindow(RenderApi::OpenGL)),
-        imguiLayer(new ImGuiLayer(*window))
-    {
-        Init();
-    }
+	Application::Application(const ApplicationInfo &info)
+		: contextManager(MakeUnique<ContextManager>(info))
+	{
+		Log::Debug("Application created.");
+	}
 
-    Window &Application::GetWindow()
-    {
-        return *window;
-    }
+	Application::~Application()
+	{
+		running = false;
+		Log::Info("Application destroyed.");
+	}
 
-    void Application::Run()
-    {
-        CoreInfo("Application started.");
-        running = true;
-        while (running)
-        {
-            Update();
-        }
-        CoreInfo("Application stopped.");
-    }
+	Context &Application::GetContext()
+	{
+		return contextManager->GetContext();
+	}
 
-    void Application::Quit()
-    {
-        running = false;
-    }
+	void Application::Run()
+	{
+		Log::Info("Application started.");
+		running = true;
+		while (running && !contextManager->HasWindowClosed())
+		{
+			Log::Trace("Updating application.");
+			contextManager->OnUpdate();
+		}
+		Log::Info("Application stopped.");
+	}
 
-    void Application::PushLayer(Layer *layer)
-    {
-        layers.PushLayer(layer);
-        layer->OnAttach();
-    }
+	void Application::Quit()
+	{
+		Log::Info("Quit application.");
+		running = false;
+	}
 
-    void Application::PushOverlay(Layer *overlay)
-    {
-        layers.PushOverlay(overlay);
-        overlay->OnAttach();
-    }
+	void Application::PushLayer(const SharedPtr<Layer> &layer)
+	{
+		Log::Info("Push layer {}.", layer->GetName());
+		contextManager->GetLayerManager().PushLayer(layer);
+	}
 
-    void Application::ShowImGui(bool show)
-    {
-        showImGui = show;
-    }
+	void Application::PushOverlay(const SharedPtr<Layer> &overlay)
+	{
+		Log::Info("Push overlay {}.", overlay->GetName());
+		contextManager->GetLayerManager().PushOverlay(overlay);
+	}
 
-    void Application::OnEvent(Event &e)
-    {
-        CoreDebug("{}", e);
-        for (Layer *layer : layers)
-        {
-            e.Dispatch(layer);
-        }
-    }
-
-    void Application::OnWindowClosed(WindowClosedEvent &e)
-    {
-        Quit();
-    }
-
-    void Application::OnWindowResized(WindowResizedEvent &e)
-    {
-        RenderCommand(*window).SetViewport({0.0f, e.GetWidth(), 0.0f, e.GetHeight()});
-    }
-
-    void Application::Init()
-    {
-        CoreDebug("Application initialization.");
-        window->SetEventListener(this);
-        PushOverlay(imguiLayer);
-        CoreDebug("Application initialized.");
-    }
-
-    void Application::Update()
-    {
-        Timestep deltaTime = ComputeDeltaTime();
-        if (!window->IsMinimized())
-        {
-            UpdateLayers(deltaTime);
-        }
-        if (showImGui)
-        {
-            RenderImGui();
-        }
-        window->OnUpdate(deltaTime);
-    }
-
-    Timestep Application::ComputeDeltaTime()
-    {
-        double time = Platform::Get().GetTime();
-        double deltaTime = time - lastTime;
-        lastTime = time;
-        CoreTrace("Frame Rate: {}", 1.0 / deltaTime);
-        return Timestep::FromSeconds((float)deltaTime);
-    }
-
-    void Application::UpdateLayers(Timestep deltaTime)
-    {
-        CoreTrace("Update Layers");
-        for (Layer *layer : Reversed(layers))
-        {
-            layer->OnUpdate(deltaTime);
-        }
-    }
-
-    void Application::RenderImGui()
-    {
-        CoreTrace("Render ImGui");
-        imguiLayer->Begin();
-        for (Layer *layer : Reversed(layers))
-        {
-            layer->OnImGuiRender();
-        }
-        imguiLayer->End();
-    }
+	void Application::ShowImGui(bool show)
+	{
+		Log::Info("Show ImGui {}.", show);
+		contextManager->GetLayerManager().ShowImGui(show);
+	}
 }

@@ -4,9 +4,9 @@
 
 namespace Hazel
 {
-    class Texture2D : public Texture
-    {
-    public:
-        virtual ~Texture2D() = default;
-    };
+	class Texture2D : public Texture
+	{
+	public:
+		virtual size_t GetHeight() const = 0;
+	};
 }

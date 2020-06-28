@@ -4,41 +4,45 @@
 
 namespace Hazel
 {
-    OpenGLVertexBuffer::OpenGLVertexBuffer(const std::vector<float> &vertices)
-        : size(vertices.size())
-    {
-        glCreateBuffers(1, &id);
-        Bind();
-        glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices.data(), GL_STATIC_DRAW);
-    }
+	OpenGLVertexBuffer::OpenGLVertexBuffer(size_t size)
+		: size(size)
+	{
+		glCreateBuffers(1, &id);
+		glNamedBufferData(id, size, nullptr, GL_DYNAMIC_DRAW);
+	}
 
-    OpenGLVertexBuffer::~OpenGLVertexBuffer()
-    {
-        glDeleteBuffers(1, &id);
-    }
+	OpenGLVertexBuffer::~OpenGLVertexBuffer()
+	{
+		glDeleteBuffers(1, &id);
+	}
 
-    void OpenGLVertexBuffer::Bind() const
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, id);
-    }
+	void OpenGLVertexBuffer::Bind() const
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, id);
+	}
 
-    void OpenGLVertexBuffer::UnBind() const
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-    }
+	void OpenGLVertexBuffer::Unbind() const
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
 
-    void OpenGLVertexBuffer::SetLayout(const BufferLayout &layout)
-    {
-        this->layout = layout;
-    }
+	size_t OpenGLVertexBuffer::GetSize() const
+	{
+		return size;
+	}
 
-    const BufferLayout &OpenGLVertexBuffer::GetLayout() const
-    {
-        return layout;
-    }
+	const BufferLayout &OpenGLVertexBuffer::GetLayout() const
+	{
+		return layout;
+	}
 
-    size_t OpenGLVertexBuffer::GetSize() const
-    {
-        return size;
-    }
+	void OpenGLVertexBuffer::SetData(const void *data, size_t size)
+	{
+		glNamedBufferSubData(id, 0, std::min(this->size, size), data);
+	}
+
+	void OpenGLVertexBuffer::SetLayout(const BufferLayout &layout)
+	{
+		this->layout = layout;
+	}
 }

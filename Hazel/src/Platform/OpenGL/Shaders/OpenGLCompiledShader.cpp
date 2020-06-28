@@ -1,82 +1,53 @@
 #include "OpenGLCompiledShader.h"
 
-#include <unordered_map>
-
 #include "glad/glad.h"
 
-#include "Hazel/Rendering/Shaders/ShaderTypeInfo.h"
-#include "Platform/OpenGL/Utils/OpenGLConvert.h"
+#include "OpenGLShaderType.h"
 
 namespace Hazel
 {
-    OpenGLCompiledShader::OpenGLCompiledShader(ShaderType type, const std::string &source)
-        : type(type)
-    {
-        Init(source);
-    }
+	OpenGLCompiledShader::OpenGLCompiledShader(ShaderType type, const std::string &source)
+		: id(glCreateShader(OpenGLShaderType::FromShaderType(type)))
+	{
+		const char *data = source.c_str();
+		glShaderSource(id, 1, &data, nullptr);
+		glCompileShader(id);
+	}
 
-    OpenGLCompiledShader::OpenGLCompiledShader(OpenGLCompiledShader &&other)
-        : id(other.id),
-        type(other.type),
-        compiled(other.compiled),
-        infoLog(std::move(other.infoLog))
-    {
-        other.id = 0;
-    }
+	OpenGLCompiledShader::OpenGLCompiledShader(OpenGLCompiledShader &&other) noexcept
+		: id(other.id)
+	{
+		other.id = 0;
+	}
 
-    OpenGLCompiledShader::~OpenGLCompiledShader()
-    {
-        glDeleteShader(id);
-    }
+	OpenGLCompiledShader::~OpenGLCompiledShader()
+	{
+		if (id != 0)
+		{
+			glDeleteShader(id);
+		}
+	}
 
-    OpenGLCompiledShader &OpenGLCompiledShader::operator=(OpenGLCompiledShader &&other)
-    {
-        id = other.id;
-        type = other.type;
-        compiled = other.compiled;
-        infoLog = std::move(other.infoLog);
-        other.id = 0;
-        return *this;
-    }
+	OpenGLCompiledShader &OpenGLCompiledShader::operator=(OpenGLCompiledShader &&other) noexcept
+	{
+		std::swap(id, other.id);
+		return *this;
+	}
 
-    void OpenGLCompiledShader::Init(const std::string &source)
-    {
-        Compile(source);
-        RetrieveCompilationStatus();
-        RetrieveInfoLog();
-        DisplayInfoLog();
-    }
+	bool OpenGLCompiledShader::IsCompiled() const
+	{
+		int result = 0;
+		glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+		return result == GL_TRUE;
+	}
 
-    void OpenGLCompiledShader::Compile(const std::string &source)
-    {
-        id = glCreateShader(OpenGLConvert::ToInternal(type));
-        const char *data = source.c_str();
-        glShaderSource(id, 1, &data, nullptr);
-        glCompileShader(id);
-    }
-
-    void OpenGLCompiledShader::RetrieveCompilationStatus()
-    {
-        int result = 0;
-        glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-        compiled = result == GL_TRUE;
-    }
-
-    void OpenGLCompiledShader::RetrieveInfoLog()
-    {
-        int maxLength = 0;
-        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &maxLength);
-        infoLog.resize(maxLength);
-        glGetShaderInfoLog(id, maxLength, &maxLength, infoLog.data());
-        infoLog.resize(maxLength);
-    }
-
-    void OpenGLCompiledShader::DisplayInfoLog()
-    {
-        const auto &vertexType = ShaderTypeInfo::GetKey(type);
-        compiled
-            ? CoreInfo("Compilation of {} shader succeeded (id = {}).", vertexType, id)
-            : CoreError("Compilation of {} shader failed.", vertexType);
-        CoreInfo("Info log: {}", infoLog);
-    }
+	std::string OpenGLCompiledShader::GetInfoLog() const
+	{
+		int maxLength = 0;
+		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &maxLength);
+		std::string infoLog(maxLength, '\0');
+		glGetShaderInfoLog(id, maxLength, &maxLength, infoLog.data());
+		infoLog.resize(maxLength);
+		return infoLog;
+	}
 }

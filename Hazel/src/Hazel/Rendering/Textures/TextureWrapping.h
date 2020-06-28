@@ -2,10 +2,12 @@
 
 namespace Hazel
 {
-    enum class TextureWrapping
-    {
-        Repeat,
-        MirroredRepeat,
-        ClampToEdge
-    };
+	enum class TextureWrapping
+	{
+		Unknown,
+		Repeat,
+		MirroredRepeat,
+		ClampToEdge,
+		ClampToBorder,
+	};
 }

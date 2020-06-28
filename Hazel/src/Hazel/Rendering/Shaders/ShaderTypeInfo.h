@@ -1,37 +1,36 @@
 #pragma once
 
+#include "spdlog/fmt/ostr.h"
+
 #include "ShaderType.h"
 
 namespace Hazel
 {
-    class ShaderTypeInfo
-    {
-    private:
-        static inline std::unordered_map<ShaderType, std::string> keys = {
-            {ShaderType::Unknown, "unknown"},
-            {ShaderType::Vertex, "vertex"},
-            {ShaderType::Pixel, "pixel"}
-        };
+	class ShaderTypeInfo
+	{
+	private:
+		static inline const std::string vertexName = "vertex";
+		static inline const std::string pixelName = "pixel";
+		static inline const std::string defaultName;
 
-        static inline std::unordered_map<std::string, ShaderType> types = {
-            {"vertex", ShaderType::Vertex},
-            {"pixel", ShaderType::Pixel},
-            {"fragment", ShaderType::Pixel}
-        };
+	public:
+		static constexpr const std::string &GetName(ShaderType type)
+		{
+			switch (type)
+			{
+			case ShaderType::Vertex:
+				return vertexName;
+			case ShaderType::Pixel:
+				return pixelName;
+			}
+			return defaultName;
+		}
 
-    public:
-        static inline ShaderType GetType(const std::string &key)
-        {
-            auto i = types.find(key);
-            return i == types.end() ? ShaderType::Unknown : i->second;
-        }
+		ShaderTypeInfo() = delete;
+	};
+}
 
-        static inline const std::string &GetKey(ShaderType type)
-        {
-            auto i = keys.find(type);
-            return i == keys.end() ? keys.at(ShaderType::Unknown) : i->second;
-        }
-
-        ShaderTypeInfo() = delete;
-    };
+inline std::ostream &operator<<(std::ostream &stream, Hazel::ShaderType type)
+{
+	return stream << Hazel::ShaderTypeInfo::GetName(type);
 }

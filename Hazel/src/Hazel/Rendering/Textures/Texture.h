@@ -2,14 +2,13 @@
 
 namespace Hazel
 {
-    class Texture
-    {
-    public:
-        virtual ~Texture() = default;
+	class Texture
+	{
+	public:
+		virtual ~Texture() = default;
 
-        virtual int GetWidth() const = 0;
-        virtual int GetHeight() const = 0;
-        virtual void SetData(const void *data) = 0;
-        virtual void Bind(unsigned int slot = 0) const = 0;
-    };
+		virtual size_t GetWidth() const = 0;
+		virtual void SetData(const void *data) = 0;
+		virtual void Bind(unsigned int slot = 0) const = 0;
+	};
 }

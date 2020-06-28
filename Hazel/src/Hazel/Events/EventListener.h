@@ -1,86 +1,80 @@
 #pragma once
 
+#include "Application/WindowCloseEvent.h"
+#include "Application/WindowResizeEvent.h"
+#include "Input/Key/KeyPressEvent.h"
+#include "Input/Key/KeyReleaseEvent.h"
+#include "Input/Key/KeyTypeEvent.h"
+#include "Input/Mouse/MouseButtonPressEvent.h"
+#include "Input/Mouse/MouseButtonReleaseEvent.h"
+#include "Input/Mouse/MouseMoveEvent.h"
+#include "Input/Mouse/MouseScrollEvent.h"
+
 namespace Hazel
 {
-    class Event;
-    class InputEvent;
-    class ApplicationEvent;
-    class WindowClosedEvent;
-    class WindowResizedEvent;
-    class KeyEvent;
-    class KeyTypedEvent;
-    class KeyPressedEvent;
-    class KeyReleasedEvent;
-    class MouseEvent;
-    class MouseMovedEvent;
-    class MouseScrolledEvent;
-    class MouseButtonEvent;
-    class MouseButtonPressedEvent;
-    class MouseButtonReleasedEvent;
+	class EventListener
+	{
+	public:
+		virtual ~EventListener() = default;
 
-    class HAZEL_API EventListener
-    {
-    public:
-        virtual ~EventListener() = default;
+		inline virtual void OnEvent(Event &e)
+		{
+		}
 
-        virtual void OnEvent(Event &e)
-        {
-        }
+		inline virtual void OnApplicationEvent(ApplicationEvent &e)
+		{
+		}
 
-        virtual void OnApplicationEvent(ApplicationEvent &e)
-        {
-        }
+		inline virtual void OnWindowResized(WindowResizeEvent &e)
+		{
+		}
 
-        virtual void OnWindowClosed(WindowClosedEvent &e)
-        {
-        }
+		inline virtual void OnWindowClosed(WindowCloseEvent &e)
+		{
+		}
 
-        virtual void OnWindowResized(WindowResizedEvent &e)
-        {
-        }
+		inline virtual void OnInputEvent(InputEvent &e)
+		{
+		}
 
-        virtual void OnInputEvent(InputEvent &e)
-        {
-        }
+		inline virtual void OnKeyEvent(KeyEvent &e)
+		{
+		}
 
-        virtual void OnKeyEvent(KeyEvent &e)
-        {
-        }
+		inline virtual void OnKeyPressed(KeyPressEvent &e)
+		{
+		}
 
-        virtual void OnKeyTyped(KeyTypedEvent &e)
-        {
-        }
+		inline virtual void OnKeyReleased(KeyReleaseEvent &e)
+		{
+		}
 
-        virtual void OnKeyPressed(KeyPressedEvent &e)
-        {
-        }
+		inline virtual void OnKeyTyped(KeyTypeEvent &e)
+		{
+		}
 
-        virtual void OnKeyReleased(KeyReleasedEvent &e)
-        {
-        }
+		inline virtual void OnMouseEvent(MouseEvent &e)
+		{
+		}
 
-        virtual void OnMouseEvent(MouseEvent &e)
-        {
-        }
+		inline virtual void OnMouseMoved(MouseMoveEvent &e)
+		{
+		}
 
-        virtual void OnMouseMoved(MouseMovedEvent &e)
-        {
-        }
+		inline virtual void OnMouseScrolled(MouseScrollEvent &e)
+		{
+		}
 
-        virtual void OnMouseScrolled(MouseScrolledEvent &e)
-        {
-        }
+		inline virtual void OnMouseButtonEvent(MouseButtonEvent &e)
+		{
+		}
 
-        virtual void OnMouseButtonEvent(MouseButtonEvent &e)
-        {
-        }
+		inline virtual void OnMouseButtonPressed(MouseButtonPressEvent &e)
+		{
+		}
 
-        virtual void OnMouseButtonPressed(MouseButtonPressedEvent &e)
-        {
-        }
-
-        virtual void OnMouseButtonReleased(MouseButtonReleasedEvent &e)
-        {
-        }
-    };
+		inline virtual void OnMouseButtonReleased(MouseButtonReleaseEvent &e)
+		{
+		}
+	};
 }

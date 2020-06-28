@@ -6,49 +6,48 @@
 
 namespace Hazel
 {
-    Image::Image(const std::string &filename)
-    {
-        int numChannels = 0;
-        data = stbi_load(filename.c_str(), &width, &height, &numChannels, 0);
-        format = ColorFormatInfo::FromNumChannels(numChannels);
-    }
+	Image::Image(const std::string &filename, bool flipVertically)
+	{
+		stbi_set_flip_vertically_on_load(flipVertically ? 1 : 0);
+		int width = 0;
+		int height = 0;
+		int numChannels = 0;
+		data = stbi_load(filename.c_str(), &width, &height, &numChannels, 0);
+		this->width = width;
+		this->height = height;
+		format = ColorFormatInfo::FromNumChannels(numChannels);
+	}
 
-    Image::Image(Image &&other) noexcept
-        : width(other.width),
-        height(other.height),
-        format(other.format),
-        data(other.ReleaseData())
-    {
-    }
+	Image::Image(Image &&other) noexcept
+		: width(other.width),
+		height(other.height),
+		format(other.format),
+		data(other.ReleaseData())
+	{
+	}
 
-    Image::~Image()
-    {
-        FreeData();
-    }
+	Image::~Image()
+	{
+		if (data)
+		{
+			stbi_image_free(data);
+		}
+	}
 
-    void *Image::ReleaseData()
-    {
-        width = height = 0;
-        void *temp = data;
-        data = nullptr;
-        return temp;
-    }
+	void *Image::ReleaseData()
+	{
+		width = height = 0;
+		void *temp = data;
+		data = nullptr;
+		return temp;
+	}
 
-    Image &Image::operator=(Image &&other)
-    {
-        width = other.width;
-        height = other.height;
-        format = other.format;
-        data = other.ReleaseData();
-        return *this;
-    }
-
-    void Image::FreeData()
-    {
-        width = height = 0;
-        if (data)
-        {
-            stbi_image_free(data);
-        }
-    }
+	Image &Image::operator=(Image &&other) noexcept
+	{
+		width = other.width;
+		height = other.height;
+		format = other.format;
+		data = other.ReleaseData();
+		return *this;
+	}
 }

@@ -2,57 +2,47 @@
 
 #include "spdlog/fmt/ostr.h"
 
-#include "EventListener.h"
-
 namespace Hazel
 {
-    class HAZEL_API Event
-    {
-    private:
-        bool handled = false;
+	class EventListener;
 
-    public:
-        constexpr Event() = default;
-        virtual ~Event() = default;
+	class Event
+	{
+	private:
+		bool handled = false;
 
-        Event(const Event &other) = delete;
-        Event &operator=(const Event &other) = delete;
+	public:
+		Event() = default;
+		virtual ~Event() = default;
 
-        inline const char *GetName() const
-        {
-            return typeid(*this).name() + 13;
-        }
+		Event(const Event &other) = delete;
+		Event &operator=(const Event &other) = delete;
 
-        inline bool IsHandled() const
-        {
-            return handled;
-        }
+		constexpr const char *GetName() const
+		{
+			return typeid(*this).name() + 13;
+		}
 
-        inline void Discard()
-        {
-            handled = true;
-        }
+		constexpr bool IsHandled() const
+		{
+			return handled;
+		}
 
-        inline void Dispatch(EventListener *listener)
-        {
-            if (listener && !handled)
-            {
-                listener->OnEvent(*this);
-                Handle(*listener);
-            }
-        }
+		constexpr void Discard()
+		{
+			handled = true;
+		}
 
-        virtual std::string ToString() const
-        {
-            return GetName();
-        }
+		void Dispatch(EventListener *listener);
 
-    protected:
-        virtual void Handle(EventListener &listener) = 0;
-    };
+		virtual std::string ToString() const;
+
+	protected:
+		virtual void DispatchEvent(EventListener &listener) = 0;
+	};
 }
 
 inline std::ostream &operator<<(std::ostream &stream, const Hazel::Event &e)
 {
-    return stream << e.ToString();
+	return stream << e.ToString();
 }

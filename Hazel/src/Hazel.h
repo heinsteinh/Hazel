@@ -8,7 +8,6 @@
 
 #include "imgui.h"
 
-#include "Hazel/Core/Core.h"
-#include "Hazel/Events/Events.h"
-#include "Hazel/Rendering/Rendering.h"
-#include "Hazel/Utils/Utils.h"
+#include "Hazel/Core/Application.h"
+#include "Hazel/Layers/Layer.h"
+#include "Hazel/Rendering/Renderer/Renderer2D.h"

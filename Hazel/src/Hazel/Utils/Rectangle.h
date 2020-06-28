@@ -1,117 +1,75 @@
 #pragma once
 
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-
-#include "Hazel/Utils/Transform.h"
+#include "Size.h"
 
 namespace Hazel
 {
-    class Rectangle
-    {
-    private:
-        float left = 0.0f;
-        float right = 0.0f;
-        float bottom = 0.0f;
-        float top = 0.0f;
+	struct Rectangle
+	{
+		float Left = 0.0f;
+		float Right = 0.0f;
+		float Bottom = 0.0f;
+		float Top = 0.0f;
 
-    public:
-        static constexpr Rectangle FromAspectRatio(float aspectRatio, float zoomLevel = 1.0f)
-        {
-            return {
-                -aspectRatio * zoomLevel,
-                aspectRatio * zoomLevel,
-                -zoomLevel,
-                zoomLevel
-            };
-        }
+		static constexpr Rectangle FromAspectRatio(float aspectRatio, float zoomLevel = 1.0f)
+		{
+			return {
+				-aspectRatio * zoomLevel,
+				aspectRatio * zoomLevel,
+				-zoomLevel,
+				zoomLevel
+			};
+		}
 
-        static constexpr Rectangle FromSize(float width, float height)
-        {
-            return {-width / 2.0f, width / 2.0f, -height / 2.0f, height / 2.0f};
-        }
+		static constexpr Rectangle FromSizeAndCenter(Size size, const glm::vec2 &position)
+		{
+			return {
+				position.x - size.Width,
+				position.x + size.Width,
+				position.y - size.Height,
+				position.y + size.Height
+			};
+		}
 
-        constexpr Rectangle() = default;
+		constexpr float GetX() const
+		{
+			return (Right + Left) / 2.0f;
+		}
 
-        constexpr Rectangle(float left, float right, float bottom, float top)
-            : left(left),
-            right(right),
-            bottom(bottom),
-            top(top)
-        {
-        }
+		constexpr float GetY() const
+		{
+			return (Top + Bottom) / 2.0f;
+		}
 
-        constexpr float GetLeft() const
-        {
-            return left;
-        }
+		constexpr float GetWidth() const
+		{
+			return Right - Left;
+		}
 
-        constexpr float GetRight() const
-        {
-            return right;
-        }
+		constexpr float GetHeight() const
+		{
+			return Top - Bottom;
+		}
 
-        constexpr float GetBottom() const
-        {
-            return bottom;
-        }
+		constexpr float GetArea() const
+		{
+			return GetWidth() * GetHeight();
+		}
 
-        constexpr float GetTop() const
-        {
-            return top;
-        }
+		constexpr bool IsEmpty() const
+		{
+			return GetWidth() == 0.0f || GetHeight() == 0.0f;
+		}
 
-        constexpr float GetX() const
-        {
-            return (right + left) / 2.0f;
-        }
+		constexpr float GetAspectRatio() const
+		{
+			auto height = GetHeight();
+			return height ? GetWidth() / height : 0.0f;
+		}
 
-        constexpr float GetY() const
-        {
-            return (top + bottom) / 2.0f;
-        }
-
-        constexpr float GetWidth() const
-        {
-            return right - left;
-        }
-
-        constexpr float GetHeight() const
-        {
-            return top - bottom;
-        }
-
-        constexpr float GetArea() const
-        {
-            return GetWidth() * GetHeight();
-        }
-
-        constexpr bool IsEmpty() const
-        {
-            return GetWidth() == 0 || GetHeight() == 0;
-        }
-
-        constexpr float GetAspectRatio() const
-        {
-            auto height = GetHeight();
-            return height ? GetWidth() / height : 0.0f;
-        }
-
-        inline glm::mat4 ToProjectionMatrix() const
-        {
-            return glm::ortho(left, right, bottom, top);
-        }
-
-        inline Transform GetTransform() const
-        {
-            return {
-                {GetX(), GetY()},
-                0.0_rad,
-                {GetWidth(), GetHeight()}
-            };
-        }
-
-        constexpr bool operator==(const Rectangle &other) const = default;
-        constexpr bool operator!=(const Rectangle &other) const = default;
-    };
+		inline glm::mat4 ToProjectionMatrix() const
+		{
+			return glm::ortho(Left, Right, Bottom, Top);
+		}
+	};
 }

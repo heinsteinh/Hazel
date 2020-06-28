@@ -1,22 +1,21 @@
 #pragma once
 
-#include "Hazel/Rendering/Drawing/ObjectFactory.h"
-#include "ShaderInfo.h"
+#include "Hazel/Rendering/Core/RenderApiFactory.h"
 #include "Shader.h"
 
 namespace Hazel
 {
-    class ShaderLibrary
-    {
-    private:
-        ObjectFactory &factory;
-        std::unordered_map<std::string, SharedPtr<Shader>> shaders;
+	class ShaderLibrary
+	{
+	private:
+		RenderApiFactory &factory;
+		std::unordered_map<std::string, SharedPtr<Shader>> shaders;
 
-    public:
-        ShaderLibrary(ObjectFactory &factory);
+	public:
+		ShaderLibrary(RenderApiFactory &factory);
 
-        SharedPtr<Shader> Get(const std::string &name);
-        void Add(const SharedPtr<Shader> &shader);
-        SharedPtr<Shader> Load(const ShaderInfo &info);
-    };
+		SharedPtr<Shader> Get(const std::string &name);
+		SharedPtr<Shader> &Add(const SharedPtr<Shader> &shader);
+		SharedPtr<Shader> &Load(const ShaderInfo &info);
+	};
 }

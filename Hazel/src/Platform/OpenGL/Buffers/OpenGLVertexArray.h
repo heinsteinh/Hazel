@@ -4,27 +4,26 @@
 
 namespace Hazel
 {
-    class OpenGLVertexArray : public VertexArray
-    {
-    private:
-        unsigned int id = 0;
-        std::vector<SharedPtr<VertexBuffer>> vertexBuffers;
-        SharedPtr<IndexBuffer> indexBuffer;
+	class OpenGLVertexArray : public VertexArray
+	{
+	private:
+		unsigned int id = 0;
+		std::vector<SharedPtr<VertexBuffer>> vertexBuffers;
+		SharedPtr<IndexBuffer> indexBuffer;
 
-    public:
-        OpenGLVertexArray();
-        virtual ~OpenGLVertexArray();
+	public:
+		OpenGLVertexArray();
+		virtual ~OpenGLVertexArray();
 
-        virtual void Bind() const override;
-        virtual void UnBind() const override;
+		virtual void Bind() const override;
+		virtual void Unbind() const override;
+		virtual const std::vector<SharedPtr<VertexBuffer>> &GetVertexBuffers() const override;
+		virtual const SharedPtr<IndexBuffer> &GetIndexBuffer() const override;
+		virtual void AddVertexBuffer(const SharedPtr<VertexBuffer> &buffer) override;
+		virtual void SetIndexBuffer(const SharedPtr<IndexBuffer> &buffer) override;
 
-        virtual const std::vector<SharedPtr<VertexBuffer>> &GetVertexBuffers() const override;
-        virtual const SharedPtr<IndexBuffer> &GetIndexBuffer() const override;
-        virtual void AddVertexBuffer(const SharedPtr<VertexBuffer> &buffer) override;
-        virtual void SetIndexBuffer(const SharedPtr<IndexBuffer> &buffer) override;
-
-    private:
-        void SetVerticesAttributes(const BufferLayout &layout);
-        void AddVertexAttribute(const BufferLayout &layout, size_t index);
-    };
+	private:
+		void SetupVerticesAttributes(const BufferLayout &layout);
+		void SetupVertexAttributes(size_t index, const BufferLayout &layout);
+	};
 }

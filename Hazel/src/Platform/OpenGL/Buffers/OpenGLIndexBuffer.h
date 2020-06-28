@@ -4,18 +4,19 @@
 
 namespace Hazel
 {
-    class OpenGLIndexBuffer : public IndexBuffer
-    {
-    private:
-        size_t size = 0;
-        unsigned int id = 0;
+	class OpenGLIndexBuffer : public IndexBuffer
+	{
+	private:
+		size_t size = 0;
+		unsigned int id = 0;
 
-    public:
-        OpenGLIndexBuffer(const std::vector<unsigned int> &indexes);
-        virtual ~OpenGLIndexBuffer();
+	public:
+		OpenGLIndexBuffer(size_t size);
+		virtual ~OpenGLIndexBuffer();
 
-        virtual void Bind() const override;
-        virtual void UnBind() const override;
-        virtual size_t GetSize() const override;
-    };
+		virtual void Bind() const override;
+		virtual void Unbind() const override;
+		virtual size_t GetSize() const override;
+		virtual void SetData(const void *data, size_t size) override;
+	};
 }

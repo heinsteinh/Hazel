@@ -5,9 +5,9 @@
 #ifdef HZ_BUILD_DYNAMIC
 
 #ifdef HZ_BUILD_DLL
-#define HAZEL_API __declspec(dllexport)
+#define __declspec(dllexport)
 #else
-#define HAZEL_API __declspec(dllimport)
+#define __declspec(dllimport)
 #endif
 
 #else

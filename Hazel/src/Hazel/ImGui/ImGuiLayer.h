@@ -1,33 +1,28 @@
 #pragma once
 
-#include "Hazel/Core/Window.h"
-#include "Hazel/Core/Layer.h"
+#include "Hazel/Window/Window.h"
+#include "Hazel/Layers/Layer.h"
+#include "ImGuiContext.h"
+#include "ImGuiRenderer.h"
 
 namespace Hazel
 {
-    class ImGuiLayer : public Layer
-    {
-    private:
-        const Window &parent;
+	class ImGuiLayer : public Layer
+	{
+	private:
+		ImGuiContext context;
+		ImGuiRenderer renderer;
 
-    public:
-        ImGuiLayer(const Window &parent);
-        virtual ~ImGuiLayer() = default;
+	public:
+		ImGuiLayer(const Window &window);
 
-        void Begin();
-        void End();
+		void Begin();
+		void End();
+		void OnContextCurrent();
 
-        virtual void OnAttach() override;
-        virtual void OnDetach() override;
-        virtual void OnUpdate(Timestep deltaTime) override;
-        virtual void OnImGuiRender() override;
-        virtual void OnKeyEvent(KeyEvent &e) override;
-        virtual void OnMouseEvent(MouseEvent &e) override;
-
-    private:
-        void Init();
-        void SetupConfigFlags();
-        void UpdatePlatforms();
-        void Shutdown();
-    };
+		virtual const std::string &GetName() const override;
+		virtual void OnKeyEvent(KeyEvent &e) override;
+		virtual void OnMouseEvent(MouseEvent &e) override;
+		virtual void OnWindowResized(WindowResizeEvent &e) override;
+	};
 }

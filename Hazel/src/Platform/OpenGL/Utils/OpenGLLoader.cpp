@@ -7,47 +7,47 @@
 
 namespace Hazel
 {
-    OpenGLLoader::OpenGLLoader()
-    {
-        Init();
-    }
+	OpenGLLoader::OpenGLLoader()
+	{
+		Init();
+	}
 
-    void OpenGLLoader::Init()
-    {
-        LoadGlad();
-        DisplayOpenGLInfo();
-        SetupConfiguration();
+	void OpenGLLoader::Init()
+	{
+		LoadGlad();
+		DisplayOpenGLInfo();
+		SetupConfiguration();
 #ifdef _DEBUG
-        SetupDebugging();
+		SetupDebugging();
 #endif
-    }
+	}
 
-    void OpenGLLoader::LoadGlad()
-    {
-        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-        {
-            CoreCritical("Glad cannot be initialized.");
-            exit(-1);
-        }
-    }
+	void OpenGLLoader::LoadGlad()
+	{
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+		{
+			Log::Critical("Glad cannot be initialized.");
+			exit(-1);
+		}
+	}
 
-    void OpenGLLoader::DisplayOpenGLInfo()
-    {
-        CoreInfo("OpenGL version: {}", glGetString(GL_VERSION));
-        CoreInfo("OpenGL vendor: {}", glGetString(GL_VENDOR));
-        CoreInfo("OpenGL renderer: {}", glGetString(GL_RENDERER));
-    }
+	void OpenGLLoader::DisplayOpenGLInfo()
+	{
+		Log::Info("OpenGL version: {}", glGetString(GL_VERSION));
+		Log::Info("OpenGL vendor: {}", glGetString(GL_VENDOR));
+		Log::Info("OpenGL renderer: {}", glGetString(GL_RENDERER));
+	}
 
-    void OpenGLLoader::SetupConfiguration()
-    {
-        glEnable(GL_MULTISAMPLE);
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    }
+	void OpenGLLoader::SetupConfiguration()
+	{
+		glEnable(GL_MULTISAMPLE);
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
 
-    void OpenGLLoader::SetupDebugging()
-    {
-        static OpenGLDebugger debugger;
-    }
+	void OpenGLLoader::SetupDebugging()
+	{
+		static OpenGLDebugger debugger;
+	}
 }

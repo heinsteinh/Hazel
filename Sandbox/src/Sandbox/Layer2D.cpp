@@ -4,16 +4,14 @@ namespace Sandbox
 {
     Layer2D::Layer2D(Hazel::Window &parent)
         : parent(parent),
-        renderer(parent),
-        cameraController(parent),
-        texturedSquare({-0.9f, 0.9f, -0.45f, 0.45f})
+        renderer(parent.GetContext()),
+        cameraController(parent)
     {
     }
 
     void Layer2D::OnAttach()
     {
-        texture = Hazel::TextureBuilder(parent).Build("assets\\textures\\Test.jpg");
-        texturedSquare.SetTexture(texture);
+        texture = Hazel::TextureFactory(parent.GetContext()).Create("assets\\textures\\Test.jpg");
     }
 
     void Layer2D::OnDetach()
@@ -48,12 +46,8 @@ namespace Sandbox
             transform.TranslateX(-speed);
         }
 
-        colorSquare.SetTransform(transform.ToMatrixWithoutRotation());
-        colorSquare.SetColor(color);
-
         renderer.BeginScene(cameraController.GetCamera());
-        renderer.Draw(colorSquare);
-        renderer.Draw(texturedSquare);
+        // DRAW
         renderer.EndScene();
     }
 

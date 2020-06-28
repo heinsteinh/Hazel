@@ -4,49 +4,44 @@
 
 namespace Hazel
 {
-    class Image
-    {
-    private:
-        int width = 0;
-        int height = 0;
-        ColorFormat format;
-        void *data = nullptr;
+	class Image
+	{
+	private:
+		size_t width = 0;
+		size_t height = 0;
+		ColorFormat format;
+		void *data = nullptr;
 
-    public:
-        Image() = default;
+	public:
+		Image() = default;
+		Image(const std::string &filename, bool flipVertically = true);
+		Image(const Image &other) = delete;
+		Image(Image &&other) noexcept;
+		~Image();
 
-        Image(const std::string &filename);
-        Image(const Image &other) = delete;
-        Image(Image &&other) noexcept;
+		void *ReleaseData();
 
-        ~Image();
+		Image &operator=(const Image &other) = delete;
+		Image &operator=(Image &&other) noexcept;
 
-        void *ReleaseData();
+		constexpr size_t GetWidth() const
+		{
+			return width;
+		}
 
-        Image &operator=(const Image &other) = delete;
-        Image &operator=(Image &&other);
+		constexpr size_t GetHeight() const
+		{
+			return height;
+		}
 
-        inline int GetWidth() const
-        {
-            return width;
-        }
+		constexpr ColorFormat GetFormat() const
+		{
+			return format;
+		}
 
-        inline int GetHeight() const
-        {
-            return height;
-        }
-
-        inline ColorFormat GetFormat() const
-        {
-            return format;
-        }
-
-        inline void *GetData() const
-        {
-            return data;
-        }
-
-    private:
-        inline void FreeData();
-    };
+		constexpr void *GetData() const
+		{
+			return data;
+		}
+	};
 }

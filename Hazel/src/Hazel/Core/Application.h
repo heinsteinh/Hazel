@@ -1,44 +1,32 @@
 #pragma once
 
-#include "Window.h"
-#include "LayerStack.h"
+#include "ApplicationInfo.h"
+#include "Context.h"
+#include "Hazel/Layers/Layer.h"
+#include "UniquePtr.h"
+#include "SharedPtr.h"
 
 namespace Hazel
 {
-    class ImGuiLayer;
+	class ContextManager;
 
-    class HAZEL_API Application : public EventListener
-    {
-    private:
-        UniquePtr<Window> window;
-        ImGuiLayer *imguiLayer;
-        LayerStack layers;
-        bool running = false;
-        bool showImGui = true;
-        double lastTime = 0.0;
+	class Application
+	{
+	private:
+		UniquePtr<ContextManager> contextManager;
+		bool running = false;
 
-    public:
-        Application();
-        virtual ~Application() = default;
+	public:
+		Application(const ApplicationInfo &info = {});
+		virtual ~Application();
 
-        Window &GetWindow();
-        void Run();
-        void Quit();
-        void PushLayer(Layer *layer);
-        void PushOverlay(Layer *overlay);
-        void ShowImGui(bool show);
+		Context &GetContext();
+		void Run();
+		void Quit();
+		void PushLayer(const SharedPtr<Layer> &layer);
+		void PushOverlay(const SharedPtr<Layer> &overlay);
+		void ShowImGui(bool show);
+	};
 
-        virtual void OnEvent(Event &e) override;
-        virtual void OnWindowClosed(WindowClosedEvent &e) override;
-        virtual void OnWindowResized(WindowResizedEvent &e) override;
-
-    private:
-        void Init();
-        void Update();
-        Timestep ComputeDeltaTime();
-        void UpdateLayers(Timestep deltaTime);
-        void RenderImGui();
-    };
-
-    Application *CreateApplication();
+	UniquePtr<Application> CreateApplication();
 }

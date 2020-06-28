@@ -14,15 +14,10 @@ namespace Sandbox
 
         float framerate = 0.0f;
 
-        glm::vec4 red = {1.0f, 0.0f, 0.0f, 1.0f};
-        glm::vec4 green = {0.0f, 1.0f, 0.0f, 1.0f};
-        glm::vec4 blue = {0.0f, 0.0f, 1.0f, 1.0f};
-        glm::vec4 color = red;
+        glm::vec4 color = {1.0f, 0.0f, 0.0f, 1.0f};
 
         Hazel::SharedPtr<Hazel::Texture2D> texture;
         Hazel::Transform transform;
-        Hazel::RectangularSprite colorSquare;
-        Hazel::RectangularSprite texturedSquare;
 
         bool showFps = true;
         bool showColorPicker = true;
