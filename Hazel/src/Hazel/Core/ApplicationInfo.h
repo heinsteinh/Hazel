@@ -8,6 +8,5 @@ namespace Hazel
 	struct ApplicationInfo
 	{
 		WindowInfo WindowInfo;
-		RenderApi &RenderApi = AvailableRenderApi::OpenGL;
 	};
 }

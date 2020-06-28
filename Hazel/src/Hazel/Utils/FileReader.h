@@ -7,9 +7,7 @@ namespace Hazel
 	class FileReader
 	{
 	public:
-		constexpr FileReader() = default;
-
-		inline std::string ReadAll(const std::string &filename)
+		static inline std::string ReadAll(const std::string &filename)
 		{
 			FILE *stream = nullptr;
 			auto code = fopen_s(&stream, filename.c_str(), "rb");
@@ -20,14 +18,14 @@ namespace Hazel
 			return ReadFile(stream);
 		}
 
-		inline std::optional<std::string> TryReadAll(const std::string &filename)
+		static inline std::optional<std::string> TryReadAll(const std::string &filename)
 		{
 			FILE *stream = nullptr;
 			fopen_s(&stream, filename.c_str(), "rb");
 			return stream ? ReadFile(stream) : std::optional<std::string>();
 		}
 
-		inline std::string ReadFile(FILE *stream)
+		static inline std::string ReadFile(FILE *stream)
 		{
 			fseek(stream, 0, SEEK_END);
 			size_t size = ftell(stream);
@@ -37,5 +35,7 @@ namespace Hazel
 			fread(result.data(), sizeof(char), size, stream);
 			return result;
 		}
+
+		FileReader() = delete;
 	};
 }

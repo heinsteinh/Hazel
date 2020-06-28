@@ -1,18 +1,15 @@
 #pragma once
 
+#include "ContextData.h"
 #include "Context.h"
-#include "Hazel/Events/EventManager.h"
-#include "Hazel/Layers/LayerManager.h"
 
 namespace Hazel
 {
 	class ContextManager : public EventListener
 	{
 	private:
+		ContextData contextData;
 		Context context;
-		EventManager eventManager;
-		LayerManager layerManager;
-		std::shared_ptr<GraphicsContext> graphicsContext;
 		bool windowClosed = false;
 
 	public:

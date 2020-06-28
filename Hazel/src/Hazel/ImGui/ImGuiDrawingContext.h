@@ -2,21 +2,18 @@
 
 #include "Hazel/Window/Window.h"
 
-namespace ImGui
-{
-	struct ImGuiContext;
-}
+struct ImGuiContext;
 
 namespace Hazel
 {
-	class ImGuiContext
+	class ImGuiDrawingContext
 	{
 	private:
-		ImGui::ImGuiContext *context = nullptr;
+		ImGuiContext *context = nullptr;
 
 	public:
-		ImGuiContext(const Window &window);
-		~ImGuiContext();
+		ImGuiDrawingContext(const Window &window);
+		~ImGuiDrawingContext();
 
 		void MakeCurrent();
 

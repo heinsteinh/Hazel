@@ -22,13 +22,14 @@ namespace Hazel
 			return drawData;
 		}
 
-		inline const DrawData &GetUpdatedDrawData()
+		constexpr DrawData &GetDrawData()
 		{
-			if (HasMoved())
-			{
-				ApplyTransform();
-				SetMoved(false);
-			}
+			return drawData;
+		}
+
+		inline DrawData &GetUpdatedDrawData()
+		{
+			ApplyTransform();
 			return drawData;
 		}
 

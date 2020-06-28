@@ -12,7 +12,7 @@ namespace Hazel
 
 	public:
 		inline ShaderCompilationException(ShaderType type, const std::string &infoLog)
-			: description("Compilation of " + ShaderTypeInfo::GetName(type) + " shader failed: " + description)
+			: description("Compilation of " + ShaderTypeInfo::GetName(type) + " shader failed: " + infoLog)
 		{
 		}
 

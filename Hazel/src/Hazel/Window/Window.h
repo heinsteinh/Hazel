@@ -11,6 +11,7 @@ namespace Hazel
 	{
 	private:
 		GLFWwindow *window = nullptr;
+		std::shared_ptr<GraphicsContext> context;
 
 	public:
 		Window(const WindowInfo &info = {});
@@ -25,6 +26,11 @@ namespace Hazel
 		constexpr GLFWwindow *GetHandle() const
 		{
 			return window;
+		}
+
+		inline GraphicsContext &GetContext() const
+		{
+			return *context;
 		}
 	};
 }

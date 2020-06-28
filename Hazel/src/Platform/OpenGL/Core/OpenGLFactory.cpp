@@ -9,7 +9,7 @@
 
 namespace Hazel
 {
-	std::shared_ptr<GraphicsContext> OpenGLFactory::CreateContext(const Window &window)
+	std::shared_ptr<GraphicsContext> OpenGLFactory::CreateContext(GLFWwindow *window)
 	{
 		return std::make_shared<OpenGLContext>(window);
 	}

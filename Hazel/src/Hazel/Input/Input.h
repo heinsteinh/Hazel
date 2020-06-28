@@ -1,11 +1,10 @@
 #pragma once
 
-#include "glm/glm.hpp"
-
 #include "Key.h"
 #include "MouseButton.h"
 #include "MousePosition.h"
-#include "Hazel/Window/Window.h"
+
+struct GLFWwindow;
 
 namespace Hazel
 {
@@ -15,7 +14,7 @@ namespace Hazel
 		GLFWwindow *window = nullptr;
 
 	public:
-		Input(Window &window);
+		Input(GLFWwindow *window);
 
 		bool IsKeyPressed(Key key) const;
 		bool IsMouseButtonPressed(MouseButton button) const;

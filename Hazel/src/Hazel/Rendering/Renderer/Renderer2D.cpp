@@ -7,7 +7,7 @@
 namespace Hazel
 {
 	Renderer2D::Renderer2D(const Context &context)
-		: context(context),
+		: drawer(context.Drawer),
 		shader(context.Factory.CreateShader(DefaultShaderInfo::Get())),
 		whiteTexture(TextureBuilder(context.Factory).Build(glm::vec4(1.0f))),
 		batchInfo(DefaultBatchInfo::Create(context.Factory)),
@@ -32,11 +32,11 @@ namespace Hazel
 	{
 		shader->Bind();
 		batch.Bind();
-		context.Drawer.DrawIndexed(batch.GetIndexCount());
+		drawer.DrawIndexed(batch.GetIndexCount());
 	}
 
-	void Renderer2D::Draw(RectangularSprite &sprite)
+	void Renderer2D::Draw(const RectangularSprite &sprite)
 	{
-		batch.Add(sprite.GetUpdatedDrawData());
+		batch.Add(sprite.GetDrawData());
 	}
 }

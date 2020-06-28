@@ -15,7 +15,7 @@ namespace Hazel
 		TemplateBatch<Vertex> vertices;
 		TextureBatch textures;
 		BatchBuffer buffer;
-		std::shared_ptr<Texture> defaultTexture;
+		std::shared_ptr<Texture2D> defaultTexture;
 
 	public:
 		inline Batch(const BatchInfo &info)
@@ -64,7 +64,7 @@ namespace Hazel
 		}
 
 	private:
-		inline int AddTexture(const std::shared_ptr<Texture> &texture)
+		inline int AddTexture(const std::shared_ptr<Texture2D> &texture)
 		{
 			return static_cast<int>(textures.Add(texture ? texture : defaultTexture));
 		}

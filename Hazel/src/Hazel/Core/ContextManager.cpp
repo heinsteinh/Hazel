@@ -3,12 +3,10 @@
 namespace Hazel
 {
 	ContextManager::ContextManager(const ApplicationInfo &info)
-		: context(info),
-		eventManager(context.Window),
-		layerManager(context.Window),
-		graphicsContext(context.Factory.CreateContext(context.Window))
+		: contextData(info),
+		context(contextData.Window, contextData.Input, info.WindowInfo.RenderApi)
 	{
-		eventManager.SetEventListener(this);
+		contextData.EventManager.SetEventListener(this);
 		context.Drawer.SetClearColor({1.0f, 0.0f, 1.0f, 1.0f});
 	}
 
@@ -19,7 +17,7 @@ namespace Hazel
 
 	LayerManager &ContextManager::GetLayerManager()
 	{
-		return layerManager;
+		return contextData.LayerManager;
 	}
 
 	bool ContextManager::ShouldCloseWindow() const
@@ -30,20 +28,20 @@ namespace Hazel
 	void ContextManager::OnUpdate()
 	{
 		context.Drawer.Clear();
-		eventManager.PollEvents();
-		layerManager.OnUpdate();
-		graphicsContext->SwapBuffers();
+		contextData.EventManager.PollEvents();
+		contextData.LayerManager.OnUpdate();
+		contextData.Window.GetContext().SwapBuffers();
 	}
 
 	void ContextManager::MakeCurrent()
 	{
-		graphicsContext->MakeCurrent();
-		layerManager.OnContextCurrent();
+		contextData.Window.GetContext().MakeCurrent();
+		contextData.LayerManager.OnContextCurrent();
 	}
 
 	void ContextManager::OnEvent(Event &e)
 	{
-		layerManager.OnEvent(e);
+		contextData.LayerManager.OnEvent(e);
 	}
 
 	void ContextManager::OnWindowResized(WindowResizeEvent &e)

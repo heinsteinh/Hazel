@@ -1,6 +1,7 @@
 #include "Hazel.h"
 #include "Hazel/Core/EntryPoint.h"
 
+#include "Log.h"
 #include "Layer2D.h"
 
 namespace Sandbox
@@ -10,26 +11,14 @@ namespace Sandbox
 	public:
 		Application()
 		{
-			Hazel::Info("Sandbox application creation");
-			PushLayer(new Layer2D(GetWindow()));
-			GetWindow().GetContext().GetDrawer().SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
+			Log::Info("Sandbox application creation");
+			PushLayer(std::make_shared<Layer2D>(*this));
+			GetContext().Drawer.SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
 		};
-
-		virtual void OnKeyPressed(Hazel::KeyPressedEvent &e) override
-		{
-			if (e.GetKey() == Hazel::Key::I)
-			{
-				ShowImGui(true);
-			}
-			if (e.GetKey() == Hazel::Key::O)
-			{
-				ShowImGui(false);
-			}
-		}
 	};
 }
 
-Hazel::UniquePtr<Hazel::Application> Hazel::CreateApplication()
+std::unique_ptr<Hazel::Application> Hazel::CreateApplication()
 {
-	return Hazel::MakeUnique<Sandbox::Application>();
+	return std::make_unique<Sandbox::Application>();
 }

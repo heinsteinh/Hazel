@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Hazel/Rendering/Buffers/VertexArray.h"
 #include "Hazel/Utils/Rectangle.h"
 
 namespace Hazel

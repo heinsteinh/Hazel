@@ -1,9 +1,5 @@
 #pragma once
 
-#include "glm/glm.hpp"
-
-#include "Drawer.h"
-
 namespace Hazel
 {
 	class GraphicsContext

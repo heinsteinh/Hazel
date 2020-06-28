@@ -4,6 +4,7 @@ namespace Hazel
 {
 	class FileInfo
 	{
+	public:
 		static inline std::string GetDirectory(const std::string &filename)
 		{
 			size_t offset = filename.find_last_of("/\\");
@@ -26,5 +27,7 @@ namespace Hazel
 				? ""
 				: filename.substr(offset + 1, filename.size() - offset);
 		}
+
+		FileInfo() = delete;
 	};
 }

@@ -7,8 +7,8 @@
 
 namespace Hazel
 {
-	OpenGLContext::OpenGLContext(const Window &window)
-		: window(window.GetHandle())
+	OpenGLContext::OpenGLContext(GLFWwindow *window)
+		: window(window)
 	{
 		MakeCurrent();
 		static OpenGLLoader loader;

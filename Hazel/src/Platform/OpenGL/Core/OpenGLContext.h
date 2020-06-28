@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Hazel/Window/Window.h"
 #include "Hazel/Rendering/Core/GraphicsContext.h"
+
+struct GLFWwindow;
 
 namespace Hazel
 {
@@ -11,7 +12,7 @@ namespace Hazel
 		GLFWwindow *window = nullptr;
 
 	public:
-		OpenGLContext(const Window &window);
+		OpenGLContext(GLFWwindow *window);
 
 		virtual void MakeCurrent() override;
 		virtual void SwapBuffers() override;

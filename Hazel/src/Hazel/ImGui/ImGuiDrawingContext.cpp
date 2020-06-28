@@ -1,29 +1,27 @@
-#include "ImGuiContext.h"
+#include "ImGuiDrawingContext.h"
 
 #include "imgui.h"
 #include "examples/imgui_impl_glfw.h"
 #include "examples/imgui_impl_opengl3.h"
 
-#include "GLFW/glfw3.h"
-
 namespace Hazel
 {
-	ImGuiContext::ImGuiContext(const Window &window)
+	ImGuiDrawingContext::ImGuiDrawingContext(const Window &window)
 	{
 		Init(window);
 	}
 
-	ImGuiContext::~ImGuiContext()
+	ImGuiDrawingContext::~ImGuiDrawingContext()
 	{
 		Shutdown();
 	}
 
-	void ImGuiContext::MakeCurrent()
+	void ImGuiDrawingContext::MakeCurrent()
 	{
 		ImGui::SetCurrentContext(context);
 	}
 
-	void ImGuiContext::Init(const Window &window)
+	void ImGuiDrawingContext::Init(const Window &window)
 	{
 		IMGUI_CHECKVERSION();
 		context = ImGui::CreateContext();
@@ -33,7 +31,7 @@ namespace Hazel
 		ImGui_ImplOpenGL3_Init("#version 410");
 	}
 
-	void ImGuiContext::SetupAppearance()
+	void ImGuiDrawingContext::SetupAppearance()
 	{
 		ImGui::StyleColorsDark();
 		ImGui::GetIO().ConfigFlags = GetConfigurationFlags();
@@ -41,14 +39,14 @@ namespace Hazel
 		ImGui::GetStyle().Colors[ImGuiCol_WindowBg].w = 1.0f;
 	}
 
-	int ImGuiContext::GetConfigurationFlags()
+	int ImGuiDrawingContext::GetConfigurationFlags()
 	{
 		return ImGuiConfigFlags_NavEnableKeyboard
 			| ImGuiConfigFlags_DockingEnable
 			| ImGuiConfigFlags_ViewportsEnable;
 	}
 
-	void ImGuiContext::Shutdown()
+	void ImGuiDrawingContext::Shutdown()
 	{
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();

@@ -9,9 +9,9 @@ namespace Hazel
 		return *static_cast<EventHandler *>(glfwGetWindowUserPointer(window));
 	}
 
-	EventManager::EventManager(const Window &window)
+	EventManager::EventManager(GLFWwindow *window)
 	{
-		glfwSetWindowUserPointer(window.GetHandle(), &eventHandler);
+		glfwSetWindowUserPointer(window, &eventHandler);
 		SetupCallbacks(window);
 	}
 
@@ -25,7 +25,7 @@ namespace Hazel
 		eventHandler.SetEventListener(listener);
 	}
 
-	void EventManager::SetupCallbacks(const Window &window)
+	void EventManager::SetupCallbacks(GLFWwindow *window)
 	{
 		Log::Debug("Window callbacks setup.");
 		SetupWindowCallbacks(window);
@@ -34,41 +34,41 @@ namespace Hazel
 		Log::Debug("Window callbacks setup OK.");
 	}
 
-	void EventManager::SetupWindowCallbacks(const Window &window)
+	void EventManager::SetupWindowCallbacks(GLFWwindow *window)
 	{
-		glfwSetWindowSizeCallback(window.GetHandle(), [](GLFWwindow *window, int width, int height)
+		glfwSetWindowSizeCallback(window, [](GLFWwindow *window, int width, int height)
 		{
 			GetHandler(window).OnResize(width, height);
 		});
-		glfwSetWindowCloseCallback(window.GetHandle(), [](GLFWwindow *window)
+		glfwSetWindowCloseCallback(window, [](GLFWwindow *window)
 		{
 			GetHandler(window).OnClose();
 		});
 	}
 
-	void EventManager::SetupKeyCallbacks(const Window &window)
+	void EventManager::SetupKeyCallbacks(GLFWwindow *window)
 	{
-		glfwSetKeyCallback(window.GetHandle(), [](GLFWwindow *window, int key, int scancode, int action, int mods)
+		glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scancode, int action, int mods)
 		{
 			GetHandler(window).OnKey(key, action);
 		});
-		glfwSetCharCallback(window.GetHandle(), [](GLFWwindow *window, unsigned int key)
+		glfwSetCharCallback(window, [](GLFWwindow *window, unsigned int key)
 		{
 			GetHandler(window).OnChar(key);
 		});
 	}
 
-	void EventManager::SetupMouseCallbacks(const Window &window)
+	void EventManager::SetupMouseCallbacks(GLFWwindow *window)
 	{
-		glfwSetMouseButtonCallback(window.GetHandle(), [](GLFWwindow *window, int button, int action, int mods)
+		glfwSetMouseButtonCallback(window, [](GLFWwindow *window, int button, int action, int mods)
 		{
 			GetHandler(window).OnMouseButton(button, action);
 		});
-		glfwSetScrollCallback(window.GetHandle(), [](GLFWwindow *window, double x, double y)
+		glfwSetScrollCallback(window, [](GLFWwindow *window, double x, double y)
 		{
 			GetHandler(window).OnMouseScrolled(x, y);
 		});
-		glfwSetCursorPosCallback(window.GetHandle(), [](GLFWwindow *window, double x, double y)
+		glfwSetCursorPosCallback(window, [](GLFWwindow *window, double x, double y)
 		{
 			GetHandler(window).OnMouseMoved(x, y);
 		});

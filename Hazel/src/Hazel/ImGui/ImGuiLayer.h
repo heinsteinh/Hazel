@@ -2,7 +2,7 @@
 
 #include "Hazel/Window/Window.h"
 #include "Hazel/Layers/Layer.h"
-#include "ImGuiContext.h"
+#include "ImGuiDrawingContext.h"
 #include "ImGuiRenderer.h"
 
 namespace Hazel
@@ -10,7 +10,9 @@ namespace Hazel
 	class ImGuiLayer : public Layer
 	{
 	private:
-		ImGuiContext context;
+		static inline const std::string name = "ImGui";
+
+		ImGuiDrawingContext context;
 		ImGuiRenderer renderer;
 
 	public:

@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Hazel/Window/Window.h"
-#include "Hazel/Rendering/Core/GraphicsContext.h"
+#include "GraphicsContext.h"
 #include "Hazel/Rendering/Shaders/Shader.h"
 #include "Hazel/Rendering/Shaders/ShaderInfo.h"
 #include "Hazel/Rendering/Buffers/VertexArray.h"
@@ -19,7 +18,7 @@ namespace Hazel
 	public:
 		virtual ~RenderApiFactory() = default;
 
-		virtual std::shared_ptr<GraphicsContext> CreateContext(const Window &window) = 0;
+		virtual std::shared_ptr<GraphicsContext> CreateContext(GLFWwindow *window) = 0;
 		virtual std::shared_ptr<Shader> CreateShader(const ShaderInfo &info) = 0;
 		virtual std::shared_ptr<VertexArray> CreateVertexArray() = 0;
 		virtual std::shared_ptr<VertexBuffer> CreateVertexBuffer(size_t size) = 0;

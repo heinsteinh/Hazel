@@ -16,6 +16,7 @@ namespace Hazel
 			info.Title.c_str(),
 			nullptr,
 			nullptr);
+		context = info.RenderApi.GetFactory().CreateContext(window);
 		glfwSwapInterval(info.VerticalSynchronization ? 1 : 0);
 		Log::Debug("Window created.");
 	}

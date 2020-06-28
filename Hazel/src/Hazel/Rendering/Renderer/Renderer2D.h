@@ -10,9 +10,9 @@ namespace Hazel
 	class Renderer2D
 	{
 	private:
-		const Context &context;
+		Drawer &drawer;
 		std::shared_ptr<Shader> shader;
-		std::shared_ptr<Texture> whiteTexture;
+		std::shared_ptr<Texture2D> whiteTexture;
 		BatchInfo batchInfo;
 		Batch batch;
 
@@ -20,7 +20,7 @@ namespace Hazel
 		Renderer2D(const Context &context);
 
 		void BeginScene(const OrthographicCamera &camera);
-		void Draw(RectangularSprite &sprite);
+		void Draw(const RectangularSprite &sprite);
 		void EndScene();
 	};
 }

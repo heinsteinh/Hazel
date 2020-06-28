@@ -5,11 +5,11 @@ layout(location = 1) in vec4 a_Color;
 layout(location = 2) in vec2 a_TextureCoordinate;
 layout(location = 3) in int a_TextureIndex;
 
+uniform mat4 u_ViewProjection;
+
 out vec4 v_Color;
 out vec2 v_TextureCoordinate;
 out int v_TextureIndex;
-
-uniform mat4 u_ViewProjection;
 
 void main()
 {

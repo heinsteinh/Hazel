@@ -6,8 +6,8 @@
 
 namespace Hazel
 {
-	Input::Input(Window &window)
-		: window(window.GetHandle())
+	Input::Input(GLFWwindow *window)
+		: window(window)
 	{
 	}
 
