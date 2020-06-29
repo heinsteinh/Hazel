@@ -32,15 +32,9 @@ namespace Hazel
 		};
 
 	public:
-		static inline DrawData Get(const glm::vec4 &color, const std::shared_ptr<Texture2D> &texture)
+		static inline const DrawData &Get()
 		{
-			auto result = drawData;
-			for (auto &mesh : result.Meshes)
-			{
-				mesh.Color = color;
-				mesh.Texture = texture;
-			}
-			return result;
+			return drawData;
 		}
 
 		RectangleDrawData() = delete;

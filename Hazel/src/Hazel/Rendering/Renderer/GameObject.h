@@ -22,12 +22,7 @@ namespace Hazel
 			return drawData;
 		}
 
-		constexpr DrawData &GetDrawData()
-		{
-			return drawData;
-		}
-
-		inline DrawData &GetUpdatedDrawData()
+		inline const DrawData &GetUpdatedDrawData()
 		{
 			ApplyTransform();
 			return drawData;
@@ -40,6 +35,12 @@ namespace Hazel
 			{
 				mesh.Position = matrix * mesh.Position;
 			}
+		}
+
+	protected:
+		constexpr DrawData &GetDrawData()
+		{
+			return drawData;
 		}
 	};
 }

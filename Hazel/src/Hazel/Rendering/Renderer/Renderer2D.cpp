@@ -28,15 +28,16 @@ namespace Hazel
 		shader->Set("u_ViewProjection", camera.GetViewProjectionMatrix());
 	}
 
-	void Renderer2D::EndScene()
-	{
-		shader->Bind();
-		batch.Bind();
-		drawer.DrawIndexed(batch.GetIndexCount());
-	}
-
 	void Renderer2D::Draw(const RectangularSprite &sprite)
 	{
 		batch.Add(sprite.GetDrawData());
+	}
+
+	void Renderer2D::EndScene()
+	{
+		batch.Bind();
+		batch.BufferData();
+		drawer.DrawIndexed(batch.GetIndexCount());
+		batch.Clear();
 	}
 }
