@@ -8,7 +8,7 @@ namespace Hazel
 	{
 	private:
 		glm::vec3 position = {0.0f, 0.0f, 0.0f};
-		float rotation;
+		float rotation = 0.0f;
 		glm::mat4 projectionMatrix{1.0f};
 		glm::mat4 viewMatrix{1.0f};
 		glm::mat4 viewProjectionMatrix{1.0f};
