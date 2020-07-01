@@ -1,15 +1,18 @@
 #pragma once
 
-#include "ContextData.h"
+#include "ApplicationInfo.h"
+#include "Hazel/Window/Window.h"
 #include "Context.h"
+#include "Hazel/Layers/LayerManager.h"
 
 namespace Hazel
 {
 	class ContextManager : public EventListener
 	{
 	private:
-		ContextData contextData;
+		Window window;
 		Context context;
+		LayerManager layerManager;
 		bool windowClosed = false;
 
 	public:
@@ -17,7 +20,7 @@ namespace Hazel
 
 		Context &GetContext();
 		LayerManager &GetLayerManager();
-		bool ShouldCloseWindow() const;
+		bool HasWindowClosed() const;
 		void OnUpdate();
 		void MakeCurrent();
 

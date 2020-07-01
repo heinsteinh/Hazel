@@ -10,6 +10,11 @@ namespace Hazel
 		static const KeyMap keymap;
 
 	public:
+		static inline const KeyMap &GetKeyMap()
+		{
+			return keymap;
+		}
+
 		static inline Key GetHazelKey(int key)
 		{
 			return keymap.GetHazelKey(key);

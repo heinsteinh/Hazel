@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Hazel/Window/Window.h"
-
+struct GLFWwindow;
 struct ImGuiContext;
 
 namespace Hazel
@@ -9,18 +8,19 @@ namespace Hazel
 	class ImGuiDrawingContext
 	{
 	private:
+		GLFWwindow *window = nullptr;
 		ImGuiContext *context = nullptr;
 
 	public:
-		ImGuiDrawingContext(const Window &window);
+		ImGuiDrawingContext(GLFWwindow *window);
 		~ImGuiDrawingContext();
 
+		void Init();
 		void MakeCurrent();
+		void Shutdown();
 
 	private:
-		void Init(const Window &window);
 		void SetupAppearance();
 		int GetConfigurationFlags();
-		void Shutdown();
 	};
 }

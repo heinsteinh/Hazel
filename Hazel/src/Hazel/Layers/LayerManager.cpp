@@ -4,9 +4,8 @@
 
 namespace Hazel
 {
-	LayerManager::LayerManager(const Window &window)
-		: window(window),
-		imGuiLayer(std::make_shared<ImGuiLayer>(window))
+	LayerManager::LayerManager(ImGuiDrawingContext &imGuiContext)
+		: imGuiLayer(std::make_shared<ImGuiLayer>(imGuiContext))
 	{
 		PushOverlay(imGuiLayer);
 	}
@@ -25,7 +24,7 @@ namespace Hazel
 
 	void LayerManager::OnUpdate()
 	{
-		if (!window.IsMinimized())
+		if (updateLayers)
 		{
 			UpdateLayers();
 		}
@@ -33,11 +32,6 @@ namespace Hazel
 		{
 			RenderImGui();
 		}
-	}
-
-	void LayerManager::OnContextCurrent()
-	{
-		imGuiLayer->OnContextCurrent();
 	}
 
 	void LayerManager::OnEvent(Event &e)
@@ -48,6 +42,12 @@ namespace Hazel
 			e.Dispatch(layer.get());
 		}
 	}
+
+	void LayerManager::EnableLayersUpdate(bool update)
+	{
+		updateLayers = update;
+	}
+
 	void LayerManager::ShowImGui(bool show)
 	{
 		showImGui = show;

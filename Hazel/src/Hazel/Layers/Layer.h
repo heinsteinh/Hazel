@@ -7,8 +7,6 @@ namespace Hazel
 	class Layer : public EventListener
 	{
 	public:
-		virtual ~Layer() = default;
-
 		inline virtual const std::string &GetName() const
 		{
 			static const std::string defaultName = "Unknown";

@@ -7,7 +7,7 @@ namespace Hazel
 {
 	struct WindowInfo
 	{
-		Size Dimensions = {1280.0f, 720.0f};
+		Size Size = {1280.0f, 720.0f};
 		std::string Title = "Hazel";
 		bool VerticalSynchronization = true;
 		RenderApi &RenderApi = AvailableRenderApi::OpenGL;

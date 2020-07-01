@@ -6,9 +6,9 @@
 
 namespace Hazel
 {
-	ImGuiDrawingContext::ImGuiDrawingContext(const Window &window)
+	ImGuiDrawingContext::ImGuiDrawingContext(GLFWwindow *window)
+		: window(window)
 	{
-		Init(window);
 	}
 
 	ImGuiDrawingContext::~ImGuiDrawingContext()
@@ -16,19 +16,32 @@ namespace Hazel
 		Shutdown();
 	}
 
+	void ImGuiDrawingContext::Init()
+	{
+		if (!context)
+		{
+			IMGUI_CHECKVERSION();
+			ImGui::SetCurrentContext(context = ImGui::CreateContext());
+			SetupAppearance();
+			ImGui_ImplGlfw_InitForOpenGL(window, true);
+			ImGui_ImplOpenGL3_Init("#version 410");
+		}
+	}
+
 	void ImGuiDrawingContext::MakeCurrent()
 	{
 		ImGui::SetCurrentContext(context);
 	}
 
-	void ImGuiDrawingContext::Init(const Window &window)
+	void ImGuiDrawingContext::Shutdown()
 	{
-		IMGUI_CHECKVERSION();
-		context = ImGui::CreateContext();
-		MakeCurrent();
-		SetupAppearance();
-		ImGui_ImplGlfw_InitForOpenGL(window.GetHandle(), true);
-		ImGui_ImplOpenGL3_Init("#version 410");
+		if (context)
+		{
+			ImGui_ImplOpenGL3_Shutdown();
+			ImGui_ImplGlfw_Shutdown();
+			ImGui::DestroyContext(context);
+			context = nullptr;
+		}
 	}
 
 	void ImGuiDrawingContext::SetupAppearance()
@@ -44,13 +57,5 @@ namespace Hazel
 		return ImGuiConfigFlags_NavEnableKeyboard
 			| ImGuiConfigFlags_DockingEnable
 			| ImGuiConfigFlags_ViewportsEnable;
-	}
-
-	void ImGuiDrawingContext::Shutdown()
-	{
-		ImGui_ImplOpenGL3_Shutdown();
-		ImGui_ImplGlfw_Shutdown();
-		ImGui::DestroyContext(context);
-		context = nullptr;
 	}
 }

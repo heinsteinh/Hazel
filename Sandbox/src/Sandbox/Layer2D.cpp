@@ -33,7 +33,7 @@ namespace Sandbox
 
 		float speed = 0.1f;
 
-		/*glm::vec3 translation(0.0f);
+		glm::vec3 translation(0.0f);
 		auto &input = application.GetContext().Input;
 		if (input.IsKeyPressed(Hazel::Key::Up))
 		{
@@ -55,7 +55,7 @@ namespace Sandbox
 		if (translation.x || translation.y || translation.z)
 		{
 			rectangles[0].ApplyTransform();
-		}*/
+		}
 
 		rectangles[0].SetColor(color);
 

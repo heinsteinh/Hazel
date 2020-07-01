@@ -8,14 +8,14 @@ namespace Hazel
 {
 	struct Context
 	{
-		Window &Window;
+		WindowProperties &Window;
 		Input &Input;
 		RenderApiFactory &Factory;
 		Drawer &Drawer;
 
-		inline Context(Hazel::Window &window, Hazel::Input &input, RenderApi &renderApi)
-			: Window(window),
-			Input(input),
+		inline Context(Hazel::Window &window, RenderApi &renderApi)
+			: Window(window.GetProperties()),
+			Input(window.GetInput()),
 			Factory(renderApi.GetFactory()),
 			Drawer(renderApi.GetDrawer())
 		{

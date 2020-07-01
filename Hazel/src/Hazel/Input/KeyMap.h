@@ -32,6 +32,16 @@ namespace Hazel
 			return hazelNative == reversedMapping.end() ? 0 : hazelNative->second;
 		}
 
+		inline auto begin() const
+		{
+			return mapping.begin();
+		}
+
+		inline auto end() const
+		{
+			return mapping.end();
+		}
+
 		inline Key operator[](int key) const
 		{
 			return GetHazelKey(key);
