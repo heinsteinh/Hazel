@@ -94,6 +94,7 @@ namespace Sandbox
 			break;
 		case Hazel::Key::C:
 			showFps = showColorPicker = true;
+			break;
 		case Hazel::Key::Backspace:
 			color = {1.0f, 0.0f, 0.0f, 1.0f};
 			rectangles[0].GetTransform() = Hazel::Transform();

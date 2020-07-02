@@ -7,7 +7,7 @@ namespace Hazel
 {
 	struct Mesh
 	{
-		glm::vec4 Position = {0.0f, 0.0f, 0.0f, 1.0f};
+		glm::vec3 Position = {0.0f, 0.0f, 0.0f};
 		glm::vec2 TextureCoordinate{0.0f};
 		glm::vec4 Color{1.0f};
 		std::shared_ptr<Texture2D> Texture;
