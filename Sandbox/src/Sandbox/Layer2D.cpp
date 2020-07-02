@@ -9,6 +9,8 @@ namespace Sandbox
 	Layer2D::Layer2D(Hazel::Application &application)
 		: application(application),
 		renderer(application.GetContext()),
+		input(application.GetContext().Input),
+		drawer(application.GetContext().Drawer),
 		cameraController(application.GetContext())
 	{
 	}
@@ -27,36 +29,34 @@ namespace Sandbox
 	{
 		framerate = 1.0f / deltaTime;
 
-		application.GetContext().Drawer.Clear();
+		drawer.Clear();
 
 		cameraController.OnUpdate(deltaTime);
 
-		float speed = 0.1f;
-
+		float speed = 1.0f;
 		glm::vec3 translation(0.0f);
-		auto &input = application.GetContext().Input;
+
 		if (input.IsKeyPressed(Hazel::Key::Up))
 		{
-			translation.x += speed;
+			translation.y += speed * deltaTime;
 		}
 		if (input.IsKeyPressed(Hazel::Key::Down))
 		{
-			translation.x -= speed;
-		}
-		if (input.IsKeyPressed(Hazel::Key::Right))
-		{
-			translation.y += speed;
+			translation.y -= speed * deltaTime;
 		}
 		if (input.IsKeyPressed(Hazel::Key::Left))
 		{
-			translation.y -= speed;
+			translation.x -= speed * deltaTime;
 		}
-		rectangles[0].Translate(translation);
-		if (translation.x || translation.y || translation.z)
+		if (input.IsKeyPressed(Hazel::Key::Right))
 		{
-			rectangles[0].ApplyTransform();
+			translation.x += speed * deltaTime;
 		}
 
+		if (translation.x || translation.y)
+		{
+			rectangles[0].GetTransform().Translation += translation;
+		}
 		rectangles[0].SetColor(color);
 
 		renderer.BeginScene(cameraController.GetCamera());
@@ -96,6 +96,7 @@ namespace Sandbox
 			showFps = showColorPicker = true;
 		case Hazel::Key::Backspace:
 			color = {1.0f, 0.0f, 0.0f, 1.0f};
+			rectangles[0].GetTransform() = Hazel::Transform();
 			break;
 		case Hazel::Key::I:
 			application.ShowImGui(showImGui = !showImGui);

@@ -1,20 +1,25 @@
 #pragma once
 
 #include "DrawData.h"
-#include "RigidBody.h"
 
 namespace Hazel
 {
-	class GameObject : public RigidBody
+	class GameObject
 	{
 	private:
 		DrawData drawData;
 
 	public:
-		inline GameObject(const DrawData &drawData, const Transform &transform = {})
-			: RigidBody(transform),
-			drawData(drawData)
+		inline GameObject(const DrawData &drawData)
+			: drawData(drawData)
 		{
+		}
+
+		virtual ~GameObject() = default;
+
+		constexpr DrawData &GetDrawData()
+		{
+			return drawData;
 		}
 
 		constexpr const DrawData &GetDrawData() const
@@ -22,25 +27,14 @@ namespace Hazel
 			return drawData;
 		}
 
-		inline const DrawData &GetUpdatedDrawData()
+		constexpr Transform &GetTransform()
 		{
-			ApplyTransform();
-			return drawData;
+			return drawData.Transform;
 		}
 
-		inline void ApplyTransform()
+		constexpr const Transform &GetTransform() const
 		{
-			auto matrix = GetTransform().ToMatrix();
-			for (auto &mesh : drawData.Meshes)
-			{
-				mesh.Position = matrix * mesh.Position;
-			}
-		}
-
-	protected:
-		constexpr DrawData &GetDrawData()
-		{
-			return drawData;
+			return drawData.Transform;
 		}
 	};
 }

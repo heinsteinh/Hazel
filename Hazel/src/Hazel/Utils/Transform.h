@@ -5,7 +5,7 @@ namespace Hazel
 	struct Transform
 	{
 		glm::vec3 Translation{0.0f};
-		glm::quat Rotation{1.0f, 0.0f, 0.0f, 1.0f};
+		glm::quat Rotation{1.0f, 0.0f, 0.0f, 0.0f};
 		glm::vec3 Scale{1.0f};
 
 		inline glm::mat4 Apply(const glm::mat4 &matrix) const

@@ -4,6 +4,7 @@
 #include "TextureBatch.h"
 #include "BatchBuffer.h"
 #include "DrawData.h"
+#include "VertexBuilder.h"
 #include "Hazel/Rendering/Textures/TextureBuilder.h"
 
 namespace Hazel
@@ -45,9 +46,10 @@ namespace Hazel
 			{
 				indexes.Add(static_cast<unsigned int>(vertices.GetSize() + index));
 			}
+			VertexBuilder builder(drawData.Transform);
 			for (const auto &mesh : drawData.Meshes)
 			{
-				vertices.Add(mesh.ToVertex(AddTexture(mesh.Texture)));
+				vertices.Add(builder.Build(mesh, AddTexture(mesh.Texture)));
 			}
 		}
 

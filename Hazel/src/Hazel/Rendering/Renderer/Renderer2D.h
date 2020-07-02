@@ -2,7 +2,7 @@
 
 #include "Hazel/Core/Context.h"
 #include "Hazel/Rendering/Camera/OrthographicCamera.h"
-#include "RectangularSprite.h"
+#include "GameObject.h"
 #include "Batch.h"
 
 namespace Hazel
@@ -20,7 +20,7 @@ namespace Hazel
 		Renderer2D(const Context &context);
 
 		void BeginScene(const OrthographicCamera &camera);
-		void Draw(const RectangularSprite &sprite);
+		void Draw(const GameObject &object);
 		void EndScene();
 	};
 }

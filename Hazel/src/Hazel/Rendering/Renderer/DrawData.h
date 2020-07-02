@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Mesh.h"
+#include "Hazel/Utils/Transform.h"
 
 namespace Hazel
 {
@@ -8,5 +9,6 @@ namespace Hazel
 	{
 		std::vector<unsigned int> Indexes;
 		std::vector<Mesh> Meshes;
+		Transform Transform;
 	};
 }

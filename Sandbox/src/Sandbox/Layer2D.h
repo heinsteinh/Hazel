@@ -10,6 +10,8 @@ namespace Sandbox
 	private:
 		Hazel::Application &application;
 		Hazel::Renderer2D renderer;
+		Hazel::Input &input;
+		Hazel::Drawer &drawer;
 		Hazel::OrthographicCameraController cameraController;
 		std::vector<Hazel::RectangularSprite> rectangles;
 

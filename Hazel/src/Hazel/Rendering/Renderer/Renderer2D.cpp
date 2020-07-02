@@ -28,9 +28,9 @@ namespace Hazel
 		shader->Set("u_ViewProjection", camera.GetViewProjectionMatrix());
 	}
 
-	void Renderer2D::Draw(const RectangularSprite &sprite)
+	void Renderer2D::Draw(const GameObject &object)
 	{
-		batch.Add(sprite.GetDrawData());
+		batch.Add(object.GetDrawData());
 	}
 
 	void Renderer2D::EndScene()
