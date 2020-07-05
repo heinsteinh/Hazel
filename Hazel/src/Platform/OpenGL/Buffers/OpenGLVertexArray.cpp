@@ -67,6 +67,6 @@ namespace Hazel
 			OpenGLDataType::FromDataType(element.GetComponentType()),
 			element.IsNormalized() ? GL_TRUE : GL_FALSE,
 			static_cast<int>(layout.GetStride()),
-			(const void *)element.GetOffset());
+			reinterpret_cast<const void *>(element.GetOffset()));
 	}
 }

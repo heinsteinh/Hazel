@@ -7,15 +7,15 @@ namespace Hazel
 	class KeyTypeEvent : public KeyEvent
 	{
 	private:
-		int key;
+		unsigned int key;
 
 	public:
-		constexpr KeyTypeEvent(int key)
+		constexpr KeyTypeEvent(unsigned int key)
 			: key(key)
 		{
 		}
 
-		constexpr int GetKey() const
+		constexpr unsigned int GetKey() const
 		{
 			return key;
 		}

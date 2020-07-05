@@ -42,11 +42,6 @@ namespace Hazel
 			return elements.begin();
 		}
 
-		inline auto end()
-		{
-			return elements.end();
-		}
-
 		inline auto begin() const
 		{
 			return elements.begin();

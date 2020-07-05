@@ -50,10 +50,4 @@ namespace Hazel
 		Log::Info("Push overlay {}.", overlay->GetName());
 		contextManager->GetLayerManager().PushOverlay(overlay);
 	}
-
-	void Application::ShowImGui(bool show)
-	{
-		Log::Info("Show ImGui {}.", show);
-		contextManager->GetLayerManager().ShowImGui(show);
-	}
 }

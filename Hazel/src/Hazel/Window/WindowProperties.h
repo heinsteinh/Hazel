@@ -20,7 +20,7 @@ namespace Hazel
 		void SetTitle(const std::string &title);
 		Size GetSize() const;
 		void Resize(Size size);
-		bool HasVerticalSynchonizationEnabled() const;
+		bool HasVerticalSynchonization() const;
 		void EnableVerticalSynchronization(bool enable);
 	};
 }

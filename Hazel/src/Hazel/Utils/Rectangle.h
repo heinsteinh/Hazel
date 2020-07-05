@@ -21,7 +21,7 @@ namespace Hazel
 			};
 		}
 
-		static constexpr Rectangle FromSizeAndCenter(Size size, const glm::vec2 &position)
+		static constexpr Rectangle FromSizeAndPosition(Size size, const glm::vec2 &position)
 		{
 			return {
 				position.x - size.Width,
@@ -31,14 +31,19 @@ namespace Hazel
 			};
 		}
 
-		constexpr float GetX() const
+		constexpr float GetPositionX() const
 		{
 			return (Right + Left) / 2.0f;
 		}
 
-		constexpr float GetY() const
+		constexpr float GetPositionY() const
 		{
 			return (Top + Bottom) / 2.0f;
+		}
+
+		constexpr glm::vec2 GetPosition() const
+		{
+			return {GetPositionX(), GetPositionY()};
 		}
 
 		constexpr float GetWidth() const
@@ -51,25 +56,24 @@ namespace Hazel
 			return Top - Bottom;
 		}
 
+		constexpr Size GetSize() const
+		{
+			return {GetWidth(), GetHeight()};
+		}
+
 		constexpr float GetArea() const
 		{
-			return GetWidth() * GetHeight();
+			return GetSize().GetArea();
+		}
+
+		constexpr float GetAspectRatio() const
+		{
+			return GetSize().GetAspectRatio();
 		}
 
 		constexpr bool IsEmpty() const
 		{
 			return GetWidth() == 0.0f || GetHeight() == 0.0f;
-		}
-
-		constexpr float GetAspectRatio() const
-		{
-			auto height = GetHeight();
-			return height ? GetWidth() / height : 0.0f;
-		}
-
-		inline glm::mat4 ToProjectionMatrix() const
-		{
-			return glm::ortho(Left, Right, Bottom, Top);
 		}
 	};
 }

@@ -23,7 +23,6 @@ namespace Hazel
 		void Quit();
 		void PushLayer(const std::shared_ptr<Layer> &layer);
 		void PushOverlay(const std::shared_ptr<Layer> &overlay);
-		void ShowImGui(bool show);
 	};
 
 	std::unique_ptr<Application> CreateApplication();

@@ -6,14 +6,14 @@ struct GLFWwindow;
 
 namespace Hazel
 {
-	class GlfwWindow
+	class NativeWindow
 	{
 	private:
 		GLFWwindow *window = nullptr;
 
 	public:
-		GlfwWindow(const WindowInfo &info);
-		~GlfwWindow();
+		NativeWindow(const WindowInfo &info);
+		~NativeWindow();
 
 		constexpr GLFWwindow *Get() const
 		{

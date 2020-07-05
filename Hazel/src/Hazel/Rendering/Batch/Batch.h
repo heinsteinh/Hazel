@@ -14,7 +14,7 @@ namespace Hazel
 		TemplateBatch<Vertex> vertices;
 		TextureBatch textures;
 		BatchBuffer buffer;
-		std::shared_ptr<Texture2D> defaultTexture;
+		std::shared_ptr<Texture2D> whiteTexture;
 
 	public:
 		Batch(const BatchInfo &info);
@@ -32,6 +32,6 @@ namespace Hazel
 	private:
 		void AddIndexes(const DrawData &drawData);
 		void AddVertices(const DrawData &drawData);
-		int AddTexture(const std::shared_ptr<Texture2D> &texture);
+		float AddTexture(const std::shared_ptr<Texture2D> &texture);
 	};
 }

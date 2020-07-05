@@ -4,20 +4,25 @@ namespace Hazel
 {
 	ContextManager::ContextManager(const ApplicationInfo &info)
 		: window(info.WindowInfo),
-		context(window, info.WindowInfo.RenderApi),
-		layerManager(window.GetImGuiContext())
+		layerManager(window.GetImGuiContext()),
+		context({
+			layerManager,
+			window.GetProperties(),
+			window.GetInput(),
+			info.WindowInfo.RenderApi.GetFactory(),
+			info.WindowInfo.RenderApi.GetDrawer()})
 	{
 		window.GetEventManager().SetEventListener(this);
-	}
-
-	Context &ContextManager::GetContext()
-	{
-		return context;
 	}
 
 	LayerManager &ContextManager::GetLayerManager()
 	{
 		return layerManager;
+	}
+
+	Context &ContextManager::GetContext()
+	{
+		return context;
 	}
 
 	bool ContextManager::HasWindowClosed() const

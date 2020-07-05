@@ -34,7 +34,7 @@ namespace Hazel
 		glfwSetWindowSize(window, static_cast<int>(size.Width), static_cast<int>(size.Height));
 	}
 
-	bool WindowProperties::HasVerticalSynchonizationEnabled() const
+	bool WindowProperties::HasVerticalSynchonization() const
 	{
 		return verticalSynchronization;
 	}

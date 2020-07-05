@@ -1,4 +1,4 @@
-#include "GlfwWindow.h"
+#include "NativeWindow.h"
 
 #include "GLFW/glfw3.h"
 
@@ -6,7 +6,7 @@
 
 namespace Hazel
 {
-	GlfwWindow::GlfwWindow(const WindowInfo &info)
+	NativeWindow::NativeWindow(const WindowInfo &info)
 	{
 		static GlfwLoader loader;
 		window = glfwCreateWindow(
@@ -17,7 +17,7 @@ namespace Hazel
 			nullptr);
 	}
 
-	GlfwWindow::~GlfwWindow()
+	NativeWindow::~NativeWindow()
 	{
 		glfwDestroyWindow(window);
 	}

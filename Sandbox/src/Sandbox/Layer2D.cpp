@@ -6,18 +6,18 @@
 
 namespace Sandbox
 {
-	Layer2D::Layer2D(Hazel::Application &application)
-		: application(application),
-		renderer(application.GetContext()),
-		input(application.GetContext().Input),
-		drawer(application.GetContext().Drawer),
-		cameraController(application.GetContext())
+	Layer2D::Layer2D(Hazel::Context &context)
+		: settings(context.Settings),
+		renderer(context),
+		input(context.Input),
+		factory(context.Factory),
+		cameraController({context.Window.GetSize().GetAspectRatio()})
 	{
 	}
 
 	void Layer2D::OnAttach()
 	{
-		texture = Hazel::TextureBuilder(application.GetContext().Factory).Build("assets\\textures\\Test.jpg");
+		texture = Hazel::TextureBuilder(factory).Build("assets\\textures\\Test.jpg");
 		rectangles.emplace_back(color, texture);
 	}
 
@@ -29,37 +29,19 @@ namespace Sandbox
 	{
 		framerate = 1.0f / deltaTime;
 
-		drawer.Clear();
-
-		cameraController.OnUpdate(deltaTime);
-
-		float speed = 1.0f;
-		glm::vec3 translation(0.0f);
-
-		if (input.IsKeyPressed(Hazel::Key::Up))
-		{
-			translation.y += speed * deltaTime;
-		}
-		if (input.IsKeyPressed(Hazel::Key::Down))
-		{
-			translation.y -= speed * deltaTime;
-		}
-		if (input.IsKeyPressed(Hazel::Key::Left))
-		{
-			translation.x -= speed * deltaTime;
-		}
-		if (input.IsKeyPressed(Hazel::Key::Right))
-		{
-			translation.x += speed * deltaTime;
-		}
-
-		if (translation.x || translation.y)
-		{
-			rectangles[0].GetTransform().Translation += translation;
-		}
 		rectangles[0].SetColor(color);
 
-		renderer.BeginScene(cameraController.GetCamera());
+		auto &transform = rectangles[0].GetTransform();
+		transform.SetTranslation({translation.x, translation.y, 0.0f});
+		transform.SetRotation(glm::angleAxis(glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)));
+		transform.SetScale({scale.x, scale.y, 1.0f});
+
+		auto &camera = cameraController.GetCamera();
+		camera.Position = {cameraTranslation.x, cameraTranslation.y, 0.0f};
+		camera.Rotation = glm::radians(cameraRotation);
+		camera.SetZoomLevel(zoomLevel);
+
+		renderer.BeginScene(camera);
 		renderer.Draw(rectangles[0]);
 		renderer.EndScene();
 	}
@@ -78,29 +60,43 @@ namespace Sandbox
 			ImGui::ColorPicker4("Color", glm::value_ptr(color));
 			ImGui::End();
 		}
+		if (showTransform)
+		{
+			ImGui::Begin("Transform", &showTransform);
+			ImGui::SliderFloat2("Translation", glm::value_ptr(translation), -1.0f, 1.0f);
+			ImGui::SliderFloat("Rotation", &rotation, -180.0f, 180.0f);
+			ImGui::SliderFloat2("Scale", glm::value_ptr(scale), -1.0f, 1.0f);
+			ImGui::End();
+		}
+		if (showCamera)
+		{
+			ImGui::Begin("Camera", &showCamera);
+			ImGui::SliderFloat2("Translation", glm::value_ptr(cameraTranslation), -1.0f, 1.0f);
+			ImGui::SliderFloat("Rotation", &cameraRotation, -180.0f, 180.0f);
+			ImGui::SliderFloat("Zoom", &zoomLevel, 0.1f, 10.0f);
+			ImGui::End();
+		}
 	}
 
-	void Layer2D::OnEvent(Hazel::Event &e)
+	void Layer2D::OnWindowResized(Hazel::WindowResizeEvent &e)
 	{
-		e.Dispatch(&cameraController);
+		cameraController.OnWindowResized(e.GetSize());
 	}
 
 	void Layer2D::OnKeyPressed(Hazel::KeyPressEvent &e)
 	{
 		switch (e.GetKey())
 		{
-		case Hazel::Key::R:
-			cameraController.SetRotationEnabled(!cameraController.HasRotationEnabled());
-			break;
 		case Hazel::Key::C:
-			showFps = showColorPicker = true;
-			break;
+			showImGui = showFps = showColorPicker = showTransform = showCamera = true;
 		case Hazel::Key::Backspace:
 			color = {1.0f, 0.0f, 0.0f, 1.0f};
-			rectangles[0].GetTransform() = Hazel::Transform();
+			translation = glm::vec2(0.0f);
+			rotation = 0.0f;
+			scale = glm::vec2(1.0f);
 			break;
 		case Hazel::Key::I:
-			application.ShowImGui(showImGui = !showImGui);
+			settings.ShowImGui(showImGui = !showImGui);
 		}
 	}
 }

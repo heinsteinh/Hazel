@@ -1,15 +1,14 @@
 #include "Renderer2D.h"
 
 #include "Hazel/Rendering/Textures/TextureBuilder.h"
-#include "DefaultShaderInfo.h"
-#include "DefaultBatchInfo.h"
+#include "Batch/DefaultShaderInfo.h"
+#include "Batch/DefaultBatchInfo.h"
 
 namespace Hazel
 {
 	Renderer2D::Renderer2D(const Context &context)
 		: drawer(context.Drawer),
 		shader(context.Factory.CreateShader(DefaultShaderInfo::Get())),
-		whiteTexture(TextureBuilder(context.Factory).Build(glm::vec4(1.0f))),
 		batchInfo(DefaultBatchInfo::Create(context.Factory)),
 		batch(batchInfo)
 	{
@@ -25,6 +24,8 @@ namespace Hazel
 
 	void Renderer2D::BeginScene(const OrthographicCamera &camera)
 	{
+		drawer.Clear();
+		batch.Clear();
 		shader->Set("u_ViewProjection", camera.GetViewProjectionMatrix());
 	}
 
@@ -38,6 +39,5 @@ namespace Hazel
 		batch.Bind();
 		batch.BufferData();
 		drawer.DrawIndexed(batch.GetIndexCount());
-		batch.Clear();
 	}
 }

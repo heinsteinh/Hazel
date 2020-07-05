@@ -39,7 +39,7 @@ namespace Hazel
 		}
 	}
 
-	void EventHandler::OnChar(int key)
+	void EventHandler::OnChar(unsigned int key)
 	{
 		KeyTypeEvent(key).Dispatch(listener);
 	}

@@ -9,7 +9,7 @@ namespace Hazel
 		vertices(info.MaxVertices),
 		textures(info.MaxTextures),
 		buffer(info),
-		defaultTexture(TextureBuilder(info.Factory).Build(glm::vec4(1.0f)))
+		whiteTexture(TextureBuilder(info.Factory).Build(glm::vec4(1.0f)))
 	{
 	}
 
@@ -18,6 +18,7 @@ namespace Hazel
 		indexes.Clear();
 		vertices.Clear();
 		textures.Clear();
+		textures.Add(whiteTexture);
 	}
 
 	void Batch::Add(const DrawData &drawData)
@@ -48,18 +49,19 @@ namespace Hazel
 
 	void Batch::AddVertices(const DrawData &drawData)
 	{
+		auto matrix = drawData.Transform.ToMatrix();
 		for (const auto &mesh : drawData.Meshes)
 		{
 			vertices.Add({
-				drawData.Transform.Apply(mesh.Position),
+				matrix * mesh.Position,
 				mesh.Color,
 				mesh.TextureCoordinate,
 				AddTexture(mesh.Texture)});
 		}
 	}
 
-	int Batch::AddTexture(const std::shared_ptr<Texture2D> &texture)
+	float Batch::AddTexture(const std::shared_ptr<Texture2D> &texture)
 	{
-		return static_cast<int>(textures.Add(texture ? texture : defaultTexture));
+		return static_cast<float>(textures.Add(texture ? texture : whiteTexture));
 	}
 }

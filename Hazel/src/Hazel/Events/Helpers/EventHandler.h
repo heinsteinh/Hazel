@@ -15,7 +15,7 @@ namespace Hazel
 		void OnResize(int width, int height);
 		void OnClose();
 		void OnKey(int key, int action);
-		void OnChar(int key);
+		void OnChar(unsigned int key);
 		void OnMouseButton(int button, int action);
 		void OnMouseScrolled(double x, double y);
 		void OnMouseMoved(double x, double y);

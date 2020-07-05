@@ -11,15 +11,15 @@ namespace Hazel
 	{
 	private:
 		Window window;
-		Context context;
 		LayerManager layerManager;
+		Context context;
 		bool windowClosed = false;
 
 	public:
 		ContextManager(const ApplicationInfo &info);
 
-		Context &GetContext();
 		LayerManager &GetLayerManager();
+		Context &GetContext();
 		bool HasWindowClosed() const;
 		void OnUpdate();
 		void MakeCurrent();

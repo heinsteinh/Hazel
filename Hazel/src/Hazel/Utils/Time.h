@@ -2,11 +2,11 @@
 
 namespace Hazel
 {
-    class Time
-    {
-    public:
-        static float GetTime();
+	class Time
+	{
+	public:
+		static float GetTime();
 
-        Time() = delete;
-    };
+		Time() = delete;
+	};
 }

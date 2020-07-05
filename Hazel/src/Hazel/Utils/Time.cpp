@@ -4,8 +4,8 @@
 
 namespace Hazel
 {
-    float Time::GetTime()
-    {
-        return static_cast<float>(glfwGetTime());
-    }
+	float Time::GetTime()
+	{
+		return static_cast<float>(glfwGetTime());
+	}
 }

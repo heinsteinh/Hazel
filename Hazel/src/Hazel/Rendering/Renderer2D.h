@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Hazel/Core/Context.h"
-#include "Hazel/Rendering/Camera/OrthographicCamera.h"
-#include "GameObject.h"
-#include "Batch.h"
+#include "Hazel/Camera/OrthographicCamera.h"
+#include "Batch/GameObject.h"
+#include "Batch/Batch.h"
 
 namespace Hazel
 {
@@ -12,7 +12,6 @@ namespace Hazel
 	private:
 		Drawer &drawer;
 		std::shared_ptr<Shader> shader;
-		std::shared_ptr<Texture2D> whiteTexture;
 		BatchInfo batchInfo;
 		Batch batch;
 

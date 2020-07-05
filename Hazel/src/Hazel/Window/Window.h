@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Helpers/GlfwWindow.h"
+#include "Helpers/NativeWindow.h"
 #include "WindowProperties.h"
 #include "Hazel/Events/EventManager.h"
 #include "Hazel/Input/Input.h"
@@ -12,7 +12,7 @@ namespace Hazel
 	class Window
 	{
 	private:
-		GlfwWindow window;
+		NativeWindow window;
 		std::shared_ptr<GraphicsContext> context;
 		ImGuiDrawingContext imGuiContext;
 		WindowProperties properties;
