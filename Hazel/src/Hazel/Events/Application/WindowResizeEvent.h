@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ApplicationEvent.h"
-#include "Hazel/Utils/Size.h"
+#include "Hazel/Geometry/Size.h"
 
 namespace Hazel
 {

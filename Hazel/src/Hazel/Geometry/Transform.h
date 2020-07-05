@@ -58,12 +58,7 @@ namespace Hazel
 		inline glm::mat4 ToMatrix() const
 		{
 			return glm::translate(
-				glm::rotate(
-					glm::scale(
-						glm::mat4(1.0f),
-						scale),
-					glm::angle(rotation),
-					glm::axis(rotation)),
+				static_cast<glm::mat4>(rotation) * glm::scale(glm::mat4(1.0f), scale),
 				translation);
 		}
 	};

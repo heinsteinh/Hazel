@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Utils/Rectangle.h"
+#include "Hazel/Geometry/Rectangle.h"
 
 namespace Hazel
 {

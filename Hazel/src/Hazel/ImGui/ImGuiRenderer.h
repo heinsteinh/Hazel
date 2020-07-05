@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Utils/Size.h"
+#include "Hazel/Geometry/Size.h"
 
 namespace Hazel
 {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Mesh.h"
-#include "Hazel/Utils/Transform.h"
+#include "Hazel/Geometry/Transform.h"
 
 namespace Hazel
 {
