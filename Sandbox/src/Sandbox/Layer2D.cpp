@@ -65,7 +65,7 @@ namespace Sandbox
 			ImGui::Begin("Transform", &showTransform);
 			ImGui::SliderFloat2("Translation", glm::value_ptr(translation), -1.0f, 1.0f);
 			ImGui::SliderFloat("Rotation", &rotation, -180.0f, 180.0f);
-			ImGui::SliderFloat2("Scale", glm::value_ptr(scale), -1.0f, 1.0f);
+			ImGui::SliderFloat2("Scale", glm::value_ptr(scale), 0.1f, 3.0f);
 			ImGui::End();
 		}
 		if (showCamera)
@@ -94,6 +94,9 @@ namespace Sandbox
 			translation = glm::vec2(0.0f);
 			rotation = 0.0f;
 			scale = glm::vec2(1.0f);
+			cameraTranslation = glm::vec2(0.0f);
+			cameraRotation = 0.0f;
+			zoomLevel = 1.0f;
 			break;
 		case Hazel::Key::I:
 			settings.ShowImGui(showImGui = !showImGui);

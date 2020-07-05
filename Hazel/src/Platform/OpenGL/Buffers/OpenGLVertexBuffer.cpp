@@ -9,6 +9,7 @@ namespace Hazel
 	{
 		glCreateBuffers(1, &id);
 		glNamedBufferData(id, size, nullptr, GL_DYNAMIC_DRAW);
+		Log::Info("Vertex buffer created with id {}.", id);
 	}
 
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()

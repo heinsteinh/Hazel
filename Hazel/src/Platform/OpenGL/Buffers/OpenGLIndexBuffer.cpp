@@ -9,6 +9,7 @@ namespace Hazel
 	{
 		glCreateBuffers(1, &id);
 		glNamedBufferData(id, size, nullptr, GL_DYNAMIC_DRAW);
+		Log::Info("Index buffer created with id {}.", id);
 	}
 
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()

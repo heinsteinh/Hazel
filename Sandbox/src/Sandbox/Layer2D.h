@@ -34,7 +34,7 @@ namespace Sandbox
 
 		glm::vec2 cameraTranslation{0.0f};
 		float cameraRotation = 0.0f;
-		float zoomLevel{1.0f};
+		float zoomLevel = 1.0f;
 
 	public:
 		Layer2D(Hazel::Context &context);

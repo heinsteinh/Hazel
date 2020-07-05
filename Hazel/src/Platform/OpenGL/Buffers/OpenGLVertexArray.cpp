@@ -9,6 +9,7 @@ namespace Hazel
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
 		glCreateVertexArrays(1, &id);
+		Log::Info("Vertex array created with id {}.", id);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()

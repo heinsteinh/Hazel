@@ -10,6 +10,7 @@ namespace Hazel
 		: name(info.Name),
 		id(OpenGLShaderBuilder::Build(info))
 	{
+		Log::Info("Shader successfully created with id {}.", id);
 	}
 
 	OpenGLShader::~OpenGLShader()
