@@ -45,8 +45,8 @@ namespace Hazel
 			data);
 	}
 
-	void OpenGLTexture2D::Bind(unsigned int slot) const
+	void OpenGLTexture2D::Bind(size_t slot) const
 	{
-		glBindTextureUnit(slot, id);
+		glBindTextureUnit(static_cast<unsigned int>(slot), id);
 	}
 }

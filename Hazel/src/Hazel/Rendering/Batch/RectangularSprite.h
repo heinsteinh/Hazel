@@ -11,11 +11,12 @@ namespace Hazel
 		inline RectangularSprite(const glm::vec4 &color, const std::shared_ptr<Texture2D> &texture)
 			: GameObject(RectangleDrawData::Get())
 		{
-			for (auto &mesh : GetDrawData().Meshes)
+			auto &drawData = GetDrawData();
+			for (auto &mesh : drawData.Meshes)
 			{
 				mesh.Color = color;
-				mesh.Texture = texture;
 			}
+			drawData.Texture = texture;
 		}
 
 		inline void SetColor(const glm::vec4 &color)
@@ -28,10 +29,7 @@ namespace Hazel
 
 		inline void SetTexture(const std::shared_ptr<Texture2D> &texture)
 		{
-			for (auto &mesh : GetDrawData().Meshes)
-			{
-				mesh.Texture = texture;
-			}
+			GetDrawData().Texture = texture;
 		}
 	};
 }

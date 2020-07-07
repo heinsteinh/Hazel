@@ -15,6 +15,11 @@ namespace Hazel
 		{
 		}
 
+		constexpr size_t GetMaxSize() const
+		{
+			return data.size();
+		}
+
 		constexpr size_t GetSize() const
 		{
 			return size;
@@ -28,6 +33,16 @@ namespace Hazel
 		constexpr void Clear()
 		{
 			size = 0;
+		}
+
+		constexpr void Resize(size_t size)
+		{
+			this->size = size;
+		}
+
+		constexpr bool CanContain(size_t size) const
+		{
+			return this->size + size <= GetMaxSize();
 		}
 
 		inline T &Add(const T &item)

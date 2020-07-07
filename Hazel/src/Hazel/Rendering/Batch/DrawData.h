@@ -2,6 +2,7 @@
 
 #include "Mesh.h"
 #include "Hazel/Geometry/Transform.h"
+#include "Hazel/Rendering/Textures/Texture2D.h"
 
 namespace Hazel
 {
@@ -10,5 +11,6 @@ namespace Hazel
 		std::vector<unsigned int> Indexes;
 		std::vector<Mesh> Meshes;
 		Transform Transform;
+		std::shared_ptr<Texture2D> Texture;
 	};
 }

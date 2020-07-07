@@ -1,37 +1,40 @@
 #include "Renderer2D.h"
 
 #include "Hazel/Rendering/Textures/TextureBuilder.h"
-#include "Batch/DefaultShaderInfo.h"
 #include "Batch/DefaultBatchInfo.h"
 
 namespace Hazel
 {
 	Renderer2D::Renderer2D(const Context &context)
+		: Renderer2D(context, DefaultBatchInfo::Create(context.Factory))
+	{
+	}
+
+	Renderer2D::Renderer2D(const Context &context, const BatchInfo &batchInfo)
 		: drawer(context.Drawer),
-		shader(context.Factory.CreateShader(DefaultShaderInfo::Get())),
-		batchInfo(DefaultBatchInfo::Create(context.Factory)),
+		shader(context.Factory),
 		batch(batchInfo)
 	{
-		std::vector<int> samplers;
-		samplers.reserve(batchInfo.MaxTextures);
-		for (size_t i = 0; i < batchInfo.MaxTextures; i++)
-		{
-			samplers.push_back(static_cast<int>(i));
-		}
-		shader->Bind();
-		shader->Set("u_Textures", samplers.data(), samplers.size());
+		shader.Bind();
+		shader.InitTextures(batch.GetMaxTextures());
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera &camera)
 	{
 		drawer.Clear();
-		batch.Clear();
-		shader->Set("u_ViewProjection", camera.GetViewProjectionMatrix());
+		shader.SetViewProjectionMatrix(camera.GetViewProjectionMatrix());
 	}
 
 	void Renderer2D::Draw(const GameObject &object)
 	{
-		batch.Add(object.GetDrawData());
+		if (!batch.Add(object.GetDrawData()))
+		{
+			EndScene();
+		}
+		if (!batch.Add(object.GetDrawData()))
+		{
+			throw BatchException("The batch is too small for the object.");
+		}
 	}
 
 	void Renderer2D::EndScene()
@@ -39,5 +42,6 @@ namespace Hazel
 		batch.Bind();
 		batch.BufferData();
 		drawer.DrawIndexed(batch.GetIndexCount());
+		batch.Clear();
 	}
 }

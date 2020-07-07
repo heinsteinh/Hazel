@@ -20,7 +20,7 @@ namespace Hazel
 		virtual size_t GetWidth() const override;
 		virtual size_t GetHeight() const override;
 		virtual void SetData(const void *data) override;
-		virtual void Bind(unsigned int slot = 0) const override;
+		virtual void Bind(size_t slot = 0) const override;
 
 	private:
 		void Init(const TextureInfo &info);

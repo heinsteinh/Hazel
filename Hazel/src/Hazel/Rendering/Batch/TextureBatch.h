@@ -8,30 +8,45 @@ namespace Hazel
 	{
 	private:
 		size_t size = 0;
-		size_t maxTextures = 0;
 		std::vector<std::shared_ptr<Texture>> textures;
 
 	public:
 		inline TextureBatch(size_t maxTextures)
-			: maxTextures(maxTextures),
-			textures(maxTextures)
+			: textures(maxTextures)
 		{
+		}
+
+		inline size_t GetMaxSize() const
+		{
+			return textures.size();
+		}
+
+		constexpr size_t GetSize() const
+		{
+			return size;
 		}
 
 		inline void Clear()
 		{
-			size = 0;
+			Resize(0);
 		}
 
-		inline size_t Add(const std::shared_ptr<Texture> &texture)
+		inline void Resize(size_t size)
+		{
+			this->size = size;
+			for (size_t i = size; i < textures.size(); i++)
+			{
+				textures[i] = nullptr;
+			}
+		}
+
+		inline std::optional<size_t> Add(const std::shared_ptr<Texture> &texture)
 		{
 			auto last = textures.begin() + size;
 			auto i = std::find(textures.begin(), last, texture);
 			if (i == last)
 			{
-				assert(size < maxTextures);
-				textures[size] = texture;
-				return size++;
+				return TryAdd(texture);
 			}
 			return i - textures.begin();
 		}
@@ -40,8 +55,19 @@ namespace Hazel
 		{
 			for (size_t i = 0; i < size; i++)
 			{
-				textures[i]->Bind(static_cast<unsigned int>(i));
+				textures[i]->Bind(i);
 			}
+		}
+
+	private:
+		inline std::optional<size_t> TryAdd(const std::shared_ptr<Texture> &texture)
+		{
+			if (size == GetMaxSize())
+			{
+				return {};
+			}
+			textures[size] = texture;
+			return size++;
 		}
 	};
 }

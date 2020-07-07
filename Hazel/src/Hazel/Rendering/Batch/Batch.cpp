@@ -11,20 +11,19 @@ namespace Hazel
 		buffer(info),
 		whiteTexture(TextureBuilder(info.Factory).Build(glm::vec4(1.0f)))
 	{
+		textures.Add(whiteTexture);
 	}
 
 	void Batch::Clear()
 	{
 		indexes.Clear();
 		vertices.Clear();
-		textures.Clear();
-		textures.Add(whiteTexture);
+		textures.Resize(1);
 	}
 
-	void Batch::Add(const DrawData &drawData)
+	bool Batch::Add(const DrawData &drawData)
 	{
-		AddIndexes(drawData);
-		AddVertices(drawData);
+		return CanContain(drawData) && TryAdd(drawData);
 	}
 
 	void Batch::BufferData()
@@ -39,6 +38,24 @@ namespace Hazel
 		textures.Bind();
 	}
 
+	bool Batch::CanContain(const DrawData &drawData) const
+	{
+		return indexes.CanContain(drawData.Indexes.size())
+			&& vertices.CanContain(drawData.Meshes.size());
+	}
+
+	bool Batch::TryAdd(const DrawData &drawData)
+	{
+		auto slot = drawData.Texture ? textures.Add(drawData.Texture) : 0;
+		if (!slot)
+		{
+			return false;
+		}
+		AddIndexes(drawData);
+		AddVertices(drawData, slot.value());
+		return true;
+	}
+
 	void Batch::AddIndexes(const DrawData &drawData)
 	{
 		for (auto index : drawData.Indexes)
@@ -47,7 +64,7 @@ namespace Hazel
 		}
 	}
 
-	void Batch::AddVertices(const DrawData &drawData)
+	void Batch::AddVertices(const DrawData &drawData, size_t slot)
 	{
 		auto matrix = drawData.Transform.ToMatrix();
 		for (const auto &mesh : drawData.Meshes)
@@ -56,12 +73,7 @@ namespace Hazel
 				matrix * mesh.Position,
 				mesh.Color,
 				mesh.TextureCoordinate,
-				AddTexture(mesh.Texture)});
+				static_cast<float>(slot)});
 		}
-	}
-
-	float Batch::AddTexture(const std::shared_ptr<Texture2D> &texture)
-	{
-		return static_cast<float>(textures.Add(texture ? texture : whiteTexture));
 	}
 }

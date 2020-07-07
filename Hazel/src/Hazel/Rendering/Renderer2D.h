@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Hazel/Core/Context.h"
+#include "Batch/DefaultShader.h"
 #include "Hazel/Camera/OrthographicCamera.h"
 #include "Batch/GameObject.h"
 #include "Batch/Batch.h"
+#include "Batch/BatchException.h"
 
 namespace Hazel
 {
@@ -11,12 +13,13 @@ namespace Hazel
 	{
 	private:
 		Drawer &drawer;
-		std::shared_ptr<Shader> shader;
-		BatchInfo batchInfo;
+		DefaultShader shader;
 		Batch batch;
+		std::vector<DrawData> drawData;
 
 	public:
 		Renderer2D(const Context &context);
+		Renderer2D(const Context &context, const BatchInfo &batchInfo);
 
 		void BeginScene(const OrthographicCamera &camera);
 		void Draw(const GameObject &object);
