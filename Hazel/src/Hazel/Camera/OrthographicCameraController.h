@@ -70,6 +70,13 @@ namespace Hazel
 			Clamper::Clamp(camera.Rotation, settings.MinRotation, settings.MaxRotation);
 		}
 
+		inline void Zoom(float offset)
+		{
+			auto zoomLevel = camera.GetZoomLevel() + settings.ZoomSpeed * offset;
+			Clamper::Clamp(zoomLevel, settings.MinZoomLevel, settings.MaxZoomLevel);
+			camera.SetZoomLevel(zoomLevel);
+		}
+
 		inline void ZoomIn(float deltaTime)
 		{
 			auto zoomLevel = camera.GetZoomLevel() - settings.ZoomSpeed * deltaTime;

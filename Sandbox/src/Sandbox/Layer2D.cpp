@@ -29,6 +29,48 @@ namespace Sandbox
 	{
 		framerate = 1.0f / deltaTime;
 
+		if (input.IsKeyPressed(Hazel::Key::Up))
+		{
+			translation.y += 1.0f * deltaTime;
+		}
+		if (input.IsKeyPressed(Hazel::Key::Down))
+		{
+			translation.y -= 1.0f * deltaTime;
+		}
+		if (input.IsKeyPressed(Hazel::Key::Right))
+		{
+			translation.x += 1.0f * deltaTime;
+		}
+		if (input.IsKeyPressed(Hazel::Key::Left))
+		{
+			translation.x -= 1.0f * deltaTime;
+		}
+
+		if (input.IsKeyPressed(Hazel::Key::W))
+		{
+			cameraTranslation.y += 1.0f * deltaTime;
+		}
+		if (input.IsKeyPressed(Hazel::Key::S))
+		{
+			cameraTranslation.y -= 1.0f * deltaTime;
+		}
+		if (input.IsKeyPressed(Hazel::Key::D))
+		{
+			cameraTranslation.x += 1.0f * deltaTime;
+		}
+		if (input.IsKeyPressed(Hazel::Key::A))
+		{
+			cameraTranslation.x -= 1.0f * deltaTime;
+		}
+		if (input.IsKeyPressed(Hazel::Key::Q))
+		{
+			cameraRotation += 90.0f * deltaTime;
+		}
+		if (input.IsKeyPressed(Hazel::Key::E))
+		{
+			cameraRotation -= 90.0f * deltaTime;
+		}
+
 		rectangles[0].SetColor(color);
 
 		auto &transform = rectangles[0].GetTransform();
@@ -90,7 +132,7 @@ namespace Sandbox
 		case Hazel::Key::C:
 			showImGui = showFps = showColorPicker = showTransform = showCamera = true;
 		case Hazel::Key::Backspace:
-			color = {1.0f, 0.0f, 0.0f, 1.0f};
+			color = glm::vec4(1.0f);
 			translation = glm::vec2(0.0f);
 			rotation = 0.0f;
 			scale = glm::vec2(1.0f);
@@ -101,5 +143,10 @@ namespace Sandbox
 		case Hazel::Key::I:
 			settings.ShowImGui(showImGui = !showImGui);
 		}
+	}
+
+	void Layer2D::OnMouseScrolled(Hazel::MouseScrollEvent &e)
+	{
+		zoomLevel = std::clamp(zoomLevel + 0.2f * e.GetYOffset(), 0.1f, 10.0f);
 	}
 }

@@ -18,7 +18,7 @@ namespace Sandbox
 		float framerate = 0.0f;
 		float speed = 1.0f;
 
-		glm::vec4 color = {1.0f, 0.0f, 0.0f, 1.0f};
+		glm::vec4 color{1.0f};
 
 		std::shared_ptr<Hazel::Texture2D> texture;
 
@@ -45,5 +45,6 @@ namespace Sandbox
 		virtual void OnImGuiRender() override;
 		virtual void OnWindowResized(Hazel::WindowResizeEvent &e) override;
 		virtual void OnKeyPressed(Hazel::KeyPressEvent &e) override;
+		virtual void OnMouseScrolled(Hazel::MouseScrollEvent &e) override;
 	};
 }
