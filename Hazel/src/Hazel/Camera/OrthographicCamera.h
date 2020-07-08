@@ -6,23 +6,20 @@ namespace Hazel
 {
 	struct OrthographicCamera
 	{
-		glm::vec3 Position = {0.0f, 0.0f, 0.0f};
+		glm::vec2 Position = {0.0f, 0.0f};
 		float Rotation = 0.0f;
-		Rectangle Viewport = {-1.0f, 1.0f, -1.0f, 1.0f};
+		float AspectRatio = 1.0f;
+		float ZoomLevel = 1.0f;
 
-		inline float GetZoomLevel() const
+		constexpr OrthographicCamera(float aspectRatio, float zoomLevel = 1.0f)
+			: AspectRatio(aspectRatio),
+			ZoomLevel(zoomLevel)
 		{
-			return Viewport.GetHeight() / 2.0f;
 		}
 
-		inline void SetZoomLevel(float zoomLevel)
+		constexpr Rectangle GetViewport() const
 		{
-			Viewport = Rectangle::FromAspectRatio(Viewport.GetAspectRatio(), zoomLevel);
-		}
-
-		constexpr void SetAspectRatio(float aspectRatio)
-		{
-			Viewport = Rectangle::FromAspectRatio(aspectRatio, GetZoomLevel());
+			return Rectangle::FromAspectRatio(AspectRatio, ZoomLevel);
 		}
 
 		inline glm::mat4 GetViewMatrix() const
@@ -32,12 +29,13 @@ namespace Hazel
 					glm::mat4(1.0f),
 					-Rotation,
 					{0.0f, 0.0f, 1.0f}),
-				-Position);
+				-glm::vec3(Position.x, Position.y, 0.0f));
 		}
 
 		inline glm::mat4 GetProjectionMatrix() const
 		{
-			return glm::ortho(Viewport.Left, Viewport.Right, Viewport.Bottom, Viewport.Top);
+			auto viewport = GetViewport();
+			return glm::ortho(viewport.Left, viewport.Right, viewport.Bottom, viewport.Top);
 		}
 
 		inline glm::mat4 GetViewProjectionMatrix() const

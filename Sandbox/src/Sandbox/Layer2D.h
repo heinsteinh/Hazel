@@ -12,7 +12,7 @@ namespace Sandbox
 		Hazel::Renderer2D renderer;
 		Hazel::Input &input;
 		Hazel::RenderApiFactory &factory;
-		Hazel::OrthographicCameraController cameraController;
+		Hazel::OrthographicCamera camera;
 		std::vector<Hazel::RectangularSprite> rectangles;
 
 		float framerate = 0.0f;

@@ -11,7 +11,7 @@ namespace Sandbox
 		renderer(context),
 		input(context.Input),
 		factory(context.Factory),
-		cameraController({context.Window.GetSize().GetAspectRatio()})
+		camera(context.Window.GetSize().GetAspectRatio())
 	{
 	}
 
@@ -78,10 +78,9 @@ namespace Sandbox
 		transform.SetRotation(glm::angleAxis(glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)));
 		transform.SetScale({scale.x, scale.y, 1.0f});
 
-		auto &camera = cameraController.GetCamera();
-		camera.Position = {cameraTranslation.x, cameraTranslation.y, 0.0f};
+		camera.Position = cameraTranslation;
 		camera.Rotation = glm::radians(cameraRotation);
-		camera.SetZoomLevel(zoomLevel);
+		camera.ZoomLevel = zoomLevel;
 
 		renderer.BeginScene(camera);
 		renderer.Draw(rectangles[0]);
@@ -122,7 +121,7 @@ namespace Sandbox
 
 	void Layer2D::OnWindowResized(Hazel::WindowResizeEvent &e)
 	{
-		cameraController.OnWindowResized(e.GetSize());
+		camera.AspectRatio = e.GetSize().GetAspectRatio();
 	}
 
 	void Layer2D::OnKeyPressed(Hazel::KeyPressEvent &e)
