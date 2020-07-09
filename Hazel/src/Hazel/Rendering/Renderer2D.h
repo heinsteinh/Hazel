@@ -15,7 +15,6 @@ namespace Hazel
 		Drawer &drawer;
 		DefaultShader shader;
 		Batch batch;
-		std::vector<DrawData> drawData;
 
 	public:
 		Renderer2D(const Context &context);

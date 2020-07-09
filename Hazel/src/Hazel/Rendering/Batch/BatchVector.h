@@ -3,14 +3,14 @@
 namespace Hazel
 {
 	template<typename T>
-	class TemplateBatch
+	class BatchVector
 	{
 	private:
 		size_t size = 0;
 		std::vector<T> data;
 
 	public:
-		TemplateBatch(size_t max)
+		BatchVector(size_t max)
 			: data(max)
 		{
 		}

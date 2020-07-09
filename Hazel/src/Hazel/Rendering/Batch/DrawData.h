@@ -8,7 +8,7 @@ namespace Hazel
 {
 	struct DrawData
 	{
-		std::vector<unsigned int> Indexes;
+		std::vector<unsigned int> Indices;
 		std::vector<Mesh> Meshes;
 		Transform Transform;
 		std::shared_ptr<Texture2D> Texture;

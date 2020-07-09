@@ -30,10 +30,10 @@ namespace Hazel
 		if (!batch.Add(object.GetDrawData()))
 		{
 			EndScene();
-		}
-		if (!batch.Add(object.GetDrawData()))
-		{
-			throw BatchException("The batch is too small for the object.");
+			if (!batch.Add(object.GetDrawData()))
+			{
+				throw BatchException("The batch is too small for the object.");
+			}
 		}
 	}
 

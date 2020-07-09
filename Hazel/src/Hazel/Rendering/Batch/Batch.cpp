@@ -5,7 +5,7 @@
 namespace Hazel
 {
 	Batch::Batch(const BatchInfo &info)
-		: indexes(info.MaxIndexes),
+		: indices(info.MaxIndices),
 		vertices(info.MaxVertices),
 		textures(info.MaxTextures),
 		buffer(info),
@@ -16,7 +16,7 @@ namespace Hazel
 
 	void Batch::Clear()
 	{
-		indexes.Clear();
+		indices.Clear();
 		vertices.Clear();
 		textures.Resize(1);
 	}
@@ -28,8 +28,8 @@ namespace Hazel
 
 	void Batch::BufferData()
 	{
-		buffer.SetIndexes(indexes.GetData(), indexes.GetSize() * sizeof(unsigned int));
-		buffer.SetVertices(vertices.GetData(), vertices.GetSize() * sizeof(Vertex));
+		buffer.BufferIndices(indices.GetData(), indices.GetSize());
+		buffer.BufferVertices(vertices.GetData(), vertices.GetSize());
 	}
 
 	void Batch::Bind() const
@@ -40,7 +40,7 @@ namespace Hazel
 
 	bool Batch::CanContain(const DrawData &drawData) const
 	{
-		return indexes.CanContain(drawData.Indexes.size())
+		return indices.CanContain(drawData.Indices.size())
 			&& vertices.CanContain(drawData.Meshes.size());
 	}
 
@@ -51,16 +51,16 @@ namespace Hazel
 		{
 			return false;
 		}
-		AddIndexes(drawData);
+		AddIndices(drawData);
 		AddVertices(drawData, slot.value());
 		return true;
 	}
 
-	void Batch::AddIndexes(const DrawData &drawData)
+	void Batch::AddIndices(const DrawData &drawData)
 	{
-		for (auto index : drawData.Indexes)
+		for (auto index : drawData.Indices)
 		{
-			indexes.Add(static_cast<unsigned int>(vertices.GetSize() + index));
+			indices.Add(static_cast<unsigned int>(vertices.GetSize() + index));
 		}
 	}
 

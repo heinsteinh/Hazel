@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TemplateBatch.h"
+#include "BatchVector.h"
 #include "TextureBatch.h"
 #include "BatchBuffer.h"
 #include "DrawData.h"
@@ -10,8 +10,8 @@ namespace Hazel
 	class Batch
 	{
 	private:
-		TemplateBatch<unsigned int> indexes;
-		TemplateBatch<Vertex> vertices;
+		BatchVector<unsigned int> indices;
+		BatchVector<Vertex> vertices;
 		TextureBatch textures;
 		BatchBuffer buffer;
 		std::shared_ptr<Texture2D> whiteTexture;
@@ -21,12 +21,12 @@ namespace Hazel
 
 		constexpr size_t GetIndexCount() const
 		{
-			return indexes.GetSize();
+			return indices.GetSize();
 		}
 
-		constexpr size_t GetMaxIndexes() const
+		constexpr size_t GetMaxIndices() const
 		{
-			return indexes.GetMaxSize();
+			return indices.GetMaxSize();
 		}
 
 		constexpr size_t GetMaxVertices() const
@@ -47,7 +47,7 @@ namespace Hazel
 	private:
 		bool CanContain(const DrawData &drawData) const;
 		bool TryAdd(const DrawData &drawData);
-		void AddIndexes(const DrawData &drawData);
+		void AddIndices(const DrawData &drawData);
 		void AddVertices(const DrawData &drawData, size_t slot);
 	};
 }

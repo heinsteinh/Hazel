@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hazel/Rendering/Buffers/VertexArray.h"
+#include "Vertex.h"
 #include "BatchInfo.h"
 
 namespace Hazel
@@ -15,10 +16,10 @@ namespace Hazel
 	public:
 		inline BatchBuffer(const BatchInfo &info)
 			: vertexArray(info.Factory.CreateVertexArray()),
-			indexBuffer(info.Factory.CreateIndexBuffer(info.MaxIndexes)),
-			vertexBuffer(info.Factory.CreateVertexBuffer(info.MaxVertices))
+			indexBuffer(info.Factory.CreateIndexBuffer(info.MaxIndices * sizeof(unsigned int))),
+			vertexBuffer(info.Factory.CreateVertexBuffer(info.MaxVertices * sizeof(Vertex)))
 		{
-			vertexBuffer->SetLayout(info.Layout);
+			vertexBuffer->SetLayout(Vertex::Layout);
 			vertexArray->SetIndexBuffer(indexBuffer);
 			vertexArray->AddVertexBuffer(vertexBuffer);
 			Bind();
@@ -31,14 +32,14 @@ namespace Hazel
 			vertexArray->GetVertexBuffers()[0]->Bind();
 		}
 
-		inline void SetIndexes(const void *indexes, size_t size)
+		inline void BufferIndices(const void *data, size_t count)
 		{
-			indexBuffer->SetData(indexes, size);
+			indexBuffer->SetData(data, count * sizeof(unsigned int));
 		}
 
-		inline void SetVertices(const void *vertices, size_t size)
+		inline void BufferVertices(const void *data, size_t count)
 		{
-			vertexBuffer->SetData(vertices, size);
+			vertexBuffer->SetData(data, count * sizeof(Vertex));
 		}
 	};
 }

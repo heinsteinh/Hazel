@@ -18,7 +18,16 @@ namespace Sandbox
 	void Layer2D::OnAttach()
 	{
 		texture = Hazel::TextureBuilder(factory).Build("assets\\textures\\Test.jpg");
-		rectangles.emplace_back(color, texture);
+		constexpr int size = 10;
+		for (int i = -size; i <= size; i++)
+		{
+			for (int j = -size; j <= size; j++)
+			{
+				auto &transform = rectangles.emplace_back(color, texture).GetTransform();
+				transform.Translate({i, j, 0.0f});
+				transform.Scale({0.1f, 0.1f, 1.0f});
+			}
+		}
 	}
 
 	void Layer2D::OnDetach()
@@ -29,7 +38,9 @@ namespace Sandbox
 	{
 		framerate = 1.0f / deltaTime;
 
-		if (input.IsKeyPressed(Hazel::Key::Up))
+		speed = zoomLevel;
+
+		/*if (input.IsKeyPressed(Hazel::Key::Up))
 		{
 			translation.y += 1.0f * deltaTime;
 		}
@@ -44,23 +55,23 @@ namespace Sandbox
 		if (input.IsKeyPressed(Hazel::Key::Left))
 		{
 			translation.x -= 1.0f * deltaTime;
-		}
+		}*/
 
 		if (input.IsKeyPressed(Hazel::Key::W))
 		{
-			cameraTranslation.y += 1.0f * deltaTime;
+			cameraTranslation.y += speed * deltaTime;
 		}
 		if (input.IsKeyPressed(Hazel::Key::S))
 		{
-			cameraTranslation.y -= 1.0f * deltaTime;
+			cameraTranslation.y -= speed * deltaTime;
 		}
 		if (input.IsKeyPressed(Hazel::Key::D))
 		{
-			cameraTranslation.x += 1.0f * deltaTime;
+			cameraTranslation.x += speed * deltaTime;
 		}
 		if (input.IsKeyPressed(Hazel::Key::A))
 		{
-			cameraTranslation.x -= 1.0f * deltaTime;
+			cameraTranslation.x -= speed * deltaTime;
 		}
 		if (input.IsKeyPressed(Hazel::Key::Q))
 		{
@@ -73,17 +84,20 @@ namespace Sandbox
 
 		rectangles[0].SetColor(color);
 
-		auto &transform = rectangles[0].GetTransform();
+		/*auto &transform = rectangles[0].GetTransform();
 		transform.SetTranslation({translation.x, translation.y, 0.0f});
 		transform.SetRotation(glm::angleAxis(glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)));
-		transform.SetScale({scale.x, scale.y, 1.0f});
+		transform.SetScale({scale.x, scale.y, 1.0f});*/
 
 		camera.Position = cameraTranslation;
 		camera.Rotation = glm::radians(cameraRotation);
 		camera.ZoomLevel = zoomLevel;
 
 		renderer.BeginScene(camera);
-		renderer.Draw(rectangles[0]);
+		for (const auto &rectangle : rectangles)
+		{
+			renderer.Draw(rectangle);
+		}
 		renderer.EndScene();
 	}
 
@@ -146,6 +160,6 @@ namespace Sandbox
 
 	void Layer2D::OnMouseScrolled(Hazel::MouseScrollEvent &e)
 	{
-		zoomLevel = std::clamp(zoomLevel + 0.2f * e.GetYOffset(), 0.1f, 10.0f);
+		zoomLevel += 0.2f * e.GetYOffset();
 	}
 }
