@@ -4,12 +4,28 @@ namespace Hazel
 {
 	class Exception : public std::exception
 	{
+	private:
+		std::string description;
+
 	public:
-		virtual const std::string &GetDescription() const = 0;
+		inline Exception(const std::string &description)
+			: description(description)
+		{
+		}
+
+		inline Exception(std::string &&description)
+			: description(std::move(description))
+		{
+		}
+
+		constexpr const std::string &GetDescription() const
+		{
+			return description;
+		}
 
 		inline virtual const char *what() const override
 		{
-			return GetDescription().c_str();
+			return description.c_str();
 		}
 	};
 }

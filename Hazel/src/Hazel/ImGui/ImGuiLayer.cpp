@@ -4,7 +4,7 @@
 
 namespace Hazel
 {
-	ImGuiLayer::ImGuiLayer(ImGuiDrawingContext &context)
+	ImGuiLayer::ImGuiLayer(ImGuiContext &context)
 		: context(context)
 	{
 	}
@@ -34,17 +34,13 @@ namespace Hazel
 		context.Shutdown();
 	}
 
-	void ImGuiLayer::OnKeyEvent(KeyEvent &e)
+	void ImGuiLayer::OnEvent(Event &e)
 	{
-		if (ImGui::GetIO().WantCaptureKeyboard)
+		if (e.IsInCategory(EventCategory::Keyboard) && ImGui::GetIO().WantCaptureKeyboard)
 		{
 			e.Discard();
 		}
-	}
-
-	void ImGuiLayer::OnMouseEvent(MouseEvent &e)
-	{
-		if (ImGui::GetIO().WantCaptureMouse)
+		else if (e.IsInCategory(EventCategory::Mouse) && ImGui::GetIO().WantCaptureMouse)
 		{
 			e.Discard();
 		}

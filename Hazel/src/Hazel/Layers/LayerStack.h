@@ -8,7 +8,7 @@ namespace Hazel
 	{
 	private:
 		std::vector<std::shared_ptr<Layer>> layers;
-		int top = 0;
+		size_t top = 0;
 
 	public:
 		inline auto begin()

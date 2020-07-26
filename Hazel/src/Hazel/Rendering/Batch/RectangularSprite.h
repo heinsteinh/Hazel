@@ -12,18 +12,18 @@ namespace Hazel
 			: GameObject(RectangleDrawData::Get())
 		{
 			auto &drawData = GetDrawData();
-			for (auto &mesh : drawData.Meshes)
+			for (auto &vertex : drawData.Vertices)
 			{
-				mesh.Color = color;
+				vertex.Color = color;
 			}
 			drawData.Texture = texture;
 		}
 
 		inline void SetColor(const glm::vec4 &color)
 		{
-			for (auto &mesh : GetDrawData().Meshes)
+			for (auto &vertex : GetDrawData().Vertices)
 			{
-				mesh.Color = color;
+				vertex.Color = color;
 			}
 		}
 

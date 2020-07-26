@@ -2,7 +2,7 @@
 
 #include "GLFW/glfw3.h"
 
-#include "GlfwKeyMap.h"
+#include "Helpers/GlfwKeyMap.h"
 
 namespace Hazel
 {
@@ -21,7 +21,7 @@ namespace Hazel
 		return glfwGetMouseButton(window, static_cast<int>(button)) == GLFW_PRESS;
 	}
 
-	MousePosition Input::GetMousePosition() const
+	glm::vec2 Input::GetMousePosition() const
 	{
 		double x, y;
 		glfwGetCursorPos(window, &x, &y);

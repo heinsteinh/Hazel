@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BatchVector.h"
+#include "BatchContainer.h"
 #include "TextureBatch.h"
 #include "BatchBuffer.h"
 #include "DrawData.h"
@@ -10,8 +10,8 @@ namespace Hazel
 	class Batch
 	{
 	private:
-		BatchVector<unsigned int> indices;
-		BatchVector<Vertex> vertices;
+		BatchContainer<unsigned int> indices;
+		BatchContainer<Vertex> vertices;
 		TextureBatch textures;
 		BatchBuffer buffer;
 		std::shared_ptr<Texture2D> whiteTexture;

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "spdlog/fmt/ostr.h"
+#include "EventType.h"
+#include "EventCategory.h"
 
 namespace Hazel
 {
@@ -9,18 +11,30 @@ namespace Hazel
 	class Event
 	{
 	private:
+		EventType type = EventType::Unknown;
+		EventCategory categories = EventCategory::None;
 		bool handled = false;
 
 	public:
-		Event() = default;
+		constexpr Event(EventType type, EventCategory categories)
+			: type(type),
+			categories(categories)
+		{
+		}
+
 		virtual ~Event() = default;
 
 		Event(const Event &other) = delete;
 		Event &operator=(const Event &other) = delete;
 
-		inline const char *GetName() const
+		constexpr EventType GetType() const
 		{
-			return typeid(*this).name() + 13;
+			return type;
+		}
+
+		constexpr bool IsInCategory(EventCategory category) const
+		{
+			return categories & category;
 		}
 
 		constexpr bool IsHandled() const
@@ -33,12 +47,15 @@ namespace Hazel
 			handled = true;
 		}
 
-		void Dispatch(EventListener *listener);
+		inline const char *GetName() const
+		{
+			return typeid(*this).name() + 13;
+		}
 
-		virtual std::string ToString() const;
-
-	protected:
-		virtual void DispatchEvent(EventListener &listener) = 0;
+		inline virtual std::string ToString() const
+		{
+			return GetName();
+		}
 	};
 }
 

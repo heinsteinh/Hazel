@@ -1,10 +1,11 @@
 #include "LayerManager.h"
 
 #include "Hazel/Utils/Reversed.h"
+#include "Hazel/Events/EventDispatcher.h"
 
 namespace Hazel
 {
-	LayerManager::LayerManager(ImGuiDrawingContext &imGuiContext)
+	LayerManager::LayerManager(ImGuiContext &imGuiContext)
 		: imGuiLayer(std::make_shared<ImGuiLayer>(imGuiContext))
 	{
 		PushOverlay(imGuiLayer);
@@ -39,7 +40,7 @@ namespace Hazel
 		Log::Debug("{}", e);
 		for (const auto &layer : layers)
 		{
-			e.Dispatch(layer.get());
+			EventDispatcher(layer.get()).Dispatch(e);
 		}
 	}
 

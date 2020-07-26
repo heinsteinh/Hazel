@@ -16,7 +16,7 @@ namespace Hazel
 		batch(batchInfo)
 	{
 		shader.Bind();
-		shader.InitTextures(batch.GetMaxTextures());
+		shader.UploadSamplerIds(batch.GetMaxTextures());
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera &camera)

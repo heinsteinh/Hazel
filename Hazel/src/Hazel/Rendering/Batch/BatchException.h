@@ -6,18 +6,10 @@ namespace Hazel
 {
 	class BatchException : public Exception
 	{
-	private:
-		std::string description;
-
 	public:
 		inline BatchException(const std::string &description)
-			: description(description)
+			: Exception(description)
 		{
-		}
-
-		inline virtual const std::string &GetDescription() const override
-		{
-			return description;
 		}
 	};
 }

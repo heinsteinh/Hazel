@@ -1,12 +1,15 @@
 #pragma once
 
-#include "ApplicationEvent.h"
+#include "Hazel/Events/Event.h"
 
 namespace Hazel
 {
-	class WindowCloseEvent : public ApplicationEvent
+	class WindowCloseEvent : public Event
 	{
-	protected:
-		virtual void DispatchApplicationEvent(EventListener &listener) override;
+	public:
+		constexpr WindowCloseEvent()
+			: Event(EventType::WindowClose, EventCategory::Window)
+		{
+		}
 	};
 }

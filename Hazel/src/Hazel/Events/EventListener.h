@@ -2,13 +2,13 @@
 
 #include "Application/WindowCloseEvent.h"
 #include "Application/WindowResizeEvent.h"
-#include "Input/Key/KeyPressEvent.h"
-#include "Input/Key/KeyReleaseEvent.h"
-#include "Input/Key/KeyTypeEvent.h"
-#include "Input/Mouse/MouseButtonPressEvent.h"
-#include "Input/Mouse/MouseButtonReleaseEvent.h"
-#include "Input/Mouse/MouseMoveEvent.h"
-#include "Input/Mouse/MouseScrollEvent.h"
+#include "Keyboard/KeyPressEvent.h"
+#include "Keyboard/KeyReleaseEvent.h"
+#include "Keyboard/KeyTypeEvent.h"
+#include "Mouse/MouseButtonPressEvent.h"
+#include "Mouse/MouseButtonReleaseEvent.h"
+#include "Mouse/MouseMoveEvent.h"
+#include "Mouse/MouseScrollEvent.h"
 
 namespace Hazel
 {
@@ -21,23 +21,11 @@ namespace Hazel
 		{
 		}
 
-		inline virtual void OnApplicationEvent(ApplicationEvent &e)
-		{
-		}
-
 		inline virtual void OnWindowResized(WindowResizeEvent &e)
 		{
 		}
 
 		inline virtual void OnWindowClosed(WindowCloseEvent &e)
-		{
-		}
-
-		inline virtual void OnInputEvent(InputEvent &e)
-		{
-		}
-
-		inline virtual void OnKeyEvent(KeyEvent &e)
 		{
 		}
 
@@ -53,19 +41,11 @@ namespace Hazel
 		{
 		}
 
-		inline virtual void OnMouseEvent(MouseEvent &e)
-		{
-		}
-
 		inline virtual void OnMouseMoved(MouseMoveEvent &e)
 		{
 		}
 
 		inline virtual void OnMouseScrolled(MouseScrollEvent &e)
-		{
-		}
-
-		inline virtual void OnMouseButtonEvent(MouseButtonEvent &e)
 		{
 		}
 

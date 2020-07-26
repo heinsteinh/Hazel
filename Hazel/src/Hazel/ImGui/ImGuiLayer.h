@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel/Layers/Layer.h"
-#include "ImGuiDrawingContext.h"
+#include "ImGuiContext.h"
 #include "ImGuiRenderer.h"
 
 namespace Hazel
@@ -11,11 +11,11 @@ namespace Hazel
 	private:
 		static inline const std::string name = "ImGui";
 
-		ImGuiDrawingContext &context;
+		ImGuiContext &context;
 		ImGuiRenderer renderer;
 
 	public:
-		ImGuiLayer(ImGuiDrawingContext &context);
+		ImGuiLayer(ImGuiContext &context);
 
 		void Begin();
 		void End();
@@ -23,8 +23,7 @@ namespace Hazel
 		virtual const std::string &GetName() const override;
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
-		virtual void OnKeyEvent(KeyEvent &e) override;
-		virtual void OnMouseEvent(MouseEvent &e) override;
+		virtual void OnEvent(Event &e) override;
 		virtual void OnWindowResized(WindowResizeEvent &e) override;
 	};
 }

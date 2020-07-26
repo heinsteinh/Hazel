@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
 	try
 	{
-		Hazel::CreateApplication()->Run();
+		CreateApplication()->Run();
 	}
 	catch (Hazel::Exception &e)
 	{

@@ -24,7 +24,7 @@ namespace Hazel
 			shader->Bind();
 		}
 
-		inline void InitTextures(size_t maxTextures)
+		inline void UploadSamplerIds(size_t maxTextures)
 		{
 			std::vector<int> samplers;
 			samplers.reserve(maxTextures);

@@ -9,13 +9,12 @@ namespace Hazel
 	private:
 		int code = 0;
 		std::string filename;
-		std::string description;
 
 	public:
 		inline OpenFileException(const std::string &filename, int code)
-			: code(code),
-			filename(filename),
-			description("Cannot open file " + filename + " (code: " + std::to_string(code) + ").")
+			: Exception("Cannot open file " + filename + " (code: " + std::to_string(code) + ")."),
+			code(code),
+			filename(filename)
 		{
 		}
 
@@ -27,11 +26,6 @@ namespace Hazel
 		constexpr const std::string &GetFilename() const
 		{
 			return filename;
-		}
-
-		inline virtual const std::string &GetDescription() const override
-		{
-			return description;
 		}
 	};
 }

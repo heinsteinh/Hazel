@@ -12,7 +12,7 @@ namespace Hazel
 			{
 				value = minValue.value();
 			}
-			else if (maxValue && value > maxValue.value())
+			if (maxValue && value > maxValue.value())
 			{
 				value = maxValue.value();
 			}

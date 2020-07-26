@@ -2,7 +2,6 @@
 
 #include "Key.h"
 #include "MouseButton.h"
-#include "MousePosition.h"
 
 struct GLFWwindow;
 
@@ -18,6 +17,6 @@ namespace Hazel
 
 		bool IsKeyPressed(Key key) const;
 		bool IsMouseButtonPressed(MouseButton button) const;
-		MousePosition GetMousePosition() const;
+		glm::vec2 GetMousePosition() const;
 	};
 }

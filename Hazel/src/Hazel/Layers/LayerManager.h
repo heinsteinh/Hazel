@@ -2,7 +2,7 @@
 
 #include "LayerStack.h"
 #include "Hazel/ImGui/ImGuiLayer.h"
-#include "Hazel/Utils/Chrono.h"
+#include "Hazel/Time/Chrono.h"
 
 namespace Hazel
 {
@@ -16,7 +16,7 @@ namespace Hazel
 		bool showImGui = true;
 
 	public:
-		LayerManager(ImGuiDrawingContext &imGuiContext);
+		LayerManager(ImGuiContext &imGuiContext);
 
 		void PushLayer(const std::shared_ptr<Layer> &layer);
 		void PushOverlay(const std::shared_ptr<Layer> &overlay);

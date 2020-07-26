@@ -1,18 +1,19 @@
 #pragma once
 
-#include "ApplicationEvent.h"
+#include "Hazel/Events/Event.h"
 #include "Hazel/Geometry/Size.h"
 
 namespace Hazel
 {
-	class WindowResizeEvent : public ApplicationEvent
+	class WindowResizeEvent : public Event
 	{
 	private:
 		Size size;
 
 	public:
 		constexpr WindowResizeEvent(float width, float height)
-			: size{width, height}
+			: Event(EventType::WindowResize, EventCategory::Window),
+			size{width, height}
 		{
 		}
 
@@ -21,9 +22,9 @@ namespace Hazel
 			return size;
 		}
 
-		virtual std::string ToString() const override;
-
-	protected:
-		virtual void DispatchApplicationEvent(EventListener &listener) override;
+		inline virtual std::string ToString() const override
+		{
+			return (std::ostringstream() << GetName() << ": " << size.Width << ", " << size.Height).str();
+		}
 	};
 }

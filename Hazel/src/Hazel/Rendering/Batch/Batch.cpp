@@ -41,7 +41,7 @@ namespace Hazel
 	bool Batch::CanContain(const DrawData &drawData) const
 	{
 		return indices.CanContain(drawData.Indices.size())
-			&& vertices.CanContain(drawData.Meshes.size());
+			&& vertices.CanContain(drawData.Vertices.size());
 	}
 
 	bool Batch::TryAdd(const DrawData &drawData)
@@ -66,13 +66,13 @@ namespace Hazel
 
 	void Batch::AddVertices(const DrawData &drawData, size_t slot)
 	{
-		auto matrix = drawData.Transform.ToMatrix();
-		for (const auto &mesh : drawData.Meshes)
+		auto &matrix = drawData.Transform.GetMatrix();
+		for (const auto &vertex : drawData.Vertices)
 		{
 			vertices.Add({
-				matrix * mesh.Position,
-				mesh.Color,
-				mesh.TextureCoordinate,
+				matrix * vertex.Position,
+				vertex.Color,
+				vertex.TextureCoordinate,
 				static_cast<float>(slot)});
 		}
 	}
