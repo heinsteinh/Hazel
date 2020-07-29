@@ -46,13 +46,13 @@ namespace Hazel
 
 	bool Batch::TryAdd(const DrawData &drawData)
 	{
-		auto slot = drawData.Texture ? textures.Add(drawData.Texture) : 0;
-		if (!slot)
+		auto textureSlot = drawData.Texture ? textures.Add(drawData.Texture) : 0;
+		if (!textureSlot)
 		{
 			return false;
 		}
 		AddIndices(drawData);
-		AddVertices(drawData, slot.value());
+		AddVertices(drawData, textureSlot.value());
 		return true;
 	}
 
@@ -64,7 +64,7 @@ namespace Hazel
 		}
 	}
 
-	void Batch::AddVertices(const DrawData &drawData, size_t slot)
+	void Batch::AddVertices(const DrawData &drawData, size_t textureSlot)
 	{
 		auto &matrix = drawData.Transform.GetMatrix();
 		for (const auto &vertex : drawData.Vertices)
@@ -73,7 +73,7 @@ namespace Hazel
 				matrix * vertex.Position,
 				vertex.Color,
 				vertex.TextureCoordinate,
-				static_cast<float>(slot)});
+				static_cast<float>(textureSlot)});
 		}
 	}
 }

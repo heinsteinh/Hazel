@@ -11,7 +11,9 @@ namespace Sandbox
 		renderer(context),
 		input(context.Input),
 		factory(context.Factory),
-		camera(context.Window.GetSize().GetAspectRatio())
+		camera({context.Window.GetSize().GetAspectRatio()}),
+		controller({context.Input, camera}),
+		dispatcher(&controller)
 	{
 	}
 
@@ -40,47 +42,7 @@ namespace Sandbox
 
 		speed = zoomLevel;
 
-		/*if (input.IsKeyPressed(Hazel::Key::Up))
-		{
-			translation.y += 1.0f * deltaTime;
-		}
-		if (input.IsKeyPressed(Hazel::Key::Down))
-		{
-			translation.y -= 1.0f * deltaTime;
-		}
-		if (input.IsKeyPressed(Hazel::Key::Right))
-		{
-			translation.x += 1.0f * deltaTime;
-		}
-		if (input.IsKeyPressed(Hazel::Key::Left))
-		{
-			translation.x -= 1.0f * deltaTime;
-		}*/
-
-		if (input.IsKeyPressed(Hazel::Key::W))
-		{
-			cameraTranslation.y += speed * deltaTime;
-		}
-		if (input.IsKeyPressed(Hazel::Key::S))
-		{
-			cameraTranslation.y -= speed * deltaTime;
-		}
-		if (input.IsKeyPressed(Hazel::Key::D))
-		{
-			cameraTranslation.x += speed * deltaTime;
-		}
-		if (input.IsKeyPressed(Hazel::Key::A))
-		{
-			cameraTranslation.x -= speed * deltaTime;
-		}
-		if (input.IsKeyPressed(Hazel::Key::Q))
-		{
-			cameraRotation += 90.0f * deltaTime;
-		}
-		if (input.IsKeyPressed(Hazel::Key::E))
-		{
-			cameraRotation -= 90.0f * deltaTime;
-		}
+		controller.OnUpdate(deltaTime);
 
 		rectangles[0].SetColor(color);
 
@@ -89,9 +51,9 @@ namespace Sandbox
 		transform.SetRotation(glm::angleAxis(glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)));
 		transform.SetScale({scale.x, scale.y, 1.0f});*/
 
-		camera.SetPosition(cameraTranslation);
+		/*camera.SetPosition(cameraTranslation);
 		camera.SetRotation(glm::radians(cameraRotation));
-		camera.SetZoomLevel(zoomLevel);
+		camera.SetZoomLevel(zoomLevel);*/
 
 		renderer.BeginScene(camera);
 		for (const auto &rectangle : rectangles)
@@ -133,9 +95,9 @@ namespace Sandbox
 		}
 	}
 
-	void Layer2D::OnWindowResized(Hazel::WindowResizeEvent &e)
+	void Layer2D::OnEvent(Hazel::Event &e)
 	{
-		camera.SetAspectRatio(e.GetSize().GetAspectRatio());
+		Hazel::EventDispatcher(&controller).Dispatch(e);
 	}
 
 	void Layer2D::OnKeyPressed(Hazel::KeyPressEvent &e)
@@ -156,10 +118,5 @@ namespace Sandbox
 		case Hazel::Key::I:
 			settings.ShowImGui(showImGui = !showImGui);
 		}
-	}
-
-	void Layer2D::OnMouseScrolled(Hazel::MouseScrollEvent &e)
-	{
-		zoomLevel += 0.2f * e.GetOffset().y;
 	}
 }

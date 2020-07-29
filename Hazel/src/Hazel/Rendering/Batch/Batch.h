@@ -48,6 +48,6 @@ namespace Hazel
 		bool CanContain(const DrawData &drawData) const;
 		bool TryAdd(const DrawData &drawData);
 		void AddIndices(const DrawData &drawData);
-		void AddVertices(const DrawData &drawData, size_t slot);
+		void AddVertices(const DrawData &drawData, size_t textureSlot);
 	};
 }

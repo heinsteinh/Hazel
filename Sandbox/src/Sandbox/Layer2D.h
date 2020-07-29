@@ -13,6 +13,8 @@ namespace Sandbox
 		Hazel::Input &input;
 		Hazel::RenderApiFactory &factory;
 		Hazel::OrthographicCamera camera;
+		Hazel::OrthographicCameraController controller;
+		Hazel::EventDispatcher dispatcher;
 		std::vector<Hazel::RectangularSprite> rectangles;
 
 		float framerate = 0.0f;
@@ -43,8 +45,7 @@ namespace Sandbox
 		virtual void OnDetach() override;
 		virtual void OnUpdate(float deltaTime) override;
 		virtual void OnImGuiRender() override;
-		virtual void OnWindowResized(Hazel::WindowResizeEvent &e) override;
+		virtual void OnEvent(Hazel::Event &e) override;
 		virtual void OnKeyPressed(Hazel::KeyPressEvent &e) override;
-		virtual void OnMouseScrolled(Hazel::MouseScrollEvent &e) override;
 	};
 }
