@@ -9,7 +9,7 @@ namespace Hazel
 	class OpenGLTextureWrapping
 	{
 	public:
-		static constexpr unsigned int FromTextureWrapping(TextureWrapping wrapping)
+		static constexpr uint32_t FromTextureWrapping(TextureWrapping wrapping)
 		{
 			switch (wrapping)
 			{

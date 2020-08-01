@@ -1,29 +1,29 @@
 #pragma once
 
-#include "DrawData.h"
+#include "Mesh.h"
 
 namespace Hazel
 {
-	class RectangleDrawData
+	class SquareMesh
 	{
 	private:
-		static inline std::vector<unsigned int> indices = {0, 1, 2, 2, 3, 0};
+		static inline const std::vector<uint32_t> indices = {0, 1, 2, 2, 3, 0};
 
-		static inline std::vector<glm::vec4> positions = {
+		static inline const std::vector<glm::vec4> positions = {
 			{-0.5f, 0.5f, 0.0f, 1.0f},
 			{0.5f, 0.5f, 0.0f, 1.0f},
 			{0.5f, -0.5f, 0.0f, 1.0f},
 			{-0.5f, -0.5f, 0.0f, 1.0f}
 		};
 
-		static inline std::vector<glm::vec2> textureCoordinates = {
+		static inline const std::vector<glm::vec2> textureCoordinates = {
 			{0.0f, 1.0f},
 			{1.0f, 1.0f},
 			{1.0f, 0.0f},
 			{0.0f, 0.0f}
 		};
 
-		static inline DrawData drawData = {
+		static inline const Mesh mesh = {
 			indices,
 			{{positions[0], textureCoordinates[0]},
 			{positions[1], textureCoordinates[1]},
@@ -32,11 +32,11 @@ namespace Hazel
 		};
 
 	public:
-		static constexpr const DrawData &Get()
+		static constexpr const Mesh &Get()
 		{
-			return drawData;
+			return mesh;
 		}
 
-		RectangleDrawData() = delete;
+		SquareMesh() = delete;
 	};
 }

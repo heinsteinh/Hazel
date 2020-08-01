@@ -4,12 +4,12 @@
 
 namespace Hazel
 {
-	Batch::Batch(const BatchInfo &info)
+	Batch::Batch(RenderApiFactory &factory, const BatchInfo &info)
 		: indices(info.MaxIndices),
 		vertices(info.MaxVertices),
 		textures(info.MaxTextures),
-		buffer(info),
-		whiteTexture(TextureBuilder(info.Factory).Build(glm::vec4(1.0f)))
+		buffer(factory, info),
+		whiteTexture(TextureBuilder(factory).BuildFlatTexture(glm::vec4(1.0f)))
 	{
 		textures.Add(whiteTexture);
 	}
@@ -40,8 +40,8 @@ namespace Hazel
 
 	bool Batch::CanContain(const DrawData &drawData) const
 	{
-		return indices.CanContain(drawData.Indices.size())
-			&& vertices.CanContain(drawData.Vertices.size());
+		return indices.CanContain(drawData.Mesh.Indices.size())
+			&& vertices.CanContain(drawData.Mesh.Indices.size());
 	}
 
 	bool Batch::TryAdd(const DrawData &drawData)
@@ -58,19 +58,18 @@ namespace Hazel
 
 	void Batch::AddIndices(const DrawData &drawData)
 	{
-		for (auto index : drawData.Indices)
+		for (auto index : drawData.Mesh.Indices)
 		{
-			indices.Add(static_cast<unsigned int>(vertices.GetSize() + index));
+			indices.Add(static_cast<uint32_t>(vertices.GetSize() + index));
 		}
 	}
 
 	void Batch::AddVertices(const DrawData &drawData, size_t textureSlot)
 	{
-		auto &matrix = drawData.Transform.GetMatrix();
-		for (const auto &vertex : drawData.Vertices)
+		for (const auto &vertex : drawData.Mesh.Vertices)
 		{
 			vertices.Add({
-				matrix * vertex.Position,
+				drawData.Transform * vertex.Position,
 				vertex.Color,
 				vertex.TextureCoordinate,
 				static_cast<float>(textureSlot)});

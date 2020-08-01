@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Hazel.h"
-#include "Hazel/Rendering/Batch/RectangularSprite.h"
 
 namespace Sandbox
 {
@@ -15,28 +14,8 @@ namespace Sandbox
 		Hazel::OrthographicCamera camera;
 		Hazel::OrthographicCameraController controller;
 		Hazel::EventDispatcher dispatcher;
-		std::vector<Hazel::RectangularSprite> rectangles;
 
 		float framerate = 0.0f;
-		float speed = 1.0f;
-
-		glm::vec4 color{1.0f};
-
-		std::shared_ptr<Hazel::Texture2D> texture;
-
-		bool showImGui = true;
-		bool showFps = true;
-		bool showColorPicker = true;
-		bool showTransform = true;
-		bool showCamera = true;
-
-		glm::vec2 translation{0.0f};
-		float rotation = 0.0f;
-		glm::vec2 scale{1.0f};
-
-		glm::vec2 cameraTranslation{0.0f};
-		float cameraRotation = 0.0f;
-		float zoomLevel = 1.0f;
 
 	public:
 		Layer2D(Hazel::Context &context);

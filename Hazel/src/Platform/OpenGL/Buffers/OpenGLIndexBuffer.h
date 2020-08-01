@@ -8,7 +8,7 @@ namespace Hazel
 	{
 	private:
 		size_t size = 0;
-		unsigned int id = 0;
+		uint32_t id = 0;
 
 	public:
 		OpenGLIndexBuffer(size_t size);

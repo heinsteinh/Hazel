@@ -52,7 +52,7 @@ namespace Hazel
 		{
 			GetHandler(window).OnKey(key, scancode, action, mods);
 		});
-		glfwSetCharCallback(window, [](GLFWwindow *window, unsigned int key)
+		glfwSetCharCallback(window, [](GLFWwindow *window, uint32_t key)
 		{
 			GetHandler(window).OnChar(key);
 		});

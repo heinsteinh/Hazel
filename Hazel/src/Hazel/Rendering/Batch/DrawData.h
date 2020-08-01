@@ -1,16 +1,14 @@
 #pragma once
 
-#include "VertexInfo.h"
-#include "Hazel/Geometry/Transform.h"
+#include "Mesh.h"
 #include "Hazel/Rendering/Textures/Texture2D.h"
 
 namespace Hazel
 {
 	struct DrawData
 	{
-		std::vector<unsigned int> Indices;
-		std::vector<VertexInfo> Vertices;
-		Transform Transform;
+		Mesh Mesh;
+		glm::mat4 Transform{1.0f};
 		std::shared_ptr<Texture2D> Texture;
 	};
 }

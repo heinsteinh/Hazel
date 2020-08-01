@@ -8,7 +8,7 @@ namespace Hazel
 	class OpenGLTexture2D : public Texture2D
 	{
 	private:
-		unsigned int id = 0;
+		uint32_t id = 0;
 		size_t width = 0;
 		size_t height = 0;
 		ColorFormat colorFormat;

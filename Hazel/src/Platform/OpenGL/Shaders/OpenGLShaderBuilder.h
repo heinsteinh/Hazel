@@ -10,7 +10,7 @@ namespace Hazel
 	class OpenGLShaderBuilder
 	{
 	public:
-		static inline unsigned int Build(const ShaderInfo &info)
+		static inline uint32_t Build(const ShaderInfo &info)
 		{
 			std::vector<OpenGLCompiledShader> shaders;
 			shaders.reserve(info.Sources.size());

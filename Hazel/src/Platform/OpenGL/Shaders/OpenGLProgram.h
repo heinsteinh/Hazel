@@ -7,7 +7,7 @@ namespace Hazel
 	class OpenGLProgram
 	{
 	private:
-		unsigned int id = 0;
+		uint32_t id = 0;
 
 	public:
 		OpenGLProgram() = default;
@@ -23,12 +23,12 @@ namespace Hazel
 		std::string GetInfoLog() const;
 		void Detach(const OpenGLCompiledShader &shader);
 
-		constexpr unsigned int GetId() const
+		constexpr uint32_t GetId() const
 		{
 			return id;
 		}
 
-		constexpr unsigned int Release()
+		constexpr uint32_t Release()
 		{
 			auto temp = id;
 			id = 0;

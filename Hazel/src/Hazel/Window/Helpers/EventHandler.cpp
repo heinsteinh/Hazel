@@ -50,7 +50,7 @@ namespace Hazel
 		}
 	}
 
-	void EventHandler::OnChar(unsigned int key)
+	void EventHandler::OnChar(uint32_t key)
 	{
 		dispatcher.Dispatch(KeyTypeEvent(key));
 	}

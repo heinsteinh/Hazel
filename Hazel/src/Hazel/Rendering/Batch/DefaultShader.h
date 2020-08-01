@@ -7,15 +7,13 @@ namespace Hazel
 	class DefaultShader
 	{
 	private:
-		static inline const ShaderInfo info = ShaderInfo::FromFiles({
-			{ShaderType::Vertex, R"(C:\Users\christian\source\repos\Hazel\Hazel\assets\shaders\DefaultShader.vert)"},
-			{ShaderType::Pixel, R"(C:\Users\christian\source\repos\Hazel\Hazel\assets\shaders\DefaultShader.frag)"}});
-
 		std::shared_ptr<Shader> shader;
 
 	public:
 		inline DefaultShader(RenderApiFactory &factory)
-			: shader(factory.CreateShader(info))
+			: shader(factory.CreateShader(ShaderInfo::FromFiles({
+			{ShaderType::Vertex, R"(C:\Users\christian\source\repos\Hazel\Hazel\assets\shaders\DefaultShader.vert)"},
+			{ShaderType::Pixel, R"(C:\Users\christian\source\repos\Hazel\Hazel\assets\shaders\DefaultShader.frag)"}})))
 		{
 		}
 
@@ -24,7 +22,7 @@ namespace Hazel
 			shader->Bind();
 		}
 
-		inline void UploadSamplerIds(size_t maxTextures)
+		inline void InitSamplers(size_t maxTextures)
 		{
 			std::vector<int> samplers;
 			samplers.reserve(maxTextures);

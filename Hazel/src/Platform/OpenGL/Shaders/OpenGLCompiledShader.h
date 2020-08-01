@@ -7,7 +7,7 @@ namespace Hazel
 	class OpenGLCompiledShader
 	{
 	private:
-		unsigned int id = 0;
+		uint32_t id = 0;
 
 	public:
 		OpenGLCompiledShader() = default;
@@ -22,12 +22,12 @@ namespace Hazel
 		bool IsCompiled() const;
 		std::string GetInfoLog() const;
 
-		constexpr unsigned int GetId() const
+		constexpr uint32_t GetId() const
 		{
 			return id;
 		}
 
-		constexpr unsigned int Release()
+		constexpr uint32_t Release()
 		{
 			auto temp = id;
 			id = 0;

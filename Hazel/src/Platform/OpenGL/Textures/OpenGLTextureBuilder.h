@@ -12,7 +12,7 @@ namespace Hazel
 	class OpenGLTextureBuilder
 	{
 	public:
-		static inline unsigned int Build(const TextureInfo &info)
+		static inline uint32_t Build(const TextureInfo &info)
 		{
 			auto id = CreateTexture(info);
 			SetupTextureParameters(id, info);
@@ -22,9 +22,9 @@ namespace Hazel
 		OpenGLTextureBuilder() = delete;
 
 	private:
-		static inline unsigned int CreateTexture(const TextureInfo &info)
+		static inline uint32_t CreateTexture(const TextureInfo &info)
 		{
-			unsigned int id;
+			uint32_t id;
 			glCreateTextures(GL_TEXTURE_2D, 1, &id);
 			glTextureStorage2D(
 				id,
@@ -35,7 +35,7 @@ namespace Hazel
 			return id;
 		}
 
-		static inline void SetupTextureParameters(unsigned int id, const TextureInfo &info)
+		static inline void SetupTextureParameters(uint32_t id, const TextureInfo &info)
 		{
 			glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, OpenGLTextureFiltering::FromTextureFiltering(info.MinFilter));
 			glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, OpenGLTextureFiltering::FromTextureFiltering(info.MagFilter));

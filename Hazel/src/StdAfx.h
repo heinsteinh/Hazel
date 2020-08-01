@@ -12,6 +12,7 @@
 #include <cmath>
 #include <functional>
 #include <chrono>
+#include <random>
 #include <regex>
 #include <string>
 #include <string_view>
@@ -25,5 +26,6 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "glm/gtx/compatibility.hpp"
 
 #include "Hazel/Logging/Log.h"

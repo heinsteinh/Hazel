@@ -9,7 +9,7 @@ namespace Hazel
 	class OpenGLColorFormat
 	{
 	public:
-		static constexpr unsigned int FromColorFormat(ColorFormat format)
+		static constexpr uint32_t FromColorFormat(ColorFormat format)
 		{
 			switch (format)
 			{

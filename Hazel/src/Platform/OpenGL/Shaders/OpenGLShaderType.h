@@ -9,7 +9,7 @@ namespace Hazel
 	class OpenGLShaderType
 	{
 	public:
-		static constexpr unsigned int FromShaderType(ShaderType type)
+		static constexpr uint32_t FromShaderType(ShaderType type)
 		{
 			switch (type)
 			{

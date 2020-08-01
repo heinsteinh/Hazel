@@ -9,7 +9,7 @@ namespace Hazel
 	class OpenGLDataType
 	{
 	public:
-		static constexpr unsigned int FromDataType(DataType dataType)
+		static constexpr uint32_t FromDataType(DataType dataType)
 		{
 			switch (dataType)
 			{

@@ -7,16 +7,16 @@ namespace Hazel
 	class KeyTypeEvent : public Event
 	{
 	private:
-		unsigned int key = 0;
+		uint32_t key = 0;
 
 	public:
-		constexpr KeyTypeEvent(unsigned int key)
+		constexpr KeyTypeEvent(uint32_t key)
 			: Event(EventType::KeyType, EventCategory::Input | EventCategory::Keyboard),
 			key(key)
 		{
 		}
 
-		constexpr unsigned int GetKey() const
+		constexpr uint32_t GetKey() const
 		{
 			return key;
 		}

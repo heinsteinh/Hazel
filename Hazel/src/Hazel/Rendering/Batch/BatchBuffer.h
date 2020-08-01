@@ -14,10 +14,10 @@ namespace Hazel
 		std::shared_ptr<VertexBuffer> vertexBuffer;
 
 	public:
-		inline BatchBuffer(const BatchInfo &info)
-			: vertexArray(info.Factory.CreateVertexArray()),
-			indexBuffer(info.Factory.CreateIndexBuffer(info.MaxIndices * sizeof(unsigned int))),
-			vertexBuffer(info.Factory.CreateVertexBuffer(info.MaxVertices * sizeof(Vertex)))
+		inline BatchBuffer(RenderApiFactory &factory, const BatchInfo &info)
+			: vertexArray(factory.CreateVertexArray()),
+			indexBuffer(factory.CreateIndexBuffer(info.MaxIndices * sizeof(uint32_t))),
+			vertexBuffer(factory.CreateVertexBuffer(info.MaxVertices * sizeof(Vertex)))
 		{
 			vertexBuffer->SetLayout(Vertex::Layout);
 			vertexArray->SetIndexBuffer(indexBuffer);
@@ -34,7 +34,7 @@ namespace Hazel
 
 		inline void BufferIndices(const void *data, size_t count)
 		{
-			indexBuffer->SetData(data, count * sizeof(unsigned int));
+			indexBuffer->SetData(data, count * sizeof(uint32_t));
 		}
 
 		inline void BufferVertices(const void *data, size_t count)

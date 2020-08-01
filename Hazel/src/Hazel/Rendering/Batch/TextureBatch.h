@@ -21,6 +21,11 @@ namespace Hazel
 			return textures.size();
 		}
 
+		inline void SetMaxSize(size_t size)
+		{
+			textures.resize(size);
+		}
+
 		constexpr size_t GetSize() const
 		{
 			return size;

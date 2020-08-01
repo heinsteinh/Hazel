@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Hazel/Rendering/Core/RenderApiFactory.h"
 #include "BatchContainer.h"
 #include "TextureBatch.h"
 #include "BatchBuffer.h"
@@ -10,14 +11,14 @@ namespace Hazel
 	class Batch
 	{
 	private:
-		BatchContainer<unsigned int> indices;
+		BatchContainer<uint32_t> indices;
 		BatchContainer<Vertex> vertices;
 		TextureBatch textures;
 		BatchBuffer buffer;
 		std::shared_ptr<Texture2D> whiteTexture;
 
 	public:
-		Batch(const BatchInfo &info);
+		Batch(RenderApiFactory &factory, const BatchInfo &info);
 
 		constexpr size_t GetIndexCount() const
 		{

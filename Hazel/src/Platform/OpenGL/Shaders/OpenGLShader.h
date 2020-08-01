@@ -9,7 +9,7 @@ namespace Hazel
 	{
 	private:
 		std::string name;
-		unsigned int id = 0;
+		uint32_t id = 0;
 
 	public:
 		OpenGLShader(const ShaderInfo &info);

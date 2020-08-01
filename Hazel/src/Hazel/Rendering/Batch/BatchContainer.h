@@ -20,6 +20,11 @@ namespace Hazel
 			return data.size();
 		}
 
+		inline void SetMaxSize(size_t size)
+		{
+			data.resize(size);
+		}
+
 		constexpr size_t GetSize() const
 		{
 			return size;

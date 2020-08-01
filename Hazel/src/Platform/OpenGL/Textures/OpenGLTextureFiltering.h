@@ -9,7 +9,7 @@ namespace Hazel
 	class OpenGLTextureFiltering
 	{
 	public:
-		static constexpr unsigned int FromTextureFiltering(TextureFiltering filtering)
+		static constexpr uint32_t FromTextureFiltering(TextureFiltering filtering)
 		{
 			switch (filtering)
 			{
