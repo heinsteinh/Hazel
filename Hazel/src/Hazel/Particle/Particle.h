@@ -37,14 +37,9 @@ namespace Hazel
 		inline glm::mat4 GetTransform() const
 		{
 			auto size = GetSize();
-			return glm::translate(
-				glm::rotate(
-					glm::scale(
-						glm::mat4(1.0f),
-						{size, size, 1.0f}),
-					Rotation,
-					{0.0f, 0.0f, 1.0f}),
-				{Position.x, Position.y, 0.0f});
+			return glm::translate(glm::mat4(1.0f), {Position.x, Position.y, 0.0f})
+				* glm::rotate(glm::mat4(1.0f), Rotation, {0.0f, 0.0f, 1.0f})
+				* glm::scale(glm::mat4(1.0f), {size, size, 1.0f});
 		}
 	};
 }

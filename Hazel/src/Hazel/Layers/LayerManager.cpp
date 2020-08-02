@@ -5,8 +5,9 @@
 
 namespace Hazel
 {
-	LayerManager::LayerManager(ImGuiContext &imGuiContext)
-		: imGuiLayer(std::make_shared<ImGuiLayer>(imGuiContext))
+	LayerManager::LayerManager(Window &window)
+		: window(window.GetProperties()),
+		imGuiLayer(std::make_shared<ImGuiLayer>(window.GetImGuiContext()))
 	{
 		PushOverlay(imGuiLayer);
 	}
@@ -25,7 +26,7 @@ namespace Hazel
 
 	void LayerManager::OnUpdate()
 	{
-		if (updateLayers)
+		if (updateLayers && !window.IsMinimized())
 		{
 			UpdateLayers();
 		}

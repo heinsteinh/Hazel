@@ -2,7 +2,7 @@
 
 #include "Hazel/Input/Key.h"
 #include "OrthographicCameraInfo.h"
-#include "Hazel/Geometry/Boundary2D.h"
+#include "Hazel/Geometry/Bounds.h"
 
 namespace Hazel
 {
@@ -17,6 +17,6 @@ namespace Hazel
 		float TranslationSpeed = 1.0f;
 		float RotationSpeed = 1.0f;
 		float ZoomSpeed = 0.2f;
-		Boundary2D Boundary;
+		Bounds Bounds = {{-1.0f, -1.0f, 0.1f}, {1.0f, 1.0f, 10.0f}};
 	};
 }

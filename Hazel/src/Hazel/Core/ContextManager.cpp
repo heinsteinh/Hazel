@@ -4,7 +4,7 @@ namespace Hazel
 {
 	ContextManager::ContextManager(const ApplicationInfo &info)
 		: window(info.WindowInfo),
-		layerManager(window.GetImGuiContext()),
+		layerManager(window),
 		context({
 			layerManager,
 			window.GetProperties(),
@@ -53,7 +53,6 @@ namespace Hazel
 	{
 		auto size = e.GetSize();
 		context.Drawer.SetViewport({0.0f, size.Width, 0.0f, size.Height});
-		layerManager.EnableLayersUpdate(!size.IsEmpty());
 	}
 
 	void ContextManager::OnWindowClosed(WindowCloseEvent &e)

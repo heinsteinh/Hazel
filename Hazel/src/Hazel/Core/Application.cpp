@@ -27,7 +27,7 @@ namespace Hazel
 		running = true;
 		while (running && !contextManager->HasWindowClosed())
 		{
-			Log::Trace("New update.");
+			Log::Trace("Update.");
 			contextManager->OnUpdate();
 		}
 		Log::Info("Application stopped.");

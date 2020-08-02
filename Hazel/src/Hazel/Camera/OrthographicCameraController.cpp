@@ -22,7 +22,8 @@ namespace Hazel
 
 	void OrthographicCameraController::OnMouseScrolled(MouseScrollEvent &e)
 	{
-		camera.SetZoomLevel(camera.GetZoomLevel() + e.GetOffset().y * settings.ZoomSpeed);
+		camera.SetZoomLevel(settings.Bounds.ClampZ(
+			camera.GetZoomLevel() + e.GetOffset().y * settings.ZoomSpeed));
 	}
 
 	void OrthographicCameraController::UpdateCameraPosition(float deltaTime)
@@ -45,7 +46,7 @@ namespace Hazel
 		{
 			position.x -= deltaPosition;
 		}
-		camera.SetPosition(settings.Boundary.Clamp(position));
+		camera.SetPosition(settings.Bounds.Clamp(position));
 	}
 
 	void OrthographicCameraController::UpdateCameraRotation(float deltaTime)

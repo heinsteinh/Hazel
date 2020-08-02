@@ -22,6 +22,16 @@ namespace Hazel
 		void SetPosition(const glm::vec2 &position);
 		void SetRotation(float rotation);
 
+		constexpr const glm::vec2 &GetPosition() const
+		{
+			return info.Position;
+		}
+
+		constexpr float GetRotation() const
+		{
+			return info.Rotation;
+		}
+
 		constexpr float GetAspectRatio() const
 		{
 			return info.AspectRatio;
@@ -32,19 +42,14 @@ namespace Hazel
 			return info.ZoomLevel;
 		}
 
+		constexpr Rectangle GetViewport() const
+		{
+			return info.GetViewport();
+		}
+
 		constexpr const glm::mat4 &GetViewProjectionMatrix() const
 		{
 			return viewProjectionMatrix;
-		}
-
-		constexpr const glm::vec2 &GetPosition() const
-		{
-			return info.Position;
-		}
-
-		constexpr float GetRotation() const
-		{
-			return info.Rotation;
 		}
 
 	private:

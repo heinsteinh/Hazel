@@ -31,7 +31,7 @@ namespace Hazel
 
 		inline void UpdatePosition(Particle &particle, float deltaTime)
 		{
-			particle.Position = particle.LinearVelocity * deltaTime;
+			particle.Position += particle.LinearVelocity * deltaTime;
 			particle.Rotation += particle.AngularVelocity * deltaTime;
 		}
 	};

@@ -22,5 +22,25 @@ namespace Hazel
 		void Resize(Size size);
 		bool HasVerticalSynchonization() const;
 		void EnableVerticalSynchronization(bool enable);
+
+		inline bool IsMinimized() const
+		{
+			return GetSize().IsEmpty();
+		}
+
+		inline float GetAspectRatio() const
+		{
+			return GetSize().GetAspectRatio();
+		}
+
+		inline float GetWidth() const
+		{
+			return GetSize().Width;
+		}
+
+		inline float GetHeight() const
+		{
+			return GetSize().Height;
+		}
 	};
 }

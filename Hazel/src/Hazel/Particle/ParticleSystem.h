@@ -2,6 +2,7 @@
 
 #include "ParticleBuilder.h"
 #include "ParticleUpdater.h"
+#include "ParticleRenderer.h"
 #include "Hazel/Rendering/Renderer2D.h"
 
 namespace Hazel
@@ -13,8 +14,7 @@ namespace Hazel
 		size_t index = 0;
 		ParticleBuilder builder;
 		ParticleUpdater updater;
-		Renderer2D &renderer;
-		DrawData drawData;
+		ParticleRenderer renderer;
 
 	public:
 		ParticleSystem(Renderer2D &renderer, size_t size = 1000);
