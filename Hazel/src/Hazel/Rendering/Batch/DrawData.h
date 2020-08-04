@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Mesh.h"
+#include "Hazel/Geometry/Transform.h"
 #include "Hazel/Rendering/Textures/Texture2D.h"
 
 namespace Hazel
@@ -8,7 +9,7 @@ namespace Hazel
 	struct DrawData
 	{
 		Mesh Mesh;
-		glm::mat4 Transform{1.0f};
+		Transform Transform;
 		std::shared_ptr<Texture2D> Texture;
 	};
 }

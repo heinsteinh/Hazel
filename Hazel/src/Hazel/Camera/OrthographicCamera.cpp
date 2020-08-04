@@ -2,10 +2,8 @@
 
 namespace Hazel
 {
-	OrthographicCamera::OrthographicCamera(const OrthographicCameraInfo &info)
-		: info(info),
-		viewMatrix(info.GetViewMatrix()),
-		projectionMatrix(info.GetProjectionMatrix())
+	OrthographicCamera::OrthographicCamera(float aspectRatio)
+		: viewport({aspectRatio})
 	{
 		RecomputeViewProjectionMatrix();
 	}
@@ -22,36 +20,24 @@ namespace Hazel
 
 	void OrthographicCamera::SetViewport(float aspectRatio, float zoomLevel)
 	{
-		std::tie(info.AspectRatio, info.ZoomLevel) = std::tie(aspectRatio, zoomLevel);
-		RecomputeProjectionMatrix();
+		viewport = {aspectRatio, zoomLevel};
+		RecomputeViewProjectionMatrix();
 	}
 
 	void OrthographicCamera::SetPosition(const glm::vec2 &position)
 	{
-		info.Position = position;
-		RecomputeViewMatrix();
+		transform.SetTranslation(position);
+		RecomputeViewProjectionMatrix();
 	}
 
 	void OrthographicCamera::SetRotation(float rotation)
 	{
-		info.Rotation = rotation;
-		RecomputeViewMatrix();
-	}
-
-	void OrthographicCamera::RecomputeViewMatrix()
-	{
-		viewMatrix = info.GetViewMatrix();
-		RecomputeViewProjectionMatrix();
-	}
-
-	void OrthographicCamera::RecomputeProjectionMatrix()
-	{
-		projectionMatrix = info.GetProjectionMatrix();
+		transform.Angle = rotation;
 		RecomputeViewProjectionMatrix();
 	}
 
 	void OrthographicCamera::RecomputeViewProjectionMatrix()
 	{
-		viewProjectionMatrix = viewMatrix * projectionMatrix;
+		viewProjectionMatrix = viewport.ToMatrix() * transform.ToInverseMatrix();
 	}
 }

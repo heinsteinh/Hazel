@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Hazel/Events/EventListener.h"
-#include "OrthographicCameraControllerInfo.h"
+#include "Hazel/Input/Input.h"
+#include "OrthographicCameraControllerSettings.h"
+#include "OrthographicCamera.h"
 
 namespace Hazel
 {
@@ -9,11 +11,11 @@ namespace Hazel
 	{
 	private:
 		Input &input;
-		OrthographicCameraControllerSettings settings;
 		OrthographicCamera &camera;
+		OrthographicCameraControllerSettings settings;
 
 	public:
-		OrthographicCameraController(const OrthographicCameraControllerInfo &info);
+		OrthographicCameraController(Input &input, OrthographicCamera &camera);
 
 		void OnUpdate(float deltaTime);
 
@@ -28,11 +30,6 @@ namespace Hazel
 		constexpr const OrthographicCameraControllerSettings &GetSettings() const
 		{
 			return settings;
-		}
-
-		constexpr const OrthographicCamera &GetCamera() const
-		{
-			return camera;
 		}
 
 	private:

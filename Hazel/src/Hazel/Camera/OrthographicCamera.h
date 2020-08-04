@@ -1,20 +1,20 @@
 #pragma once
 
 #include "Hazel/Geometry/Rectangle.h"
-#include "OrthographicCameraInfo.h"
+#include "Hazel/Geometry/Viewport.h"
+#include "Hazel/Geometry/Transform.h"
 
 namespace Hazel
 {
 	class OrthographicCamera
 	{
 	private:
-		OrthographicCameraInfo info;
-		glm::mat4 viewMatrix{1.0f};
-		glm::mat4 projectionMatrix{1.0f};
+		Viewport viewport;
+		Transform transform;
 		glm::mat4 viewProjectionMatrix{1.0f};
 
 	public:
-		OrthographicCamera(const OrthographicCameraInfo &info = {});
+		OrthographicCamera(float aspectRatio);
 
 		void SetAspectRatio(float aspectRatio);
 		void SetZoomLevel(float zoomLevel);
@@ -22,29 +22,29 @@ namespace Hazel
 		void SetPosition(const glm::vec2 &position);
 		void SetRotation(float rotation);
 
-		constexpr const glm::vec2 &GetPosition() const
+		constexpr glm::vec2 GetPosition() const
 		{
-			return info.Position;
+			return transform.Translation;
 		}
 
-		constexpr float GetRotation() const
+		inline float GetRotation() const
 		{
-			return info.Rotation;
+			return transform.Angle;
 		}
 
 		constexpr float GetAspectRatio() const
 		{
-			return info.AspectRatio;
+			return viewport.AspectRatio;
 		}
 
 		constexpr float GetZoomLevel() const
 		{
-			return info.ZoomLevel;
+			return viewport.ZoomLevel;
 		}
 
 		constexpr Rectangle GetViewport() const
 		{
-			return info.GetViewport();
+			return viewport.ToRectangle();
 		}
 
 		constexpr const glm::mat4 &GetViewProjectionMatrix() const
@@ -53,8 +53,6 @@ namespace Hazel
 		}
 
 	private:
-		void RecomputeViewMatrix();
-		void RecomputeProjectionMatrix();
 		void RecomputeViewProjectionMatrix();
 	};
 }

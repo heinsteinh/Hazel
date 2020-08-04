@@ -11,26 +11,6 @@ namespace Hazel
 		float Bottom = 0.0f;
 		float Top = 0.0f;
 
-		static constexpr Rectangle FromAspectRatio(float aspectRatio, float zoomLevel = 1.0f)
-		{
-			return {
-				-aspectRatio * zoomLevel,
-				aspectRatio * zoomLevel,
-				-zoomLevel,
-				zoomLevel
-			};
-		}
-
-		static constexpr Rectangle FromSizeAndPosition(Size size, const glm::vec2 &position)
-		{
-			return {
-				position.x - size.Width,
-				position.x + size.Width,
-				position.y - size.Height,
-				position.y + size.Height
-			};
-		}
-
 		constexpr float GetPositionX() const
 		{
 			return (Right + Left) / 2.0f;

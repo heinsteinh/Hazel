@@ -2,10 +2,9 @@
 
 namespace Hazel
 {
-	OrthographicCameraController::OrthographicCameraController(const OrthographicCameraControllerInfo &info)
-		: input(info.Input),
-		settings(info.Settings),
-		camera(info.Camera)
+	OrthographicCameraController::OrthographicCameraController(Input &input, OrthographicCamera &camera)
+		: input(input),
+		camera(camera)
 	{
 	}
 
@@ -61,6 +60,6 @@ namespace Hazel
 		{
 			rotation += deltaRotation;
 		}
-		camera.SetRotation(rotation);
+		camera.SetRotation(glm::mod(rotation, 2.0f * glm::pi<float>()));
 	}
 }

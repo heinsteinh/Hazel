@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel.h"
-#include "Hazel/Geometry/Viewport.h"
+#include "Hazel/Geometry/Screen.h"
 
 namespace Sandbox
 {
@@ -14,7 +14,7 @@ namespace Sandbox
 		Hazel::Input &input;
 		Hazel::RenderApiFactory &factory;
 		Hazel::OrthographicCamera camera;
-		Hazel::Viewport viewport;
+		Hazel::Screen screen;
 		Hazel::OrthographicCameraController controller;
 		Hazel::EventDispatcher dispatcher;
 		Hazel::ParticleSystem particleSystem;

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Hazel/Input/Key.h"
-#include "OrthographicCameraInfo.h"
 #include "Hazel/Geometry/Bounds.h"
 
 namespace Hazel

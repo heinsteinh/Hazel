@@ -66,10 +66,11 @@ namespace Hazel
 
 	void Batch::AddVertices(const DrawData &drawData, size_t textureSlot)
 	{
+		auto matrix = drawData.Transform.ToMatrix();
 		for (const auto &vertex : drawData.Mesh.Vertices)
 		{
 			vertices.Add({
-				drawData.Transform * vertex.Position,
+				matrix * vertex.Position,
 				vertex.Color,
 				vertex.TextureCoordinate,
 				static_cast<float>(textureSlot)});

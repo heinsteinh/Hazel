@@ -14,11 +14,11 @@ namespace Sandbox
 		input(context.Input),
 		factory(context.Factory),
 		camera({context.Window.GetSize().GetAspectRatio()}),
-		viewport(window, camera),
+		screen(window, camera),
 		controller({context.Input, camera}),
 		dispatcher(&controller),
 		particleSystem(renderer),
-		drawData({Hazel::SquareMesh::Get(), glm::mat4(1.0f)})
+		drawData({Hazel::SquareMesh::Get()})
 	{
 		drawData.Mesh.SetColor({1.0f, 0.0f, 0.0f, 1.0f});
 		defaultInfo.Position = {0.0f, 0.0f};
@@ -52,7 +52,7 @@ namespace Sandbox
 
 		if (input.IsMouseButtonPressed(Hazel::MouseButton::B1))
 		{
-			particleInfo.Position = viewport.GetRealPosition(input.GetMousePosition());
+			particleInfo.Position = screen.GetRealPosition(input.GetMousePosition());
 			for (int i = 0; i < nParticles; i++)
 			{
 				particleSystem.Emit(particleInfo);
@@ -72,7 +72,14 @@ namespace Sandbox
 		ImGui::Begin("Info");
 		ImGui::Text("Update Time: %f", renderTime);
 		ImGui::Text("Camera Position: %f %f %f", camera.GetPosition().x, camera.GetPosition().y, camera.GetZoomLevel());
+		ImGui::Text("Camera Rotation: %fdeg", glm::degrees(camera.GetRotation()));
 		ImGui::End();
+
+		/*ImGui::Begin("Transform");
+		ImGui::SliderFloat2("Translation", glm::value_ptr(drawData.Transform.Translation), -10.0f, 10.0f);
+		ImGui::SliderFloat("Rotation", &drawData.Transform.Angle, 0.0f, glm::radians(360.0f));
+		ImGui::SliderFloat2("Scale", glm::value_ptr(drawData.Transform.Scale), 0.0f, glm::radians(360.0f));
+		ImGui::End();*/
 
 		ImGui::Begin("ParticleInfo");
 		ImGui::SliderFloat2("Position", glm::value_ptr(particleInfo.Position), -1.0f, 1.0f);
@@ -99,6 +106,7 @@ namespace Sandbox
 		if (e.GetKey() == Hazel::Key::Backspace)
 		{
 			particleInfo = defaultInfo;
+			camera = Hazel::OrthographicCamera(window.GetAspectRatio());
 		}
 	}
 

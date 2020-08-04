@@ -1,32 +1,28 @@
 #pragma once
 
-#include "Hazel/Window/WindowProperties.h"
-#include "Hazel/Camera/OrthographicCamera.h"
+#include "Rectangle.h"
 
 namespace Hazel
 {
-	class Viewport
+	struct Viewport
 	{
-	private:
-		const WindowProperties &window;
-		const OrthographicCamera &camera;
+		float AspectRatio = 1.0f;
+		float ZoomLevel = 1.0f;
 
-	public:
-		constexpr Viewport(const WindowProperties &window, const OrthographicCamera &camera)
-			: window(window),
-			camera(camera)
+		inline glm::mat4 ToMatrix() const
 		{
+			auto viewport = ToRectangle();
+			return glm::ortho(viewport.Left, viewport.Right, viewport.Bottom, viewport.Top);
 		}
 
-		inline glm::vec2 GetRealPosition(const glm::vec2 &pixelPosition) const
+		constexpr Rectangle ToRectangle() const
 		{
-			auto [width, height] = window.GetSize();
-			auto viewport = camera.GetViewport();
-			auto &cameraPosition = camera.GetPosition();
 			return {
-				(pixelPosition.x / width - 0.5f) * viewport.GetWidth() + cameraPosition.x,
-				(0.5f - pixelPosition.y / height) * viewport.GetHeight() + cameraPosition.y
+				-AspectRatio * ZoomLevel,
+				AspectRatio * ZoomLevel,
+				-ZoomLevel,
+				ZoomLevel
 			};
-		};
+		}
 	};
 }

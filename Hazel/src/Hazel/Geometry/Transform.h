@@ -2,77 +2,45 @@
 
 namespace Hazel
 {
-	class Transform
+	struct Transform
 	{
-	private:
-		glm::vec3 translation{0.0f};
-		glm::quat rotation = {1.0f, 0.0f, 0.0f, 0.0f};
-		glm::vec3 scale{1.0f};
-		glm::mat4 matrix{1.0f};
+		glm::vec3 Translation{0.0f};
+		float Angle = 0.0f;
+		glm::vec3 Axis = {0.0f, 0.0f, 1.0f};
+		glm::vec3 Scale{1.0f};
 
-	public:
-		constexpr const glm::vec3 &GetTranslation() const
+		constexpr void SetTranslation(const glm::vec2 &translation)
 		{
-			return translation;
+			Translation = {translation.x, translation.y, 0.0f};
 		}
 
-		inline void Translate(const glm::vec3 &translation)
+		constexpr void SetScale(const glm::vec2 &scale)
 		{
-			this->translation += translation;
-			matrix = ComputeMatrix();
+			Scale = {scale.x, scale.y, 1.0f};
 		}
 
-		inline void SetTranslation(const glm::vec3 &translation)
+		inline glm::mat4 ToMatrix() const
 		{
-			this->translation = translation;
-			matrix = ComputeMatrix();
+			return glm::scale(
+				glm::rotate(
+					glm::translate(
+						glm::mat4(1.0f),
+						Translation),
+					Angle,
+					Axis),
+				Scale);
 		}
 
-		constexpr const glm::quat &GetRotation() const
-		{
-			return rotation;
-		}
-
-		inline void Rotate(const glm::quat &rotation)
-		{
-			this->rotation = rotation * this->rotation;
-			matrix = ComputeMatrix();
-		}
-
-		inline void SetRotation(const glm::quat &rotation)
-		{
-			this->rotation = rotation;
-			matrix = ComputeMatrix();
-		}
-
-		constexpr const glm::vec3 &GetScale() const
-		{
-			return scale;
-		}
-
-		inline void Scale(const glm::vec3 &scale)
-		{
-			this->scale *= scale;
-			matrix = ComputeMatrix();
-		}
-
-		inline void SetScale(const glm::vec3 &scale)
-		{
-			this->scale = scale;
-			matrix = ComputeMatrix();
-		}
-
-		constexpr const glm::mat4 &GetMatrix() const
-		{
-			return matrix;
-		}
-
-	private:
-		inline glm::mat4 ComputeMatrix() const
+		inline glm::mat4 ToInverseMatrix() const
 		{
 			return glm::translate(
-				static_cast<glm::mat4>(rotation) * glm::scale(glm::mat4(1.0f), scale),
-				translation);
+				glm::rotate(
+					glm::scale(
+						glm::mat4(1.0f),
+						1.0f / Scale),
+					-Angle,
+					Axis),
+				-Translation);
 		}
 	};
 }
