@@ -26,7 +26,7 @@ namespace Hazel
 
 	void OrthographicCamera::SetPosition(const glm::vec2 &position)
 	{
-		transform.SetTranslation(position);
+		transform.SetPosition(position);
 		RecomputeViewProjectionMatrix();
 	}
 

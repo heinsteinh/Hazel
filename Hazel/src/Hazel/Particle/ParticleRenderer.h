@@ -24,7 +24,7 @@ namespace Hazel
 			if (particle.Active)
 			{
 				drawData.Mesh.SetColor(particle.GetColor());
-				drawData.Transform = particle.GetTransform();
+				drawData.Transform = particle.Transform;
 				renderer.Draw(drawData);
 			}
 		}

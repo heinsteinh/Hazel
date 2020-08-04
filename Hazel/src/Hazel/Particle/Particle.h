@@ -7,16 +7,15 @@ namespace Hazel
 	struct Particle
 	{
 		bool Active = false;
-		glm::vec2 Position{0.0f};
+		Transform Transform;
 		glm::vec2 LinearVelocity{0.0f};
-		float Rotation = 0.0f;
 		float AngularVelocity = 0.0f;
 		glm::vec4 ColorBegin{0.0f};
 		glm::vec4 ColorEnd{0.0f};
 		float SizeBegin = 0.0f;
 		float SizeEnd = 0.0f;
 		float LifeTime = 1.0f;
-		float RemainingLifeRime = 0.0f;
+		float RemainingLifeTime = 0.0f;
 
 		inline float GetSize() const
 		{
@@ -25,7 +24,7 @@ namespace Hazel
 
 		constexpr float GetLife() const
 		{
-			return RemainingLifeRime / LifeTime;
+			return RemainingLifeTime / LifeTime;
 		}
 
 		inline glm::vec4 GetColor() const
@@ -34,16 +33,6 @@ namespace Hazel
 			auto color = glm::mix(ColorEnd, ColorBegin, life);
 			color.a *= life;
 			return color;
-		}
-
-		inline Transform GetTransform() const
-		{
-			Transform result;
-			result.SetTranslation(Position);
-			result.Angle = Rotation;
-			auto size = GetSize();
-			result.SetScale({size, size});
-			return result;
 		}
 	};
 }

@@ -15,6 +15,7 @@ namespace Hazel
 				if (particle.Active)
 				{
 					UpdatePosition(particle, deltaTime);
+					UpdateSize(particle);
 				}
 			}
 		}
@@ -22,8 +23,8 @@ namespace Hazel
 	private:
 		inline void UpdateLifeTime(Particle &particle, float deltaTime)
 		{
-			particle.RemainingLifeRime -= deltaTime;
-			if (particle.RemainingLifeRime <= 0.0f)
+			particle.RemainingLifeTime -= deltaTime;
+			if (particle.RemainingLifeTime <= 0.0f)
 			{
 				particle.Active = false;
 			}
@@ -31,8 +32,13 @@ namespace Hazel
 
 		inline void UpdatePosition(Particle &particle, float deltaTime)
 		{
-			particle.Position += particle.LinearVelocity * deltaTime;
-			particle.Rotation += particle.AngularVelocity * deltaTime;
+			particle.Transform.Translate(particle.LinearVelocity * deltaTime);
+			particle.Transform.Angle += particle.AngularVelocity * deltaTime;
+		}
+
+		inline void UpdateSize(Particle &particle)
+		{
+			particle.Transform.SetScale(particle.GetSize());
 		}
 	};
 }

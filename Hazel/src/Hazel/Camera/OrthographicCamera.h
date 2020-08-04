@@ -24,7 +24,7 @@ namespace Hazel
 
 		constexpr glm::vec2 GetPosition() const
 		{
-			return transform.Translation;
+			return transform.Position;
 		}
 
 		inline float GetRotation() const

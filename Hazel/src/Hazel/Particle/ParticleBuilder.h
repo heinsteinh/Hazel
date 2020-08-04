@@ -25,15 +25,13 @@ namespace Hazel
 	private:
 		inline void BuildPosition(Particle &particle, const ParticleInfo &info)
 		{
-			particle.Position = info.Position;
-			particle.Rotation = random.NextFloat() * 2 * glm::pi<float>();
+			particle.Transform.SetPosition(info.Position);
+			particle.Transform.Angle = random.NextFloat() * 2 * glm::pi<float>();
 		}
 
 		inline void BuildVelocity(Particle &particle, const ParticleInfo &info)
 		{
-			particle.LinearVelocity = info.LinearVelocity;
-			particle.LinearVelocity.x += info.LinearVelocityVariation.x * (random.NextFloat() - 0.5f);
-			particle.LinearVelocity.y += info.LinearVelocityVariation.y * (random.NextFloat() - 0.5f);
+			particle.LinearVelocity = info.LinearVelocity + info.LinearVelocityVariation * GetRandomDirection();
 		}
 
 		inline void BuildColor(Particle &particle, const ParticleInfo &info)
@@ -45,13 +43,18 @@ namespace Hazel
 		inline void BuildLifeTime(Particle &particle, const ParticleInfo &info)
 		{
 			particle.LifeTime = info.LifeTime;
-			particle.RemainingLifeRime = info.LifeTime;
+			particle.RemainingLifeTime = info.LifeTime;
 		}
 
 		inline void BuildSize(Particle &particle, const ParticleInfo &info)
 		{
 			particle.SizeBegin = info.SizeBegin + info.SizeVariation * (random.NextFloat() - 0.5f);
 			particle.SizeEnd = info.SizeEnd;
+		}
+
+		inline glm::vec2 GetRandomDirection()
+		{
+			return {random.NextFloat() - 0.5f, random.NextFloat() - 0.5f};
 		}
 	};
 }

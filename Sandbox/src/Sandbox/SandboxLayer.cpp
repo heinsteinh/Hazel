@@ -17,7 +17,7 @@ namespace Sandbox
 		screen(window, camera),
 		controller({context.Input, camera}),
 		dispatcher(&controller),
-		particleSystem(renderer),
+		particleSystem(renderer, 100000),
 		drawData({Hazel::SquareMesh::Get()})
 	{
 		drawData.Mesh.SetColor({1.0f, 0.0f, 0.0f, 1.0f});
@@ -76,7 +76,7 @@ namespace Sandbox
 		ImGui::End();
 
 		/*ImGui::Begin("Transform");
-		ImGui::SliderFloat2("Translation", glm::value_ptr(drawData.Transform.Translation), -10.0f, 10.0f);
+		ImGui::SliderFloat2("Translation", glm::value_ptr(drawData.Transform.Position), -10.0f, 10.0f);
 		ImGui::SliderFloat("Rotation", &drawData.Transform.Angle, 0.0f, glm::radians(360.0f));
 		ImGui::SliderFloat2("Scale", glm::value_ptr(drawData.Transform.Scale), 0.0f, glm::radians(360.0f));
 		ImGui::End();*/
