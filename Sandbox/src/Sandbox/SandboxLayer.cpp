@@ -17,7 +17,7 @@ namespace Sandbox
 		screen(window, camera),
 		controller({context.Input, camera}),
 		dispatcher(&controller),
-		particleSystem(renderer, 100000),
+		particleSystem(renderer, maxParticles),
 		drawData({Hazel::SquareMesh::Get()})
 	{
 		drawData.Mesh.SetColor({1.0f, 0.0f, 0.0f, 1.0f});
@@ -59,10 +59,15 @@ namespace Sandbox
 			}
 		}
 
+		if (maxParticles != particleSystem.GetMaxParticles())
+		{
+			particleSystem.SetMaxParticles(maxParticles);
+		}
+
 		particleSystem.OnUpdate(deltaTime);
 
 		renderer.BeginScene(camera);
-		//renderer.Draw(drawData);
+		renderer.Draw(drawData);
 		particleSystem.OnRender();
 		renderer.EndScene();
 	}
@@ -75,11 +80,11 @@ namespace Sandbox
 		ImGui::Text("Camera Rotation: %fdeg", glm::degrees(camera.GetRotation()));
 		ImGui::End();
 
-		/*ImGui::Begin("Transform");
+		ImGui::Begin("Transform");
 		ImGui::SliderFloat2("Translation", glm::value_ptr(drawData.Transform.Position), -10.0f, 10.0f);
 		ImGui::SliderFloat("Rotation", &drawData.Transform.Angle, 0.0f, glm::radians(360.0f));
 		ImGui::SliderFloat2("Scale", glm::value_ptr(drawData.Transform.Scale), 0.0f, glm::radians(360.0f));
-		ImGui::End();*/
+		ImGui::End();
 
 		ImGui::Begin("ParticleInfo");
 		ImGui::SliderFloat2("Position", glm::value_ptr(particleInfo.Position), -1.0f, 1.0f);
@@ -93,6 +98,7 @@ namespace Sandbox
 		ImGui::SliderFloat("SizeVariation", &particleInfo.SizeVariation, 0.0f, 1.0f);
 		ImGui::SliderFloat("LifeTime", &particleInfo.LifeTime, 0.0f, 10.0f);
 		ImGui::SliderInt("NParticles", &nParticles, 0, 100);
+		ImGui::SliderInt("MaxParticle", &maxParticles, 1, 1000000);
 		ImGui::End();
 	}
 

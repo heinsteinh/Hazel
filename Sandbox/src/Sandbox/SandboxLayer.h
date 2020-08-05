@@ -24,6 +24,7 @@ namespace Sandbox
 
 		float renderTime = 0.0f;
 		int nParticles = 5;
+		int maxParticles = 1000;
 
 	public:
 		SandboxLayer(Hazel::Context &context);

@@ -53,6 +53,7 @@ namespace Hazel
 		}
 
 	private:
+		glm::mat4 ComputeViewMatrix() const;
 		void RecomputeViewProjectionMatrix();
 	};
 }

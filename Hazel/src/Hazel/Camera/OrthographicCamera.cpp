@@ -36,8 +36,18 @@ namespace Hazel
 		RecomputeViewProjectionMatrix();
 	}
 
+	glm::mat4 OrthographicCamera::ComputeViewMatrix() const
+	{
+		return glm::rotate(
+			glm::translate(
+				glm::mat4(1.0f),
+				transform.Position),
+			transform.Angle,
+			transform.Axis);
+	}
+
 	void OrthographicCamera::RecomputeViewProjectionMatrix()
 	{
-		viewProjectionMatrix = viewport.ToMatrix() * transform.ToInverseMatrix();
+		viewProjectionMatrix = viewport.ToMatrix() * ComputeViewMatrix();
 	}
 }

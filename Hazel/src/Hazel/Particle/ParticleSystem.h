@@ -22,5 +22,7 @@ namespace Hazel
 		void OnUpdate(float deltaTime);
 		void OnRender();
 		void Emit(const ParticleInfo &info);
+		size_t GetMaxParticles() const;
+		void SetMaxParticles(size_t size);
 	};
 }

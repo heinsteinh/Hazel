@@ -19,6 +19,11 @@ namespace Hazel
 			Position += glm::vec3(translation.x, translation.y, 0.0f);
 		}
 
+		inline glm::quat GetRotation() const
+		{
+			return glm::angleAxis(Angle, Axis);
+		}
+
 		constexpr void SetScale(const glm::vec2 &scale)
 		{
 			Scale = {scale.x, scale.y, 1.0f};
@@ -27,11 +32,6 @@ namespace Hazel
 		constexpr void SetScale(float scale)
 		{
 			Scale = {scale, scale, scale};
-		}
-
-		constexpr void Rescale(float scale)
-		{
-			Scale *= scale;
 		}
 
 		constexpr void Rescale(const glm::vec2 &scale)
