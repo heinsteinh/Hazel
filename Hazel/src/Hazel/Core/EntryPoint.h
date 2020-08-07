@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	}
 	catch (std::exception &e)
 	{
-		Hazel::Log::Critical("Unknown exception: {}", e.what());
+		Hazel::Log::Critical("Fatal exception: {}", e.what());
 	}
 	catch (...)
 	{

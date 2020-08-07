@@ -11,14 +11,14 @@ namespace Hazel
 	private:
 		static inline const std::string name = "ImGui";
 
-		ImGuiContext &context;
 		ImGuiRenderer renderer;
 
 	public:
-		ImGuiLayer(ImGuiContext &context);
+		ImGuiLayer(ImGuiDrawer &drawer);
 
 		void Begin();
 		void End();
+		void OnContextCurrent();
 
 		virtual const std::string &GetName() const override;
 		virtual void OnAttach() override;

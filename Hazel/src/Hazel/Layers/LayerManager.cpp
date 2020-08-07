@@ -7,7 +7,7 @@ namespace Hazel
 {
 	LayerManager::LayerManager(Window &window)
 		: window(window.GetProperties()),
-		imGuiLayer(std::make_shared<ImGuiLayer>(window.GetImGuiContext()))
+		imGuiLayer(std::make_shared<ImGuiLayer>(window.GetImGuiDrawer()))
 	{
 		PushOverlay(imGuiLayer);
 	}
@@ -34,6 +34,11 @@ namespace Hazel
 		{
 			RenderImGui();
 		}
+	}
+
+	void LayerManager::OnContextCurrent()
+	{
+		imGuiLayer->OnContextCurrent();
 	}
 
 	void LayerManager::OnEvent(Event &e)

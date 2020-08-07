@@ -1,6 +1,7 @@
 #include "OpenGLFactory.h"
 
 #include "OpenGLContext.h"
+#include "OpenGLImGuiDrawer.h"
 #include "Platform/OpenGL/Shaders/OpenGLShader.h"
 #include "Platform/OpenGL/Buffers/OpenGLVertexArray.h"
 #include "Platform/OpenGL/Buffers/OpenGLVertexBuffer.h"
@@ -12,6 +13,11 @@ namespace Hazel
 	std::shared_ptr<GraphicsContext> OpenGLFactory::CreateContext(GLFWwindow *window)
 	{
 		return std::make_shared<OpenGLContext>(window);
+	}
+
+	std::shared_ptr<ImGuiDrawer> OpenGLFactory::CreateImGuiDrawer(GLFWwindow *window)
+	{
+		return std::make_shared<OpenGLImGuiDrawer>(window);
 	}
 
 	std::shared_ptr<Shader> OpenGLFactory::CreateShader(const ShaderInfo &info)

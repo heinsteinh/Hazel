@@ -5,7 +5,6 @@
 #include "EventManager.h"
 #include "Hazel/Input/Input.h"
 #include "Hazel/Rendering/Core/GraphicsContext.h"
-#include "Hazel/ImGui/ImGuiContext.h"
 
 namespace Hazel
 {
@@ -14,7 +13,7 @@ namespace Hazel
 	private:
 		NativeWindow window;
 		std::shared_ptr<GraphicsContext> context;
-		ImGuiContext imGuiContext;
+		std::shared_ptr<ImGuiDrawer> imGuiDrawer;
 		WindowProperties properties;
 		EventManager eventManager;
 		Input input;
@@ -28,9 +27,9 @@ namespace Hazel
 			return *context;
 		}
 
-		constexpr ImGuiContext &GetImGuiContext()
+		inline ImGuiDrawer &GetImGuiDrawer()
 		{
-			return imGuiContext;
+			return *imGuiDrawer;
 		}
 
 		constexpr WindowProperties &GetProperties()

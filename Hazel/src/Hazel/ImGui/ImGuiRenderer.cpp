@@ -3,22 +3,46 @@
 #include "GLFW/glfw3.h"
 
 #include "imgui.h"
-#include "examples/imgui_impl_glfw.h"
-#include "examples/imgui_impl_opengl3.h"
 
 namespace Hazel
 {
+	ImGuiRenderer::ImGuiRenderer(ImGuiDrawer &drawer)
+		: drawer(drawer)
+	{
+	}
+
+	ImGuiRenderer::~ImGuiRenderer()
+	{
+		Shutdown();
+	}
+
+	void ImGuiRenderer::OnContextCurrent()
+	{
+		context.MakeCurrent();
+	}
+
+	void ImGuiRenderer::Init()
+	{
+		context.Init();
+		drawer.Init();
+	}
+
+	void ImGuiRenderer::Shutdown()
+	{
+		drawer.Shutdown();
+		context.Shutdown();
+	}
+
 	void ImGuiRenderer::Begin()
 	{
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
+		drawer.CreateNewFrame();
 		ImGui::NewFrame();
 	}
 
 	void ImGuiRenderer::End()
 	{
 		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		drawer.RenderDrawData();
 		UpdateWindows();
 	}
 

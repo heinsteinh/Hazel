@@ -1,16 +1,9 @@
 #include "ImGuiContext.h"
 
 #include "imgui.h"
-#include "examples/imgui_impl_glfw.h"
-#include "examples/imgui_impl_opengl3.h"
 
 namespace Hazel
 {
-	ImGuiContext::ImGuiContext(GLFWwindow *window)
-		: window(window)
-	{
-	}
-
 	ImGuiContext::~ImGuiContext()
 	{
 		Shutdown();
@@ -23,25 +16,20 @@ namespace Hazel
 			IMGUI_CHECKVERSION();
 			ImGui::SetCurrentContext(context = ImGui::CreateContext());
 			SetupAppearance();
-			ImGui_ImplGlfw_InitForOpenGL(window, true);
-			ImGui_ImplOpenGL3_Init("#version 410");
 		}
-	}
-
-	void ImGuiContext::MakeCurrent()
-	{
-		ImGui::SetCurrentContext(context);
 	}
 
 	void ImGuiContext::Shutdown()
 	{
 		if (context)
 		{
-			ImGui_ImplOpenGL3_Shutdown();
-			ImGui_ImplGlfw_Shutdown();
-			ImGui::DestroyContext(context);
-			context = nullptr;
+			ImGui::DestroyContext(std::exchange(context, nullptr));
 		}
+	}
+
+	void ImGuiContext::MakeCurrent()
+	{
+		ImGui::SetCurrentContext(context);
 	}
 
 	void ImGuiContext::SetupAppearance()

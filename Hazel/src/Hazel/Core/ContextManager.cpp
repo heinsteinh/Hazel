@@ -41,7 +41,7 @@ namespace Hazel
 	void ContextManager::MakeCurrent()
 	{
 		window.GetContext().MakeCurrent();
-		window.GetImGuiContext().MakeCurrent();
+		layerManager.OnContextCurrent();
 	}
 
 	void ContextManager::OnEvent(Event &e)

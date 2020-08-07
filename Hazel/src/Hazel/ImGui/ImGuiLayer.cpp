@@ -4,8 +4,8 @@
 
 namespace Hazel
 {
-	ImGuiLayer::ImGuiLayer(ImGuiContext &context)
-		: context(context)
+	ImGuiLayer::ImGuiLayer(ImGuiDrawer &drawer)
+		: renderer(drawer)
 	{
 	}
 
@@ -19,6 +19,11 @@ namespace Hazel
 		renderer.End();
 	}
 
+	void ImGuiLayer::OnContextCurrent()
+	{
+		renderer.OnContextCurrent();
+	}
+
 	const std::string &ImGuiLayer::GetName() const
 	{
 		return name;
@@ -26,12 +31,12 @@ namespace Hazel
 
 	void ImGuiLayer::OnAttach()
 	{
-		context.Init();
+		renderer.Init();
 	}
 
 	void ImGuiLayer::OnDetach()
 	{
-		context.Shutdown();
+		renderer.Shutdown();
 	}
 
 	void ImGuiLayer::OnEvent(Event &e)

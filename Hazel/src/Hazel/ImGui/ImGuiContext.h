@@ -1,6 +1,5 @@
 #pragma once
 
-struct GLFWwindow;
 struct ImGuiContext;
 
 namespace Hazel
@@ -8,16 +7,15 @@ namespace Hazel
 	class ImGuiContext
 	{
 	private:
-		GLFWwindow *window = nullptr;
 		::ImGuiContext *context = nullptr;
 
 	public:
-		ImGuiContext(GLFWwindow *window);
+		ImGuiContext() = default;
 		~ImGuiContext();
 
 		void Init();
-		void MakeCurrent();
 		void Shutdown();
+		void MakeCurrent();
 
 	private:
 		void SetupAppearance();
