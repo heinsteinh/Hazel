@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Rendering/Core/RenderApiFactory.h"
+#include "Hazel/Rendering/RenderApi/RenderApiFactory.h"
 #include "Texture.h"
 #include "Image.h"
 
@@ -28,16 +28,16 @@ namespace Hazel
 			return texture;
 		}
 
-		inline std::shared_ptr<Texture2D> BuildFlatTexture(const glm::vec4 &data)
+		inline std::shared_ptr<Texture2D> BuildFlatTexture(const glm::vec4 &color)
 		{
 			auto texture = factory.CreateTexture2D({1, 1, ColorFormat::Rgba});
-			unsigned char color[4] = {
-				static_cast<unsigned char>(255.0f * data.r),
-				static_cast<unsigned char>(255.0f * data.g),
-				static_cast<unsigned char>(255.0f * data.b),
-				static_cast<unsigned char>(255.0f * data.a)
+			unsigned char data[4] = {
+				static_cast<unsigned char>(255.0f * color.r),
+				static_cast<unsigned char>(255.0f * color.g),
+				static_cast<unsigned char>(255.0f * color.b),
+				static_cast<unsigned char>(255.0f * color.a)
 			};
-			texture->SetData(color);
+			texture->SetData(data);
 			return texture;
 		}
 	};

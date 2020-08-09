@@ -7,8 +7,8 @@ namespace Hazel
 	class Image
 	{
 	private:
-		size_t width = 0;
-		size_t height = 0;
+		float width = 0.0f;
+		float height = 0.0f;
 		ColorFormat format;
 		void *data = nullptr;
 
@@ -24,12 +24,12 @@ namespace Hazel
 		Image &operator=(const Image &other) = delete;
 		Image &operator=(Image &&other) noexcept;
 
-		constexpr size_t GetWidth() const
+		constexpr float GetWidth() const
 		{
 			return width;
 		}
 
-		constexpr size_t GetHeight() const
+		constexpr float GetHeight() const
 		{
 			return height;
 		}

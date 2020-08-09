@@ -8,6 +8,13 @@ namespace Sandbox
 	class SandboxLayer : public Hazel::Layer
 	{
 	private:
+
+		float renderTime = 0.0f;
+		int nParticles = 5;
+		int maxParticles = 1000;
+		glm::vec2 bottomLeft{0.0f};
+		Hazel::Size size{2560.0f, 1664.0f};
+
 		Hazel::Renderer2D renderer;
 		Hazel::ApplicationSettings &settings;
 		Hazel::WindowProperties &window;
@@ -21,10 +28,7 @@ namespace Sandbox
 		Hazel::ParticleInfo particleInfo;
 		Hazel::ParticleInfo defaultInfo;
 		Hazel::DrawData drawData;
-
-		float renderTime = 0.0f;
-		int nParticles = 5;
-		int maxParticles = 1000;
+		std::shared_ptr<Hazel::Texture2D> spriteSheet;
 
 	public:
 		SandboxLayer(Hazel::Context &context);

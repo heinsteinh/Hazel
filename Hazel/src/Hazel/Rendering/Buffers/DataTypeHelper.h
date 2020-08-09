@@ -4,7 +4,7 @@
 
 namespace Hazel
 {
-	class DataTypeInfo
+	class DataTypeHelper
 	{
 	public:
 		static constexpr size_t GetSize(DataType dataType)
@@ -22,6 +22,6 @@ namespace Hazel
 			}
 		}
 
-		DataTypeInfo() = delete;
+		DataTypeHelper() = delete;
 	};
 }

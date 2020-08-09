@@ -2,7 +2,7 @@
 
 #include "stb_image.h"
 
-#include "ColorFormatInfo.h"
+#include "ColorFormatHelper.h"
 
 namespace Hazel
 {
@@ -13,9 +13,9 @@ namespace Hazel
 		int height = 0;
 		int numChannels = 0;
 		data = stbi_load(filename.c_str(), &width, &height, &numChannels, 0);
-		this->width = width;
-		this->height = height;
-		format = ColorFormatInfo::FromNumChannels(numChannels);
+		this->width = static_cast<float>(width);
+		this->height = static_cast<float>(height);
+		format = ColorFormatHelper::CreateFromNumChannels(numChannels);
 	}
 
 	Image::Image(Image &&other) noexcept
@@ -37,9 +37,7 @@ namespace Hazel
 	void *Image::ReleaseData()
 	{
 		width = height = 0;
-		void *temp = data;
-		data = nullptr;
-		return temp;
+		return std::exchange(data, nullptr);
 	}
 
 	Image &Image::operator=(Image &&other) noexcept

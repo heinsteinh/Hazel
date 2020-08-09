@@ -9,18 +9,18 @@ namespace Hazel
 	{
 	private:
 		uint32_t id = 0;
-		size_t width = 0;
-		size_t height = 0;
+		float width = 0;
+		float height = 0;
 		ColorFormat colorFormat;
 
 	public:
 		OpenGLTexture2D(const TextureInfo &info);
 		virtual ~OpenGLTexture2D();
 
-		virtual size_t GetWidth() const override;
-		virtual size_t GetHeight() const override;
+		virtual float GetWidth() const override;
+		virtual float GetHeight() const override;
 		virtual void SetData(const void *data) override;
-		virtual void Bind(size_t slot = 0) const override;
+		virtual void Bind(uint32_t slot = 0) const override;
 
 	private:
 		void Init(const TextureInfo &info);

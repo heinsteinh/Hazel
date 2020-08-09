@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ShaderDataTypeInfo.h"
+#include "ShaderDataTypeHelper.h"
 
 namespace Hazel
 {
@@ -8,7 +8,7 @@ namespace Hazel
 	{
 	private:
 		std::string name;
-		ShaderDataTypeInfo type = ShaderDataType::Unknown;
+		ShaderDataType type = ShaderDataType::Unknown;
 		size_t offset = 0;
 		bool normalized = false;
 
@@ -44,22 +44,22 @@ namespace Hazel
 
 		constexpr DataType GetComponentType() const
 		{
-			return type.GetComponentType();
+			return ShaderDataTypeHelper::GetComponentType(type);
 		}
 
 		constexpr size_t GetComponentSize() const
 		{
-			return type.GetComponentSize();
+			return ShaderDataTypeHelper::GetComponentSize(type);
 		}
 
 		constexpr size_t GetComponentCount() const
 		{
-			return type.GetComponentCount();
+			return ShaderDataTypeHelper::GetComponentCount(type);
 		}
 
 		constexpr size_t GetSize() const
 		{
-			return type.GetSize();
+			return ShaderDataTypeHelper::GetSize(type);
 		}
 
 		constexpr void SetOffset(size_t offset)

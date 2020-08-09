@@ -2,7 +2,7 @@
 
 namespace Hazel
 {
-	class FileInfo
+	class Filename
 	{
 	public:
 		static inline std::string GetDirectory(const std::string &filename)
@@ -28,6 +28,6 @@ namespace Hazel
 				: filename.substr(offset + 1, filename.size() - offset);
 		}
 
-		FileInfo() = delete;
+		Filename() = delete;
 	};
 }

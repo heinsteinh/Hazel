@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel/Geometry/Size.h"
-#include "Hazel/Rendering/Core/AvailableRenderApi.h"
+#include "Hazel/Rendering/RenderApi/AvailableRenderApi.h"
 
 namespace Hazel
 {

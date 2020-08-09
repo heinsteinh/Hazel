@@ -72,7 +72,7 @@ namespace Hazel
 			vertices.Add({
 				matrix * vertex.Position,
 				vertex.Color,
-				vertex.TextureCoordinate,
+				drawData.Texture.MapCoordinates(vertex.TextureCoordinate),
 				static_cast<float>(textureSlot)});
 		}
 	}

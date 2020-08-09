@@ -20,7 +20,6 @@ namespace Sandbox
 		particleSystem(renderer, maxParticles),
 		drawData({Hazel::SquareMesh::Get()})
 	{
-		drawData.Mesh.SetColor({1.0f, 0.0f, 0.0f, 1.0f});
 		defaultInfo.Position = {0.0f, 0.0f};
 		defaultInfo.LinearVelocity = {0.2f, 0.2f};
 		defaultInfo.LinearVelocityVariation = {0.2f, 0.2f};
@@ -37,7 +36,10 @@ namespace Sandbox
 
 	void SandboxLayer::OnAttach()
 	{
-		//texture = Hazel::TextureBuilder(factory).Build("assets\\textures\\Test.jpg");
+		spriteSheet = Hazel::TextureBuilder(factory).BuildFromFile("assets\\textures\\SpriteSheet.png");
+		drawData.Mesh.SetColor({1.0f, 1.0f, 1.0f, 1.0f});
+		drawData.Texture = spriteSheet;
+		drawData.Transform.SetScale({spriteSheet->GetAspectRatio(), 1.0f});
 	}
 
 	void SandboxLayer::OnDetach()
@@ -66,9 +68,11 @@ namespace Sandbox
 
 		particleSystem.OnUpdate(deltaTime);
 
+		drawData.Texture.SetCoordinates(Hazel::TextureCoordinates::FromBottomLeftAndSize(bottomLeft, size));
+
 		renderer.BeginScene(camera);
-		renderer.Draw(drawData);
 		particleSystem.OnRender();
+		renderer.Draw(drawData);
 		renderer.EndScene();
 	}
 
@@ -84,6 +88,13 @@ namespace Sandbox
 		ImGui::SliderFloat2("Translation", glm::value_ptr(drawData.Transform.Position), -10.0f, 10.0f);
 		ImGui::SliderFloat("Rotation", &drawData.Transform.Angle, 0.0f, glm::radians(360.0f));
 		ImGui::SliderFloat2("Scale", glm::value_ptr(drawData.Transform.Scale), 0.0f, glm::radians(360.0f));
+		ImGui::End();
+
+		ImGui::Begin("Texture Coordinates");
+		ImGui::SliderFloat("Left", &bottomLeft.x, 0.0f, 2560.0f);
+		ImGui::SliderFloat("Bottom", &bottomLeft.y, 0.0f, 1664.0f);
+		ImGui::SliderFloat("Width", &size.Width, 0.0f, 2560.0f);
+		ImGui::SliderFloat("Height", &size.Height, 0.0f, 1664.0f);
 		ImGui::End();
 
 		ImGui::Begin("ParticleInfo");

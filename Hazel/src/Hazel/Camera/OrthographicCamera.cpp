@@ -10,17 +10,13 @@ namespace Hazel
 
 	void OrthographicCamera::SetAspectRatio(float aspectRatio)
 	{
-		SetViewport(aspectRatio, GetZoomLevel());
+		viewport.AspectRatio = aspectRatio;
+		RecomputeViewProjectionMatrix();
 	}
 
 	void OrthographicCamera::SetZoomLevel(float zoomLevel)
 	{
-		SetViewport(GetAspectRatio(), zoomLevel);
-	}
-
-	void OrthographicCamera::SetViewport(float aspectRatio, float zoomLevel)
-	{
-		viewport = {aspectRatio, zoomLevel};
+		viewport.ZoomLevel = zoomLevel;
 		RecomputeViewProjectionMatrix();
 	}
 
@@ -48,6 +44,6 @@ namespace Hazel
 
 	void OrthographicCamera::RecomputeViewProjectionMatrix()
 	{
-		viewProjectionMatrix = viewport.ToMatrix() * ComputeViewMatrix();
+		viewProjectionMatrix = viewport.ToProjectionMatrix() * ComputeViewMatrix();
 	}
 }

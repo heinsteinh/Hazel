@@ -21,12 +21,12 @@ namespace Hazel
 		glDeleteTextures(1, &id);
 	}
 
-	size_t OpenGLTexture2D::GetWidth() const
+	float OpenGLTexture2D::GetWidth() const
 	{
 		return width;
 	}
 
-	size_t OpenGLTexture2D::GetHeight() const
+	float OpenGLTexture2D::GetHeight() const
 	{
 		return height;
 	}
@@ -45,8 +45,8 @@ namespace Hazel
 			data);
 	}
 
-	void OpenGLTexture2D::Bind(size_t slot) const
+	void OpenGLTexture2D::Bind(uint32_t slot) const
 	{
-		glBindTextureUnit(static_cast<uint32_t>(slot), id);
+		glBindTextureUnit(slot, id);
 	}
 }

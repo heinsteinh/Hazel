@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Rendering/Core/RenderApiFactory.h"
+#include "Hazel/Rendering/RenderApi/RenderApiFactory.h"
 
 namespace Hazel
 {

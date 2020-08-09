@@ -18,7 +18,6 @@ namespace Hazel
 
 		void SetAspectRatio(float aspectRatio);
 		void SetZoomLevel(float zoomLevel);
-		void SetViewport(float aspectRatio, float zoomLevel);
 		void SetPosition(const glm::vec2 &position);
 		void SetRotation(float rotation);
 

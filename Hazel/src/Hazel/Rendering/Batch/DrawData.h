@@ -2,7 +2,7 @@
 
 #include "Mesh.h"
 #include "Hazel/Geometry/Transform.h"
-#include "Hazel/Rendering/Textures/Texture2D.h"
+#include "Hazel/Rendering/Textures/SubTexture2D.h"
 
 namespace Hazel
 {
@@ -10,6 +10,6 @@ namespace Hazel
 	{
 		Mesh Mesh;
 		Transform Transform;
-		std::shared_ptr<Texture2D> Texture;
+		SubTexture2D Texture;
 	};
 }

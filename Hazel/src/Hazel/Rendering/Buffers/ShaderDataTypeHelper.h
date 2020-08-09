@@ -1,22 +1,14 @@
 #pragma once
 
 #include "ShaderDataType.h"
-#include "DataTypeInfo.h"
+#include "DataTypeHelper.h"
 
 namespace Hazel
 {
-	class ShaderDataTypeInfo
+	class ShaderDataTypeHelper
 	{
-	private:
-		ShaderDataType type;
-
 	public:
-		constexpr ShaderDataTypeInfo(ShaderDataType type)
-			: type(type)
-		{
-		}
-
-		constexpr DataType GetComponentType() const
+		static constexpr DataType GetComponentType(ShaderDataType type)
 		{
 			switch (type)
 			{
@@ -38,7 +30,7 @@ namespace Hazel
 			return DataType::Unknown;
 		}
 
-		constexpr size_t GetComponentCount() const
+		static constexpr size_t GetComponentCount(ShaderDataType type)
 		{
 			switch (type)
 			{
@@ -64,19 +56,16 @@ namespace Hazel
 			}
 		}
 
-		constexpr size_t GetComponentSize() const
+		static constexpr size_t GetComponentSize(ShaderDataType type)
 		{
-			return DataTypeInfo::GetSize(GetComponentType());
+			return DataTypeHelper::GetSize(GetComponentType(type));
 		}
 
-		constexpr size_t GetSize() const
+		static constexpr size_t GetSize(ShaderDataType type)
 		{
-			return GetComponentCount() * GetComponentSize();
+			return GetComponentCount(type) * GetComponentSize(type);
 		}
 
-		constexpr operator ShaderDataType() const
-		{
-			return type;
-		}
+		ShaderDataTypeHelper() = delete;
 	};
 }
