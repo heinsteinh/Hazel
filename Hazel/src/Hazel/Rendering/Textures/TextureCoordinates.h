@@ -4,33 +4,58 @@
 
 namespace Hazel
 {
-	struct TextureCoordinates
+	class TextureCoordinates
 	{
-		Rectangle Coordinates;
+	private:
+		Rectangle rectangle;
 
-		static constexpr TextureCoordinates FromTextureSize(Size size)
-		{
-			return {0.0f, size.Width, 0.0f, size.Height};
-		}
-
-		static constexpr TextureCoordinates FromBottomLeftAndSize(const glm::vec2 &bottomLeft, Size size)
-		{
-			return {
+	public:
+		inline TextureCoordinates(const glm::vec2 &bottomLeft = glm::vec2(0.0f), Size size = Size())
+			: rectangle({
 				bottomLeft.x,
 				bottomLeft.x + size.Width,
 				bottomLeft.y,
-				bottomLeft.y + size.Height
+				bottomLeft.y + size.Height})
+		{
+		}
+
+		inline TextureCoordinates(Size size)
+			: TextureCoordinates(glm::vec2(0.0f), size)
+		{
+		}
+
+		constexpr glm::vec2 GetShift(Size textureSize) const
+		{
+			if (textureSize.IsEmpty())
+			{
+				return glm::vec2(0.0f);
+			}
+			return {
+				rectangle.Left / textureSize.Width,
+				rectangle.Bottom / textureSize.Height
 			};
 		}
 
-		constexpr glm::vec2 GetBottomLeft() const
+		constexpr Size GetScale(Size textureSize) const
 		{
-			return {Coordinates.Left, Coordinates.Bottom};
+			if (textureSize.IsEmpty())
+			{
+				return {};
+			}
+			return {
+				rectangle.GetWidth() / textureSize.Width,
+				rectangle.GetHeight() / textureSize.Height
+			};
 		}
 
 		constexpr Size GetSize() const
 		{
-			return Coordinates.GetSize();
+			return rectangle.GetSize();
+		}
+
+		constexpr float GetAspectRatio() const
+		{
+			return rectangle.GetSize().GetAspectRatio();
 		}
 	};
 }

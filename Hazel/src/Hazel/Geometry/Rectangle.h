@@ -11,19 +11,12 @@ namespace Hazel
 		float Bottom = 0.0f;
 		float Top = 0.0f;
 
-		constexpr float GetPositionX() const
-		{
-			return (Right + Left) / 2.0f;
-		}
-
-		constexpr float GetPositionY() const
-		{
-			return (Top + Bottom) / 2.0f;
-		}
-
 		constexpr glm::vec2 GetPosition() const
 		{
-			return {GetPositionX(), GetPositionY()};
+			return {
+				(Right + Left) / 2.0f,
+				(Top + Bottom) / 2.0f
+			};
 		}
 
 		constexpr float GetWidth() const

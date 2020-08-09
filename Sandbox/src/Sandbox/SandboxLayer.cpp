@@ -68,7 +68,8 @@ namespace Sandbox
 
 		particleSystem.OnUpdate(deltaTime);
 
-		drawData.Texture.SetCoordinates(Hazel::TextureCoordinates::FromBottomLeftAndSize(bottomLeft, size));
+		drawData.Texture.SetCoordinates({bottomLeft, size});
+		//drawData.Transform.SetScale({drawData.Texture.GetAspectRatio(), 1.0f});
 
 		renderer.BeginScene(camera);
 		particleSystem.OnRender();

@@ -10,7 +10,8 @@ namespace Hazel
 	private:
 		std::shared_ptr<Texture2D> texture;
 		glm::vec2 shift{0.0f};
-		Size scale = {1.0f, 1.0f};
+		Size scale;
+		float aspectRatio = 0.0f;
 
 	public:
 		SubTexture2D() = default;
@@ -30,10 +31,16 @@ namespace Hazel
 		{
 			if (texture)
 			{
-				shift = coordinates.GetBottomLeft();
-				auto size = coordinates.GetSize();
-				scale.Width = size.Width / texture->GetWidth();
-				scale.Height = size.Height / texture->GetHeight();
+				auto size = texture->GetSize();
+				shift = coordinates.GetShift(size);
+				scale = coordinates.GetScale(size);
+				aspectRatio = coordinates.GetAspectRatio();
+			}
+			else
+			{
+				shift = glm::vec2(0.0f);
+				scale = Size();
+				aspectRatio = 1.0f;
 			}
 		}
 
@@ -44,9 +51,14 @@ namespace Hazel
 				return glm::vec2(0.0f);
 			}
 			return {
-				(shift.x + coordinates.x) * scale.Width,
-				(shift.y + coordinates.y) * scale.Height
+				shift.x + coordinates.x * scale.Width,
+				shift.y + coordinates.y * scale.Height
 			};
+		}
+
+		constexpr float GetAspectRatio() const
+		{
+			return aspectRatio;
 		}
 
 		inline operator bool() const
