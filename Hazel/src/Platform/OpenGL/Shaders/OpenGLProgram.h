@@ -27,12 +27,5 @@ namespace Hazel
 		{
 			return id;
 		}
-
-		constexpr uint32_t Release()
-		{
-			auto temp = id;
-			id = 0;
-			return temp;
-		}
 	};
 }

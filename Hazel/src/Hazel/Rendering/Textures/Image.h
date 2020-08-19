@@ -19,8 +19,6 @@ namespace Hazel
 		Image(Image &&other) noexcept;
 		~Image();
 
-		void *ReleaseData();
-
 		Image &operator=(const Image &other) = delete;
 		Image &operator=(Image &&other) noexcept;
 

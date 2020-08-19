@@ -2,6 +2,7 @@
 
 #include "Hazel/Rendering/Shaders/Shader.h"
 #include "Hazel/Rendering/Shaders/ShaderInfo.h"
+#include "OpenGLProgram.h"
 
 namespace Hazel
 {
@@ -9,7 +10,7 @@ namespace Hazel
 	{
 	private:
 		std::string name;
-		uint32_t id = 0;
+		OpenGLProgram program;
 
 	public:
 		OpenGLShader(const ShaderInfo &info);

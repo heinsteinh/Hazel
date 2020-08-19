@@ -15,6 +15,7 @@ namespace Hazel
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()
 	{
 		glDeleteBuffers(1, &id);
+		Log::Info("Index buffer with id {} destroyed.", id);
 	}
 
 	void OpenGLIndexBuffer::Bind() const

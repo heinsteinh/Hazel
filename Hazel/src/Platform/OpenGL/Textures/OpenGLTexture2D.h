@@ -21,10 +21,5 @@ namespace Hazel
 		virtual float GetHeight() const override;
 		virtual void SetData(const void *data) override;
 		virtual void Bind(uint32_t slot = 0) const override;
-
-	private:
-		void Init(const TextureInfo &info);
-		void Create();
-		void SetParameters(const TextureInfo &info);
 	};
 }

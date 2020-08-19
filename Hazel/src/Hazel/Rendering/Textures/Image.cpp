@@ -22,7 +22,7 @@ namespace Hazel
 		: width(other.width),
 		height(other.height),
 		format(other.format),
-		data(other.ReleaseData())
+		data(std::exchange(other.data, nullptr))
 	{
 	}
 
@@ -34,18 +34,12 @@ namespace Hazel
 		}
 	}
 
-	void *Image::ReleaseData()
-	{
-		width = height = 0;
-		return std::exchange(data, nullptr);
-	}
-
 	Image &Image::operator=(Image &&other) noexcept
 	{
-		width = other.width;
-		height = other.height;
-		format = other.format;
-		data = other.ReleaseData();
+		std::swap(width, other.width);
+		std::swap(height, other.height);
+		std::swap(format, other.format);
+		std::swap(data, other.data);
 		return *this;
 	}
 }

@@ -19,6 +19,7 @@ namespace Hazel
 	OpenGLTexture2D::~OpenGLTexture2D()
 	{
 		glDeleteTextures(1, &id);
+		Log::Info("Texture with id {} destroyed.", id);
 	}
 
 	float OpenGLTexture2D::GetWidth() const

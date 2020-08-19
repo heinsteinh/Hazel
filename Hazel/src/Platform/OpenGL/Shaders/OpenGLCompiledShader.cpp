@@ -15,9 +15,8 @@ namespace Hazel
 	}
 
 	OpenGLCompiledShader::OpenGLCompiledShader(OpenGLCompiledShader &&other) noexcept
-		: id(other.id)
+		: id(std::exchange(other.id, 0))
 	{
-		other.id = 0;
 	}
 
 	OpenGLCompiledShader::~OpenGLCompiledShader()

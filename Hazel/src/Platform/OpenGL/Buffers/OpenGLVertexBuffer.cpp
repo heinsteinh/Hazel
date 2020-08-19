@@ -15,6 +15,7 @@ namespace Hazel
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()
 	{
 		glDeleteBuffers(1, &id);
+		Log::Info("Vertex buffer with id {} destroyed.", id);
 	}
 
 	void OpenGLVertexBuffer::Bind() const

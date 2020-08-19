@@ -8,19 +8,19 @@ namespace Hazel
 {
 	OpenGLShader::OpenGLShader(const ShaderInfo &info)
 		: name(info.Name),
-		id(OpenGLShaderBuilder::Build(info))
+		program(OpenGLShaderBuilder::Build(info))
 	{
-		Log::Info("Shader successfully created with id {}.", id);
+		Log::Info("Shader '{}' successfully created with id {}.", name, program.GetId());
 	}
 
 	OpenGLShader::~OpenGLShader()
 	{
-		glDeleteProgram(id);
+		Log::Info("Shader '{}' with id {} destroyed.", name, program.GetId());
 	}
 
 	void OpenGLShader::Bind() const
 	{
-		glUseProgram(id);
+		glUseProgram(program.GetId());
 	}
 
 	void OpenGLShader::Unbind() const
@@ -75,6 +75,6 @@ namespace Hazel
 
 	int OpenGLShader::GetUniformLocation(const std::string &name)
 	{
-		return glGetUniformLocation(id, name.c_str());
+		return glGetUniformLocation(program.GetId(), name.c_str());
 	}
 }

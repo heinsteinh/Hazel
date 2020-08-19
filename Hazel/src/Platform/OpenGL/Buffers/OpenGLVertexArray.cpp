@@ -15,6 +15,7 @@ namespace Hazel
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
 		glDeleteVertexArrays(1, &id);
+		Log::Info("Vertex array with id {} destroyed.", id);
 	}
 
 	void OpenGLVertexArray::Bind() const
