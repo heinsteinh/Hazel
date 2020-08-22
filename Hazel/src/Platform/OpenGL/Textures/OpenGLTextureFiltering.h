@@ -2,7 +2,7 @@
 
 #include "glad/glad.h"
 
-#include "Hazel/Rendering/Textures/TextureFiltering.h"
+#include "Hazel/Textures/TextureFiltering.h"
 
 namespace Hazel
 {

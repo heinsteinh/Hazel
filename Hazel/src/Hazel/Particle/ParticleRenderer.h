@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel/Rendering/Renderer2D.h"
-#include "Hazel/Rendering/Batch/SquareMesh.h"
+#include "Hazel/Rendering/SquareMesh.h"
 #include "Particle.h"
 
 namespace Hazel

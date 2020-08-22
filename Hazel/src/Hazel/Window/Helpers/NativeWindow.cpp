@@ -6,12 +6,12 @@
 
 namespace Hazel
 {
-	NativeWindow::NativeWindow(const WindowInfo &info)
+	NativeWindow::NativeWindow(const ContextInfo &info)
 	{
 		static GlfwLoader loader;
 		window = glfwCreateWindow(
-			static_cast<int>(info.Size.Width),
-			static_cast<int>(info.Size.Height),
+			static_cast<int>(info.Resolution.Width),
+			static_cast<int>(info.Resolution.Height),
 			info.Title.c_str(),
 			nullptr,
 			nullptr);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ApplicationInfo.h"
+#include "ContextInfo.h"
 #include "Hazel/Window/Window.h"
 #include "Context.h"
 #include "Hazel/Layers/LayerManager.h"
@@ -16,7 +16,7 @@ namespace Hazel
 		bool windowClosed = false;
 
 	public:
-		ContextManager(const ApplicationInfo &info);
+		ContextManager(const ContextInfo &info);
 
 		LayerManager &GetLayerManager();
 		Context &GetContext();

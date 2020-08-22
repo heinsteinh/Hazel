@@ -10,7 +10,7 @@ namespace Hazel
 	private:
 		std::shared_ptr<Texture2D> texture;
 		glm::vec2 shift{0.0f};
-		Size scale;
+		glm::vec2 scale{0.0f};
 		float aspectRatio = 0.0f;
 
 	public:
@@ -38,8 +38,7 @@ namespace Hazel
 			}
 			else
 			{
-				shift = glm::vec2(0.0f);
-				scale = Size();
+				shift = scale = glm::vec2(0.0f);
 				aspectRatio = 1.0f;
 			}
 		}
@@ -50,10 +49,7 @@ namespace Hazel
 			{
 				return glm::vec2(0.0f);
 			}
-			return {
-				shift.x + coordinates.x * scale.Width,
-				shift.y + coordinates.y * scale.Height
-			};
+			return shift + coordinates * scale;
 		}
 
 		constexpr float GetAspectRatio() const

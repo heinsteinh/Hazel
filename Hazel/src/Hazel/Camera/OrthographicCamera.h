@@ -11,6 +11,8 @@ namespace Hazel
 	private:
 		Viewport viewport;
 		Transform transform;
+		glm::mat4 viewMatrix{1.0f};
+		glm::mat4 projectionMatrix{1.0f};
 		glm::mat4 viewProjectionMatrix{1.0f};
 
 	public:
@@ -46,6 +48,16 @@ namespace Hazel
 			return viewport.ToRectangle();
 		}
 
+		constexpr const glm::mat4 &GetViewMatrix() const
+		{
+			return viewMatrix;
+		}
+
+		constexpr const glm::mat4 &GetProjectionMatrix() const
+		{
+			return projectionMatrix;
+		}
+
 		constexpr const glm::mat4 &GetViewProjectionMatrix() const
 		{
 			return viewProjectionMatrix;
@@ -53,6 +65,8 @@ namespace Hazel
 
 	private:
 		glm::mat4 ComputeViewMatrix() const;
+		void RecomputeViewMatrix();
+		void RecomputeProjectionMatrix();
 		void RecomputeViewProjectionMatrix();
 	};
 }

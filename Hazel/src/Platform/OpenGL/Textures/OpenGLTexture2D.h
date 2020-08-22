@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Hazel/Rendering/Textures/Texture2D.h"
-#include "Hazel/Rendering/Textures/TextureInfo.h"
+#include "Hazel/Textures/Texture2D.h"
+#include "Hazel/Textures/TextureInfo.h"
 
 namespace Hazel
 {

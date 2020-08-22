@@ -1,6 +1,6 @@
 #include "Batch.h"
 
-#include "Hazel/Rendering/Textures/TextureBuilder.h"
+#include "Hazel/Textures/TextureBuilder.h"
 
 namespace Hazel
 {

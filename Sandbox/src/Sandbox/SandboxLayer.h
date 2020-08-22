@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel.h"
-#include "Hazel/Geometry/Screen.h"
+#include "Hazel/Geometry/ScreenTransform.h"
 
 namespace Sandbox
 {
@@ -21,7 +21,7 @@ namespace Sandbox
 		Hazel::Input &input;
 		Hazel::RenderApiFactory &factory;
 		Hazel::OrthographicCamera camera;
-		Hazel::Screen screen;
+		Hazel::ScreenTransform screenTransform;
 		Hazel::OrthographicCameraController controller;
 		Hazel::EventDispatcher dispatcher;
 		Hazel::ParticleSystem particleSystem;

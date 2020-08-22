@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel/Core/Exception.h"
-#include "Hazel/Rendering/Shaders/ShaderTypeName.h"
+#include "Hazel/Shaders/ShaderTypeName.h"
 
 namespace Hazel
 {

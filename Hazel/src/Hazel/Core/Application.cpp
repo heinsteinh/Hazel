@@ -4,7 +4,7 @@
 
 namespace Hazel
 {
-	Application::Application(const ApplicationInfo &info)
+	Application::Application(const ContextInfo &info)
 		: contextManager(std::make_unique<ContextManager>(info))
 	{
 		Log::Debug("Application created.");

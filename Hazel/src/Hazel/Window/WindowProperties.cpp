@@ -4,7 +4,7 @@
 
 namespace Hazel
 {
-	WindowProperties::WindowProperties(GLFWwindow *window, const WindowInfo &info)
+	WindowProperties::WindowProperties(GLFWwindow *window, const ContextInfo &info)
 		: window(window),
 		title(info.Title)
 	{

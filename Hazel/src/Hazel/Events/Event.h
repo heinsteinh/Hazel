@@ -1,6 +1,7 @@
 #pragma once
 
 #include "spdlog/fmt/ostr.h"
+
 #include "EventType.h"
 #include "EventCategory.h"
 

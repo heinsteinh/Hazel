@@ -19,7 +19,7 @@ namespace Hazel
 		static inline const std::string B8 = "MouseButton8";
 		static inline const std::string Invalid = "InvalidMouseButton";
 
-		static inline const std::string GetMouseButtonName(MouseButton button)
+		static inline const std::string &GetMouseButtonName(MouseButton button)
 		{
 			switch (button)
 			{

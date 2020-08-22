@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Rendering/RenderApi/RenderApi.h"
+#include "Hazel/RenderApi/RenderApi.h"
 #include "OpenGLInfo.h"
 #include "OpenGLFactory.h"
 #include "OpenGLDrawer.h"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ApplicationInfo.h"
+#include "ContextInfo.h"
 #include "Context.h"
 #include "Hazel/Layers/Layer.h"
 
@@ -15,7 +15,7 @@ namespace Hazel
 		bool running = false;
 
 	public:
-		Application(const ApplicationInfo &info = {});
+		Application(const ContextInfo &info = {});
 		virtual ~Application();
 
 		Context &GetContext();

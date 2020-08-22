@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Rendering/Buffers/IndexBuffer.h"
+#include "Hazel/Buffers/IndexBuffer.h"
 
 namespace Hazel
 {

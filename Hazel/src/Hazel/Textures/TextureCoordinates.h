@@ -36,11 +36,11 @@ namespace Hazel
 			};
 		}
 
-		constexpr Size GetScale(Size textureSize) const
+		constexpr glm::vec2 GetScale(Size textureSize) const
 		{
 			if (textureSize.IsEmpty())
 			{
-				return {};
+				return glm::vec2(0.0f);
 			}
 			return {
 				rectangle.GetWidth() / textureSize.Width,
@@ -55,7 +55,7 @@ namespace Hazel
 
 		constexpr float GetAspectRatio() const
 		{
-			return rectangle.GetSize().GetAspectRatio();
+			return rectangle.GetAspectRatio();
 		}
 	};
 }

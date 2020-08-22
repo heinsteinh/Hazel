@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WindowInfo.h"
+#include "Hazel/Core/ContextInfo.h"
 
 struct GLFWwindow;
 
@@ -14,7 +14,7 @@ namespace Hazel
 		bool verticalSynchronization = false;
 
 	public:
-		WindowProperties(GLFWwindow *window, const WindowInfo &info);
+		WindowProperties(GLFWwindow *window, const ContextInfo &info);
 
 		const std::string &GetTitle() const;
 		void SetTitle(const std::string &title);
@@ -38,9 +38,19 @@ namespace Hazel
 			return GetSize().Width;
 		}
 
+		inline void SetWidth(float width)
+		{
+			Resize({width, GetHeight()});
+		}
+
 		inline float GetHeight() const
 		{
 			return GetSize().Height;
+		}
+
+		inline void SetHeight(float height)
+		{
+			Resize({GetHeight(), height});
 		}
 	};
 }

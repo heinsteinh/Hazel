@@ -6,7 +6,7 @@
 
 namespace Hazel
 {
-	Window::Window(const WindowInfo &info)
+	Window::Window(const ContextInfo &info)
 		: window(info),
 		context(info.RenderApi.GetFactory().CreateContext(window.Get())),
 		imGuiDrawer(info.RenderApi.GetFactory().CreateImGuiDrawer(window.Get())),
@@ -14,7 +14,7 @@ namespace Hazel
 		eventManager(window.Get()),
 		input(window.Get())
 	{
-		Log::Debug("New window created {} ({}x{})", info.Title, info.Size.Width, info.Size.Height);
+		Log::Debug("New window created {} ({}x{})", info.Title, info.Resolution.Width, info.Resolution.Height);
 	}
 
 	Window::~Window()

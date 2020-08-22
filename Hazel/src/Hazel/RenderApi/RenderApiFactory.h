@@ -2,13 +2,13 @@
 
 #include "GraphicsContext.h"
 #include "ImGuiDrawer.h"
-#include "Hazel/Rendering/Shaders/Shader.h"
-#include "Hazel/Rendering/Shaders/ShaderInfo.h"
-#include "Hazel/Rendering/Buffers/VertexArray.h"
-#include "Hazel/Rendering/Buffers/VertexBuffer.h"
-#include "Hazel/Rendering/Buffers/IndexBuffer.h"
-#include "Hazel/Rendering/Textures/Texture2D.h"
-#include "Hazel/Rendering/Textures/TextureInfo.h"
+#include "Hazel/Shaders/Shader.h"
+#include "Hazel/Shaders/ShaderInfo.h"
+#include "Hazel/Buffers/VertexArray.h"
+#include "Hazel/Buffers/VertexBuffer.h"
+#include "Hazel/Buffers/IndexBuffer.h"
+#include "Hazel/Textures/Texture2D.h"
+#include "Hazel/Textures/TextureInfo.h"
 
 struct GLFWwindow;
 

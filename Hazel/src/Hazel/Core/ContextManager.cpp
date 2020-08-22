@@ -2,15 +2,15 @@
 
 namespace Hazel
 {
-	ContextManager::ContextManager(const ApplicationInfo &info)
-		: window(info.WindowInfo),
+	ContextManager::ContextManager(const ContextInfo &info)
+		: window(info),
 		layerManager(window),
 		context({
 			layerManager,
 			window.GetProperties(),
 			window.GetInput(),
-			info.WindowInfo.RenderApi.GetFactory(),
-			info.WindowInfo.RenderApi.GetDrawer()})
+			info.RenderApi.GetFactory(),
+			info.RenderApi.GetDrawer()})
 	{
 		window.GetEventManager().SetEventListener(this);
 	}

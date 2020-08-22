@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Rendering/RenderApi/RenderApiFactory.h"
+#include "Hazel/RenderApi/RenderApiFactory.h"
 #include "Texture.h"
 #include "Image.h"
 

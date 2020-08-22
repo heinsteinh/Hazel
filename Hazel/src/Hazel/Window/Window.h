@@ -4,7 +4,7 @@
 #include "WindowProperties.h"
 #include "EventManager.h"
 #include "Hazel/Input/Input.h"
-#include "Hazel/Rendering/RenderApi/GraphicsContext.h"
+#include "Hazel/RenderApi/GraphicsContext.h"
 
 namespace Hazel
 {
@@ -19,7 +19,7 @@ namespace Hazel
 		Input input;
 
 	public:
-		Window(const WindowInfo &info = {});
+		Window(const ContextInfo &info = {});
 		~Window();
 
 		inline GraphicsContext &GetContext()

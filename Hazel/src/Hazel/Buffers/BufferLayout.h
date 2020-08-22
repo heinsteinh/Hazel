@@ -11,13 +11,13 @@ namespace Hazel
 		size_t stride = 0;
 
 	public:
-		BufferLayout(std::initializer_list<BufferElement> elements = {})
+		inline BufferLayout(std::initializer_list<BufferElement> elements = {})
 			: elements(elements)
 		{
 			CalculateOffsetsAndStride();
 		}
 
-		inline const std::vector<BufferElement> &GetElements() const
+		constexpr const std::vector<BufferElement> &GetElements() const
 		{
 			return elements;
 		}
@@ -27,7 +27,7 @@ namespace Hazel
 			return elements[index];
 		}
 
-		inline size_t GetStride() const
+		constexpr size_t GetStride() const
 		{
 			return stride;
 		}

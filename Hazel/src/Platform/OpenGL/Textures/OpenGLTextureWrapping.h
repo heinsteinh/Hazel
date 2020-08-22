@@ -2,7 +2,7 @@
 
 #include "glad/glad.h"
 
-#include "Hazel/Rendering/Textures/TextureWrapping.h"
+#include "Hazel/Textures/TextureWrapping.h"
 
 namespace Hazel
 {

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Hazel/Window/Window.h"
+#include "Hazel/Window/WindowProperties.h"
+#include "Hazel/Input/Input.h"
 #include "ApplicationSettings.h"
 
 namespace Hazel

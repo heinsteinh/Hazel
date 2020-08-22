@@ -2,8 +2,8 @@
 
 #include "imgui.h"
 
-#include "Hazel/Rendering/Textures/TextureBuilder.h"
-#include "Hazel/Rendering/Batch/SquareMesh.h"
+#include "Hazel/Textures/TextureBuilder.h"
+#include "Hazel/Rendering/SquareMesh.h"
 
 namespace Sandbox
 {
@@ -14,7 +14,7 @@ namespace Sandbox
 		input(context.Input),
 		factory(context.Factory),
 		camera({context.Window.GetSize().GetAspectRatio()}),
-		screen(window, camera),
+		screenTransform(window, camera),
 		controller({context.Input, camera}),
 		dispatcher(&controller),
 		particleSystem(renderer, maxParticles),
@@ -54,7 +54,7 @@ namespace Sandbox
 
 		if (input.IsMouseButtonPressed(Hazel::MouseButton::B1))
 		{
-			particleInfo.Position = screen.GetRealPosition(input.GetMousePosition());
+			particleInfo.Position = screenTransform.GetWorldPosition(input.GetMousePosition());
 			for (int i = 0; i < nParticles; i++)
 			{
 				particleSystem.Emit(particleInfo);

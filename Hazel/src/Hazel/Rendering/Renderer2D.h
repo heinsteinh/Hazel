@@ -2,7 +2,7 @@
 
 #include "Hazel/Core/Context.h"
 #include "Hazel/Camera/OrthographicCamera.h"
-#include "Batch/DefaultShader.h"
+#include "Hazel/Rendering/DefaultShader.h"
 #include "Batch/Batch.h"
 #include "Batch/BatchException.h"
 

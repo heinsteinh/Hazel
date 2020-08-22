@@ -1,6 +1,6 @@
 #include "AvailableRenderApi.h"
 
-#include "Platform/OpenGL/Core/OpenGLRenderApi.h"
+#include "Platform/OpenGL/RenderApi/OpenGLRenderApi.h"
 
 namespace Hazel
 {

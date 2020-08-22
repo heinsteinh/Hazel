@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Window/WindowInfo.h"
+#include "Hazel/Core/ContextInfo.h"
 
 struct GLFWwindow;
 
@@ -12,7 +12,7 @@ namespace Hazel
 		GLFWwindow *window = nullptr;
 
 	public:
-		NativeWindow(const WindowInfo &info);
+		NativeWindow(const ContextInfo &info);
 		~NativeWindow();
 
 		constexpr GLFWwindow *Get() const

@@ -2,7 +2,7 @@
 
 #include "glad/glad.h"
 
-#include "Hazel/Rendering/Buffers/DataType.h"
+#include "Hazel/Buffers/DataType.h"
 
 namespace Hazel
 {

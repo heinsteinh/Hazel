@@ -2,7 +2,7 @@
 
 #include "glad/glad.h"
 
-#include "Hazel/Rendering/Shaders/ShaderType.h"
+#include "Hazel/Shaders/ShaderType.h"
 
 namespace Hazel
 {

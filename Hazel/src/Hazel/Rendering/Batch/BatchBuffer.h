@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Hazel/Rendering/Buffers/VertexArray.h"
-#include "Vertex.h"
+#include "Hazel/Buffers/VertexArray.h"
+#include "Hazel/Rendering/Vertex.h"
 #include "BatchInfo.h"
 
 namespace Hazel

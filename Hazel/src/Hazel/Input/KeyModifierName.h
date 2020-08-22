@@ -17,7 +17,7 @@ namespace Hazel
 		static inline const std::string CapsLock = "CapsLock";
 		static inline const std::string NumLock = "NumLock";
 
-		static inline const std::string GetKeyModifierName(KeyModifier button)
+		static inline const std::string &GetKeyModifierName(KeyModifier button)
 		{
 			switch (button)
 			{

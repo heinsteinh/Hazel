@@ -3,33 +3,34 @@
 namespace Hazel
 {
 	OrthographicCamera::OrthographicCamera(float aspectRatio)
-		: viewport({aspectRatio})
+		: viewport({aspectRatio}),
+		projectionMatrix(viewport.ToProjectionMatrix()),
+		viewProjectionMatrix(projectionMatrix *viewMatrix)
 	{
-		RecomputeViewProjectionMatrix();
 	}
 
 	void OrthographicCamera::SetAspectRatio(float aspectRatio)
 	{
 		viewport.AspectRatio = aspectRatio;
-		RecomputeViewProjectionMatrix();
+		RecomputeProjectionMatrix();
 	}
 
 	void OrthographicCamera::SetZoomLevel(float zoomLevel)
 	{
 		viewport.ZoomLevel = zoomLevel;
-		RecomputeViewProjectionMatrix();
+		RecomputeProjectionMatrix();
 	}
 
 	void OrthographicCamera::SetPosition(const glm::vec2 &position)
 	{
 		transform.SetPosition(position);
-		RecomputeViewProjectionMatrix();
+		RecomputeViewMatrix();
 	}
 
 	void OrthographicCamera::SetRotation(float rotation)
 	{
 		transform.Angle = rotation;
-		RecomputeViewProjectionMatrix();
+		RecomputeViewMatrix();
 	}
 
 	glm::mat4 OrthographicCamera::ComputeViewMatrix() const
@@ -42,8 +43,20 @@ namespace Hazel
 			transform.Axis);
 	}
 
+	void OrthographicCamera::RecomputeViewMatrix()
+	{
+		viewMatrix = ComputeViewMatrix();
+		RecomputeViewProjectionMatrix();
+	}
+
+	void OrthographicCamera::RecomputeProjectionMatrix()
+	{
+		projectionMatrix = viewport.ToProjectionMatrix();
+		RecomputeViewProjectionMatrix();
+	}
+
 	void OrthographicCamera::RecomputeViewProjectionMatrix()
 	{
-		viewProjectionMatrix = viewport.ToProjectionMatrix() * ComputeViewMatrix();
+		viewProjectionMatrix = projectionMatrix * viewMatrix;
 	}
 }

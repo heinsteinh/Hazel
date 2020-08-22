@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Hazel/Rendering/Shaders/ShaderInfo.h"
-#include "Hazel/Rendering/Shaders/ShaderCompilationException.h"
+#include "Hazel/Shaders/ShaderInfo.h"
+#include "Hazel/Shaders/ShaderCompilationException.h"
 #include "OpenGLCompiledShader.h"
 #include "OpenGLProgram.h"
 

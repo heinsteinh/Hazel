@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Hazel/Rendering/Shaders/ShaderType.h"
-#include "Hazel/Utils/FileReader.h"
-#include "Hazel/Utils/Filename.h"
+#include "Hazel/Shaders/ShaderType.h"
+#include "Hazel/FileSystem/FileReader.h"
+#include "Hazel/FileSystem/Filename.h"
 
 namespace Hazel
 {

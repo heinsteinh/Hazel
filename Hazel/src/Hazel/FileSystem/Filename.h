@@ -24,7 +24,7 @@ namespace Hazel
 		{
 			size_t offset = filename.find('.');
 			return offset == std::string::npos
-				? ""
+				? std::string()
 				: filename.substr(offset + 1, filename.size() - offset);
 		}
 

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Hazel/Rendering/RenderApi/RenderApiFactory.h"
+#include "Hazel/RenderApi/RenderApiFactory.h"
+#include "Hazel/Rendering/DrawData.h"
 #include "BatchContainer.h"
 #include "TextureBatch.h"
 #include "BatchBuffer.h"
-#include "DrawData.h"
 
 namespace Hazel
 {

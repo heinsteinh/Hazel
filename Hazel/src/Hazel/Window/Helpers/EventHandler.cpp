@@ -30,8 +30,7 @@ namespace Hazel
 				GlfwKeyMap::GetHazelKey(key),
 				scancode,
 				static_cast<KeyModifier>(mods),
-				0));
-			repeatCount = 0;
+				repeatCount = 0));
 			break;
 		case GLFW_RELEASE:
 			dispatcher.Dispatch(KeyReleaseEvent(
@@ -41,12 +40,11 @@ namespace Hazel
 			repeatCount = 0;
 			break;
 		case GLFW_REPEAT:
-			repeatCount++;
 			dispatcher.Dispatch(KeyPressEvent(
 				GlfwKeyMap::GetHazelKey(key),
 				scancode,
 				static_cast<KeyModifier>(mods),
-				repeatCount));
+				++repeatCount));
 		}
 	}
 

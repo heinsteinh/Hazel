@@ -2,7 +2,7 @@
 
 #include "glad/glad.h"
 
-#include "Hazel/Rendering/Textures/ColorFormat.h"
+#include "Hazel/Textures/ColorFormat.h"
 
 namespace Hazel
 {

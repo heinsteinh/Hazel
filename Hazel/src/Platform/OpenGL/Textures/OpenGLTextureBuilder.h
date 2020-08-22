@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Rendering/Textures/TextureInfo.h"
+#include "Hazel/Textures/TextureInfo.h"
 #include "OpenGLStorageColorFormat.h"
 #include "OpenGLTextureFiltering.h"
 #include "OpenGLTextureWrapping.h"
