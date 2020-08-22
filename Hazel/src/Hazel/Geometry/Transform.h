@@ -51,17 +51,5 @@ namespace Hazel
 					Axis),
 				Scale);
 		}
-
-		inline glm::mat4 ToInverseMatrix() const
-		{
-			return glm::translate(
-				glm::rotate(
-					glm::scale(
-						glm::mat4(1.0f),
-						1.0f / Scale),
-					-Angle,
-					Axis),
-				-Position);
-		}
 	};
 }

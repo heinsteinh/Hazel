@@ -4,14 +4,22 @@
 
 namespace Hazel
 {
-	Batch::Batch(RenderApiFactory &factory, const BatchInfo &info)
-		: indices(info.MaxIndices),
-		vertices(info.MaxVertices),
-		textures(info.MaxTextures),
-		buffer(factory, info),
+	Batch::Batch(RenderApiFactory &factory)
+		: indices(0),
+		vertices(0),
+		textures(1),
+		buffer(factory),
 		whiteTexture(TextureBuilder(factory).BuildFlatTexture(glm::vec4(1.0f)))
 	{
 		textures.Add(whiteTexture);
+	}
+
+	void Batch::Init(const BatchInfo &info)
+	{
+		indices.SetMaxSize(info.MaxIndices);
+		vertices.SetMaxSize(info.MaxVertices);
+		textures.SetMaxSize(info.MaxTextures);
+		buffer.Init(info);
 	}
 
 	void Batch::Clear()

@@ -79,7 +79,21 @@ namespace Sandbox
 		ImGui::SliderFloat("SizeVariation", &particleInfo.SizeVariation, 0.0f, 1.0f);
 		ImGui::SliderFloat("LifeTime", &particleInfo.LifeTime, 0.0f, 10.0f);
 		ImGui::SliderInt("NParticles", &nParticles, 0, 100);
-		ImGui::SliderInt("MaxParticle", &maxParticles, 1, 1000000);
+		ImGui::SliderInt("MaxParticle", &maxParticles, 1, 100000);
+		ImGui::End();
+
+		ImGui::Begin("Renderer");
+		ImGui::SliderInt("MaxVertices", &maxVertices, 0, 100000);
+		ImGui::SliderInt("MaxIndices", &maxIndices, 0, 100000);
+		ImGui::SliderInt("MaxTextures", &maxTextures, 0, 100000);
+		ImGui::Text("DrawCall: %zu", renderer.GetStatistics().DrawCallCount);
+		ImGui::Text("VertexCount: %zu", renderer.GetStatistics().VertexCount);
+		ImGui::Text("IndexCount: %zu", renderer.GetStatistics().IndexCount);
+		ImGui::Text("TextureCount: %zu", renderer.GetStatistics().TextureCount);
+		if (ImGui::Button("Reset"))
+		{
+			renderer.Init({(size_t)maxVertices, (size_t)maxIndices, (size_t)maxTextures});
+		}
 		ImGui::End();
 	}
 

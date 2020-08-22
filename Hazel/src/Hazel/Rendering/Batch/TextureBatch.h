@@ -11,7 +11,7 @@ namespace Hazel
 		std::vector<std::shared_ptr<Texture2D>> textures;
 
 	public:
-		inline TextureBatch(size_t maxTextures)
+		inline TextureBatch(size_t maxTextures = 0)
 			: textures(maxTextures)
 		{
 		}

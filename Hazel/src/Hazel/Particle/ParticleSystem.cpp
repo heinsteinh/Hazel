@@ -4,7 +4,6 @@ namespace Hazel
 {
 	ParticleSystem::ParticleSystem(Renderer2D &renderer, size_t size)
 		: pool(size > 0 ? size : 1),
-		index(size > 0 ? size - 1 : 0),
 		renderer(renderer)
 	{
 	}
@@ -28,7 +27,7 @@ namespace Hazel
 	void ParticleSystem::Emit(const ParticleInfo &info)
 	{
 		builder.Build(pool[index], info);
-		index = --index % pool.size();
+		index = (index + 1) % pool.size();
 	}
 
 	size_t ParticleSystem::GetMaxParticles() const

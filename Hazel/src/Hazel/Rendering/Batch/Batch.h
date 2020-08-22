@@ -18,7 +18,9 @@ namespace Hazel
 		std::shared_ptr<Texture2D> whiteTexture;
 
 	public:
-		Batch(RenderApiFactory &factory, const BatchInfo &info);
+		Batch(RenderApiFactory &factory);
+
+		void Init(const BatchInfo &info);
 
 		constexpr size_t GetIndexCount() const
 		{
@@ -30,9 +32,19 @@ namespace Hazel
 			return indices.GetMaxSize();
 		}
 
+		constexpr size_t GetVertexCount() const
+		{
+			return vertices.GetSize();
+		}
+
 		constexpr size_t GetMaxVertices() const
 		{
 			return vertices.GetMaxSize();
+		}
+
+		constexpr size_t GetTextureCount() const
+		{
+			return textures.GetSize();
 		}
 
 		inline size_t GetMaxTextures() const

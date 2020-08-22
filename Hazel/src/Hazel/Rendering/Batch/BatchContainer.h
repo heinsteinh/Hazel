@@ -10,7 +10,7 @@ namespace Hazel
 		std::vector<T> data;
 
 	public:
-		inline BatchContainer(size_t max)
+		inline BatchContainer(size_t max = 0)
 			: data(max)
 		{
 		}

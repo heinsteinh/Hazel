@@ -17,7 +17,11 @@ namespace Sandbox
 
 		float renderTime = 0.0f;
 		int nParticles = 5;
-		int maxParticles = 10000;
+		int maxParticles = 1000;
+
+		int maxIndices = (int)renderer.GetBatchInfo().MaxIndices;
+		int maxVertices = (int)renderer.GetBatchInfo().MaxVertices;
+		int maxTextures = (int)renderer.GetBatchInfo().MaxTextures;
 
 		Hazel::ParticleInfo particleInfo;
 		Hazel::ParticleInfo defaultInfo;

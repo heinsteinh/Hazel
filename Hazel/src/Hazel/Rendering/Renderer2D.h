@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RendererStatistics.h"
 #include "Hazel/Core/Context.h"
 #include "Hazel/Camera/OrthographicCamera.h"
 #include "Hazel/Rendering/DefaultShader.h"
@@ -13,14 +14,26 @@ namespace Hazel
 	private:
 		Drawer &drawer;
 		DefaultShader shader;
+		BatchInfo batchInfo;
 		Batch batch;
+		RendererStatistics statistics;
 
 	public:
 		Renderer2D(const Context &context);
-		Renderer2D(const Context &context, const BatchInfo &batchInfo);
 
+		void Init(const BatchInfo &info);
 		void BeginScene(const OrthographicCamera &camera);
 		void Draw(const DrawData &drawData);
 		void EndScene();
+
+		constexpr const BatchInfo &GetBatchInfo() const
+		{
+			return batchInfo;
+		}
+
+		constexpr const RendererStatistics &GetStatistics() const
+		{
+			return statistics;
+		}
 	};
 }
