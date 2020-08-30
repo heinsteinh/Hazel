@@ -47,6 +47,7 @@ namespace Sandbox
 
 	void SandboxLayer::OnImGuiRender()
 	{
+		dockspace.Begin();
 		ImGui::Begin("Info");
 		ImGui::Text("Update Time: %f", renderTime);
 		ImGui::Text("Camera Position: %f %f %f", camera.GetPosition().x, camera.GetPosition().y, camera.GetZoomLevel());
@@ -65,6 +66,7 @@ namespace Sandbox
 		ImGui::SliderFloat("Width", &size.Width, 0.0f, 2560.0f);
 		ImGui::SliderFloat("Height", &size.Height, 0.0f, 1664.0f);
 		ImGui::End();
+		dockspace.End();
 	}
 
 	void SandboxLayer::OnEvent(Hazel::Event &e)

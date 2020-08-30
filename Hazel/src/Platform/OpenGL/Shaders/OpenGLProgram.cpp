@@ -4,7 +4,7 @@
 
 namespace Hazel
 {
-	OpenGLProgram::OpenGLProgram(const std::vector<OpenGLCompiledShader> &shaders)
+	OpenGLProgram::OpenGLProgram(const std::vector<OpenGLProgramUnit> &shaders)
 		: id(glCreateProgram())
 	{
 		for (const auto &shader : shaders)
@@ -12,6 +12,13 @@ namespace Hazel
 			glAttachShader(id, shader.GetId());
 		}
 		glLinkProgram(id);
+		if (IsLinked())
+		{
+			for (const auto &shader : shaders)
+			{
+				glDetachShader(id, shader.GetId());
+			}
+		}
 	}
 
 	OpenGLProgram::OpenGLProgram(OpenGLProgram &&other) noexcept
@@ -25,12 +32,6 @@ namespace Hazel
 		{
 			glDeleteProgram(id);
 		}
-	}
-
-	OpenGLProgram &OpenGLProgram::operator=(OpenGLProgram &&other) noexcept
-	{
-		std::swap(id, other.id);
-		return *this;
 	}
 
 	bool OpenGLProgram::IsLinked() const
@@ -50,8 +51,9 @@ namespace Hazel
 		return infoLog;
 	}
 
-	void OpenGLProgram::Detach(const OpenGLCompiledShader &shader)
+	OpenGLProgram &OpenGLProgram::operator=(OpenGLProgram &&other) noexcept
 	{
-		glDetachShader(id, shader.GetId());
+		std::swap(id, other.id);
+		return *this;
 	}
 }

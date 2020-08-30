@@ -1,7 +1,5 @@
 #pragma once
 
-#include "ColorFormat.h"
-
 namespace Hazel
 {
 	class Image
@@ -9,7 +7,7 @@ namespace Hazel
 	private:
 		float width = 0.0f;
 		float height = 0.0f;
-		ColorFormat format;
+		int channelCount = 0;
 		void *data = nullptr;
 
 	public:
@@ -32,9 +30,9 @@ namespace Hazel
 			return height;
 		}
 
-		constexpr ColorFormat GetFormat() const
+		constexpr int GetChannelCount() const
 		{
-			return format;
+			return channelCount;
 		}
 
 		constexpr void *GetData() const

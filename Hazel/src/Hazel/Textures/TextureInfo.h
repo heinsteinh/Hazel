@@ -1,6 +1,7 @@
 #pragma once
 
-#include "ColorFormat.h"
+#include "Hazel/Geometry/Size.h"
+#include "TextureFormat.h"
 #include "TextureFiltering.h"
 #include "TextureWrapping.h"
 
@@ -8,9 +9,8 @@ namespace Hazel
 {
 	struct TextureInfo
 	{
-		float Width = 0;
-		float Height = 0;
-		ColorFormat ColorFormat = ColorFormat::Rgba;
+		Size Dimensions;
+		TextureFormat Format = TextureFormat::Rgba;
 		TextureFiltering MinFilter = TextureFiltering::Linear;
 		TextureFiltering MagFilter = TextureFiltering::Linear;
 		TextureWrapping SWrap = TextureWrapping::Repeat;

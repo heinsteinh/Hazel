@@ -4,6 +4,8 @@
 
 #include "imgui.h"
 
+#include "spdlog/fmt/fmt.h"
+
 #include "Hazel/Core/Application.h"
 #include "Hazel/Layers/Layer.h"
 #include "Hazel/Events/EventDispatcher.h"

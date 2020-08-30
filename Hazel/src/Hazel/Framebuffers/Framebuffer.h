@@ -1,18 +1,19 @@
 #pragma once
 
-#include "TextureInfo.h"
+#include "FramebufferInfo.h"
+#include "FramebufferCreationException.h"
 
 namespace Hazel
 {
-	class Texture
+	class Framebuffer
 	{
 	public:
-		virtual ~Texture() = default;
+		virtual ~Framebuffer() = default;
 
-		virtual const TextureInfo &GetInfo() const = 0;
-		virtual void Bind(uint32_t slot = 0) const = 0;
-		virtual void SetData(const void *data) = 0;
-		virtual void *GetId() const = 0;
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
+		virtual const FramebufferInfo &GetInfo() const = 0;
+		virtual void *GetColorAttachement() const = 0;
 
 		inline Size GetSize() const
 		{

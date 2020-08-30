@@ -1,27 +1,27 @@
 #pragma once
 
-#include "Texture2D.h"
+#include "Texture.h"
 #include "TextureCoordinates.h"
 
 namespace Hazel
 {
-	class SubTexture2D
+	class SubTexture
 	{
 	private:
-		std::shared_ptr<Texture2D> texture;
+		std::shared_ptr<Texture> texture;
 		glm::vec2 shift{0.0f};
 		glm::vec2 scale{0.0f};
 		float aspectRatio = 0.0f;
 
 	public:
-		SubTexture2D() = default;
+		SubTexture() = default;
 
-		inline SubTexture2D(const std::shared_ptr<Texture2D> &texture)
+		inline SubTexture(const std::shared_ptr<Texture> &texture)
 			: texture(texture)
 		{
 		}
 
-		inline SubTexture2D(const std::shared_ptr<Texture2D> &texture, const TextureCoordinates &coordinates)
+		inline SubTexture(const std::shared_ptr<Texture> &texture, const TextureCoordinates &coordinates)
 			: texture(texture)
 		{
 			SetCoordinates(coordinates);
@@ -36,20 +36,11 @@ namespace Hazel
 				scale = coordinates.GetScale(size);
 				aspectRatio = coordinates.GetAspectRatio();
 			}
-			else
-			{
-				shift = scale = glm::vec2(0.0f);
-				aspectRatio = 1.0f;
-			}
 		}
 
 		inline glm::vec2 MapCoordinates(const glm::vec2 &coordinates) const
 		{
-			if (!texture)
-			{
-				return glm::vec2(0.0f);
-			}
-			return shift + coordinates * scale;
+			return texture ? shift + coordinates * scale : glm::vec2(0.0f);
 		}
 
 		constexpr float GetAspectRatio() const
@@ -62,7 +53,7 @@ namespace Hazel
 			return static_cast<bool>(texture);
 		}
 
-		constexpr operator const std::shared_ptr<Texture2D> &() const
+		constexpr operator const std::shared_ptr<Texture> &() const
 		{
 			return texture;
 		}

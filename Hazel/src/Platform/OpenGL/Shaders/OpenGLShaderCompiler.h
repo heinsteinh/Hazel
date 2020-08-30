@@ -2,17 +2,17 @@
 
 #include "Hazel/Shaders/ShaderInfo.h"
 #include "Hazel/Shaders/ShaderCompilationException.h"
-#include "OpenGLCompiledShader.h"
+#include "OpenGLProgramUnit.h"
 #include "OpenGLProgram.h"
 
 namespace Hazel
 {
-	class OpenGLShaderBuilder
+	class OpenGLShaderCompiler
 	{
 	public:
-		static inline OpenGLProgram Build(const ShaderInfo &info)
+		static inline OpenGLProgram CompileAndLink(const ShaderInfo &info)
 		{
-			std::vector<OpenGLCompiledShader> shaders;
+			std::vector<OpenGLProgramUnit> shaders;
 			shaders.reserve(info.Sources.size());
 			for (const auto &[type, source] : info.Sources)
 			{
@@ -21,9 +21,10 @@ namespace Hazel
 			return Link(shaders);
 		}
 
-		static inline OpenGLCompiledShader Compile(ShaderType type, const std::string &source)
+	private:
+		static inline OpenGLProgramUnit Compile(ShaderType type, const std::string &source)
 		{
-			OpenGLCompiledShader shader(type, source);
+			OpenGLProgramUnit shader(type, source);
 			if (!shader.IsCompiled())
 			{
 				throw ShaderCompilationException(type, shader.GetInfoLog());
@@ -31,20 +32,16 @@ namespace Hazel
 			return shader;
 		}
 
-		static inline OpenGLProgram Link(const std::vector<OpenGLCompiledShader> &shaders)
+		static inline OpenGLProgram Link(const std::vector<OpenGLProgramUnit> &shaders)
 		{
 			OpenGLProgram program(shaders);
 			if (!program.IsLinked())
 			{
-				throw ShaderCompilationException("Shader link failed: " + program.GetInfoLog());
-			}
-			for (const auto &shader : shaders)
-			{
-				program.Detach(shader);
+				throw ShaderCompilationException(fmt::format("Shader link failed: {}", program.GetInfoLog()));
 			}
 			return program;
 		}
 
-		OpenGLShaderBuilder() = delete;
+		OpenGLShaderCompiler() = delete;
 	};
 }

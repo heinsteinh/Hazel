@@ -1,5 +1,7 @@
 #pragma once
 
+#include "spdlog/fmt/fmt.h"
+
 #include "Hazel/Core/Exception.h"
 
 namespace Hazel
@@ -12,7 +14,7 @@ namespace Hazel
 
 	public:
 		inline OpenFileException(const std::string &filename, int code)
-			: Exception("Cannot open file " + filename + " (code: " + std::to_string(code) + ")."),
+			: Exception(fmt::format("Cannot open file {} (code: {}).", filename, code)),
 			code(code),
 			filename(filename)
 		{

@@ -2,7 +2,7 @@
 
 #include "Hazel/Shaders/Shader.h"
 #include "Hazel/Shaders/ShaderInfo.h"
-#include "OpenGLProgram.h"
+#include "OpenGLShaderHolder.h"
 
 namespace Hazel
 {
@@ -10,7 +10,7 @@ namespace Hazel
 	{
 	private:
 		std::string name;
-		OpenGLProgram program;
+		OpenGLShaderHolder holder;
 
 	public:
 		OpenGLShader(const ShaderInfo &info);
@@ -27,8 +27,5 @@ namespace Hazel
 		virtual void Set(const std::string &name, const glm::mat3 &value) override;
 		virtual void Set(const std::string &name, const glm::mat4 &value) override;
 		virtual void Set(const std::string &name, const int *values, size_t size) override;
-
-	private:
-		int GetUniformLocation(const std::string &name);
 	};
 }

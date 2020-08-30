@@ -2,7 +2,7 @@
 
 #include "Mesh.h"
 #include "Hazel/Geometry/Transform.h"
-#include "Hazel/Textures/SubTexture2D.h"
+#include "Hazel/Textures/SubTexture.h"
 
 namespace Hazel
 {
@@ -10,6 +10,6 @@ namespace Hazel
 	{
 		Mesh Mesh;
 		Transform Transform;
-		SubTexture2D Texture;
+		SubTexture Texture;
 	};
 }

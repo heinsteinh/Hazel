@@ -4,7 +4,7 @@
 #include "WindowProperties.h"
 #include "EventManager.h"
 #include "Hazel/Input/Input.h"
-#include "Hazel/RenderApi/GraphicsContext.h"
+#include "Hazel/GraphicsContext/GraphicsContext.h"
 
 namespace Hazel
 {

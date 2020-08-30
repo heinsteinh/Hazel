@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Textures/Texture2D.h"
+#include "Hazel/Textures/Texture.h"
 
 namespace Hazel
 {
@@ -8,7 +8,7 @@ namespace Hazel
 	{
 	private:
 		size_t size = 0;
-		std::vector<std::shared_ptr<Texture2D>> textures;
+		std::vector<std::shared_ptr<Texture>> textures;
 
 	public:
 		inline TextureBatch(size_t maxTextures = 0)
@@ -45,7 +45,7 @@ namespace Hazel
 			}
 		}
 
-		inline std::optional<size_t> Add(const std::shared_ptr<Texture2D> &texture)
+		inline std::optional<size_t> Add(const std::shared_ptr<Texture> &texture)
 		{
 			auto last = textures.begin() + size;
 			auto i = std::find(textures.begin(), last, texture);
@@ -65,7 +65,7 @@ namespace Hazel
 		}
 
 	private:
-		inline std::optional<size_t> TryAdd(const std::shared_ptr<Texture2D> &texture)
+		inline std::optional<size_t> TryAdd(const std::shared_ptr<Texture> &texture)
 		{
 			if (size == GetMaxSize())
 			{

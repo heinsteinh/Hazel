@@ -15,7 +15,7 @@ namespace Hazel
 		BatchContainer<Vertex> vertices;
 		TextureBatch textures;
 		BatchBuffer buffer;
-		std::shared_ptr<Texture2D> whiteTexture;
+		std::shared_ptr<Texture> whiteTexture;
 
 	public:
 		Batch(RenderApiFactory &factory);

@@ -2,30 +2,30 @@
 
 #include "glad/glad.h"
 
-#include "OpenGLShaderBuilder.h"
+#include "OpenGLShaderCompiler.h"
 
 namespace Hazel
 {
 	OpenGLShader::OpenGLShader(const ShaderInfo &info)
 		: name(info.Name),
-		program(OpenGLShaderBuilder::Build(info))
+		holder(info)
 	{
-		Log::Info("Shader '{}' successfully created with id {}.", name, program.GetId());
+		Log::Info("Shader '{}' successfully created with id {}.", name, holder.GetId());
 	}
 
 	OpenGLShader::~OpenGLShader()
 	{
-		Log::Info("Shader '{}' with id {} destroyed.", name, program.GetId());
+		Log::Info("Shader '{}' (id: {}) destruction.", name, holder.GetId());
 	}
 
 	void OpenGLShader::Bind() const
 	{
-		glUseProgram(program.GetId());
+		holder.Bind();
 	}
 
 	void OpenGLShader::Unbind() const
 	{
-		glUseProgram(0);
+		holder.Unbind();
 	}
 
 	const std::string &OpenGLShader::GetName() const
@@ -35,46 +35,41 @@ namespace Hazel
 
 	void OpenGLShader::Set(const std::string &name, int value)
 	{
-		glUniform1i(GetUniformLocation(name), value);
+		holder.Set(name, value);
 	}
 
 	void OpenGLShader::Set(const std::string &name, float value)
 	{
-		glUniform1f(GetUniformLocation(name), value);
+		holder.Set(name, value);
 	}
 
 	void OpenGLShader::Set(const std::string &name, const glm::vec2 &value)
 	{
-		glUniform2f(GetUniformLocation(name), value[0], value[1]);
+		holder.Set(name, value);
 	}
 
 	void OpenGLShader::Set(const std::string &name, const glm::vec3 &value)
 	{
-		glUniform3f(GetUniformLocation(name), value[0], value[1], value[2]);
+		holder.Set(name, value);
 	}
 
 	void OpenGLShader::Set(const std::string &name, const glm::vec4 &value)
 	{
-		glUniform4f(GetUniformLocation(name), value[0], value[1], value[2], value[3]);
+		holder.Set(name, value);
 	}
 
 	void OpenGLShader::Set(const std::string &name, const glm::mat3 &value)
 	{
-		glUniformMatrix3fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
+		holder.Set(name, value);
 	}
 
 	void OpenGLShader::Set(const std::string &name, const glm::mat4 &value)
 	{
-		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
+		holder.Set(name, value);
 	}
 
 	void OpenGLShader::Set(const std::string &name, const int *values, size_t size)
 	{
-		glUniform1iv(GetUniformLocation(name), static_cast<int>(size), values);
-	}
-
-	int OpenGLShader::GetUniformLocation(const std::string &name)
-	{
-		return glGetUniformLocation(program.GetId(), name.c_str());
+		holder.Set(name, values, size);
 	}
 }

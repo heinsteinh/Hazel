@@ -2,8 +2,6 @@
 
 #include "stb_image.h"
 
-#include "ColorFormatHelper.h"
-
 namespace Hazel
 {
 	Image::Image(const std::string &filename, bool flipVertically)
@@ -11,17 +9,15 @@ namespace Hazel
 		stbi_set_flip_vertically_on_load(flipVertically ? 1 : 0);
 		int width = 0;
 		int height = 0;
-		int numChannels = 0;
-		data = stbi_load(filename.c_str(), &width, &height, &numChannels, 0);
+		data = stbi_load(filename.c_str(), &width, &height, &channelCount, 0);
 		this->width = static_cast<float>(width);
 		this->height = static_cast<float>(height);
-		format = ColorFormatHelper::CreateFromNumChannels(numChannels);
 	}
 
 	Image::Image(Image &&other) noexcept
 		: width(other.width),
 		height(other.height),
-		format(other.format),
+		channelCount(other.channelCount),
 		data(std::exchange(other.data, nullptr))
 	{
 	}
@@ -38,7 +34,7 @@ namespace Hazel
 	{
 		std::swap(width, other.width);
 		std::swap(height, other.height);
-		std::swap(format, other.format);
+		std::swap(channelCount, other.channelCount);
 		std::swap(data, other.data);
 		return *this;
 	}

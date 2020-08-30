@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OpenGLCompiledShader.h"
+#include "OpenGLProgramUnit.h"
 
 namespace Hazel
 {
@@ -10,18 +10,16 @@ namespace Hazel
 		uint32_t id = 0;
 
 	public:
-		OpenGLProgram() = default;
-		OpenGLProgram(const std::vector<OpenGLCompiledShader> &shaders);
+		OpenGLProgram(const std::vector<OpenGLProgramUnit> &shaders);
 		OpenGLProgram(const OpenGLProgram &other) = delete;
 		OpenGLProgram(OpenGLProgram &&other) noexcept;
 		~OpenGLProgram();
 
-		OpenGLProgram &operator=(const OpenGLProgram &other) = delete;
-		OpenGLProgram &operator=(OpenGLProgram &&other) noexcept;
-
 		bool IsLinked() const;
 		std::string GetInfoLog() const;
-		void Detach(const OpenGLCompiledShader &shader);
+
+		OpenGLProgram &operator=(const OpenGLProgram &other) = delete;
+		OpenGLProgram &operator=(OpenGLProgram &&other) noexcept;
 
 		constexpr uint32_t GetId() const
 		{

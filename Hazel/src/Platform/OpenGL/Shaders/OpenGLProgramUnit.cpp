@@ -1,4 +1,4 @@
-#include "OpenGLCompiledShader.h"
+#include "OpenGLProgramUnit.h"
 
 #include "glad/glad.h"
 
@@ -6,7 +6,7 @@
 
 namespace Hazel
 {
-	OpenGLCompiledShader::OpenGLCompiledShader(ShaderType type, const std::string &source)
+	OpenGLProgramUnit::OpenGLProgramUnit(ShaderType type, const std::string &source)
 		: id(glCreateShader(OpenGLShaderType::FromShaderType(type)))
 	{
 		const char *data = source.c_str();
@@ -14,33 +14,33 @@ namespace Hazel
 		glCompileShader(id);
 	}
 
-	OpenGLCompiledShader::OpenGLCompiledShader(OpenGLCompiledShader &&other) noexcept
+	OpenGLProgramUnit::OpenGLProgramUnit(OpenGLProgramUnit &&other) noexcept
 		: id(std::exchange(other.id, 0))
 	{
 	}
 
-	OpenGLCompiledShader::~OpenGLCompiledShader()
+	OpenGLProgramUnit::~OpenGLProgramUnit()
 	{
-		if (id != 0)
+		if (id)
 		{
 			glDeleteShader(id);
 		}
 	}
 
-	OpenGLCompiledShader &OpenGLCompiledShader::operator=(OpenGLCompiledShader &&other) noexcept
+	OpenGLProgramUnit &OpenGLProgramUnit::operator=(OpenGLProgramUnit &&other) noexcept
 	{
 		std::swap(id, other.id);
 		return *this;
 	}
 
-	bool OpenGLCompiledShader::IsCompiled() const
+	bool OpenGLProgramUnit::IsCompiled() const
 	{
 		int result = 0;
 		glGetShaderiv(id, GL_COMPILE_STATUS, &result);
 		return result == GL_TRUE;
 	}
 
-	std::string OpenGLCompiledShader::GetInfoLog() const
+	std::string OpenGLProgramUnit::GetInfoLog() const
 	{
 		int maxLength = 0;
 		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &maxLength);

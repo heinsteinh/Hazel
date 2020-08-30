@@ -2,10 +2,11 @@
 
 namespace Hazel
 {
-	enum class ColorFormat
+	enum class TextureFormat
 	{
 		Unknown,
 		Rgb,
-		Rgba
+		Rgba,
+		DepthStencil
 	};
 }

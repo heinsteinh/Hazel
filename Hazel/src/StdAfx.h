@@ -28,4 +28,6 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "glm/gtx/compatibility.hpp"
 
+#include "spdlog/spdlog.h"
+
 #include "Hazel/Logging/Log.h"

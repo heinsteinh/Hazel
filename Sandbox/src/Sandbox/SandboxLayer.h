@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hazel.h"
+#include "Hazel/ImGui/ImGuiDockSpace.h"
 
 namespace Sandbox
 {
@@ -19,7 +20,8 @@ namespace Sandbox
 		Hazel::OrthographicCameraController controller;
 		Hazel::EventDispatcher dispatcher;
 		Hazel::DrawData drawData;
-		std::shared_ptr<Hazel::Texture2D> spriteSheet;
+		Hazel::ImGuiDockSpace dockspace;
+		std::shared_ptr<Hazel::Texture> spriteSheet;
 
 	public:
 		SandboxLayer(Hazel::Context &context);
