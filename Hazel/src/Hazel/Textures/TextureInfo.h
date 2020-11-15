@@ -9,7 +9,7 @@ namespace Hazel
 {
 	struct TextureInfo
 	{
-		Size Dimensions;
+		Size Size;
 		TextureFormat Format = TextureFormat::Rgba;
 		TextureFiltering MinFilter = TextureFiltering::Linear;
 		TextureFiltering MagFilter = TextureFiltering::Linear;

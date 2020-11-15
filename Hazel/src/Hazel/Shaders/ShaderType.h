@@ -4,8 +4,9 @@ namespace Hazel
 {
 	enum class ShaderType
 	{
-		Unknown,
+		Unknown = -1,
 		Vertex,
-		Pixel
+		Pixel,
+		Count = Pixel
 	};
 }

@@ -2,27 +2,27 @@
 
 #include "Hazel/Layers/Layer.h"
 #include "ImGuiRenderer.h"
+#include "Helpers/ImGuiContextHolder.h"
 
 namespace Hazel
 {
 	class ImGuiLayer : public Layer
 	{
 	private:
-		static inline const std::string name = "ImGui";
-
-		ImGuiRenderer renderer;
+		std::shared_ptr<ImGuiRenderer> renderer;
+		std::shared_ptr<ImGuiContextHolder> imGuiContext;
 
 	public:
-		ImGuiLayer(ImGuiDrawer &drawer);
+		ImGuiLayer();
 
-		void Begin();
-		void End();
-		void OnContextCurrent();
+		void BeginRender();
+		void EndRender();
+		bool WantCaptureKeyboard() const;
+		bool WantCaptureMouse() const;
+		bool WantBlockEvent(Event &e) const;
 
-		virtual const std::string &GetName() const override;
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
 		virtual void OnEvent(Event &e) override;
-		virtual void OnWindowResized(WindowResizeEvent &e) override;
 	};
 }

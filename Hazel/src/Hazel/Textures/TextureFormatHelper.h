@@ -32,7 +32,5 @@ namespace Hazel
 				return 0;
 			}
 		}
-
-		TextureFormatHelper() = delete;
 	};
 }

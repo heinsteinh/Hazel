@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Core/Exception.h"
+#include "Hazel/Exceptions/Exception.h"
 
 namespace Hazel
 {

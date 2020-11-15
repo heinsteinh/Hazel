@@ -15,7 +15,7 @@ namespace Hazel
 	public:
 		inline ParticleRenderer(Renderer2D &renderer)
 			: renderer(renderer),
-			drawData({SquareMesh::Get()})
+			drawData({SquareMesh::CreateMesh()})
 		{
 		}
 
@@ -23,9 +23,9 @@ namespace Hazel
 		{
 			if (particle.Active)
 			{
-				drawData.Mesh.SetColor(particle.GetColor());
+				drawData.Mesh->SetColor(particle.GetColor());
 				drawData.Transform = particle.Transform;
-				renderer.Draw(drawData);
+				renderer.Render(drawData);
 			}
 		}
 	};

@@ -3,20 +3,44 @@
 #include "Key.h"
 #include "MouseButton.h"
 
-struct GLFWwindow;
-
 namespace Hazel
 {
 	class Input
 	{
 	private:
-		GLFWwindow *window = nullptr;
+		std::bitset<static_cast<size_t>(Key::Last)> keys;
+		std::bitset<static_cast<size_t>(MouseButton::Last)> buttons;
+		glm::vec2 mousePosition{0.0f};
 
 	public:
-		Input(GLFWwindow *window);
+		constexpr bool IsKeyPressed(Key key) const
+		{
+			return keys[static_cast<size_t>(key)];
+		}
 
-		bool IsKeyPressed(Key key) const;
-		bool IsMouseButtonPressed(MouseButton button) const;
-		glm::vec2 GetMousePosition() const;
+		inline void SetKeyPressed(Key key, bool pressed)
+		{
+			keys[static_cast<size_t>(key)] = pressed;
+		}
+
+		constexpr bool IsMouseButtonPressed(MouseButton button) const
+		{
+			return buttons[static_cast<size_t>(button)];
+		}
+
+		inline void SetMouseButtonPressed(MouseButton button, bool pressed)
+		{
+			buttons[static_cast<size_t>(button)] = pressed;
+		}
+
+		constexpr glm::vec2 GetMousePosition() const
+		{
+			return mousePosition;
+		}
+
+		constexpr void SetMousePosition(const glm::vec2 &mousePosition)
+		{
+			this->mousePosition = mousePosition;
+		}
 	};
 }

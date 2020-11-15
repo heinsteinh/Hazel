@@ -7,21 +7,20 @@
 
 namespace Sandbox
 {
-	SandboxLayer::SandboxLayer(Hazel::Context &context)
+	SandboxLayer::SandboxLayer()
 		: renderer(context),
 		window(context.Window),
 		input(context.Input),
 		factory(context.Factory),
 		camera({context.Window.GetSize().GetAspectRatio()}),
-		controller({context.Input, camera}),
-		dispatcher(&controller),
+		cameraController({context.Input, camera}),
 		drawData({Hazel::SquareMesh::Get()})
 	{
 	}
 
 	void SandboxLayer::OnAttach()
 	{
-		spriteSheet = Hazel::TextureBuilder(factory).BuildFromFile("assets\\textures\\SpriteSheet.png");
+		spriteSheet = Hazel::TextureBuilder(GetGraphicsContext()).BuildFromFile("assets\\textures\\SpriteSheet.png");
 		drawData.Mesh.SetColor({1.0f, 1.0f, 1.0f, 1.0f});
 		drawData.Texture = spriteSheet;
 		drawData.Transform.SetScale({spriteSheet->GetAspectRatio(), 1.0f});
@@ -41,7 +40,7 @@ namespace Sandbox
 		//drawData.Transform.SetScale({drawData.Texture.GetAspectRatio(), 1.0f});
 
 		renderer.BeginScene(camera);
-		renderer.Draw(drawData);
+		renderer.Render(drawData);
 		renderer.EndScene();
 	}
 
@@ -71,14 +70,14 @@ namespace Sandbox
 
 	void SandboxLayer::OnEvent(Hazel::Event &e)
 	{
-		dispatcher.Dispatch(e);
+		cameraController.OnEvent(e);
 	}
 
 	void SandboxLayer::OnKeyPressed(Hazel::KeyPressEvent &e)
 	{
 		if (e.GetKey() == Hazel::Key::Backspace)
 		{
-			camera = Hazel::OrthographicCamera(window.GetAspectRatio());
+			camera = Hazel::OrthographicCamera(GetWindow().GetAspectRatio());
 		}
 	}
 

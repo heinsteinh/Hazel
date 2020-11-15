@@ -16,8 +16,6 @@ namespace Hazel
 	public:
 		static const std::string &GetKeyName(Key key);
 		static const std::string &GetScancodeName(int scancode);
-
-		KeyName() = delete;
 	};
 }
 

@@ -1,8 +1,6 @@
 #pragma once
 
-#include "spdlog/fmt/fmt.h"
-
-#include "Hazel/Core/Exception.h"
+#include "Hazel/Exceptions/Exception.h"
 
 namespace Hazel
 {

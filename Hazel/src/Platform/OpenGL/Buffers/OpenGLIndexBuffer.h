@@ -14,9 +14,15 @@ namespace Hazel
 		OpenGLIndexBuffer(size_t size);
 		virtual ~OpenGLIndexBuffer();
 
-		virtual void Bind() const override;
-		virtual void Unbind() const override;
+		void Bind() const;
+		void Unbind() const;
+
 		virtual size_t GetSize() const override;
-		virtual void SetData(const void *data, size_t size) override;
+		virtual void BufferData(const void *data, size_t size) override;
+
+		constexpr uint32_t GetId() const
+		{
+			return id;
+		}
 	};
 }

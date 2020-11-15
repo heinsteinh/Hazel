@@ -2,13 +2,12 @@
 
 #include "spdlog/fmt/ostr.h"
 
+#include "Hazel/Utils/FunctorTraits.h"
 #include "EventType.h"
 #include "EventCategory.h"
 
 namespace Hazel
 {
-	class EventListener;
-
 	class Event
 	{
 	private:
@@ -51,6 +50,19 @@ namespace Hazel
 		inline const char *GetName() const
 		{
 			return typeid(*this).name() + 13;
+		}
+
+		template<typename FunctorType>
+		void Dispatch(const FunctorType &functor)
+		{
+			using Traits = FunctorTraits<FunctorType>;
+			static_assert(Traits::ArgCount == 1, "Functor must take only one argument.");
+			using EventType = std::decay_t<Traits::ArgType<0>>;
+			static_assert(std::is_convertible_v<EventType &, Event &>, "Functor argument must be an event.");
+			if (!handled && type == EventType::Type)
+			{
+				functor(static_cast<EventType &>(*this));
+			}
 		}
 
 		inline virtual std::string ToString() const

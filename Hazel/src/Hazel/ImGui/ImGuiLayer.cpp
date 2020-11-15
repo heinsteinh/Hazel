@@ -4,55 +4,61 @@
 
 namespace Hazel
 {
-	ImGuiLayer::ImGuiLayer(ImGuiDrawer &drawer)
-		: renderer(drawer)
+	ImGuiLayer::ImGuiLayer()
+		: Layer("ImGui")
 	{
 	}
 
-	void ImGuiLayer::Begin()
+	void ImGuiLayer::BeginRender()
 	{
-		renderer.Begin();
+		renderer->CreateNewFrame();
+		ImGui::NewFrame();
 	}
 
-	void ImGuiLayer::End()
+	void ImGuiLayer::EndRender()
 	{
-		renderer.End();
+		ImGui::Render();
+		renderer->RenderDrawData();
 	}
 
-	void ImGuiLayer::OnContextCurrent()
+	bool ImGuiLayer::WantCaptureKeyboard() const
 	{
-		renderer.OnContextCurrent();
+		return ImGui::GetIO().WantCaptureKeyboard;
 	}
 
-	const std::string &ImGuiLayer::GetName() const
+	bool ImGuiLayer::WantCaptureMouse() const
 	{
-		return name;
+		return ImGui::GetIO().WantCaptureMouse;
+	}
+
+	bool ImGuiLayer::WantBlockEvent(Event &e) const
+	{
+		return e.IsInCategory(EventCategory::Keyboard) && WantCaptureKeyboard()
+			|| e.IsInCategory(EventCategory::Mouse) && WantCaptureMouse();
 	}
 
 	void ImGuiLayer::OnAttach()
 	{
-		renderer.Init();
+		imGuiContext = std::make_shared<ImGuiContextHolder>();
+		renderer = GetGraphicsContext().CreateImGuiRenderer();
 	}
 
 	void ImGuiLayer::OnDetach()
 	{
-		renderer.Shutdown();
+		imGuiContext = nullptr;
+		renderer = nullptr;
 	}
 
 	void ImGuiLayer::OnEvent(Event &e)
 	{
-		if (e.IsInCategory(EventCategory::Keyboard) && ImGui::GetIO().WantCaptureKeyboard)
+		e.Dispatch([this](WindowResizeEvent &e)
+		{
+			auto size = e.GetSize();
+			ImGui::GetIO().DisplaySize = {size.Width, size.Height};
+		});
+		if (WantBlockEvent(e))
 		{
 			e.Discard();
 		}
-		else if (e.IsInCategory(EventCategory::Mouse) && ImGui::GetIO().WantCaptureMouse)
-		{
-			e.Discard();
-		}
-	}
-
-	void ImGuiLayer::OnWindowResized(WindowResizeEvent &e)
-	{
-		renderer.SetDisplaySize(e.GetSize());
 	}
 }

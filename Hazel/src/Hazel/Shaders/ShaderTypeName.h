@@ -25,8 +25,6 @@ namespace Hazel
 			}
 			return defaultName;
 		}
-
-		ShaderTypeName() = delete;
 	};
 }
 

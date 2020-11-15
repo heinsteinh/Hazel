@@ -65,7 +65,5 @@ namespace Hazel
 		{
 			return GetComponentCount(type) * GetComponentSize(type);
 		}
-
-		ShaderDataTypeHelper() = delete;
 	};
 }

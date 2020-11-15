@@ -1,50 +1,72 @@
 #pragma once
 
-#include "Helpers/NativeWindow.h"
-#include "WindowProperties.h"
-#include "EventManager.h"
-#include "Hazel/Input/Input.h"
-#include "Hazel/GraphicsContext/GraphicsContext.h"
+#include "WindowInfo.h"
+#include "Hazel/Input/Key.h"
+#include "Hazel/Input/MouseButton.h"
+
+struct GLFWwindow;
 
 namespace Hazel
 {
 	class Window
 	{
 	private:
-		NativeWindow window;
-		std::shared_ptr<GraphicsContext> context;
-		std::shared_ptr<ImGuiDrawer> imGuiDrawer;
-		WindowProperties properties;
-		EventManager eventManager;
-		Input input;
+		GLFWwindow *window;
+		std::string title;
+		bool verticalSynchronization;
+		std::shared_ptr<GraphicsContext> graphicsContext;
 
 	public:
-		Window(const ContextInfo &info = {});
+		Window(const WindowInfo &info);
 		~Window();
 
-		inline GraphicsContext &GetContext()
+		bool IsClosed() const;
+		void Close();
+		const std::string &GetTitle() const;
+		void SetTitle(const std::string &title);
+		Size GetSize() const;
+		void Resize(Size size);
+		bool HasVerticalSynchonization() const;
+		void SetVerticalSynchronization(bool verticalSynchronization);
+
+		constexpr GLFWwindow *GetHandle() const
 		{
-			return *context;
+			return window;
 		}
 
-		inline ImGuiDrawer &GetImGuiDrawer()
+		inline GraphicsContext &GetGraphicsContext() const
 		{
-			return *imGuiDrawer;
+			return *graphicsContext;
 		}
 
-		constexpr WindowProperties &GetProperties()
+		inline bool IsMinimized() const
 		{
-			return properties;
+			return GetSize().IsEmpty();
 		}
 
-		constexpr EventManager &GetEventManager()
+		inline float GetAspectRatio() const
 		{
-			return eventManager;
+			return GetSize().GetAspectRatio();
 		}
 
-		constexpr Input &GetInput()
+		inline float GetWidth() const
 		{
-			return input;
+			return GetSize().Width;
+		}
+
+		inline void SetWidth(float width)
+		{
+			Resize({width, GetHeight()});
+		}
+
+		inline float GetHeight() const
+		{
+			return GetSize().Height;
+		}
+
+		inline void SetHeight(float height)
+		{
+			Resize({GetWidth(), height});
 		}
 	};
 }

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Hazel/Shaders/ShaderType.h"
+#include "ShaderSourceMap.h"
+#include "ShaderCompilationException.h"
 #include "Hazel/FileSystem/FileReader.h"
 #include "Hazel/FileSystem/Filename.h"
 
@@ -9,16 +10,24 @@ namespace Hazel
 	struct ShaderInfo
 	{
 		std::string Name;
-		std::unordered_map<ShaderType, std::string> Sources;
+		ShaderSourceMap Sources;
 
-		static inline ShaderInfo FromFiles(const std::unordered_map<ShaderType, std::string> &files)
+		static inline ShaderInfo FromFiles(const std::vector<std::pair<ShaderType, std::string>> &files)
 		{
-			ShaderInfo result = {Filename::GetBaseName(files.at(ShaderType::Vertex))};
-			result.Sources.reserve(files.size());
+			ShaderInfo result;
 			for (const auto &[type, file] : files)
 			{
 				result.Sources[type] = FileReader::ReadAll(file);
 			}
+			if (!result.Sources.Contains(ShaderType::Vertex))
+			{
+				throw ShaderCompilationException("Missing vertex shader.");
+			}
+			if (!result.Sources.Contains(ShaderType::Pixel))
+			{
+				throw ShaderCompilationException("Missing pixel shader.");
+			}
+			result.Name = Filename::GetBaseName(files[0].second);
 			return result;
 		}
 	};

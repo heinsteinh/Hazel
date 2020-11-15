@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/RenderApi/RenderApiFactory.h"
+#include "Hazel/GraphicsContext/GraphicsContext.h"
 
 namespace Hazel
 {
@@ -10,16 +10,11 @@ namespace Hazel
 		std::shared_ptr<Shader> shader;
 
 	public:
-		inline DefaultShader(RenderApiFactory &factory)
-			: shader(factory.CreateShader(ShaderInfo::FromFiles({
+		inline DefaultShader(GraphicsContext &graphics)
+			: shader(graphics.CreateShader(ShaderInfo::FromFiles({
 			{ShaderType::Vertex, R"(C:\Users\christian\source\repos\Hazel\Hazel\assets\shaders\DefaultShader.vert)"},
 			{ShaderType::Pixel, R"(C:\Users\christian\source\repos\Hazel\Hazel\assets\shaders\DefaultShader.frag)"}})))
 		{
-		}
-
-		inline void Bind() const
-		{
-			shader->Bind();
 		}
 
 		inline void InitSamplers(size_t maxTextures)
@@ -36,6 +31,11 @@ namespace Hazel
 		inline void SetViewProjectionMatrix(const glm::mat4 &matrix)
 		{
 			shader->Set("u_ViewProjection", matrix);
+		}
+
+		constexpr operator const std::shared_ptr<Shader> &() const
+		{
+			return shader;
 		}
 	};
 }

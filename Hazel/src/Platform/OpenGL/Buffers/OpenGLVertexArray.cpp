@@ -6,16 +6,18 @@
 
 namespace Hazel
 {
-	OpenGLVertexArray::OpenGLVertexArray()
+	OpenGLVertexArray::OpenGLVertexArray(const VertexAttributes &vertexAttributes)
 	{
 		glCreateVertexArrays(1, &id);
-		Log::Info("Vertex array created with id {}.", id);
+		Bind();
+		LoadAttributes(vertexAttributes);
+		Log::Debug("Vertex array created with id {}.", id);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
 		glDeleteVertexArrays(1, &id);
-		Log::Info("Vertex array with id {} destroyed.", id);
+		Log::Debug("Vertex array with id {} destroyed.", id);
 	}
 
 	void OpenGLVertexArray::Bind() const
@@ -28,47 +30,20 @@ namespace Hazel
 		glBindVertexArray(0);
 	}
 
-	const std::vector<std::shared_ptr<VertexBuffer>> &OpenGLVertexArray::GetVertexBuffers() const
+	void OpenGLVertexArray::LoadAttributes(const VertexAttributes &vertexAttributes)
 	{
-		return vertexBuffers;
-	}
-
-	const std::shared_ptr<IndexBuffer> &OpenGLVertexArray::GetIndexBuffer() const
-	{
-		return indexBuffer;
-	}
-
-	void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer> &buffer)
-	{
-		vertexBuffers.push_back(buffer);
-		Bind();
-		buffer->Bind();
-		SetupVerticesAttributes(buffer->GetLayout());
-	}
-
-	void OpenGLVertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer> &buffer)
-	{
-		indexBuffer = buffer;
-	}
-
-	void OpenGLVertexArray::SetupVerticesAttributes(const BufferLayout &layout)
-	{
-		for (size_t i = 0; i < layout.GetSize(); i++)
+		for (size_t i = 0; i < vertexAttributes.GetSize(); i++)
 		{
-			SetupVertexAttributes(i, layout);
+			int index = static_cast<int>(i);
+			auto &attribute = vertexAttributes.GetElement(i);
+			glEnableVertexAttribArray(index);
+			glVertexAttribPointer(
+				index,
+				static_cast<int>(attribute.GetComponentCount()),
+				OpenGLDataType::GetDataType(attribute.GetComponentType()),
+				attribute.IsNormalized() ? GL_TRUE : GL_FALSE,
+				static_cast<int>(vertexAttributes.GetStride()),
+				reinterpret_cast<const void *>(attribute.GetOffset()));
 		}
-	}
-
-	void OpenGLVertexArray::SetupVertexAttributes(size_t index, const BufferLayout &layout)
-	{
-		glEnableVertexAttribArray(static_cast<int>(index));
-		const auto &element = layout.GetElement(index);
-		glVertexAttribPointer(
-			static_cast<int>(index),
-			static_cast<int>(element.GetComponentCount()),
-			OpenGLDataType::FromDataType(element.GetComponentType()),
-			element.IsNormalized() ? GL_TRUE : GL_FALSE,
-			static_cast<int>(layout.GetStride()),
-			reinterpret_cast<const void *>(element.GetOffset()));
 	}
 }

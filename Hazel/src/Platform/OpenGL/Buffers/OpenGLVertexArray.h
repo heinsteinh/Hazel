@@ -1,29 +1,27 @@
 #pragma once
 
-#include "Hazel/Buffers/VertexArray.h"
+#include "Hazel/Buffers/InputLayout.h"
 
 namespace Hazel
 {
-	class OpenGLVertexArray : public VertexArray
+	class OpenGLVertexArray : public InputLayout
 	{
 	private:
-		uint32_t id = 0;
-		std::vector<std::shared_ptr<VertexBuffer>> vertexBuffers;
-		std::shared_ptr<IndexBuffer> indexBuffer;
+		uint32_t id;
 
 	public:
-		OpenGLVertexArray();
-		virtual ~OpenGLVertexArray();
+		OpenGLVertexArray(const VertexAttributes &vertexAttributes);
+		~OpenGLVertexArray();
 
-		virtual void Bind() const override;
-		virtual void Unbind() const override;
-		virtual const std::vector<std::shared_ptr<VertexBuffer>> &GetVertexBuffers() const override;
-		virtual const std::shared_ptr<IndexBuffer> &GetIndexBuffer() const override;
-		virtual void AddVertexBuffer(const std::shared_ptr<VertexBuffer> &buffer) override;
-		virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer> &buffer) override;
+		void Bind() const;
+		void Unbind() const;
+
+		constexpr uint32_t GetId() const
+		{
+			return id;
+		}
 
 	private:
-		void SetupVerticesAttributes(const BufferLayout &layout);
-		void SetupVertexAttributes(size_t index, const BufferLayout &layout);
+		void LoadAttributes(const VertexAttributes &vertexAttributes);
 	};
 }

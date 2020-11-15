@@ -27,7 +27,5 @@ namespace Hazel
 				? std::string()
 				: filename.substr(offset + 1, filename.size() - offset);
 		}
-
-		Filename() = delete;
 	};
 }

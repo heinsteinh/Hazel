@@ -6,7 +6,5 @@ namespace Hazel
 	{
 	public:
 		static float GetTime();
-
-		Time() = delete;
 	};
 }

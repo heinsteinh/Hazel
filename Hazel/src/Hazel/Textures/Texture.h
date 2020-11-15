@@ -10,13 +10,12 @@ namespace Hazel
 		virtual ~Texture() = default;
 
 		virtual const TextureInfo &GetInfo() const = 0;
-		virtual void Bind(uint32_t slot = 0) const = 0;
 		virtual void SetData(const void *data) = 0;
-		virtual void *GetId() const = 0;
+		virtual void *GetHandle() const = 0;
 
 		inline Size GetSize() const
 		{
-			return GetInfo().Dimensions;
+			return GetInfo().Size;
 		}
 
 		inline float GetWidth() const

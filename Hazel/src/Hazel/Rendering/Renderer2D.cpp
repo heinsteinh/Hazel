@@ -4,31 +4,23 @@
 
 namespace Hazel
 {
-	Renderer2D::Renderer2D(const Context &context)
-		: drawer(context.Drawer),
-		shader(context.Factory),
-		batchInfo({60000, 40000, 32}),
-		batch(context.Factory)
+	Renderer2D::Renderer2D(const RendererInfo &info)
+		: info(info),
+		batch(info),
+		shader(*info.GraphicsContext)
 	{
-		Init(batchInfo);
-	}
-
-	void Renderer2D::Init(const BatchInfo &info)
-	{
-		batchInfo = info;
-		shader.Bind();
+		info.GraphicsContext->SetShader(shader);
 		shader.InitSamplers(batch.GetMaxTextures());
-		batch.Init(info);
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera &camera)
 	{
-		drawer.Clear();
+		info.GraphicsContext->Clear();
 		shader.SetViewProjectionMatrix(camera.GetViewProjectionMatrix());
-		statistics = RendererStatistics();
+		statistics.Reset();
 	}
 
-	void Renderer2D::Draw(const DrawData &drawData)
+	void Renderer2D::Render(const DrawData &drawData)
 	{
 		if (!batch.Add(drawData))
 		{
@@ -44,7 +36,7 @@ namespace Hazel
 	{
 		batch.Bind();
 		batch.BufferData();
-		drawer.DrawIndexed(batch.GetIndexCount());
+		info.GraphicsContext->DrawIndexed(batch.GetIndexCount(), info.IndexFormat);
 		statistics.DrawCallCount++;
 		statistics.IndexCount += batch.GetIndexCount();
 		statistics.VertexCount += batch.GetVertexCount();

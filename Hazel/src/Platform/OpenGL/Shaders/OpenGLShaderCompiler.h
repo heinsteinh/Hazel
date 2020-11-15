@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Hazel/Shaders/ShaderInfo.h"
-#include "Hazel/Shaders/ShaderCompilationException.h"
-#include "OpenGLProgramUnit.h"
 #include "OpenGLProgram.h"
 
 namespace Hazel
@@ -10,38 +7,50 @@ namespace Hazel
 	class OpenGLShaderCompiler
 	{
 	public:
-		static inline OpenGLProgram CompileAndLink(const ShaderInfo &info)
+		static inline std::shared_ptr<OpenGLProgram> Compile(const ShaderInfo &info)
 		{
-			std::vector<OpenGLProgramUnit> shaders;
-			shaders.reserve(info.Sources.size());
-			for (const auto &[type, source] : info.Sources)
-			{
-				shaders.push_back(Compile(type, source));
-			}
-			return Link(shaders);
+			return Link(info.Name, CompileShaders(info.Sources));
 		}
 
 	private:
-		static inline OpenGLProgramUnit Compile(ShaderType type, const std::string &source)
+		static inline std::vector<OpenGLShader> CompileShaders(const ShaderSourceMap &sources)
 		{
-			OpenGLProgramUnit shader(type, source);
+			std::vector<OpenGLShader> shaders;
+			shaders.reserve(sources.GetSize());
+			for (const auto &[type, source] : sources)
+			{
+				shaders.push_back(CompileShader(type, source));
+			}
+			return shaders;
+		}
+
+		static inline OpenGLShader CompileShader(ShaderType type, const std::string &source)
+		{
+			OpenGLShader shader(type, source);
 			if (!shader.IsCompiled())
 			{
-				throw ShaderCompilationException(type, shader.GetInfoLog());
+				throw ShaderCompilationException(fmt::format("Shader {} compilation failed: {}", type, shader.GetInfoLog()));
 			}
 			return shader;
 		}
 
-		static inline OpenGLProgram Link(const std::vector<OpenGLProgramUnit> &shaders)
+		static inline std::shared_ptr<OpenGLProgram> Link(const std::string &name, const std::vector<OpenGLShader> &shaders)
 		{
-			OpenGLProgram program(shaders);
-			if (!program.IsLinked())
+			auto program = std::make_shared<OpenGLProgram>(name);
+			for (const auto &shader : shaders)
 			{
-				throw ShaderCompilationException(fmt::format("Shader link failed: {}", program.GetInfoLog()));
+				program->Attach(shader);
+			}
+			program->Link();
+			if (!program->IsLinked())
+			{
+				throw ShaderCompilationException(fmt::format("Shader link failed: {}", program->GetInfoLog()));
+			}
+			for (const auto &shader : shaders)
+			{
+				program->Detach(shader);
 			}
 			return program;
 		}
-
-		OpenGLShaderCompiler() = delete;
 	};
 }

@@ -1,0 +1,31 @@
+#pragma once
+
+#include "glad/glad.h"
+
+namespace Hazel
+{
+	class OpenGLFramebufferStatus
+	{
+	private:
+		static inline const std::string unknown = "UNKNOWN";
+
+		static inline const std::unordered_map<int, std::string> names = {
+			{GL_FRAMEBUFFER_COMPLETE, "GL_FRAMEBUFFER_COMPLETE"},
+			{GL_FRAMEBUFFER_UNDEFINED, "GL_FRAMEBUFFER_UNDEFINED"},
+			{GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT, "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"},
+			{GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT, "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT"},
+			{GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER, "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER"},
+			{GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER, "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER"},
+			{GL_FRAMEBUFFER_UNSUPPORTED, "GL_FRAMEBUFFER_UNSUPPORTED"},
+			{GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE, "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE"},
+			{GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS, "GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS"}
+		};
+
+	public:
+		static inline const std::string &GetStatusName(int status)
+		{
+			auto i = names.find(status);
+			return i == names.end() ? unknown : i->second;
+		}
+	};
+}

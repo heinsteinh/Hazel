@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Hazel/Buffers/BufferLayout.h"
+#include "Hazel/Buffers/VertexAttributes.h"
 
 namespace Hazel
 {
 	struct Vertex
 	{
-		static inline const BufferLayout Layout = {
+		static inline const VertexAttributes Attributes = {
 			{"a_Position", ShaderDataType::Float3},
 			{"a_Color", ShaderDataType::Float4},
 			{"a_TextureCoordinate", ShaderDataType::Float2},

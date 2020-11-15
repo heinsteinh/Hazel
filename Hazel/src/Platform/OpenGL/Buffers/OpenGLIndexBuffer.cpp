@@ -9,13 +9,13 @@ namespace Hazel
 	{
 		glCreateBuffers(1, &id);
 		glNamedBufferData(id, size, nullptr, GL_DYNAMIC_DRAW);
-		Log::Info("Index buffer created with id {}.", id);
+		Log::Debug("Index buffer created with id {}.", id);
 	}
 
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()
 	{
 		glDeleteBuffers(1, &id);
-		Log::Info("Index buffer with id {} destroyed.", id);
+		Log::Debug("Index buffer with id {} destroyed.", id);
 	}
 
 	void OpenGLIndexBuffer::Bind() const
@@ -33,7 +33,7 @@ namespace Hazel
 		return size;
 	}
 
-	void OpenGLIndexBuffer::SetData(const void *data, size_t size)
+	void OpenGLIndexBuffer::BufferData(const void *data, size_t size)
 	{
 		glNamedBufferSubData(id, 0, std::min(this->size, size), data);
 	}

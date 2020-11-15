@@ -1,5 +1,5 @@
 #include "Hazel.h"
-#include "Hazel/Core/EntryPoint.h"
+#include "Hazel/Application/EntryPoint.h"
 
 #include "Log.h"
 #include "SandboxLayer.h"
@@ -13,9 +13,9 @@ namespace Sandbox
 		Application()
 		{
 			Log::Info("Sandbox application creation");
-			PushLayer(std::make_shared<SandboxLayer>(GetContext()));
-			//PushLayer(std::make_shared<TestParticle>(GetContext()));
-			GetContext().Drawer.SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
+			GetContext().GetGraphicsContext().SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
+			PushLayer(std::make_shared<SandboxLayer>());
+			//PushLayer(std::make_shared<TestParticle>());
 		};
 	};
 }

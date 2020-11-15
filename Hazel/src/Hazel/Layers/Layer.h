@@ -1,18 +1,70 @@
 #pragma once
 
-#include "Hazel/Events/EventListener.h"
+#include "Hazel/Events/WindowCloseEvent.h"
+#include "Hazel/Events/WindowResizeEvent.h"
+#include "Hazel/Events/KeyPressEvent.h"
+#include "Hazel/Events/KeyReleaseEvent.h"
+#include "Hazel/Events/KeyTypeEvent.h"
+#include "Hazel/Events/MouseButtonPressEvent.h"
+#include "Hazel/Events/MouseButtonReleaseEvent.h"
+#include "Hazel/Events/MouseMoveEvent.h"
+#include "Hazel/Events/MouseScrollEvent.h"
+#include "Hazel/Layers/LayersContext.h"
+#include "Hazel/Input/InputUpdater.h"
 
 namespace Hazel
 {
-	class Layer : public EventListener
+	class Layer
 	{
 	private:
-		static inline const std::string defaultName = "Unknown";
+		std::string name;
+		Input input;
+		LayersContext *context = nullptr;
 
 	public:
-		inline virtual const std::string &GetName() const
+		inline Layer(const std::string &name = "Unknown")
+			: name(name)
 		{
-			return defaultName;
+		}
+
+		inline const std::string &GetName() const
+		{
+			return name;
+		}
+
+		inline void Quit()
+		{
+			context->SetRunning(false);
+		}
+
+		inline void EnableImGuiRendering(bool renderImGui)
+		{
+			context->EnableImGuiRendering(renderImGui);
+		}
+
+		inline Window &GetWindow() const
+		{
+			return context->GetWindow();
+		}
+
+		inline GraphicsContext &GetGraphicsContext() const
+		{
+			return context->GetGraphicsContext();
+		}
+
+		inline Input &GetInput()
+		{
+			return input;
+		}
+
+		inline void SetContext(LayersContext &context)
+		{
+			this->context = &context;
+		}
+
+		inline void UpdateInput(Event &e)
+		{
+			InputUpdater::UpdateInput(input, e);
 		}
 
 		inline virtual void OnAttach()
@@ -20,6 +72,10 @@ namespace Hazel
 		}
 
 		inline virtual void OnDetach()
+		{
+		}
+
+		inline virtual void OnEvent(Event &e)
 		{
 		}
 

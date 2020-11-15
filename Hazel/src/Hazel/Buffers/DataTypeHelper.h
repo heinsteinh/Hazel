@@ -14,14 +14,12 @@ namespace Hazel
 			case DataType::Bool:
 				return 1;
 			case DataType::Integer:
-				return sizeof(int);
+				return 4;
 			case DataType::Float:
-				return sizeof(float);
+				return 4;
 			default:
 				return 0;
 			}
 		}
-
-		DataTypeHelper() = delete;
 	};
 }

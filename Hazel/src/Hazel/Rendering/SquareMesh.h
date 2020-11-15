@@ -6,37 +6,22 @@ namespace Hazel
 {
 	class SquareMesh
 	{
-	private:
-		static inline const std::vector<uint32_t> indices = {0, 1, 2, 2, 3, 0};
-
-		static inline const std::vector<glm::vec4> positions = {
-			{-0.5f, 0.5f, 0.0f, 1.0f},
-			{0.5f, 0.5f, 0.0f, 1.0f},
-			{0.5f, -0.5f, 0.0f, 1.0f},
-			{-0.5f, -0.5f, 0.0f, 1.0f}
-		};
-
-		static inline const std::vector<glm::vec2> textureCoordinates = {
-			{0.0f, 1.0f},
-			{1.0f, 1.0f},
-			{1.0f, 0.0f},
-			{0.0f, 0.0f}
-		};
-
-		static inline const Mesh mesh = {
-			indices,
-			{{positions[0], textureCoordinates[0]},
-			{positions[1], textureCoordinates[1]},
-			{positions[2], textureCoordinates[2]},
-			{positions[3], textureCoordinates[3]}}
-		};
-
 	public:
-		static constexpr const Mesh &Get()
+		static inline std::shared_ptr<Mesh> CreateMesh()
 		{
-			return mesh;
+			std::shared_ptr<Mesh> result;
+			result->Indices = {0, 1, 2, 2, 3, 0};
+			result->Vertices.resize(4);
+			result->Vertices[0].Position = {-0.5f, 0.5f, 0.0f, 1.0f};
+			result->Vertices[0].TextureCoordinate = {0.0f, 1.0f};
+			result->Vertices[1].Position = {0.5f, 0.5f, 0.0f, 1.0f};
+			result->Vertices[1].TextureCoordinate = {1.0f, 1.0f};
+			result->Vertices[2].Position = {0.5f, -0.5f, 0.0f, 1.0f};
+			result->Vertices[2].TextureCoordinate = {1.0f, 0.0f};
+			result->Vertices[3].Position = {-0.5f, -0.5f, 0.0f, 1.0f};
+			result->Vertices[3].TextureCoordinate = {0.0f, 0.0f};
+			result->SetColor(glm::vec4(1.0f));
+			return result;
 		}
-
-		SquareMesh() = delete;
 	};
 }

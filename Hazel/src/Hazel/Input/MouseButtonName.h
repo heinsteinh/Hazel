@@ -42,8 +42,6 @@ namespace Hazel
 			}
 			return Invalid;
 		}
-
-		MouseButtonName() = delete;
 	};
 }
 

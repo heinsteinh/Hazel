@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Hazel/Core/BuildSettings.h"
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -22,6 +20,7 @@
 #include <mutex>
 #include <unordered_map>
 #include <unordered_set>
+#include <bitset>
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -31,3 +30,4 @@
 #include "spdlog/spdlog.h"
 
 #include "Hazel/Logging/Log.h"
+#include "Hazel/Exceptions/AssertionException.h"

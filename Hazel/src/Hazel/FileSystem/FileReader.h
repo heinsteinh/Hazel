@@ -35,7 +35,5 @@ namespace Hazel
 			fread(result.data(), sizeof(char), size, stream);
 			return result;
 		}
-
-		FileReader() = delete;
 	};
 }

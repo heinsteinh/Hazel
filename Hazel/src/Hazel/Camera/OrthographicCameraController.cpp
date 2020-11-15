@@ -1,31 +1,34 @@
 #include "OrthographicCameraController.h"
 
+#include "Hazel/Events/WindowResizeEvent.h"
+#include "Hazel/Events/MouseScrollEvent.h"
+
 namespace Hazel
 {
-	OrthographicCameraController::OrthographicCameraController(Input &input, OrthographicCamera &camera)
-		: input(input),
-		camera(camera)
+	OrthographicCameraController::OrthographicCameraController(const OrthographicCameraControllerSettings &settings)
+		: settings(settings)
 	{
 	}
 
-	void OrthographicCameraController::OnUpdate(float deltaTime)
+	void OrthographicCameraController::UpdateCamera(OrthographicCamera &camera, Event &e)
 	{
-		UpdateCameraPosition(deltaTime);
-		UpdateCameraRotation(deltaTime);
+		e.Dispatch([&](WindowResizeEvent &e)
+		{
+			camera.SetAspectRatio(e.GetSize().GetAspectRatio());
+		});
+		e.Dispatch([&](MouseScrollEvent &e)
+		{
+			camera.SetZoomLevel(settings.Bounds.ClampZ(camera.GetZoomLevel() + e.GetOffset().y * settings.ZoomSpeed));
+		});
 	}
 
-	void OrthographicCameraController::OnWindowResized(WindowResizeEvent &e)
+	void OrthographicCameraController::UpdateCamera(OrthographicCamera &camera, const Input &input, float deltaTime)
 	{
-		camera.SetAspectRatio(e.GetSize().GetAspectRatio());
+		UpdateCameraPosition(camera, input, deltaTime);
+		UpdateCameraRotation(camera, input, deltaTime);
 	}
 
-	void OrthographicCameraController::OnMouseScrolled(MouseScrollEvent &e)
-	{
-		camera.SetZoomLevel(settings.Bounds.ClampZ(
-			camera.GetZoomLevel() + e.GetOffset().y * settings.ZoomSpeed));
-	}
-
-	void OrthographicCameraController::UpdateCameraPosition(float deltaTime)
+	void OrthographicCameraController::UpdateCameraPosition(OrthographicCamera &camera, const Input &input, float deltaTime)
 	{
 		auto position = camera.GetPosition();
 		auto deltaPosition = settings.TranslationSpeed * deltaTime;
@@ -48,7 +51,7 @@ namespace Hazel
 		camera.SetPosition(settings.Bounds.Clamp(position));
 	}
 
-	void OrthographicCameraController::UpdateCameraRotation(float deltaTime)
+	void OrthographicCameraController::UpdateCameraRotation(OrthographicCamera &camera, const Input &input, float deltaTime)
 	{
 		auto rotation = camera.GetRotation();
 		auto deltaRotation = settings.RotationSpeed * deltaTime;

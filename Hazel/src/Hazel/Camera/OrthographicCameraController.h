@@ -1,26 +1,22 @@
 #pragma once
 
-#include "Hazel/Events/EventListener.h"
-#include "Hazel/Input/Input.h"
 #include "OrthographicCameraControllerSettings.h"
 #include "OrthographicCamera.h"
+#include "Hazel/Events/Event.h"
+#include "Hazel/Input/Input.h"
 
 namespace Hazel
 {
-	class OrthographicCameraController : public EventListener
+	class OrthographicCameraController
 	{
 	private:
-		Input &input;
-		OrthographicCamera &camera;
 		OrthographicCameraControllerSettings settings;
 
 	public:
-		OrthographicCameraController(Input &input, OrthographicCamera &camera);
+		OrthographicCameraController(const OrthographicCameraControllerSettings &settings = {});
 
-		void OnUpdate(float deltaTime);
-
-		virtual void OnWindowResized(WindowResizeEvent &e) override;
-		virtual void OnMouseScrolled(MouseScrollEvent &e) override;
+		void UpdateCamera(OrthographicCamera &camera, Event &e);
+		void UpdateCamera(OrthographicCamera &camera, const Input &input, float deltaTime);
 
 		constexpr OrthographicCameraControllerSettings &GetSettings()
 		{
@@ -33,7 +29,7 @@ namespace Hazel
 		}
 
 	private:
-		void UpdateCameraPosition(float deltaTime);
-		void UpdateCameraRotation(float deltaTime);
+		void UpdateCameraPosition(OrthographicCamera &camera, const Input &input, float deltaTime);
+		void UpdateCameraRotation(OrthographicCamera &camera, const Input &input, float deltaTime);
 	};
 }

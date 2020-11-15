@@ -1,29 +1,13 @@
 #pragma once
 
-#include "ImGuiDrawer.h"
-#include "ImGuiContext.h"
-#include "Hazel/Geometry/Size.h"
-
 namespace Hazel
 {
 	class ImGuiRenderer
 	{
-	private:
-		ImGuiDrawer &drawer;
-		ImGuiContext context;
-
 	public:
-		ImGuiRenderer(ImGuiDrawer &drawer);
-		~ImGuiRenderer();
+		virtual ~ImGuiRenderer() = default;
 
-		void OnContextCurrent();
-		void Init();
-		void Shutdown();
-		void Begin();
-		void End();
-		void SetDisplaySize(Size size);
-
-	private:
-		void UpdateWindows();
+		virtual void CreateNewFrame() = 0;
+		virtual void RenderDrawData() = 0;
 	};
 }

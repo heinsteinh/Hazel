@@ -8,7 +8,7 @@ namespace Hazel
 {
 	struct DrawData
 	{
-		Mesh Mesh;
+		std::shared_ptr<Mesh> Mesh;
 		Transform Transform;
 		SubTexture Texture;
 	};

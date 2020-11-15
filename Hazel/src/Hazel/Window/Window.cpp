@@ -6,19 +6,67 @@
 
 namespace Hazel
 {
-	Window::Window(const ContextInfo &info)
-		: window(info),
-		context(info.RenderApi.GetFactory().CreateContext(window.Get())),
-		imGuiDrawer(info.RenderApi.GetFactory().CreateImGuiDrawer(window.Get())),
-		properties(window.Get(), info),
-		eventManager(window.Get()),
-		input(window.Get())
+	Window::Window(const WindowInfo &info)
+		: title(info.Title)
 	{
-		Log::Debug("New window created {} ({}x{})", info.Title, info.Resolution.Width, info.Resolution.Height);
+		static GlfwLoader glfwLoader;
+		window = glfwCreateWindow(
+			static_cast<int>(info.Resolution.Width),
+			static_cast<int>(info.Resolution.Height),
+			info.Title.c_str(),
+			nullptr,
+			nullptr);
+		graphicsContext = info.GraphicsApi->CreateContext({window});
+		Log::Debug("New window created {}", title);
 	}
 
 	Window::~Window()
 	{
-		Log::Debug("Window destroyed {}.", properties.GetTitle());
+		glfwDestroyWindow(window);
+		Log::Debug("Window destroyed {}.", title);
+	}
+
+	bool Window::IsClosed() const
+	{
+		return glfwWindowShouldClose(window);
+	}
+
+	void Window::Close()
+	{
+		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	}
+
+	const std::string &Window::GetTitle() const
+	{
+		return title;
+	}
+
+	void Window::SetTitle(const std::string &title)
+	{
+		this->title = title;
+		glfwSetWindowTitle(window, title.c_str());
+	}
+
+	Size Window::GetSize() const
+	{
+		int width, height;
+		glfwGetWindowSize(window, &width, &height);
+		return {static_cast<float>(width), static_cast<float>(height)};
+	}
+
+	void Window::Resize(Size size)
+	{
+		glfwSetWindowSize(window, static_cast<int>(size.Width), static_cast<int>(size.Height));
+	}
+
+	bool Window::HasVerticalSynchonization() const
+	{
+		return verticalSynchronization;
+	}
+
+	void Window::SetVerticalSynchronization(bool verticalSynchronization)
+	{
+		this->verticalSynchronization = verticalSynchronization;
+		glfwSwapInterval(verticalSynchronization ? 1 : 0);
 	}
 }

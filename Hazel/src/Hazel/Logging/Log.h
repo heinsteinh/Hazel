@@ -55,7 +55,5 @@ namespace Hazel
 		{
 			logger.Critical(std::forward<Args>(args)...);
 		}
-
-		Log() = delete;
 	};
 }

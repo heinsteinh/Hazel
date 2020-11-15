@@ -1,34 +1,31 @@
 #pragma once
 
 #include "RendererStatistics.h"
-#include "Hazel/Core/Context.h"
 #include "Hazel/Camera/OrthographicCamera.h"
 #include "Hazel/Rendering/DefaultShader.h"
-#include "Batch/Batch.h"
-#include "Batch/BatchException.h"
+#include "Batch.h"
+#include "BatchException.h"
 
 namespace Hazel
 {
 	class Renderer2D
 	{
 	private:
-		Drawer &drawer;
-		DefaultShader shader;
-		BatchInfo batchInfo;
+		RendererInfo info;
 		Batch batch;
+		DefaultShader shader;
 		RendererStatistics statistics;
 
 	public:
-		Renderer2D(const Context &context);
+		Renderer2D(const RendererInfo &info);
 
-		void Init(const BatchInfo &info);
 		void BeginScene(const OrthographicCamera &camera);
-		void Draw(const DrawData &drawData);
+		void Render(const DrawData &drawData);
 		void EndScene();
 
-		constexpr const BatchInfo &GetBatchInfo() const
+		constexpr const RendererInfo &GetBatchInfo() const
 		{
-			return batchInfo;
+			return info;
 		}
 
 		constexpr const RendererStatistics &GetStatistics() const
