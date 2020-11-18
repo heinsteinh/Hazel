@@ -8,10 +8,12 @@ namespace Hazel
 	class ScreenTransform
 	{
 	private:
-		const Window *window;
-		const OrthographicCamera *camera;
+		const Window *window = nullptr;
+		const OrthographicCamera *camera = nullptr;
 
 	public:
+		ScreenTransform() = default;
+
 		constexpr ScreenTransform(const Window &window, const OrthographicCamera &camera)
 			: window(&window),
 			camera(&camera)

@@ -4,7 +4,7 @@
 
 namespace Hazel
 {
-	class BatchBuffer
+	class BatchBuffers
 	{
 	private:
 		std::shared_ptr<IndexBuffer> indexBuffer;
@@ -12,7 +12,7 @@ namespace Hazel
 		std::shared_ptr<InputLayout> inputLayout;
 
 	public:
-		inline BatchBuffer(const RendererInfo &info)
+		inline BatchBuffers(const RendererInfo &info)
 			: indexBuffer(info.CreateIndexBuffer()),
 			vertexBuffer(info.CreateVertexBuffer()),
 			inputLayout(info.CreateInputLayout())

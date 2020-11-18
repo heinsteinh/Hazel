@@ -9,8 +9,9 @@
 #include "Platform/OpenGL/Buffers/OpenGLVertexArray.h"
 #include "Platform/OpenGL/Buffers/OpenGLIndexBuffer.h"
 #include "Platform/OpenGL/Textures/OpenGLTexture.h"
-#include "OpenGLDrawer.h"
-#include "OpenGLInfo.h"
+#include "Helpers/OpenGLLoader.h"
+#include "Helpers/OpenGLDrawer.h"
+#include "Helpers/OpenGLInfo.h"
 
 namespace Hazel
 {
@@ -18,15 +19,16 @@ namespace Hazel
 		: window(window)
 	{
 		MakeCurrent();
-		context.InitTextureSlots(OpenGLInfo::GetMaxTextures());
+		static OpenGLLoader loader;
+		textures.InitTextureSlots(OpenGLInfo::GetMaxTextures());
 	}
 
 	void OpenGLGraphicsContext::MakeCurrent() const
 	{
 		if (currentContext != this)
 		{
-			currentContext = this;
 			glfwMakeContextCurrent(window);
+			currentContext = this;
 		}
 	}
 
@@ -34,8 +36,8 @@ namespace Hazel
 	{
 		if (currentContext == this)
 		{
-			currentContext = nullptr;
 			glfwMakeContextCurrent(nullptr);
+			currentContext = nullptr;
 		}
 	}
 
@@ -69,10 +71,10 @@ namespace Hazel
 		return std::make_shared<OpenGLVertexArray>(vertexAttributes);
 	}
 
-	std::shared_ptr<IndexBuffer> OpenGLGraphicsContext::CreateIndexBuffer(size_t size)
+	std::shared_ptr<IndexBuffer> OpenGLGraphicsContext::CreateIndexBuffer(size_t indexCount, IndexFormat indexFormat)
 	{
 		MakeCurrent();
-		return std::make_shared<OpenGLIndexBuffer>(size);
+		return std::make_shared<OpenGLIndexBuffer>(indexCount, indexFormat);
 	}
 
 	std::shared_ptr<Texture> OpenGLGraphicsContext::CreateTexture(const TextureInfo &info)
@@ -84,42 +86,42 @@ namespace Hazel
 	void OpenGLGraphicsContext::SetFramebuffer(const std::shared_ptr<Framebuffer> &framebuffer)
 	{
 		MakeCurrent();
-		context.SetFramebuffer(framebuffer);
+		this->framebuffer.SetFramebuffer(framebuffer);
 	}
 
 	void OpenGLGraphicsContext::SetShader(const std::shared_ptr<Shader> &shader)
 	{
 		MakeCurrent();
-		context.SetShader(shader);
+		this->shader.SetShader(shader);
 	}
 
 	void OpenGLGraphicsContext::SetIndexBuffer(const std::shared_ptr<IndexBuffer> &indexBuffer)
 	{
 		MakeCurrent();
-		context.SetIndexBuffer(indexBuffer);
+		this->buffers.SetIndexBuffer(indexBuffer);
 	}
 
 	void OpenGLGraphicsContext::SetVertexBuffer(const std::shared_ptr<VertexBuffer> &vertexBuffer)
 	{
 		MakeCurrent();
-		context.SetVertexBuffer(vertexBuffer);
+		this->buffers.SetVertexBuffer(vertexBuffer);
 	}
 
 	void OpenGLGraphicsContext::SetInputLayout(const std::shared_ptr<InputLayout> &inputLayout)
 	{
 		MakeCurrent();
-		context.SetInputLayout(inputLayout);
+		this->buffers.SetInputLayout(inputLayout);
 	}
 
 	size_t OpenGLGraphicsContext::GetTextureSlotCount()
 	{
-		return context.GetTextureSlotCount();
+		return textures.GetTextureSlotCount();
 	}
 
 	void OpenGLGraphicsContext::SetTexture(const std::shared_ptr<Texture> &texture, uint32_t slot)
 	{
 		MakeCurrent();
-		context.SetTexture(texture, slot);
+		this->textures.SetTexture(texture, slot);
 	}
 
 	void OpenGLGraphicsContext::SetViewport(const Rectangle &viewport)
@@ -140,10 +142,13 @@ namespace Hazel
 		OpenGLDrawer::Clear();
 	}
 
-	void OpenGLGraphicsContext::DrawIndexed(size_t indexCount, IndexFormat indexFormat)
+	void OpenGLGraphicsContext::DrawIndexed(size_t indexCount, PrimitiveType primitiveType)
 	{
 		MakeCurrent();
-		OpenGLDrawer::DrawIndexed(indexCount, indexFormat);
+		OpenGLDrawer::DrawIndexed(
+			indexCount,
+			primitiveType,
+			buffers.GetIndexFormat());
 	}
 
 	void OpenGLGraphicsContext::SwapBuffers()

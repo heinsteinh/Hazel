@@ -1,6 +1,6 @@
 #include "GraphicsApiFactory.h"
 
-#include "Platform/OpenGL/GraphicsApi/OpenGL.h"
+#include "Platform/OpenGL/Graphics/OpenGL.h"
 
 namespace Hazel
 {

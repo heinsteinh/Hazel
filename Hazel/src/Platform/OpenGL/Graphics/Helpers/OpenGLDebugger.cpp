@@ -48,7 +48,7 @@ namespace Hazel
 		const GLchar *message,
 		const void *userParam)
 	{
-		Log::Error("OpenGL error (id = {}):\n\tsource: {}\n\ttype: {}\n\tsevertity: {}\n\tmessage {}.",
+		Log::Error("OpenGL error {}:\n\tsource: {}\n\ttype: {}\n\tsevertity: {}\n\tmessage: {}.",
 			id,
 			Get(sources, source),
 			Get(types, type),

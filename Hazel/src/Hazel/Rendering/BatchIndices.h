@@ -2,6 +2,7 @@
 
 #include "Hazel/Buffers/IndexFormatHelper.h"
 #include "BatchArray.h"
+#include "Hazel/Exceptions/AssertionException.h"
 
 namespace Hazel
 {
@@ -9,75 +10,100 @@ namespace Hazel
 	{
 	private:
 		IndexFormat format;
-		BatchArray data;
+		size_t indexCount = 0;
+		size_t maxIndexCount;
+		BatchArray<uint8_t> data8;
+		BatchArray<uint16_t> data16;
+		BatchArray<uint32_t> data32;
 
 	public:
-		inline BatchIndices(size_t size = 0, IndexFormat format = IndexFormat::UInt32)
-			: format(format),
-			data(IndexFormatHelper::GetSize(format), size)
+		inline BatchIndices(size_t maxIndexCount = 0, IndexFormat format = IndexFormat::UInt32)
+			: format(format)
 		{
+			SetMaxIndexCount(maxIndexCount);
 		}
 
-		inline size_t GetMaxElementCount() const
+		inline size_t GetMaxIndexCount() const
 		{
-			return data.GetMaxElementCount();
+			return maxIndexCount;
 		}
 
-		inline void SetMaxElementCount(size_t count)
+		inline void SetMaxIndexCount(size_t maxIndexCount)
 		{
-			data.SetMaxElementCount(count);
+			this->maxIndexCount = maxIndexCount;
+			switch (format)
+			{
+			case IndexFormat::UInt8:
+				return data8.SetMaxElementCount(maxIndexCount);
+			case IndexFormat::UInt16:
+				return data16.SetMaxElementCount(maxIndexCount);
+			case IndexFormat::UInt32:
+				return data32.SetMaxElementCount(maxIndexCount);
+			}
+			HZ_ASSERT(false, "Invalid index format");
 		}
 
-		inline size_t GetElementCount() const
+		inline size_t GetIndexCount() const
 		{
-			return data.GetElementCount();
+			return indexCount;
 		}
 
-		inline void SetElementCount(size_t elementCount)
+		inline void SetIndexCount(size_t indexCount)
 		{
-			data.SetElementCount(elementCount);
+			this->indexCount = indexCount;
 		}
 
 		inline void Clear()
 		{
-			data.Clear();
+			indexCount = 0;
 		}
 
-		inline bool CanContain(size_t elementCount) const
+		inline bool CanContain(size_t indexCount) const
 		{
-			return data.CanContain(elementCount);
+			return this->indexCount + indexCount <= maxIndexCount;
 		}
 
-		inline void *Add(uint32_t index)
+		inline void Add(uint32_t index)
 		{
+			indexCount++;
 			switch (format)
 			{
 			case IndexFormat::UInt8:
-				return AddIndex<uint8_t>(index);
+				return data8.Add(static_cast<uint8_t>(index));
 			case IndexFormat::UInt16:
-				return AddIndex<uint16_t>(index);
+				return data16.Add(static_cast<uint16_t>(index));
 			case IndexFormat::UInt32:
-				return AddIndex<uint32_t>(index);
+				return data32.Add(index);
 			}
 			HZ_ASSERT(false, "Invalid index format");
 		}
 
 		inline const void *GetData() const
 		{
-			return data.GetData();
+			switch (format)
+			{
+			case IndexFormat::UInt8:
+				return data8.GetData();
+			case IndexFormat::UInt16:
+				return data16.GetData();
+			case IndexFormat::UInt32:
+				return data32.GetData();
+			}
+			HZ_ASSERT(false, "Invalid index format");
 		}
 
 		inline size_t GetSize() const
 		{
-			return data.GetSize();
-		}
-
-	private:
-		template<typename IndexType>
-		void *AddIndex(uint32_t index)
-		{
-			auto value = static_cast<IndexType>(index);
-			return data.Add(&value);
+			switch (format)
+			{
+			case IndexFormat::UInt8:
+				return data8.GetSize();
+			case IndexFormat::UInt16:
+				return data16.GetSize();
+			case IndexFormat::UInt32:
+				return data32.GetSize();
+			}
+			HZ_ASSERT(false, "Invalid index format");
 		}
 	};
 }

@@ -6,31 +6,48 @@ namespace Hazel
 {
 	class Texture
 	{
+	private:
+		TextureInfo info;
+
 	public:
+		inline Texture(const TextureInfo &info)
+			: info(info)
+		{
+		}
+
 		virtual ~Texture() = default;
 
-		virtual const TextureInfo &GetInfo() const = 0;
 		virtual void SetData(const void *data) = 0;
 		virtual void *GetHandle() const = 0;
 
-		inline Size GetSize() const
+		constexpr const TextureInfo &GetInfo() const
 		{
-			return GetInfo().Size;
+			return info;
 		}
 
-		inline float GetWidth() const
+		constexpr TextureFormat GetFormat() const
 		{
-			return GetSize().Width;
+			return info.Format;
 		}
 
-		inline float GetHeight() const
+		constexpr Size GetSize() const
 		{
-			return GetSize().Height;
+			return info.Size;
 		}
 
-		inline float GetAspectRatio() const
+		constexpr float GetWidth() const
 		{
-			return GetSize().GetAspectRatio();
+			return info.Size.Width;
+		}
+
+		constexpr float GetHeight() const
+		{
+			return info.Size.Height;
+		}
+
+		constexpr float GetAspectRatio() const
+		{
+			return info.Size.GetAspectRatio();
 		}
 	};
 }

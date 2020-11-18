@@ -2,6 +2,7 @@
 
 #include "Helpers/ApplicationEvents.h"
 #include "Helpers/ApplicationMainLoop.h"
+#include "Helpers/EntryPoint.h"
 
 namespace Hazel
 {

@@ -8,11 +8,12 @@ namespace Hazel
 		: graphicsContext(info.GraphicsContext),
 		indices(info.MaxIndices, info.IndexFormat),
 		vertices(info.MaxVertices),
-		textures(info.MaxTextures),
-		buffer(info),
-		whiteTexture(TextureBuilder(*info.GraphicsContext).BuildFlatTexture(glm::vec4(1.0f)))
+		textures(graphicsContext->GetTextureSlotCount()),
+		buffers(info),
+		whiteTexture(TextureBuilder(*graphicsContext).BuildFlatTexture(glm::vec4(1.0f)))
 	{
 		textures.Add(whiteTexture);
+		BindBuffers();
 	}
 
 	void Batch::Clear()
@@ -29,13 +30,17 @@ namespace Hazel
 
 	void Batch::BufferData()
 	{
-		buffer.BufferIndices(indices.GetData(), indices.GetSize());
-		buffer.BufferVertices(vertices.GetData(), vertices.GetSize());
+		buffers.BufferIndices(indices.GetData(), indices.GetSize());
+		buffers.BufferVertices(vertices.GetData(), vertices.GetSize());
 	}
 
-	void Batch::Bind() const
+	void Batch::BindBuffers() const
 	{
-		buffer.Bind(*graphicsContext);
+		buffers.Bind(*graphicsContext);
+	}
+
+	void Batch::BindTextures() const
+	{
 		textures.Bind(*graphicsContext);
 	}
 
@@ -61,21 +66,20 @@ namespace Hazel
 	{
 		for (auto index : drawData.Mesh->Indices)
 		{
-			indices.Add(static_cast<uint32_t>(vertices.GetSize() + index));
+			indices.Add(static_cast<uint32_t>(vertices.GetElementCount() + index));
 		}
 	}
 
 	void Batch::AddVertices(const DrawData &drawData, size_t textureSlot)
 	{
 		auto matrix = drawData.Transform.ToMatrix();
-		Vertex vertex;
 		for (const auto &vertexInfo : drawData.Mesh->Vertices)
 		{
+			auto &vertex = vertices.Emplace();
 			vertex.Position = matrix * vertexInfo.Position;
 			vertex.Color = vertexInfo.Color;
 			vertex.TextureCoordinate = drawData.Texture.MapCoordinates(vertexInfo.TextureCoordinate);
 			vertex.TextureIndex = static_cast<float>(textureSlot);
-			vertices.Add(vertex);
 		};
 	}
 }

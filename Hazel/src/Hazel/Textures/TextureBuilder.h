@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/GraphicsContext/GraphicsContext.h"
+#include "Hazel/Graphics/GraphicsContext.h"
 #include "TextureFormatHelper.h"
 #include "Image.h"
 

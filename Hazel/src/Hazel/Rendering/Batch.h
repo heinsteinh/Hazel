@@ -2,10 +2,9 @@
 
 #include "DrawData.h"
 #include "Vertex.h"
-#include "BatchVertices.h"
 #include "BatchIndices.h"
 #include "BatchTextures.h"
-#include "BatchBuffer.h"
+#include "BatchBuffers.h"
 
 namespace Hazel
 {
@@ -14,9 +13,9 @@ namespace Hazel
 	private:
 		GraphicsContext *graphicsContext = nullptr;
 		BatchIndices indices;
-		BatchVertices<Vertex> vertices;
+		BatchArray<Vertex> vertices;
 		BatchTextures textures;
-		BatchBuffer buffer;
+		BatchBuffers buffers;
 		std::shared_ptr<Texture> whiteTexture;
 
 	public:
@@ -25,16 +24,17 @@ namespace Hazel
 		void Clear();
 		bool Add(const DrawData &drawData);
 		void BufferData();
-		void Bind() const;
+		void BindBuffers() const;
+		void BindTextures() const;
 
 		inline size_t GetIndexCount() const
 		{
-			return indices.GetElementCount();
+			return indices.GetIndexCount();
 		}
 
-		inline size_t GetMaxIndices() const
+		inline size_t GetMaxIndexCount() const
 		{
-			return indices.GetMaxElementCount();
+			return indices.GetMaxIndexCount();
 		}
 
 		inline size_t GetVertexCount() const

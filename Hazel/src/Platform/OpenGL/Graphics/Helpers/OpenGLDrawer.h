@@ -3,8 +3,8 @@
 #include "glad/glad.h"
 
 #include "Hazel/Geometry/Rectangle.h"
-
 #include "Platform/OpenGL/Buffers/OpenGLIndexFormat.h"
+#include "OpenGLPrimitiveType.h"
 
 namespace Hazel
 {
@@ -30,10 +30,10 @@ namespace Hazel
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 
-		static inline void DrawIndexed(size_t indexCount, IndexFormat indexFormat)
+		static inline void DrawIndexed(size_t indexCount, PrimitiveType primitiveType, IndexFormat indexFormat)
 		{
 			glDrawElements(
-				GL_TRIANGLES,
+				OpenGLPrimitiveType::GetPrimitiveType(primitiveType),
 				static_cast<int>(indexCount),
 				OpenGLIndexFormat::GetIndexFormat(indexFormat),
 				nullptr);

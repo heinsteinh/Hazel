@@ -8,8 +8,8 @@ namespace Hazel
 	class Input
 	{
 	private:
-		std::bitset<static_cast<size_t>(Key::Last)> keys;
-		std::bitset<static_cast<size_t>(MouseButton::Last)> buttons;
+		std::bitset<static_cast<size_t>(Key::Count)> keys;
+		std::bitset<static_cast<size_t>(MouseButton::Count)> buttons;
 		glm::vec2 mousePosition{0.0f};
 
 	public:

@@ -25,7 +25,6 @@ namespace Hazel
 		void SetColorAttachment(const std::shared_ptr<OpenGLTexture> &colorAttachment);
 		void SetDepthAttachment(const std::shared_ptr<OpenGLTexture> &depthAttachment);
 
-		virtual const FramebufferInfo &GetInfo() const override;
 		virtual std::shared_ptr<Texture> GetColorAttachement() const override;
 		virtual std::shared_ptr<Texture> GetDepthAttachement() const override;
 

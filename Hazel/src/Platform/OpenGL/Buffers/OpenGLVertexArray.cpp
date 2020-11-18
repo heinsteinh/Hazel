@@ -7,10 +7,9 @@
 namespace Hazel
 {
 	OpenGLVertexArray::OpenGLVertexArray(const VertexAttributes &vertexAttributes)
+		: InputLayout(vertexAttributes)
 	{
 		glCreateVertexArrays(1, &id);
-		Bind();
-		LoadAttributes(vertexAttributes);
 		Log::Debug("Vertex array created with id {}.", id);
 	}
 
@@ -30,13 +29,14 @@ namespace Hazel
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::LoadAttributes(const VertexAttributes &vertexAttributes)
+	void OpenGLVertexArray::AddBoundVertexBuffer()
 	{
+		auto &vertexAttributes = GetAttributes();
 		for (size_t i = 0; i < vertexAttributes.GetSize(); i++)
 		{
 			int index = static_cast<int>(i);
-			auto &attribute = vertexAttributes.GetElement(i);
-			glEnableVertexAttribArray(index);
+			auto &attribute = vertexAttributes.GetAttribute(i);
+			glEnableVertexArrayAttrib(id, index);
 			glVertexAttribPointer(
 				index,
 				static_cast<int>(attribute.GetComponentCount()),

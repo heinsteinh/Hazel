@@ -16,8 +16,6 @@ namespace Hazel
 		glm::mat4 viewProjectionMatrix{1.0f};
 
 	public:
-		OrthographicCamera(float aspectRatio);
-
 		void SetAspectRatio(float aspectRatio);
 		void SetZoomLevel(float zoomLevel);
 		void SetPosition(const glm::vec2 &position);

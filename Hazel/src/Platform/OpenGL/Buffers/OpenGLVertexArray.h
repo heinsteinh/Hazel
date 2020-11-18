@@ -15,13 +15,11 @@ namespace Hazel
 
 		void Bind() const;
 		void Unbind() const;
+		void AddBoundVertexBuffer();
 
 		constexpr uint32_t GetId() const
 		{
 			return id;
 		}
-
-	private:
-		void LoadAttributes(const VertexAttributes &vertexAttributes);
 	};
 }

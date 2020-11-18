@@ -7,7 +7,7 @@
 namespace Hazel
 {
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferInfo &info)
-		: info(info)
+		: Framebuffer(info)
 	{
 		glCreateFramebuffers(1, &id);
 		Log::Debug("Framebuffer successfully created with id {}.", id);
@@ -22,7 +22,7 @@ namespace Hazel
 	void OpenGLFramebuffer::Bind() const
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, id);
-		glViewport(0, 0, static_cast<int>(info.Size.Width), static_cast<int>(info.Size.Height));
+		glViewport(0, 0, static_cast<int>(GetWidth()), static_cast<int>(GetHeight()));
 	}
 
 	void OpenGLFramebuffer::Unbind() const
@@ -55,11 +55,6 @@ namespace Hazel
 	{
 		this->depthAttachment = depthAttachment;
 		Attach(GL_DEPTH_STENCIL_ATTACHMENT, depthAttachment);
-	}
-
-	const FramebufferInfo &OpenGLFramebuffer::GetInfo() const
-	{
-		return info;
 	}
 
 	std::shared_ptr<Texture> OpenGLFramebuffer::GetColorAttachement() const

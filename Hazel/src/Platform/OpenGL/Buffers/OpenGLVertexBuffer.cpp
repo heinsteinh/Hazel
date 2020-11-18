@@ -5,7 +5,7 @@
 namespace Hazel
 {
 	OpenGLVertexBuffer::OpenGLVertexBuffer(size_t size)
-		: size(size)
+		: VertexBuffer(size)
 	{
 		glCreateBuffers(1, &id);
 		glNamedBufferData(id, size, nullptr, GL_DYNAMIC_DRAW);
@@ -28,13 +28,8 @@ namespace Hazel
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	size_t OpenGLVertexBuffer::GetSize() const
-	{
-		return size;
-	}
-
 	void OpenGLVertexBuffer::BufferData(const void *data, size_t size)
 	{
-		glNamedBufferSubData(id, 0, std::min(this->size, size), data);
+		glNamedBufferSubData(id, 0, std::min(GetSize(), size), data);
 	}
 }

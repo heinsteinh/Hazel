@@ -4,7 +4,7 @@
 
 #include "spdlog/fmt/fmt.h"
 
-#include "Hazel/Application/EntryPoint.h"
+#include "Hazel/Application/Application.h"
 #include "Hazel/Logging/Logger.h"
 #include "Hazel/Camera/OrthographicCameraController.h"
 #include "Hazel/Rendering/Renderer2D.h"

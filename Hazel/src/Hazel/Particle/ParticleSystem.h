@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ParticleBuilder.h"
-#include "ParticleUpdater.h"
 #include "ParticleRenderer.h"
 #include "Hazel/Rendering/Renderer2D.h"
 
@@ -13,16 +12,15 @@ namespace Hazel
 		std::vector<Particle> pool;
 		size_t index = 0;
 		ParticleBuilder builder;
-		ParticleUpdater updater;
 		ParticleRenderer renderer;
 
 	public:
-		ParticleSystem(Renderer2D &renderer, size_t size = 1000);
+		ParticleSystem(size_t maxParticles = 1000);
 
-		void OnUpdate(float deltaTime);
-		void OnRender();
-		void Emit(const ParticleInfo &info);
+		void UpdateActiveParticles(float deltaTime);
+		void RenderActiveParticles(Renderer2D &renderer);
+		void EmitParticle(const ParticleInfo &info);
 		size_t GetMaxParticles() const;
-		void SetMaxParticles(size_t size);
+		void SetMaxParticles(size_t maxParticles);
 	};
 }

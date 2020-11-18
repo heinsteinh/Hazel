@@ -13,7 +13,7 @@ namespace Hazel
         B7,
         B8,
         Invalid,
-        Last = B8,
+        Count = B8,
         Left = B1,
         Right = B2,
         Middle = B3

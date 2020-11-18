@@ -9,7 +9,7 @@ namespace Hazel
 	public:
 		static inline std::shared_ptr<Mesh> CreateMesh()
 		{
-			std::shared_ptr<Mesh> result;
+			std::shared_ptr<Mesh> result = std::make_shared<Mesh>();
 			result->Indices = {0, 1, 2, 2, 3, 0};
 			result->Vertices.resize(4);
 			result->Vertices[0].Position = {-0.5f, 0.5f, 0.0f, 1.0f};

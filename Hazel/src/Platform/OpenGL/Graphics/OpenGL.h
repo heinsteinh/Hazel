@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/GraphicsApi/GraphicsApi.h"
+#include "Hazel/Graphics/GraphicsApi.h"
 
 namespace Hazel
 {

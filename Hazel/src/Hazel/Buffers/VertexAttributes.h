@@ -7,25 +7,25 @@ namespace Hazel
 	class VertexAttributes
 	{
 	private:
-		std::vector<VertexAttribute> elements;
+		std::vector<VertexAttribute> attributes;
 		size_t stride = 0;
 
 	public:
-		inline VertexAttributes(std::initializer_list<VertexAttribute> elements = {})
-			: elements(elements)
+		inline VertexAttributes(std::initializer_list<VertexAttribute> attributes = {})
+			: attributes(attributes)
 		{
 			CalculateOffsetsAndStride();
 		}
 
-		inline VertexAttributes(const std::vector<VertexAttribute> &elements)
-			: elements(elements)
+		inline VertexAttributes(const std::vector<VertexAttribute> &attributes)
+			: attributes(attributes)
 		{
 			CalculateOffsetsAndStride();
 		}
 
-		inline const VertexAttribute &GetElement(size_t index) const
+		inline const VertexAttribute &GetAttribute(size_t index) const
 		{
-			return elements[index];
+			return attributes[index];
 		}
 
 		constexpr size_t GetStride() const
@@ -35,32 +35,32 @@ namespace Hazel
 
 		inline size_t GetSize() const
 		{
-			return elements.size();
+			return attributes.size();
 		}
 
 		inline auto begin() const
 		{
-			return elements.begin();
+			return attributes.begin();
 		}
 
 		inline auto end() const
 		{
-			return elements.end();
+			return attributes.end();
 		}
 
 		inline const VertexAttribute &operator[](size_t index) const
 		{
-			return GetElement(index);
+			return GetAttribute(index);
 		}
 
 	private:
 		inline void CalculateOffsetsAndStride()
 		{
 			stride = 0;
-			for (auto &element : elements)
+			for (auto &attribute : attributes)
 			{
-				element.SetOffset(stride);
-				stride += element.GetSize();
+				attribute.SetOffset(stride);
+				stride += attribute.GetSize();
 			}
 		}
 	};

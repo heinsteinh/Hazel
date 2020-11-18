@@ -8,22 +8,23 @@
 namespace Sandbox
 {
 	SandboxLayer::SandboxLayer()
-		: renderer(context),
-		window(context.Window),
-		input(context.Input),
-		factory(context.Factory),
-		camera({context.Window.GetSize().GetAspectRatio()}),
-		cameraController({context.Input, camera}),
-		drawData({Hazel::SquareMesh::Get()})
+		: Layer("Sandbox"),
+		drawData({Hazel::SquareMesh::CreateMesh()})
 	{
 	}
 
 	void SandboxLayer::OnAttach()
 	{
+		Hazel::RendererInfo rendererInfo;
+		rendererInfo.GraphicsContext = &GetGraphicsContext();
+		rendererInfo.MaxIndices = 60000;
+		rendererInfo.MaxVertices = 40000;
+		renderer = std::make_shared<Hazel::Renderer2D>(rendererInfo);
 		spriteSheet = Hazel::TextureBuilder(GetGraphicsContext()).BuildFromFile("assets\\textures\\SpriteSheet.png");
-		drawData.Mesh.SetColor({1.0f, 1.0f, 1.0f, 1.0f});
+		drawData.Mesh->SetColor({1.0f, 1.0f, 1.0f, 1.0f});
 		drawData.Texture = spriteSheet;
 		drawData.Transform.SetScale({spriteSheet->GetAspectRatio(), 1.0f});
+		camera.SetAspectRatio(GetWindow().GetAspectRatio());
 	}
 
 	void SandboxLayer::OnDetach()
@@ -34,19 +35,19 @@ namespace Sandbox
 	{
 		renderTime = deltaTime;
 
-		controller.OnUpdate(deltaTime);
+		cameraController.UpdateCamera(camera, GetInput(), deltaTime);
 
 		drawData.Texture.SetCoordinates({bottomLeft, size});
 		//drawData.Transform.SetScale({drawData.Texture.GetAspectRatio(), 1.0f});
 
-		renderer.BeginScene(camera);
-		renderer.Render(drawData);
-		renderer.EndScene();
+		renderer->BeginScene(camera);
+		renderer->Render(drawData);
+		renderer->EndScene();
 	}
 
 	void SandboxLayer::OnImGuiRender()
 	{
-		dockspace.Begin();
+		//dockspace.Begin();
 		ImGui::Begin("Info");
 		ImGui::Text("Update Time: %f", renderTime);
 		ImGui::Text("Camera Position: %f %f %f", camera.GetPosition().x, camera.GetPosition().y, camera.GetZoomLevel());
@@ -65,23 +66,19 @@ namespace Sandbox
 		ImGui::SliderFloat("Width", &size.Width, 0.0f, 2560.0f);
 		ImGui::SliderFloat("Height", &size.Height, 0.0f, 1664.0f);
 		ImGui::End();
-		dockspace.End();
+		//dockspace.End();
 	}
 
 	void SandboxLayer::OnEvent(Hazel::Event &e)
 	{
-		cameraController.OnEvent(e);
-	}
-
-	void SandboxLayer::OnKeyPressed(Hazel::KeyPressEvent &e)
-	{
-		if (e.GetKey() == Hazel::Key::Backspace)
+		cameraController.UpdateCamera(camera, e);
+		e.Dispatch([this](Hazel::KeyPressEvent &e)
 		{
-			camera = Hazel::OrthographicCamera(GetWindow().GetAspectRatio());
-		}
-	}
-
-	void SandboxLayer::OnMouseButtonPressed(Hazel::MouseButtonPressEvent &e)
-	{
+			if (e.GetKey() == Hazel::Key::Backspace)
+			{
+				camera = {};
+				camera.SetAspectRatio(GetWindow().GetAspectRatio());
+			}
+		});
 	}
 }

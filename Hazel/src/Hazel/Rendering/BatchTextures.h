@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/GraphicsContext/GraphicsContext.h"
+#include "Hazel/Graphics/GraphicsContext.h"
 #include "Hazel/Textures/Texture.h"
 
 namespace Hazel

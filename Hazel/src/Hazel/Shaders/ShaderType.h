@@ -7,6 +7,6 @@ namespace Hazel
 		Unknown = -1,
 		Vertex,
 		Pixel,
-		Count = Pixel
+		Count = Pixel + 1
 	};
 }

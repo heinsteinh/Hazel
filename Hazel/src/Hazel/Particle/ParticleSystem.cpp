@@ -1,32 +1,33 @@
 #include "ParticleSystem.h"
 
+#include "ParticleUpdater.h"
+
 namespace Hazel
 {
-	ParticleSystem::ParticleSystem(Renderer2D &renderer, size_t size)
-		: pool(size > 0 ? size : 1),
-		renderer(renderer)
+	ParticleSystem::ParticleSystem(size_t maxParticles)
+		: pool(maxParticles > 0 ? maxParticles : 1)
 	{
 	}
 
-	void ParticleSystem::OnUpdate(float deltaTime)
+	void ParticleSystem::UpdateActiveParticles(float deltaTime)
 	{
 		for (auto &particle : pool)
 		{
-			updater.Update(particle, deltaTime);
+			ParticleUpdater::UpdateParticle(particle, deltaTime);
 		}
 	}
 
-	void ParticleSystem::OnRender()
+	void ParticleSystem::RenderActiveParticles(Renderer2D &renderer)
 	{
 		for (const auto &particle : pool)
 		{
-			renderer.Render(particle);
+			this->renderer.RenderParticle(renderer, particle);
 		}
 	}
 
-	void ParticleSystem::Emit(const ParticleInfo &info)
+	void ParticleSystem::EmitParticle(const ParticleInfo &info)
 	{
-		builder.Build(pool[index], info);
+		builder.BuildParticle(pool[index], info);
 		index = (index + 1) % pool.size();
 	}
 

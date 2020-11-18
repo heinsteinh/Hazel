@@ -2,14 +2,9 @@
 
 namespace Sandbox
 {
-	TestParticle::TestParticle(Hazel::Context &context)
-		: window(context.Window),
-		input(context.Input),
-		camera(window.GetAspectRatio()),
-		controller(input, camera),
-		renderer(context),
-		screenTransform(window, camera),
-		particleSystem(renderer, maxParticles)
+	TestParticle::TestParticle()
+		: Layer("TestParticle"),
+		particleSystem(maxParticles)
 	{
 		defaultInfo.Position = {0.0f, 0.0f};
 		defaultInfo.LinearVelocity = {0.0f, 0.0f};
@@ -27,6 +22,12 @@ namespace Sandbox
 
 	void TestParticle::OnAttach()
 	{
+		Hazel::RendererInfo rendererInfo;
+		rendererInfo.GraphicsContext = &GetGraphicsContext();
+		rendererInfo.MaxIndices = maxIndices;
+		rendererInfo.MaxVertices = maxVertices;
+		renderer = std::make_shared<Hazel::Renderer2D>(rendererInfo);
+		screenTransform = {GetWindow(), camera};
 	}
 
 	void TestParticle::OnDetach()
@@ -36,15 +37,16 @@ namespace Sandbox
 	void TestParticle::OnUpdate(float deltaTime)
 	{
 		renderTime = deltaTime;
+		auto &input = GetInput();
 
-		controller.OnUpdate(deltaTime);
+		controller.UpdateCamera(camera, input, deltaTime);
 
 		if (input.IsMouseButtonPressed(Hazel::MouseButton::B1))
 		{
 			particleInfo.Position = screenTransform.GetWorldPosition(input.GetMousePosition());
 			for (int i = 0; i < nParticles; i++)
 			{
-				particleSystem.Emit(particleInfo);
+				particleSystem.EmitParticle(particleInfo);
 			}
 		}
 
@@ -53,10 +55,10 @@ namespace Sandbox
 			particleSystem.SetMaxParticles(maxParticles);
 		}
 
-		particleSystem.OnUpdate(deltaTime);
-		renderer.BeginScene(camera);
-		particleSystem.OnRender();
-		renderer.EndScene();
+		particleSystem.UpdateActiveParticles(deltaTime);
+		renderer->BeginScene(camera);
+		particleSystem.RenderActiveParticles(*renderer);
+		renderer->EndScene();
 	}
 
 	void TestParticle::OnImGuiRender()
@@ -85,28 +87,27 @@ namespace Sandbox
 		ImGui::Begin("Renderer");
 		ImGui::SliderInt("MaxVertices", &maxVertices, 0, 100000);
 		ImGui::SliderInt("MaxIndices", &maxIndices, 0, 100000);
-		ImGui::SliderInt("MaxTextures", &maxTextures, 0, 100000);
-		ImGui::Text("DrawCall: %zu", renderer.GetStatistics().DrawCallCount);
-		ImGui::Text("VertexCount: %zu", renderer.GetStatistics().VertexCount);
-		ImGui::Text("IndexCount: %zu", renderer.GetStatistics().IndexCount);
-		ImGui::Text("TextureCount: %zu", renderer.GetStatistics().TextureCount);
+		ImGui::Text("DrawCall: %zu", renderer->GetStatistics().DrawCallCount);
+		ImGui::Text("VertexCount: %zu", renderer->GetStatistics().VertexCount);
+		ImGui::Text("IndexCount: %zu", renderer->GetStatistics().IndexCount);
+		ImGui::Text("TextureCount: %zu", renderer->GetStatistics().TextureCount);
 		if (ImGui::Button("Reset"))
 		{
-			renderer.Init({(size_t)maxVertices, (size_t)maxIndices, (size_t)maxTextures});
+			OnAttach();
 		}
 		ImGui::End();
 	}
 
 	inline void TestParticle::OnEvent(Hazel::Event &e)
 	{
-		Hazel::EventDispatcher(&controller).Dispatch(e);
-	}
-
-	void TestParticle::OnKeyPressed(Hazel::KeyPressEvent &e)
-	{
-		if (e.GetKey() == Hazel::Key::Backspace)
+		controller.UpdateCamera(camera, e);
+		e.Dispatch([this](Hazel::KeyPressEvent &e)
 		{
-			camera = Hazel::OrthographicCamera(window.GetAspectRatio());
-		}
+			if (e.GetKey() == Hazel::Key::Backspace)
+			{
+				camera = {};
+				camera.SetAspectRatio(GetWindow().GetAspectRatio());
+			}
+		});
 	}
 }

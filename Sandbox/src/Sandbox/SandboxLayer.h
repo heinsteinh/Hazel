@@ -22,13 +22,10 @@ namespace Sandbox
 	public:
 		SandboxLayer();
 
-		void OnKeyPressed(Hazel::KeyPressEvent &e);
-		void OnMouseButtonPressed(Hazel::MouseButtonPressEvent &e);
-
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
+		virtual void OnEvent(Hazel::Event &e) override;
 		virtual void OnUpdate(float deltaTime) override;
 		virtual void OnImGuiRender() override;
-		virtual void OnEvent(Hazel::Event &e) override;
 	};
 }

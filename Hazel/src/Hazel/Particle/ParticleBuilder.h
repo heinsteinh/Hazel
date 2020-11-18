@@ -12,7 +12,7 @@ namespace Hazel
 		Random random;
 
 	public:
-		inline void Build(Particle &particle, const ParticleInfo &info)
+		inline void BuildParticle(Particle &particle, const ParticleInfo &info)
 		{
 			particle.Active = true;
 			BuildPosition(particle, info);

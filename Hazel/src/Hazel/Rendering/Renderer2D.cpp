@@ -9,13 +9,13 @@ namespace Hazel
 		batch(info),
 		shader(*info.GraphicsContext)
 	{
+		batch.BindBuffers();
 		info.GraphicsContext->SetShader(shader);
 		shader.InitSamplers(batch.GetMaxTextures());
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera &camera)
 	{
-		info.GraphicsContext->Clear();
 		shader.SetViewProjectionMatrix(camera.GetViewProjectionMatrix());
 		statistics.Reset();
 	}
@@ -34,9 +34,9 @@ namespace Hazel
 
 	void Renderer2D::EndScene()
 	{
-		batch.Bind();
+		batch.BindTextures();
 		batch.BufferData();
-		info.GraphicsContext->DrawIndexed(batch.GetIndexCount(), info.IndexFormat);
+		info.GraphicsContext->DrawIndexed(batch.GetIndexCount(), PrimitiveType::Triangles);
 		statistics.DrawCallCount++;
 		statistics.IndexCount += batch.GetIndexCount();
 		statistics.VertexCount += batch.GetVertexCount();

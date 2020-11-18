@@ -7,6 +7,9 @@ extern std::unique_ptr<Hazel::Application> CreateApplication();
 
 int main(int argc, char *argv[])
 {
+#ifdef HZ_DEBUG
+	CreateApplication()->Run();
+#else
 	try
 	{
 		CreateApplication()->Run();
@@ -22,5 +25,6 @@ int main(int argc, char *argv[])
 	catch (...)
 	{
 		Hazel::Log::Critical("General failure");
-	}
+}
+#endif
 }

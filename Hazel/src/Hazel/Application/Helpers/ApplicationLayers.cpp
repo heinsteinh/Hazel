@@ -8,6 +8,7 @@ namespace Hazel
 		: context(context),
 		imGuiLayer(std::make_shared<ImGuiLayer>())
 	{
+		PushOverlay(imGuiLayer);
 	}
 
 	void ApplicationLayers::PushLayer(const std::shared_ptr<Layer> &layer)

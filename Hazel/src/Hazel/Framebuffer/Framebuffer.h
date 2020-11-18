@@ -9,29 +9,41 @@ namespace Hazel
 {
 	class Framebuffer
 	{
+	private:
+		FramebufferInfo info;
+
 	public:
+		inline Framebuffer(const FramebufferInfo &info)
+			: info(info)
+		{
+		}
+
 		virtual ~Framebuffer() = default;
 
-		virtual const FramebufferInfo &GetInfo() const = 0;
 		virtual std::shared_ptr<Texture> GetColorAttachement() const = 0;
 		virtual std::shared_ptr<Texture> GetDepthAttachement() const = 0;
 
-		inline Size GetSize() const
+		constexpr const FramebufferInfo &GetInfo() const
+		{
+			return info;
+		}
+
+		constexpr Size GetSize() const
 		{
 			return GetInfo().Size;
 		}
 
-		inline float GetWidth() const
+		constexpr float GetWidth() const
 		{
 			return GetSize().Width;
 		}
 
-		inline float GetHeight() const
+		constexpr float GetHeight() const
 		{
 			return GetSize().Height;
 		}
 
-		inline float GetAspectRatio() const
+		constexpr float GetAspectRatio() const
 		{
 			return GetSize().GetAspectRatio();
 		}

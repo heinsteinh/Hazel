@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel/Application/ApplicationInfo.h"
-#include "Hazel/GraphicsApi/GraphicsApiFactory.h"
+#include "Hazel/Graphics/GraphicsApiFactory.h"
 #include "Hazel/Layers/LayersContext.h"
 #include "ApplicationLayers.h"
 #include "Hazel/Time/Chrono.h"

@@ -2,13 +2,6 @@
 
 namespace Hazel
 {
-	OrthographicCamera::OrthographicCamera(float aspectRatio)
-		: viewport({aspectRatio}),
-		projectionMatrix(viewport.ToProjectionMatrix()),
-		viewProjectionMatrix(projectionMatrix *viewMatrix)
-	{
-	}
-
 	void OrthographicCamera::SetAspectRatio(float aspectRatio)
 	{
 		viewport.AspectRatio = aspectRatio;

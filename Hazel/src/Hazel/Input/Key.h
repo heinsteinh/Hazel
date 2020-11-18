@@ -125,6 +125,6 @@ namespace Hazel
 		RightAlt = 346,
 		RightSuper = 347,
 		Menu = 348,
-		Last = Menu
+		Count = Menu + 1
 	};
 }

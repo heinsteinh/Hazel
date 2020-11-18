@@ -2,7 +2,6 @@
 
 #include "glad/glad.h"
 
-#include "Helpers/OpenGLTextureStorageFormat.h"
 #include "Helpers/OpenGLTextureFiltering.h"
 #include "Helpers/OpenGLTextureWrapping.h"
 #include "Helpers/OpenGLTextureFormat.h"
@@ -10,20 +9,20 @@
 namespace Hazel
 {
 	OpenGLTexture::OpenGLTexture(const TextureInfo &info)
-		: info(info)
+		: Texture(info)
 	{
 		glCreateTextures(GL_TEXTURE_2D, 1, &id);
-		Log::Info("Texture created with id {}.", id);
+		Log::Debug("Texture created with id {}.", id);
 		glTextureStorage2D(
 			id,
 			1,
-			OpenGLTextureStorageFormat::FromTextureFormat(info.Format),
-			static_cast<int>(info.Size.Width),
-			static_cast<int>(info.Size.Height));
-		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, OpenGLTextureFiltering::FromTextureFiltering(info.MinFilter));
-		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, OpenGLTextureFiltering::FromTextureFiltering(info.MagFilter));
-		glTextureParameteri(id, GL_TEXTURE_WRAP_S, OpenGLTextureWrapping::FromTextureWrapping(info.SWrap));
-		glTextureParameteri(id, GL_TEXTURE_WRAP_T, OpenGLTextureWrapping::FromTextureWrapping(info.TWrap));
+			OpenGLTextureFormat::GetStorageFormat(GetFormat()),
+			static_cast<int>(GetWidth()),
+			static_cast<int>(GetHeight()));
+		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, OpenGLTextureFiltering::GetTextureFiltering(info.MinFilter));
+		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, OpenGLTextureFiltering::GetTextureFiltering(info.MagFilter));
+		glTextureParameteri(id, GL_TEXTURE_WRAP_S, OpenGLTextureWrapping::GetTextureWrapping(info.SWrap));
+		glTextureParameteri(id, GL_TEXTURE_WRAP_T, OpenGLTextureWrapping::GetTextureWrapping(info.TWrap));
 	}
 
 	OpenGLTexture::~OpenGLTexture()
@@ -37,11 +36,6 @@ namespace Hazel
 		glBindTextureUnit(slot, id);
 	}
 
-	const TextureInfo &OpenGLTexture::GetInfo() const
-	{
-		return info;
-	}
-
 	void OpenGLTexture::SetData(const void *data)
 	{
 		glTextureSubImage2D(
@@ -49,9 +43,9 @@ namespace Hazel
 			0,
 			0,
 			0,
-			static_cast<int>(info.Size.Width),
-			static_cast<int>(info.Size.Height),
-			OpenGLTextureFormat::FromTextureFormat(info.Format),
+			static_cast<int>(GetWidth()),
+			static_cast<int>(GetHeight()),
+			OpenGLTextureFormat::GetTextureFormat(GetFormat()),
 			GL_UNSIGNED_BYTE,
 			data);
 	}
