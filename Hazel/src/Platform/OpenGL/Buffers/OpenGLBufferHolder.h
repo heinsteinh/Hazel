@@ -69,6 +69,10 @@ namespace Hazel
 				{
 					vertexArray->AddBoundVertexBuffer();
 				}
+				if (indexBuffer)
+				{
+					indexBuffer->Bind();
+				}
 			}
 		}
 	};

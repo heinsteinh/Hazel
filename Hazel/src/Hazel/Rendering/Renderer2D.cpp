@@ -9,9 +9,9 @@ namespace Hazel
 		batch(info),
 		shader(*info.GraphicsContext)
 	{
-		batch.BindBuffers();
 		info.GraphicsContext->SetShader(shader);
 		shader.InitSamplers(batch.GetMaxTextures());
+		batch.BindBuffers();
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera &camera)
