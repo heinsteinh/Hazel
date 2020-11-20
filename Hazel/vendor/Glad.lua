@@ -1,21 +1,19 @@
-
 project "Glad"
     kind "StaticLib"
     language "C"
-    staticruntime "on"
+    staticruntime "On"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+    objdir ("obj/" .. outputdir .. "/%{prj.name}")
 
-    files
-    {
-        "include/glad/glad.h",
-        "include/KHR/khrplatform.h",
-        "src/glad.c"
+    files {
+        "Glad/include/glad/glad.h",
+        "Glad/include/KHR/khrplatform.h",
+        "Glad/src/glad.c"
     }
-    includedirs
-    {
-        "include"
+
+    includedirs {
+        "Glad/include"
     }
 
     filter "system:windows"
@@ -23,8 +21,8 @@ project "Glad"
 
     filter "configurations:Debug"
         runtime "Debug"
-        symbols "on"
+        symbols "On"
 
     filter "configurations:Release"
         runtime "Release"
-        optimize "on"
+        optimize "On"
