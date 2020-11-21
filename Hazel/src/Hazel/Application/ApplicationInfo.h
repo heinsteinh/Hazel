@@ -13,6 +13,7 @@ namespace Hazel
 		std::string Title = "Hazel";
 		Size Resolution = {1280.0f, 720.0f};
 		bool VerticalSynchronization = true;
+		bool EnableImGui = true;
 		bool RenderImGui = true;
 	};
 }

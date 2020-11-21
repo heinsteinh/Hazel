@@ -10,8 +10,6 @@ namespace Hazel
 	{
 	private:
 		IndexFormat format;
-		size_t indexCount = 0;
-		size_t maxIndexCount;
 		BatchArray<uint8_t> data8;
 		BatchArray<uint16_t> data16;
 		BatchArray<uint32_t> data32;
@@ -25,12 +23,20 @@ namespace Hazel
 
 		inline size_t GetMaxIndexCount() const
 		{
-			return maxIndexCount;
+			switch (format)
+			{
+			case IndexFormat::UInt8:
+				return data8.GetMaxElementCount();
+			case IndexFormat::UInt16:
+				return data16.GetMaxElementCount();
+			case IndexFormat::UInt32:
+				return data32.GetMaxElementCount();
+			}
+			HZ_ASSERT(false, "Invalid index format");
 		}
 
 		inline void SetMaxIndexCount(size_t maxIndexCount)
 		{
-			this->maxIndexCount = maxIndexCount;
 			switch (format)
 			{
 			case IndexFormat::UInt8:
@@ -45,27 +51,53 @@ namespace Hazel
 
 		inline size_t GetIndexCount() const
 		{
-			return indexCount;
+			switch (format)
+			{
+			case IndexFormat::UInt8:
+				return data8.GetElementCount();
+			case IndexFormat::UInt16:
+				return data16.GetElementCount();
+			case IndexFormat::UInt32:
+				return data32.GetElementCount();
+			}
+			HZ_ASSERT(false, "Invalid index format");
 		}
 
 		inline void SetIndexCount(size_t indexCount)
 		{
-			this->indexCount = indexCount;
+			switch (format)
+			{
+			case IndexFormat::UInt8:
+				return data8.SetElementCount(indexCount);
+			case IndexFormat::UInt16:
+				return data16.SetElementCount(indexCount);
+			case IndexFormat::UInt32:
+				return data32.SetElementCount(indexCount);
+			}
+			HZ_ASSERT(false, "Invalid index format");
 		}
 
 		inline void Clear()
 		{
-			indexCount = 0;
+			switch (format)
+			{
+			case IndexFormat::UInt8:
+				return data8.Clear();
+			case IndexFormat::UInt16:
+				return data16.Clear();
+			case IndexFormat::UInt32:
+				return data32.Clear();
+			}
+			HZ_ASSERT(false, "Invalid index format");
 		}
 
 		inline bool CanContain(size_t indexCount) const
 		{
-			return this->indexCount + indexCount <= maxIndexCount;
+			return GetIndexCount() + indexCount <= GetMaxIndexCount();
 		}
 
 		inline void Add(uint32_t index)
 		{
-			indexCount++;
 			switch (format)
 			{
 			case IndexFormat::UInt8:

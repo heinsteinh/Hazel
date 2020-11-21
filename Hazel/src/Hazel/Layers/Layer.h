@@ -52,7 +52,7 @@ namespace Hazel
 			return context->GetGraphicsContext();
 		}
 
-		inline Input &GetInput()
+		inline const Input &GetInput() const
 		{
 			return input;
 		}

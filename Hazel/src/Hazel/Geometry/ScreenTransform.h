@@ -29,5 +29,15 @@ namespace Hazel
 				camera->GetProjectionMatrix(),
 				glm::vec4(0.0f, height, width, -height));
 		};
+
+		inline glm::vec2 GetScreenPosition(const glm::vec3 &worldPosition) const
+		{
+			auto [width, height] = window->GetSize();
+			return glm::project(
+				worldPosition,
+				camera->GetViewMatrix(),
+				camera->GetProjectionMatrix(),
+				glm::vec4(0.0f, height, width, -height));
+		};
 	};
 }

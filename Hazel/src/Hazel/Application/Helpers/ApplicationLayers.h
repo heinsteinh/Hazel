@@ -16,6 +16,7 @@ namespace Hazel
 	public:
 		ApplicationLayers(LayersContext &context);
 
+		void PushImGuiLayer();
 		void PushLayer(const std::shared_ptr<Layer> &layer);
 		void PushOverlay(const std::shared_ptr<Layer> &overlay);
 		void DispatchEvent(Event &e);

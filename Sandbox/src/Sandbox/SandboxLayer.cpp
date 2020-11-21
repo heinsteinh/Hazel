@@ -49,7 +49,7 @@ namespace Sandbox
 	{
 		//dockspace.Begin();
 		ImGui::Begin("Info");
-		ImGui::Text("Update Time: %f", renderTime);
+		ImGui::Text("Update Time: %fms", 1000 * renderTime);
 		ImGui::Text("Camera Position: %f %f %f", camera.GetPosition().x, camera.GetPosition().y, camera.GetZoomLevel());
 		ImGui::Text("Camera Rotation: %fdeg", glm::degrees(camera.GetRotation()));
 		ImGui::End();

@@ -5,9 +5,13 @@
 namespace Hazel
 {
 	ApplicationLayers::ApplicationLayers(LayersContext &context)
-		: context(context),
-		imGuiLayer(std::make_shared<ImGuiLayer>())
+		: context(context)
 	{
+	}
+
+	void ApplicationLayers::PushImGuiLayer()
+	{
+		imGuiLayer = std::make_shared<ImGuiLayer>();
 		PushOverlay(imGuiLayer);
 	}
 
@@ -48,11 +52,14 @@ namespace Hazel
 
 	void ApplicationLayers::RenderImGui()
 	{
-		imGuiLayer->BeginRender();
-		for (const auto &layer : Reversed(layers))
+		if (imGuiLayer)
 		{
-			layer->OnImGuiRender();
+			imGuiLayer->BeginRender();
+			for (const auto &layer : Reversed(layers))
+			{
+				layer->OnImGuiRender();
+			}
+			imGuiLayer->EndRender();
 		}
-		imGuiLayer->EndRender();
 	}
 }

@@ -22,7 +22,11 @@ namespace Hazel
 			layersContext({graphicsApi.get(), info.Title, info.Resolution}),
 			layers(layersContext)
 		{
-			layersContext.EnableImGuiRendering(info.RenderImGui);
+			if (info.EnableImGui)
+			{
+				layers.PushImGuiLayer();
+				layersContext.EnableImGuiRendering(info.RenderImGui);
+			}
 			layersContext.GetWindow().SetVerticalSynchronization(info.VerticalSynchronization);
 		}
 

@@ -28,6 +28,7 @@ namespace Sandbox
 		rendererInfo.MaxVertices = maxVertices;
 		renderer = std::make_shared<Hazel::Renderer2D>(rendererInfo);
 		screenTransform = {GetWindow(), camera};
+		camera.SetAspectRatio(GetWindow().GetAspectRatio());
 	}
 
 	void TestParticle::OnDetach()
@@ -64,7 +65,7 @@ namespace Sandbox
 	void TestParticle::OnImGuiRender()
 	{
 		ImGui::Begin("Info");
-		ImGui::Text("Update Time: %f", renderTime);
+		ImGui::Text("Update Time: %fms", 1000 * renderTime);
 		ImGui::Text("Camera Position: %f %f %f", camera.GetPosition().x, camera.GetPosition().y, camera.GetZoomLevel());
 		ImGui::Text("Camera Rotation: %fdeg", glm::degrees(camera.GetRotation()));
 		ImGui::End();

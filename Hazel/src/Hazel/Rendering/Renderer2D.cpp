@@ -40,7 +40,7 @@ namespace Hazel
 		statistics.DrawCallCount++;
 		statistics.IndexCount += batch.GetIndexCount();
 		statistics.VertexCount += batch.GetVertexCount();
-		statistics.TextureCount += batch.GetTextureCount();
+		statistics.TextureCount = batch.GetTextureCount();
 		batch.Clear();
 	}
 }
