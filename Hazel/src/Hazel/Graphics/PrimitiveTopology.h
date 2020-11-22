@@ -2,7 +2,7 @@
 
 namespace Hazel
 {
-	enum class PrimitiveType
+	enum class PrimitiveTopology
 	{
 		Triangles,
 		Lines,

@@ -4,14 +4,28 @@
 
 #include "Hazel/Geometry/Rectangle.h"
 #include "Platform/OpenGL/Buffers/OpenGLIndexFormat.h"
-#include "OpenGLPrimitiveType.h"
+#include "OpenGLPrimitiveTopology.h"
 
 namespace Hazel
 {
 	class OpenGLDrawer
 	{
+	private:
+		int indexFormat = GL_UNSIGNED_INT;
+		int primitiveTopology = GL_TRIANGLES;
+
 	public:
-		static inline void SetViewport(const Rectangle &viewport)
+		inline void SetIndexFormat(IndexFormat indexFormat)
+		{
+			this->indexFormat = OpenGLIndexFormat::GetIndexFormat(indexFormat);
+		}
+
+		inline void SetPrimitiveTopology(PrimitiveTopology primitiveTopology)
+		{
+			this->primitiveTopology = OpenGLPrimitiveTopology::GetPrimitiveTopology(primitiveTopology);
+		}
+
+		inline void SetViewport(const Rectangle &viewport)
 		{
 			glViewport(
 				static_cast<int>(viewport.Left),
@@ -20,22 +34,22 @@ namespace Hazel
 				static_cast<int>(viewport.GetHeight()));
 		}
 
-		static inline void SetClearColor(const glm::vec4 &color)
+		inline void SetClearColor(const glm::vec4 &color)
 		{
 			glClearColor(color.r, color.g, color.b, color.a);
 		}
 
-		static inline void Clear()
+		inline void Clear()
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 
-		static inline void DrawIndexed(size_t indexCount, PrimitiveType primitiveType, IndexFormat indexFormat)
+		inline void DrawIndexed(size_t indexCount)
 		{
 			glDrawElements(
-				OpenGLPrimitiveType::GetPrimitiveType(primitiveType),
+				primitiveTopology,
 				static_cast<int>(indexCount),
-				OpenGLIndexFormat::GetIndexFormat(indexFormat),
+				indexFormat,
 				nullptr);
 		}
 	};

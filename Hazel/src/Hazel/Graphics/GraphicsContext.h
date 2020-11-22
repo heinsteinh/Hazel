@@ -8,7 +8,7 @@
 #include "Hazel/Buffers/IndexBuffer.h"
 #include "Hazel/Textures/Texture.h"
 #include "Hazel/Geometry/Rectangle.h"
-#include "PrimitiveType.h"
+#include "PrimitiveTopology.h"
 
 struct GLFWwindow;
 
@@ -36,7 +36,8 @@ namespace Hazel
 		virtual void SetViewport(const Rectangle &viewport) = 0;
 		virtual void SetClearColor(const glm::vec4 &color) = 0;
 		virtual void Clear() = 0;
-		virtual void DrawIndexed(size_t indexCount, PrimitiveType primitiveType) = 0;
+		virtual void SetPrimitiveTopology(PrimitiveTopology primitiveTopology) = 0;
+		virtual void DrawIndexed(size_t indexCount) = 0;
 		virtual void SwapBuffers() = 0;
 	};
 }

@@ -6,6 +6,7 @@
 #include "Platform/OpenGL/Framebuffer/OpenGLFramebufferBuilder.h"
 #include "Platform/OpenGL/Shaders/OpenGLShaderCompiler.h"
 #include "Platform/OpenGL/Buffers/OpenGLVertexBuffer.h"
+#include "Platform/OpenGL/Buffers/OpenGLUniformBuffer.h"
 #include "Platform/OpenGL/Buffers/OpenGLVertexArray.h"
 #include "Platform/OpenGL/Buffers/OpenGLIndexBuffer.h"
 #include "Platform/OpenGL/Textures/OpenGLTexture.h"
@@ -98,6 +99,7 @@ namespace Hazel
 	void OpenGLGraphicsContext::SetIndexBuffer(const std::shared_ptr<IndexBuffer> &indexBuffer)
 	{
 		MakeCurrent();
+		drawer.SetIndexFormat(indexBuffer->GetIndexFormat());
 		this->buffers.SetIndexBuffer(indexBuffer);
 	}
 
@@ -127,28 +129,31 @@ namespace Hazel
 	void OpenGLGraphicsContext::SetViewport(const Rectangle &viewport)
 	{
 		MakeCurrent();
-		OpenGLDrawer::SetViewport(viewport);
+		drawer.SetViewport(viewport);
 	}
 
 	void OpenGLGraphicsContext::SetClearColor(const glm::vec4 &color)
 	{
 		MakeCurrent();
-		OpenGLDrawer::SetClearColor(color);
+		drawer.SetClearColor(color);
 	}
 
 	void OpenGLGraphicsContext::Clear()
 	{
 		MakeCurrent();
-		OpenGLDrawer::Clear();
+		drawer.Clear();
 	}
 
-	void OpenGLGraphicsContext::DrawIndexed(size_t indexCount, PrimitiveType primitiveType)
+	void OpenGLGraphicsContext::SetPrimitiveTopology(PrimitiveTopology primitiveTopology)
 	{
 		MakeCurrent();
-		OpenGLDrawer::DrawIndexed(
-			indexCount,
-			primitiveType,
-			buffers.GetIndexFormat());
+		drawer.SetPrimitiveTopology(primitiveTopology);
+	}
+
+	void OpenGLGraphicsContext::DrawIndexed(size_t indexCount)
+	{
+		MakeCurrent();
+		drawer.DrawIndexed(indexCount);
 	}
 
 	void OpenGLGraphicsContext::SwapBuffers()

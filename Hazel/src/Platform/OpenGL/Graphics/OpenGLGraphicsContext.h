@@ -5,6 +5,7 @@
 #include "Platform/OpenGL/Shaders/OpenGLShaderHolder.h"
 #include "Platform/OpenGL/Buffers/OpenGLBufferHolder.h"
 #include "Platform/OpenGL/Textures/OpenGLTextureHolder.h"
+#include "Helpers/OpenGLDrawer.h"
 
 struct GLFWwindow;
 
@@ -16,6 +17,7 @@ namespace Hazel
 		static inline thread_local const OpenGLGraphicsContext *currentContext = nullptr;
 
 		GLFWwindow *window = nullptr;
+		OpenGLDrawer drawer;
 		OpenGLFramebufferHolder framebuffer;
 		OpenGLShaderHolder shader;
 		OpenGLBufferHolder buffers;
@@ -44,12 +46,8 @@ namespace Hazel
 		virtual void SetViewport(const Rectangle &viewport) override;
 		virtual void SetClearColor(const glm::vec4 &color) override;
 		virtual void Clear() override;
-		virtual void DrawIndexed(size_t indexCount, PrimitiveType primitiveType) override;
+		virtual void SetPrimitiveTopology(PrimitiveTopology primitiveTopology) override;
+		virtual void DrawIndexed(size_t indexCount) override;
 		virtual void SwapBuffers() override;
-
-		constexpr GLFWwindow *GetWindowHandle() const
-		{
-			return window;
-		}
 	};
 }

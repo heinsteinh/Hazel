@@ -36,7 +36,7 @@ namespace Hazel
 	{
 		batch.BindTextures();
 		batch.BufferData();
-		info.GraphicsContext->DrawIndexed(batch.GetIndexCount(), PrimitiveType::Triangles);
+		info.GraphicsContext->DrawIndexed(batch.GetIndexCount());
 		statistics.DrawCallCount++;
 		statistics.IndexCount += batch.GetIndexCount();
 		statistics.VertexCount += batch.GetVertexCount();

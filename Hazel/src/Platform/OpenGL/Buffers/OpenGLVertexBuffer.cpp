@@ -9,13 +9,13 @@ namespace Hazel
 	{
 		glCreateBuffers(1, &id);
 		glNamedBufferData(id, size, nullptr, GL_DYNAMIC_DRAW);
-		Log::Debug("Vertex buffer created with id {}.", id);
+		Log::Debug("OpenGL vertex buffer created with id {}.", id);
 	}
 
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()
 	{
 		glDeleteBuffers(1, &id);
-		Log::Debug("Vertex buffer with id {} destroyed.", id);
+		Log::Debug("OpenGL vertex buffer with id {} destroyed.", id);
 	}
 
 	void OpenGLVertexBuffer::Bind() const
