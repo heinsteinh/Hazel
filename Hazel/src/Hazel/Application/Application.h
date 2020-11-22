@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ApplicationInfo.h"
+#include "Helpers/ApplicationInfo.h"
 
 namespace Hazel
 {

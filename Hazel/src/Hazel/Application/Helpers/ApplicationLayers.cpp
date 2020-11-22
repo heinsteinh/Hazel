@@ -4,8 +4,8 @@
 
 namespace Hazel
 {
-	ApplicationLayers::ApplicationLayers(LayerStack &layers)
-		: layers(std::move(layers))
+	ApplicationLayers::ApplicationLayers(const LayerStack &layers)
+		: layers(layers)
 	{
 	}
 

@@ -3,7 +3,6 @@
 #include "Hazel/Graphics/GraphicsApi.h"
 #include "Hazel/Geometry/Size.h"
 #include "Hazel/Layers/LayerStack.h"
-#include "Hazel/Window/WindowInfo.h"
 
 namespace Hazel
 {

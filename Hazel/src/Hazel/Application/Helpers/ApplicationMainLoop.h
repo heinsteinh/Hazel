@@ -10,10 +10,7 @@ namespace Hazel
 	public:
 		static inline void Run(ApplicationContext &context)
 		{
-			context.SetEventCallback([&](Event &e)
-			{
-				ApplicationEvents::ProcessEvent(context, e);
-			});
+			ApplicationUpdater::Init(context);
 			context.SetRunning(true);
 			while (context.IsRunning())
 			{

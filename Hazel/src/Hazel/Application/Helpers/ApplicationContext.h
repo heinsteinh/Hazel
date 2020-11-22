@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Application/ApplicationInfo.h"
+#include "ApplicationInfo.h"
 #include "Hazel/Graphics/GraphicsApiFactory.h"
 #include "Hazel/Layers/LayersContext.h"
 #include "ApplicationLayers.h"
@@ -17,7 +17,7 @@ namespace Hazel
 		Chrono chrono;
 
 	public:
-		inline ApplicationContext(ApplicationInfo &info)
+		inline ApplicationContext(const ApplicationInfo &info)
 			: graphicsApi(info.GraphicsApi ? info.GraphicsApi : GraphicsApiFactory::CreateOpenGLInstance()),
 			layersContext({graphicsApi.get(), info.Title, info.Resolution}),
 			layers(info.Layers)

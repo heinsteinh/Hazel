@@ -1,8 +1,6 @@
 #pragma once
 
 #include "ApplicationContext.h"
-#include "ApplicationLayers.h"
-#include "Hazel/Logging/Log.h"
 
 namespace Hazel
 {
@@ -11,7 +9,6 @@ namespace Hazel
 	public:
 		static inline void ProcessEvent(ApplicationContext &context, Event &e)
 		{
-			Log::Debug("{}.", e);
 			e.Dispatch([&](WindowCloseEvent &e)
 			{
 				context.SetRunning(false);

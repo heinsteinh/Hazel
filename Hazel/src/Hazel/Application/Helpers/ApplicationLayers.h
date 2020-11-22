@@ -13,7 +13,7 @@ namespace Hazel
 		std::shared_ptr<ImGuiLayer> imGuiLayer;
 
 	public:
-		ApplicationLayers(LayerStack &layers);
+		ApplicationLayers(const LayerStack &layers);
 
 		void PushImGuiLayer();
 		void AttachLayers(LayersContext &context);
