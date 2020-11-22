@@ -37,9 +37,9 @@ namespace Hazel
 			context->SetRunning(false);
 		}
 
-		inline void EnableImGuiRendering(bool renderImGui)
+		inline void EnableImGuiRender(bool renderImGui)
 		{
-			context->EnableImGuiRendering(renderImGui);
+			context->EnableImGuiRender(renderImGui);
 		}
 
 		inline Window &GetWindow() const

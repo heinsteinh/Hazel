@@ -1,9 +1,9 @@
 #pragma once
 
+#include "Layer.h"
+
 namespace Hazel
 {
-	class Layer;
-
 	class LayerStack
 	{
 	private:
@@ -13,22 +13,22 @@ namespace Hazel
 	public:
 		inline auto begin()
 		{
-			return layers.rbegin();
+			return layers.begin();
 		}
 
 		inline auto end()
 		{
-			return layers.rend();
+			return layers.end();
 		}
 
 		inline auto rbegin()
 		{
-			return layers.begin();
+			return layers.rbegin();
 		}
 
 		inline auto rend()
 		{
-			return layers.end();
+			return layers.rend();
 		}
 
 		inline void LayerStack::PushLayer(const std::shared_ptr<Layer> &layer)

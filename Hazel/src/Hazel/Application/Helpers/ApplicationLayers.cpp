@@ -4,34 +4,29 @@
 
 namespace Hazel
 {
-	ApplicationLayers::ApplicationLayers(LayersContext &context)
-		: context(context)
+	ApplicationLayers::ApplicationLayers(LayerStack &layers)
+		: layers(std::move(layers))
 	{
 	}
 
 	void ApplicationLayers::PushImGuiLayer()
 	{
 		imGuiLayer = std::make_shared<ImGuiLayer>();
-		PushOverlay(imGuiLayer);
+		layers.PushOverlay(imGuiLayer);
 	}
 
-	void ApplicationLayers::PushLayer(const std::shared_ptr<Layer> &layer)
+	void ApplicationLayers::AttachLayers(LayersContext &context)
 	{
-		layers.PushLayer(layer);
-		layer->SetContext(context);
-		layer->OnAttach();
-	}
-
-	void ApplicationLayers::PushOverlay(const std::shared_ptr<Layer> &overlay)
-	{
-		layers.PushOverlay(overlay);
-		overlay->SetContext(context);
-		overlay->OnAttach();
+		for (const auto &layer : layers)
+		{
+			layer->SetContext(context);
+			layer->OnAttach();
+		}
 	}
 
 	void ApplicationLayers::DispatchEvent(Event &e)
 	{
-		for (const auto &layer : layers)
+		for (const auto &layer : Reversed(layers))
 		{
 			if (e.IsHandled())
 			{
@@ -44,7 +39,7 @@ namespace Hazel
 
 	void ApplicationLayers::UpdateLayers(float deltaTime)
 	{
-		for (const auto &layer : Reversed(layers))
+		for (const auto &layer : layers)
 		{
 			layer->OnUpdate(deltaTime);
 		}
@@ -55,7 +50,7 @@ namespace Hazel
 		if (imGuiLayer)
 		{
 			imGuiLayer->BeginRender();
-			for (const auto &layer : Reversed(layers))
+			for (const auto &layer : layers)
 			{
 				layer->OnImGuiRender();
 			}

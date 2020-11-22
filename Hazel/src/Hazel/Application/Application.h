@@ -1,25 +1,63 @@
 #pragma once
 
-#include "Helpers/ApplicationContext.h"
-#include "Hazel/Time/Chrono.h"
+#include "ApplicationInfo.h"
 
 namespace Hazel
 {
+	class ApplicationContext;
+
 	class Application
 	{
 	private:
-		ApplicationContext context;
+		ApplicationInfo info;
+		std::unique_ptr<ApplicationContext> context;
 
 	public:
-		Application(const ApplicationInfo &info = {});
+		Application();
 		virtual ~Application();
 
 		void Run();
-		bool IsRunning() const;
-		void Quit();
-		void PushLayer(const std::shared_ptr<Layer> &layer);
-		void PushOverlay(const std::shared_ptr<Layer> &overlay);
+
+		inline void SetGraphicsApi(const std::shared_ptr<GraphicsApi> &graphicsApi)
+		{
+			info.GraphicsApi = graphicsApi;
+		}
+
+		inline void SetTitle(const std::string &title)
+		{
+			info.Title = title;
+		}
+
+		inline void SetResolution(Size resolution)
+		{
+			info.Resolution = resolution;
+		}
+
+		inline void SetVerticalSynchronization(bool verticalSynchronization)
+		{
+			info.VerticalSynchronization = verticalSynchronization;
+		}
+
+		inline void EnableImGui(bool imGuiEnabled)
+		{
+			info.ImGuiEnabled = imGuiEnabled;
+		}
+
+		inline void RenderImGui(bool imGuiRenderEnabled)
+		{
+			info.ImGuiRenderEnabled = imGuiRenderEnabled;
+		}
+
+		inline void PushLayer(const std::shared_ptr<Layer> &layer)
+		{
+			info.Layers.PushLayer(layer);
+		}
+
+		void PushOverlay(const std::shared_ptr<Layer> &overlay)
+		{
+			info.Layers.PushOverlay(overlay);
+		}
 	};
 
-	std::unique_ptr<Application> CreateApplication();
+	std::unique_ptr<Application> CreateApplication(int argc, char *argv[]);
 }

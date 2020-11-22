@@ -3,16 +3,16 @@
 #include "Hazel/Application/Application.h"
 #include "Hazel/Logging/Log.h"
 
-extern std::unique_ptr<Hazel::Application> CreateApplication();
+extern std::unique_ptr<Hazel::Application> CreateApplication(int argc, char *argv[]);
 
 int main(int argc, char *argv[])
 {
 #ifdef HZ_DEBUG
-	CreateApplication()->Run();
+	CreateApplication(argc, argv)->Run();
 #else
 	try
 	{
-		CreateApplication()->Run();
+		CreateApplication(argc, argv)->Run();
 	}
 	catch (Hazel::Exception &e)
 	{
@@ -25,6 +25,6 @@ int main(int argc, char *argv[])
 	catch (...)
 	{
 		Hazel::Log::Critical("General failure");
-}
+	}
 #endif
 }

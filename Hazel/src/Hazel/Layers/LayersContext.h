@@ -9,7 +9,7 @@ namespace Hazel
 	{
 	private:
 		bool running = false;
-		bool renderImGui = true;
+		bool imGuiRenderEnabled = true;
 		Window window;
 		EventSystem eventSystem;
 
@@ -30,14 +30,14 @@ namespace Hazel
 			this->running = running;
 		}
 
-		inline bool WantRenderImGui() const
+		inline bool IsImGuiRenderEnabled() const
 		{
-			return renderImGui;
+			return imGuiRenderEnabled;
 		}
 
-		inline void EnableImGuiRendering(bool renderImGui)
+		inline void EnableImGuiRender(bool imGuiRenderEnabled)
 		{
-			this->renderImGui = renderImGui;
+			this->imGuiRenderEnabled = imGuiRenderEnabled;
 		}
 
 		inline Window &GetWindow()

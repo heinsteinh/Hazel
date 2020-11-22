@@ -17,17 +17,18 @@ namespace Hazel
 		Chrono chrono;
 
 	public:
-		inline ApplicationContext(const ApplicationInfo &info)
+		inline ApplicationContext(ApplicationInfo &info)
 			: graphicsApi(info.GraphicsApi ? info.GraphicsApi : GraphicsApiFactory::CreateOpenGLInstance()),
 			layersContext({graphicsApi.get(), info.Title, info.Resolution}),
-			layers(layersContext)
+			layers(info.Layers)
 		{
-			if (info.EnableImGui)
+			layersContext.GetWindow().SetVerticalSynchronization(info.VerticalSynchronization);
+			if (info.ImGuiEnabled)
 			{
 				layers.PushImGuiLayer();
-				layersContext.EnableImGuiRendering(info.RenderImGui);
+				layersContext.EnableImGuiRender(info.ImGuiRenderEnabled);
 			}
-			layersContext.GetWindow().SetVerticalSynchronization(info.VerticalSynchronization);
+			layers.AttachLayers(layersContext);
 		}
 
 		inline GraphicsApi &GetGraphicsApi() const
@@ -45,9 +46,9 @@ namespace Hazel
 			layersContext.SetRunning(running);
 		}
 
-		inline bool WantRenderImGui() const
+		inline bool IsImGuiRenderEnabled() const
 		{
-			return layersContext.WantRenderImGui();
+			return layersContext.IsImGuiRenderEnabled();
 		}
 
 		inline Window &GetWindow()

@@ -20,7 +20,7 @@ namespace Sandbox
 	};
 }
 
-std::unique_ptr<Hazel::Application> CreateApplication()
+std::unique_ptr<Hazel::Application> CreateApplication(int argc, char *argv[])
 {
 	return std::make_unique<Sandbox::Application>();
 }
