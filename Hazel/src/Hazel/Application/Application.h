@@ -17,27 +17,27 @@ namespace Hazel
 
 		inline void SetGraphicsApi(const std::shared_ptr<GraphicsApi> &graphicsApi)
 		{
-			context.GetInfo().GraphicsApi = graphicsApi;
+			context.SetGraphicsApi(graphicsApi);
 		}
 
-		inline void SetTitle(const std::string &title)
+		inline void SetWindowTitle(const std::string &title)
 		{
-			context.GetInfo().Title = title;
+			context.SetWindowTitle(title);
 		}
 
-		inline void SetResolution(Size resolution)
+		inline void SetWindowResolution(Size resolution)
 		{
-			context.GetInfo().Resolution = resolution;
+			context.SetWindowResolution(resolution);
 		}
 
 		inline void SetVerticalSynchronization(bool verticalSynchronization)
 		{
-			context.GetInfo().VerticalSynchronization = verticalSynchronization;
+			context.SetVerticalSynchronization(verticalSynchronization);
 		}
 
 		inline void EnableImGui(bool imGuiEnabled)
 		{
-			context.GetInfo().ImGuiEnabled = imGuiEnabled;
+			context.EnableImGui(imGuiEnabled);
 		}
 
 		inline void EnableImGuiRender(bool imGuiRenderEnabled)

@@ -1,6 +1,5 @@
 #include "Application.h"
 
-#include "Helpers/ApplicationEvents.h"
 #include "Helpers/ApplicationMainLoop.h"
 #include "Helpers/EntryPoint.h"
 

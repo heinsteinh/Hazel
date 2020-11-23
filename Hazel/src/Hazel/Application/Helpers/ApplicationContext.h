@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ApplicationInfo.h"
 #include "Hazel/Graphics/GraphicsApiFactory.h"
 #include "Hazel/Layers/LayersContext.h"
 #include "ApplicationLayers.h"
@@ -11,48 +10,33 @@ namespace Hazel
 	class ApplicationContext
 	{
 	private:
-		ApplicationInfo info;
+		std::shared_ptr<GraphicsApi> graphicsApi;
+		bool imGuiEnabled = true;
+		WindowInfo windowInfo;
 		LayersContext layersContext;
 		ApplicationLayers layers;
 		Chrono chrono;
 
 	public:
-		inline void CreateApplicationWindow()
+		inline const std::shared_ptr<GraphicsApi> &GetGraphicsApi() const
 		{
-			if (!info.GraphicsApi)
-			{
-				info.GraphicsApi = GraphicsApiFactory::CreateOpenGLInstance();
-			}
-			layersContext.CreateApplicationWindow(info.GetWindowInfo());
+			return graphicsApi;
 		}
 
-		inline void SetupImGui()
+		inline void SetGraphicsApi(const std::shared_ptr<GraphicsApi> &graphicsApi)
 		{
-			if (info.ImGuiEnabled)
-			{
-				layers.PushImGuiLayer();
-				layersContext.EnableImGuiRender(IsImGuiRenderEnabled());
-			}
+			this->graphicsApi = graphicsApi;
+			windowInfo.GraphicsApi = graphicsApi.get();
 		}
 
-		inline void AttachLayers()
+		inline bool IsImGuiEnabled() const
 		{
-			layers.AttachLayers(layersContext);
+			return imGuiEnabled;
 		}
 
-		inline ApplicationInfo &GetInfo()
+		inline void EnableImGui(bool imGuiEnabled)
 		{
-			return info;
-		}
-
-		inline const ApplicationInfo &GetInfo() const
-		{
-			return info;
-		}
-
-		inline GraphicsApi &GetGraphicsApi() const
-		{
-			return *info.GraphicsApi;
+			this->imGuiEnabled = imGuiEnabled;
 		}
 
 		inline bool IsRunning() const
@@ -75,6 +59,26 @@ namespace Hazel
 			layersContext.EnableImGuiRender(imGuiRenderEnabled);
 		}
 
+		inline void SetWindowTitle(const std::string &title)
+		{
+			windowInfo.Title = title;
+		}
+
+		inline void SetWindowResolution(Size resolution)
+		{
+			windowInfo.Resolution = resolution;
+		}
+
+		inline void SetVerticalSynchronization(bool verticalSynchronization)
+		{
+			windowInfo.VerticalSynchronization = verticalSynchronization;
+		}
+
+		inline void CreateApplicationWindow()
+		{
+			layersContext.CreateApplicationWindow(windowInfo);
+		}
+
 		inline Window &GetWindow() const
 		{
 			return layersContext.GetWindow();
@@ -93,6 +97,11 @@ namespace Hazel
 		inline void PollEvents()
 		{
 			layersContext.PollEvents();
+		}
+
+		inline void AttachLayers()
+		{
+			layers.AttachLayers(layersContext);
 		}
 
 		inline ApplicationLayers &GetLayers()

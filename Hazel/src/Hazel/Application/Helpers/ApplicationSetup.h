@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ApplicationContext.h"
-#include "Hazel/Logging/Log.h"
+#include "ApplicationEvents.h"
 
 namespace Hazel
 {
@@ -11,12 +11,18 @@ namespace Hazel
 		static inline void Setup(ApplicationContext &context)
 		{
 			Log::Info("Application setup.");
+			if (!context.GetGraphicsApi())
+			{
+				context.SetGraphicsApi(GraphicsApiFactory::CreateOpenGLInstance());
+			}
 			context.CreateApplicationWindow();
-			context.SetupImGui();
+			if (context.IsImGuiEnabled())
+			{
+				context.GetLayers().PushImGuiLayer();
+			}
 			context.AttachLayers();
 			context.SetEventCallback([&](Event &e)
 			{
-				Log::Debug("{}.", e);
 				ApplicationEvents::ProcessEvent(context, e);
 			});
 		}

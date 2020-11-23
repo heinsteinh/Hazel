@@ -1,8 +1,6 @@
 #pragma once
 
-#include "ApplicationEvents.h"
 #include "ApplicationRenderer.h"
-#include "Hazel/Logging/Log.h"
 
 namespace Hazel
 {
