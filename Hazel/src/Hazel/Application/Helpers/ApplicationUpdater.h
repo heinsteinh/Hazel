@@ -9,15 +9,6 @@ namespace Hazel
 	class ApplicationUpdater
 	{
 	public:
-		static inline void Init(ApplicationContext &context)
-		{
-			context.SetEventCallback([&](Event &e)
-			{
-				Log::Debug("{}.", e);
-				ApplicationEvents::ProcessEvent(context, e);
-			});
-		}
-
 		static inline void Update(ApplicationContext &context)
 		{
 			auto deltaTime = context.GetDeltaTime();

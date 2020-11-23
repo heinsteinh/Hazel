@@ -4,11 +4,6 @@
 
 namespace Hazel
 {
-	ApplicationLayers::ApplicationLayers(const LayerStack &layers)
-		: layers(layers)
-	{
-	}
-
 	void ApplicationLayers::PushImGuiLayer()
 	{
 		imGuiLayer = std::make_shared<ImGuiLayer>();

@@ -15,10 +15,11 @@ namespace Hazel
 		EventReceiver receiver;
 
 	public:
-		EventSystem(const Window &window);
 		~EventSystem();
 
+		void SetWindow(const Window &window);
 		void PollEvents();
+		void RemoveWindow();
 
 		inline void SendEvent(Event &e)
 		{

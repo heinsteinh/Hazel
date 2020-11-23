@@ -17,6 +17,7 @@ namespace Hazel
 			nullptr,
 			nullptr);
 		graphicsContext = info.GraphicsApi->CreateContext({window});
+		SetVerticalSynchronization(info.VerticalSynchronization);
 		Log::Debug("New window created {}", title);
 	}
 

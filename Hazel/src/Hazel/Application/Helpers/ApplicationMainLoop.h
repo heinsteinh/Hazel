@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ApplicationEvents.h"
+#include "ApplicationSetup.h"
 #include "ApplicationUpdater.h"
 
 namespace Hazel
@@ -10,7 +11,7 @@ namespace Hazel
 	public:
 		static inline void Run(ApplicationContext &context)
 		{
-			ApplicationUpdater::Init(context);
+			ApplicationSetup::Setup(context);
 			context.SetRunning(true);
 			while (context.IsRunning())
 			{

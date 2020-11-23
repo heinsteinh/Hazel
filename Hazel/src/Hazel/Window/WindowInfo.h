@@ -10,5 +10,6 @@ namespace Hazel
 		GraphicsApi *GraphicsApi = nullptr;
 		std::string Title;
 		Size Resolution;
+		bool VerticalSynchronization = true;
 	};
 }

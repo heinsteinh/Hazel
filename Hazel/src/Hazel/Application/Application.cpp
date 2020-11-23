@@ -14,14 +14,13 @@ namespace Hazel
 	Application::~Application()
 	{
 		Log::Info("Application destroyed.");
-		context->SetRunning(false);
+		context.SetRunning(false);
 	}
 
 	void Application::Run()
 	{
 		Log::Info("Application started.");
-		context = std::make_unique<ApplicationContext>(info);
-		ApplicationMainLoop::Run(*context);
+		ApplicationMainLoop::Run(context);
 		Log::Info("Application stopped.");
 	}
 }

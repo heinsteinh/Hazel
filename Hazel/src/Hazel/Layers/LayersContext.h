@@ -10,16 +10,10 @@ namespace Hazel
 	private:
 		bool running = false;
 		bool imGuiRenderEnabled = true;
-		Window window;
+		std::unique_ptr<Window> window;
 		EventSystem eventSystem;
 
 	public:
-		inline LayersContext(const WindowInfo &info)
-			: window(info),
-			eventSystem(window)
-		{
-		}
-
 		inline bool IsRunning() const
 		{
 			return running;
@@ -40,19 +34,21 @@ namespace Hazel
 			this->imGuiRenderEnabled = imGuiRenderEnabled;
 		}
 
-		inline Window &GetWindow()
+		inline Window &CreateApplicationWindow(const WindowInfo &info)
 		{
-			return window;
+			window = std::make_unique<Window>(info);
+			eventSystem.SetWindow(*window);
+			return *window;
 		}
 
-		inline const Window &GetWindow() const
+		inline Window &GetWindow() const
 		{
-			return window;
+			return *window;
 		}
 
 		inline GraphicsContext &GetGraphicsContext() const
 		{
-			return window.GetGraphicsContext();
+			return window->GetGraphicsContext();
 		}
 
 		inline void SetEventCallback(const EventSystem::Callback &callback)

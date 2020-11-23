@@ -11,29 +11,48 @@ namespace Hazel
 	class ApplicationContext
 	{
 	private:
-		std::shared_ptr<GraphicsApi> graphicsApi;
+		ApplicationInfo info;
 		LayersContext layersContext;
 		ApplicationLayers layers;
 		Chrono chrono;
 
 	public:
-		inline ApplicationContext(const ApplicationInfo &info)
-			: graphicsApi(info.GraphicsApi ? info.GraphicsApi : GraphicsApiFactory::CreateOpenGLInstance()),
-			layersContext({graphicsApi.get(), info.Title, info.Resolution}),
-			layers(info.Layers)
+		inline void CreateApplicationWindow()
 		{
-			layersContext.GetWindow().SetVerticalSynchronization(info.VerticalSynchronization);
+			if (!info.GraphicsApi)
+			{
+				info.GraphicsApi = GraphicsApiFactory::CreateOpenGLInstance();
+			}
+			layersContext.CreateApplicationWindow(info.GetWindowInfo());
+		}
+
+		inline void SetupImGui()
+		{
 			if (info.ImGuiEnabled)
 			{
 				layers.PushImGuiLayer();
-				layersContext.EnableImGuiRender(info.ImGuiRenderEnabled);
+				layersContext.EnableImGuiRender(IsImGuiRenderEnabled());
 			}
+		}
+
+		inline void AttachLayers()
+		{
 			layers.AttachLayers(layersContext);
+		}
+
+		inline ApplicationInfo &GetInfo()
+		{
+			return info;
+		}
+
+		inline const ApplicationInfo &GetInfo() const
+		{
+			return info;
 		}
 
 		inline GraphicsApi &GetGraphicsApi() const
 		{
-			return *graphicsApi;
+			return *info.GraphicsApi;
 		}
 
 		inline bool IsRunning() const
@@ -51,12 +70,12 @@ namespace Hazel
 			return layersContext.IsImGuiRenderEnabled();
 		}
 
-		inline Window &GetWindow()
+		inline void EnableImGuiRender(bool imGuiRenderEnabled)
 		{
-			return layersContext.GetWindow();
+			layersContext.EnableImGuiRender(imGuiRenderEnabled);
 		}
 
-		inline const Window &GetWindow() const
+		inline Window &GetWindow() const
 		{
 			return layersContext.GetWindow();
 		}

@@ -1,16 +1,13 @@
 #pragma once
 
-#include "Helpers/ApplicationInfo.h"
+#include "Helpers/ApplicationContext.h"
 
 namespace Hazel
 {
-	class ApplicationContext;
-
 	class Application
 	{
 	private:
-		ApplicationInfo info;
-		std::unique_ptr<ApplicationContext> context;
+		ApplicationContext context;
 
 	public:
 		Application();
@@ -20,42 +17,42 @@ namespace Hazel
 
 		inline void SetGraphicsApi(const std::shared_ptr<GraphicsApi> &graphicsApi)
 		{
-			info.GraphicsApi = graphicsApi;
+			context.GetInfo().GraphicsApi = graphicsApi;
 		}
 
 		inline void SetTitle(const std::string &title)
 		{
-			info.Title = title;
+			context.GetInfo().Title = title;
 		}
 
 		inline void SetResolution(Size resolution)
 		{
-			info.Resolution = resolution;
+			context.GetInfo().Resolution = resolution;
 		}
 
 		inline void SetVerticalSynchronization(bool verticalSynchronization)
 		{
-			info.VerticalSynchronization = verticalSynchronization;
+			context.GetInfo().VerticalSynchronization = verticalSynchronization;
 		}
 
 		inline void EnableImGui(bool imGuiEnabled)
 		{
-			info.ImGuiEnabled = imGuiEnabled;
+			context.GetInfo().ImGuiEnabled = imGuiEnabled;
 		}
 
-		inline void RenderImGui(bool imGuiRenderEnabled)
+		inline void EnableImGuiRender(bool imGuiRenderEnabled)
 		{
-			info.ImGuiRenderEnabled = imGuiRenderEnabled;
+			context.EnableImGuiRender(imGuiRenderEnabled);
 		}
 
 		inline void PushLayer(const std::shared_ptr<Layer> &layer)
 		{
-			info.Layers.PushLayer(layer);
+			context.GetLayers().PushLayer(layer);
 		}
 
 		void PushOverlay(const std::shared_ptr<Layer> &overlay)
 		{
-			info.Layers.PushOverlay(overlay);
+			context.GetLayers().PushOverlay(overlay);
 		}
 	};
 

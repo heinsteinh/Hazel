@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Hazel/Graphics/GraphicsApi.h"
-#include "Hazel/Geometry/Size.h"
+#include "Hazel/Window/WindowInfo.h"
 #include "Hazel/Layers/LayerStack.h"
 
 namespace Hazel
@@ -14,6 +13,15 @@ namespace Hazel
 		bool VerticalSynchronization = true;
 		bool ImGuiEnabled = true;
 		bool ImGuiRenderEnabled = true;
-		LayerStack Layers;
+
+		inline WindowInfo GetWindowInfo() const
+		{
+			WindowInfo info;
+			info.GraphicsApi = GraphicsApi.get();
+			info.Title = Title;
+			info.Resolution = Resolution;
+			info.VerticalSynchronization = VerticalSynchronization;
+			return info;
+		}
 	};
 }
