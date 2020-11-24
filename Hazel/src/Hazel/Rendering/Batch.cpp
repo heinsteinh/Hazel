@@ -16,6 +16,11 @@ namespace Hazel
 		BindBuffers();
 	}
 
+	void Batch::PushConstant(const void *data, size_t size)
+	{
+		buffers.BufferConstant(data, size);
+	}
+
 	void Batch::Clear()
 	{
 		indices.Clear();

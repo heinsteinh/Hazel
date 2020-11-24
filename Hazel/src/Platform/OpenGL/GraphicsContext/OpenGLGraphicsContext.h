@@ -32,14 +32,16 @@ namespace Hazel
 		virtual std::shared_ptr<ImGuiRenderer> CreateImGuiRenderer() override;
 		virtual std::shared_ptr<Framebuffer> CreateFramebuffer(const FramebufferInfo &info) override;
 		virtual std::shared_ptr<Shader> CreateShader(const ShaderInfo &info) override;
+		virtual std::shared_ptr<IndexBuffer> CreateIndexBuffer(size_t size) override;
 		virtual std::shared_ptr<VertexBuffer> CreateVertexBuffer(size_t size) override;
+		virtual std::shared_ptr<ConstantBuffer> CreateConstantBuffer(size_t size) override;
 		virtual std::shared_ptr<InputLayout> CreateInputLayout(const VertexAttributes &vertexAttributes) override;
-		virtual std::shared_ptr<IndexBuffer> CreateIndexBuffer(size_t indexCount) override;
 		virtual std::shared_ptr<Texture> CreateTexture(const TextureInfo &info) override;
 		virtual void SetFramebuffer(const std::shared_ptr<Framebuffer> &framebuffer) override;
 		virtual void SetShader(const std::shared_ptr<Shader> &shader) override;
 		virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer> &indexBuffer) override;
 		virtual void SetVertexBuffer(const std::shared_ptr<VertexBuffer> &vertexBuffer) override;
+		virtual void SetConstantBuffer(const std::shared_ptr<ConstantBuffer> &constantBuffer, uint32_t binding = 0) override;
 		virtual void SetInputLayout(const std::shared_ptr<InputLayout> &inputLayout) override;
 		virtual void SetTexture(const std::shared_ptr<Texture> &texture, uint32_t slot = 0) override;
 		virtual size_t GetTextureSlotCount() override;

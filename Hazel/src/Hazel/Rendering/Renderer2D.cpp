@@ -17,7 +17,8 @@ namespace Hazel
 
 	void Renderer2D::BeginScene(const OrthographicCamera &camera)
 	{
-		shader.SetViewProjectionMatrix(camera.GetViewProjectionMatrix());
+		batch.PushConstant(glm::value_ptr(camera.GetViewProjectionMatrix()), sizeof(glm::mat4));
+		//shader.SetViewProjectionMatrix(camera.GetViewProjectionMatrix());
 		statistics.Reset();
 	}
 

@@ -9,12 +9,14 @@ namespace Hazel
 	private:
 		std::shared_ptr<IndexBuffer> indexBuffer;
 		std::shared_ptr<VertexBuffer> vertexBuffer;
+		std::shared_ptr<ConstantBuffer> constantBuffer;
 		std::shared_ptr<InputLayout> inputLayout;
 
 	public:
 		inline BatchBuffers(const RendererInfo &info)
 			: indexBuffer(info.CreateIndexBuffer()),
 			vertexBuffer(info.CreateVertexBuffer()),
+			constantBuffer(info.CreateConstantBuffer()),
 			inputLayout(info.CreateInputLayout())
 		{
 		}
@@ -23,6 +25,7 @@ namespace Hazel
 		{
 			graphicsContext.SetIndexBuffer(indexBuffer);
 			graphicsContext.SetVertexBuffer(vertexBuffer);
+			graphicsContext.SetConstantBuffer(constantBuffer, 0);
 			graphicsContext.SetInputLayout(inputLayout);
 		}
 
@@ -34,6 +37,11 @@ namespace Hazel
 		inline void BufferVertices(const void *data, size_t size)
 		{
 			vertexBuffer->BufferData(data, size);
+		}
+
+		inline void BufferConstant(const void *data, size_t size)
+		{
+			constantBuffer->BufferData(data, size);
 		}
 	};
 }

@@ -21,6 +21,7 @@ namespace Hazel
 	public:
 		Batch(const RendererInfo &info);
 
+		void PushConstant(const void *data, size_t size);
 		void Clear();
 		bool Add(const DrawData &drawData);
 		void BufferData();

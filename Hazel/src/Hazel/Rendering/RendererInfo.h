@@ -23,6 +23,11 @@ namespace Hazel
 			return GraphicsContext->CreateVertexBuffer(MaxVertexCount * sizeof(Vertex));
 		}
 
+		inline std::shared_ptr<ConstantBuffer> CreateConstantBuffer() const
+		{
+			return GraphicsContext->CreateConstantBuffer(sizeof(glm::mat4));
+		}
+
 		inline std::shared_ptr<InputLayout> CreateInputLayout() const
 		{
 			return GraphicsContext->CreateInputLayout(Vertex::Attributes);

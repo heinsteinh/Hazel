@@ -13,6 +13,7 @@ namespace Hazel
 		OpenGLUniformBuffer(size_t size);
 		virtual ~OpenGLUniformBuffer();
 
+		void SetBinding(uint32_t binding);
 		void Bind() const;
 		void Unbind() const;
 

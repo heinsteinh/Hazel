@@ -60,22 +60,27 @@ namespace Hazel
 		return OpenGLShaderCompiler::Compile(info);
 	}
 
+	std::shared_ptr<IndexBuffer> OpenGLGraphicsContext::CreateIndexBuffer(size_t size)
+	{
+		MakeCurrent();
+		return std::make_shared<OpenGLIndexBuffer>(size);
+	}
+
 	std::shared_ptr<VertexBuffer> OpenGLGraphicsContext::CreateVertexBuffer(size_t size)
 	{
 		MakeCurrent();
 		return std::make_shared<OpenGLVertexBuffer>(size);
 	}
 
+	std::shared_ptr<ConstantBuffer> OpenGLGraphicsContext::CreateConstantBuffer(size_t size)
+	{
+		return std::make_shared<OpenGLUniformBuffer>(size);
+	}
+
 	std::shared_ptr<InputLayout> OpenGLGraphicsContext::CreateInputLayout(const VertexAttributes &vertexAttributes)
 	{
 		MakeCurrent();
 		return std::make_shared<OpenGLVertexArray>(vertexAttributes);
-	}
-
-	std::shared_ptr<IndexBuffer> OpenGLGraphicsContext::CreateIndexBuffer(size_t indexCount)
-	{
-		MakeCurrent();
-		return std::make_shared<OpenGLIndexBuffer>(indexCount);
 	}
 
 	std::shared_ptr<Texture> OpenGLGraphicsContext::CreateTexture(const TextureInfo &info)
@@ -106,6 +111,12 @@ namespace Hazel
 	{
 		MakeCurrent();
 		this->buffers.SetVertexBuffer(vertexBuffer);
+	}
+
+	void OpenGLGraphicsContext::SetConstantBuffer(const std::shared_ptr<ConstantBuffer> &constantBuffer, uint32_t binding)
+	{
+		MakeCurrent();
+		this->buffers.SetConstantBuffer(constantBuffer, binding);
 	}
 
 	void OpenGLGraphicsContext::SetInputLayout(const std::shared_ptr<InputLayout> &inputLayout)
