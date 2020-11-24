@@ -10,6 +10,7 @@ namespace Hazel
 		shader(*info.GraphicsContext)
 	{
 		info.GraphicsContext->SetShader(shader);
+		info.GraphicsContext->SetIndexFormat(info.IndexFormat);
 		shader.InitSamplers(batch.GetMaxTextures());
 		batch.BindBuffers();
 	}

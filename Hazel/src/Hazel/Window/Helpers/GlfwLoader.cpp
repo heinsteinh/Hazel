@@ -16,7 +16,6 @@ namespace Hazel
 
 	void GlfwLoader::Init()
 	{
-		Log::Debug("GLFW initialization.");
 		SetupErrorCallback();
 		InitGlfw();
 		SetupParameters();
@@ -46,8 +45,7 @@ namespace Hazel
 
 	void GlfwLoader::Shutdown()
 	{
-		Log::Debug("GLFW terminate.");
 		glfwTerminate();
-		Log::Debug("GLFW terminated.");
+		Log::Debug("GLFW shutdown.");
 	}
 }

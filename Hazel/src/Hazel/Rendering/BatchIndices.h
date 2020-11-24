@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Hazel/Buffers/IndexFormatHelper.h"
 #include "BatchArray.h"
+#include "Hazel/GraphicsContext/IndexFormatHelper.h"
 #include "Hazel/Exceptions/AssertionException.h"
 
 namespace Hazel

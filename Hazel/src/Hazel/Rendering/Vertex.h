@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Hazel/Buffers/VertexAttributes.h"
+#include "Hazel/GraphicsBuffers/VertexAttributes.h"
 
 namespace Hazel
 {
 	struct Vertex
 	{
 		static inline const VertexAttributes Attributes = {
-			{"a_Position", ShaderDataType::Float3},
-			{"a_Color", ShaderDataType::Float4},
-			{"a_TextureCoordinate", ShaderDataType::Float2},
-			{"a_TextureIndex", ShaderDataType::Float}
+			{ShaderDataType::Float3},
+			{ShaderDataType::Float4},
+			{ShaderDataType::Float2},
+			{ShaderDataType::Float}
 		};
 
 		glm::vec3 Position{0.0f};

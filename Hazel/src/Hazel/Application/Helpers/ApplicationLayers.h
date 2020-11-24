@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Hazel/Layers/LayerStack.h"
+#include "LayerStack.h"
+#include "LayerContext.h"
 #include "Hazel/ImGui/ImGuiLayer.h"
-#include "Hazel/Layers/LayersContext.h"
 
 namespace Hazel
 {
@@ -14,7 +14,7 @@ namespace Hazel
 
 	public:
 		void PushImGuiLayer();
-		void AttachLayers(LayersContext &context);
+		void AttachLayers(LayerContext &context);
 		void DispatchEvent(Event &e);
 		void UpdateLayers(float deltaTime);
 		void RenderImGui();

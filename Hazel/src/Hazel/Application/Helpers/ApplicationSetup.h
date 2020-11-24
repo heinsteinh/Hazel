@@ -10,7 +10,7 @@ namespace Hazel
 	public:
 		static inline void Setup(ApplicationContext &context)
 		{
-			Log::Info("Application setup.");
+			Log::Debug("Application setup.");
 			if (!context.GetGraphicsApi())
 			{
 				context.SetGraphicsApi(GraphicsApiFactory::CreateOpenGLInstance());

@@ -1,15 +1,15 @@
 #pragma once
 
-#include "Hazel/Layers/Layer.h"
-#include "ImGuiRenderer.h"
+#include "Hazel/Application/Layer.h"
 #include "Helpers/ImGuiContextHolder.h"
+#include "ImGuiRenderer.h"
 
 namespace Hazel
 {
 	class ImGuiLayer : public Layer
 	{
 	private:
-		std::shared_ptr<ImGuiContextHolder> imGuiContext;
+		std::unique_ptr<ImGuiContextHolder> imGuiContext;
 		std::shared_ptr<ImGuiRenderer> renderer;
 
 	public:

@@ -24,8 +24,9 @@ namespace Sandbox
 	{
 		Hazel::RendererInfo rendererInfo;
 		rendererInfo.GraphicsContext = &GetGraphicsContext();
-		rendererInfo.MaxIndices = maxIndices;
-		rendererInfo.MaxVertices = maxVertices;
+		rendererInfo.MaxIndexCount = maxIndices;
+		rendererInfo.MaxVertexCount = maxVertices;
+		rendererInfo.IndexFormat = Hazel::IndexFormat::UInt16;
 		renderer = std::make_shared<Hazel::Renderer2D>(rendererInfo);
 		screenTransform = {GetWindow(), camera};
 		camera.SetAspectRatio(GetWindow().GetAspectRatio());

@@ -39,7 +39,7 @@ namespace Hazel
 
 	void ImGuiLayer::OnAttach()
 	{
-		imGuiContext = std::make_shared<ImGuiContextHolder>();
+		imGuiContext = std::make_unique<ImGuiContextHolder>();
 		renderer = GetGraphicsContext().CreateImGuiRenderer();
 	}
 

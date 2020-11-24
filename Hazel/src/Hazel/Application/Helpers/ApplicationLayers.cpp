@@ -10,7 +10,7 @@ namespace Hazel
 		layers.PushOverlay(imGuiLayer);
 	}
 
-	void ApplicationLayers::AttachLayers(LayersContext &context)
+	void ApplicationLayers::AttachLayers(LayerContext &context)
 	{
 		for (const auto &layer : layers)
 		{

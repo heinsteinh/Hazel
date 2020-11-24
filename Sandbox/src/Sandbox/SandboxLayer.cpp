@@ -17,8 +17,8 @@ namespace Sandbox
 	{
 		Hazel::RendererInfo rendererInfo;
 		rendererInfo.GraphicsContext = &GetGraphicsContext();
-		rendererInfo.MaxIndices = 60000;
-		rendererInfo.MaxVertices = 40000;
+		rendererInfo.MaxIndexCount = 60000;
+		rendererInfo.MaxVertexCount = 40000;
 		renderer = std::make_shared<Hazel::Renderer2D>(rendererInfo);
 		spriteSheet = Hazel::TextureBuilder(GetGraphicsContext()).BuildFromFile("assets\\textures\\SpriteSheet.png");
 		drawData.Mesh->SetColor({1.0f, 1.0f, 1.0f, 1.0f});

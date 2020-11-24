@@ -2,7 +2,7 @@
 
 #include "RendererStatistics.h"
 #include "Hazel/Camera/OrthographicCamera.h"
-#include "Hazel/Rendering/DefaultShader.h"
+#include "Hazel/Rendering/BatchShader.h"
 #include "Batch.h"
 #include "BatchException.h"
 
@@ -13,7 +13,7 @@ namespace Hazel
 	private:
 		RendererInfo info;
 		Batch batch;
-		DefaultShader shader;
+		BatchShader shader;
 		RendererStatistics statistics;
 
 	public:

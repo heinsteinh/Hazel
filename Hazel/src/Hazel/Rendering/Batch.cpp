@@ -6,8 +6,8 @@ namespace Hazel
 {
 	Batch::Batch(const RendererInfo &info)
 		: graphicsContext(info.GraphicsContext),
-		indices(info.MaxIndices, info.IndexFormat),
-		vertices(info.MaxVertices),
+		indices(info.MaxIndexCount, info.IndexFormat),
+		vertices(info.MaxVertexCount),
 		textures(graphicsContext->GetTextureSlotCount()),
 		buffers(info),
 		whiteTexture(TextureBuilder(*graphicsContext).BuildFlatTexture(glm::vec4(1.0f)))

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Hazel/Graphics/GraphicsApiFactory.h"
-#include "Hazel/Layers/LayersContext.h"
+#include "Hazel/GraphicsApi/GraphicsApiFactory.h"
 #include "ApplicationLayers.h"
+#include "LayerContext.h"
 #include "Hazel/Time/Chrono.h"
 
 namespace Hazel
@@ -13,7 +13,7 @@ namespace Hazel
 		std::shared_ptr<GraphicsApi> graphicsApi;
 		bool imGuiEnabled = true;
 		WindowInfo windowInfo;
-		LayersContext layersContext;
+		LayerContext layerContext;
 		ApplicationLayers layers;
 		Chrono chrono;
 
@@ -41,22 +41,22 @@ namespace Hazel
 
 		inline bool IsRunning() const
 		{
-			return layersContext.IsRunning();
+			return layerContext.IsRunning();
 		}
 
 		inline void SetRunning(bool running)
 		{
-			layersContext.SetRunning(running);
+			layerContext.SetRunning(running);
 		}
 
 		inline bool IsImGuiRenderEnabled() const
 		{
-			return layersContext.IsImGuiRenderEnabled();
+			return layerContext.IsImGuiRenderEnabled();
 		}
 
 		inline void EnableImGuiRender(bool imGuiRenderEnabled)
 		{
-			layersContext.EnableImGuiRender(imGuiRenderEnabled);
+			layerContext.EnableImGuiRender(imGuiRenderEnabled);
 		}
 
 		inline void SetWindowTitle(const std::string &title)
@@ -76,32 +76,32 @@ namespace Hazel
 
 		inline void CreateApplicationWindow()
 		{
-			layersContext.CreateApplicationWindow(windowInfo);
+			layerContext.CreateApplicationWindow(windowInfo);
 		}
 
 		inline Window &GetWindow() const
 		{
-			return layersContext.GetWindow();
+			return layerContext.GetWindow();
 		}
 
 		inline GraphicsContext &GetGraphicsContext() const
 		{
-			return layersContext.GetGraphicsContext();
+			return layerContext.GetGraphicsContext();
 		}
 
 		inline void SetEventCallback(const EventSystem::Callback &callback)
 		{
-			layersContext.SetEventCallback(callback);
+			layerContext.SetEventCallback(callback);
 		}
 
 		inline void PollEvents()
 		{
-			layersContext.PollEvents();
+			layerContext.PollEvents();
 		}
 
 		inline void AttachLayers()
 		{
-			layers.AttachLayers(layersContext);
+			layers.AttachLayers(layerContext);
 		}
 
 		inline ApplicationLayers &GetLayers()
