@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Platform/OpenGL/Shaders/OpenGLProgram.h"
+#include "Platform/OpenGL/GraphicsContext/OpenGLBinder.h"
 
 namespace Hazel
 {
@@ -17,12 +18,7 @@ namespace Hazel
 
 		inline void SetShader(const std::shared_ptr<Shader> &shader)
 		{
-			if (shader && program != shader.get())
-			{
-				HZ_ASSERT(typeid(*shader) == typeid(OpenGLProgram), "Not an OpenGL type.");
-				program = static_cast<OpenGLProgram *>(shader.get());
-				program->Bind();
-			}
+			OpenGLBinder::Bind(program, shader);
 		}
 	};
 }

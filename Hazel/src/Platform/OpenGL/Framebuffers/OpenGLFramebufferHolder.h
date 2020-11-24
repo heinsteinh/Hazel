@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Platform/OpenGL/Framebuffers/OpenGLFramebuffer.h"
+#include "Platform/OpenGL/GraphicsContext/OpenGLBinder.h"
 
 namespace Hazel
 {
@@ -17,12 +18,7 @@ namespace Hazel
 
 		inline void SetFramebuffer(const std::shared_ptr<Framebuffer> &framebuffer)
 		{
-			if (framebuffer && this->framebuffer != framebuffer.get())
-			{
-				HZ_ASSERT(typeid(*framebuffer) == typeid(OpenGLFramebuffer), "Not an OpenGL type.");
-				this->framebuffer = static_cast<OpenGLFramebuffer *>(framebuffer.get());
-				this->framebuffer->Bind();
-			}
+			OpenGLBinder::Bind(this->framebuffer, framebuffer);
 		}
 	};
 }

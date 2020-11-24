@@ -15,7 +15,7 @@ namespace Hazel
 
 		void Bind() const;
 		void Unbind() const;
-		void AddBoundVertexBuffer();
+		void AddCurrentVertexBuffer();
 
 		constexpr uint32_t GetId() const
 		{

@@ -27,10 +27,10 @@ namespace Hazel
 
 		inline void SetTexture(const std::shared_ptr<Texture> &texture, uint32_t slot)
 		{
+			HZ_ASSERT(slot < textures.size(), "Not enough texture slots.");
 			if (texture && textures[slot] != texture.get())
 			{
 				HZ_ASSERT(typeid(*texture) == typeid(OpenGLTexture), "Not an OpenGL type.");
-				HZ_ASSERT(slot < textures.size(), "Not enough texture slots.");
 				textures[slot] = static_cast<OpenGLTexture *>(texture.get());
 				textures[slot]->Bind(slot);
 			}

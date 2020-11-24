@@ -3,6 +3,7 @@
 #include "Platform/OpenGL/GraphicsBuffers/OpenGLVertexBuffer.h"
 #include "Platform/OpenGL/GraphicsBuffers/OpenGLVertexArray.h"
 #include "Platform/OpenGL/GraphicsBuffers/OpenGLIndexBuffer.h"
+#include "Platform/OpenGL/GraphicsContext/OpenGLBinder.h"
 
 namespace Hazel
 {
@@ -21,12 +22,7 @@ namespace Hazel
 
 		inline void SetIndexBuffer(const std::shared_ptr<IndexBuffer> &indexBuffer)
 		{
-			if (indexBuffer && this->indexBuffer != indexBuffer.get())
-			{
-				HZ_ASSERT(typeid(*indexBuffer) == typeid(OpenGLIndexBuffer), "Not an OpenGL type.");
-				this->indexBuffer = static_cast<OpenGLIndexBuffer *>(indexBuffer.get());
-				this->indexBuffer->Bind();
-			}
+			OpenGLBinder::Bind(this->indexBuffer, indexBuffer);
 		}
 
 		inline OpenGLVertexBuffer *GetVertexBuffer() const
@@ -36,15 +32,10 @@ namespace Hazel
 
 		inline void SetVertexBuffer(const std::shared_ptr<VertexBuffer> &vertexBuffer)
 		{
-			if (vertexBuffer && this->vertexBuffer != vertexBuffer.get())
+			OpenGLBinder::Bind(this->vertexBuffer, vertexBuffer);
+			if (vertexArray)
 			{
-				HZ_ASSERT(typeid(*vertexBuffer) == typeid(OpenGLVertexBuffer), "Not an OpenGL type.");
-				this->vertexBuffer = static_cast<OpenGLVertexBuffer *>(vertexBuffer.get());
-				this->vertexBuffer->Bind();
-				if (vertexArray)
-				{
-					vertexArray->AddBoundVertexBuffer();
-				}
+				vertexArray->AddCurrentVertexBuffer();
 			}
 		}
 
@@ -55,19 +46,14 @@ namespace Hazel
 
 		inline void SetInputLayout(const std::shared_ptr<InputLayout> &inputLayout)
 		{
-			if (inputLayout && vertexArray != inputLayout.get())
+			OpenGLBinder::Bind(this->vertexArray, inputLayout);
+			if (vertexBuffer)
 			{
-				HZ_ASSERT(typeid(*inputLayout) == typeid(OpenGLVertexArray), "Not an OpenGL type.");
-				vertexArray = static_cast<OpenGLVertexArray *>(inputLayout.get());
-				vertexArray->Bind();
-				if (vertexBuffer)
-				{
-					vertexArray->AddBoundVertexBuffer();
-				}
-				if (indexBuffer)
-				{
-					indexBuffer->Bind();
-				}
+				vertexArray->AddCurrentVertexBuffer();
+			}
+			if (indexBuffer)
+			{
+				indexBuffer->Bind();
 			}
 		}
 	};

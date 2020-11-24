@@ -29,7 +29,7 @@ namespace Hazel
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::AddBoundVertexBuffer()
+	void OpenGLVertexArray::AddCurrentVertexBuffer()
 	{
 		auto &vertexAttributes = GetAttributes();
 		for (size_t i = 0; i < vertexAttributes.GetSize(); i++)
