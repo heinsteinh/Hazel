@@ -13,7 +13,7 @@ namespace Hazel
 	private:
 		OpenGLIndexBuffer *indexBuffer = nullptr;
 		OpenGLVertexBuffer *vertexBuffer = nullptr;
-		OpenGLUniformBuffer *uniformBuffer = nullptr;
+		std::vector<OpenGLUniformBuffer *> uniformBuffers;
 		OpenGLVertexArray *vertexArray = nullptr;
 
 	public:
@@ -41,17 +41,30 @@ namespace Hazel
 			}
 		}
 
-		inline OpenGLUniformBuffer *GetUniformBuffer() const
+		inline void InitBindingCount(size_t bindingCount)
 		{
-			return uniformBuffer;
+			uniformBuffers.resize(bindingCount);
+		}
+
+		inline size_t GetUniformBufferBindingCount() const
+		{
+			return uniformBuffers.size();
+		}
+
+		inline OpenGLUniformBuffer *GetUniformBuffer(uint32_t binding) const
+		{
+			HZ_ASSERT(binding < uniformBuffers.size(), "Binding out of range");
+			return uniformBuffers[binding];
 		}
 
 		inline void SetConstantBuffer(const std::shared_ptr<ConstantBuffer> &constantBuffer, uint32_t binding)
 		{
-			OpenGLBinder::Bind(this->uniformBuffer, constantBuffer);
-			if (this->uniformBuffer)
+			HZ_ASSERT(binding < uniformBuffers.size(), "Binding out of range");
+			auto &uniformBuffer = uniformBuffers[binding];
+			OpenGLBinder::Bind(uniformBuffer, constantBuffer);
+			if (uniformBuffer)
 			{
-				this->uniformBuffer->SetBinding(binding);
+				uniformBuffer->SetBinding(binding);
 			}
 		}
 

@@ -7,11 +7,18 @@ namespace Hazel
 	class OpenGLInfo
 	{
 	public:
-		static inline size_t GetMaxTextures()
+		static inline size_t GetUniformBufferBindingCount()
 		{
-			int result;
-			glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &result);
-			return result;
+			int bindingCount;
+			glGetIntegerv(GL_MAX_UNIFORM_BUFFER_BINDINGS, &bindingCount);
+			return bindingCount;
+		}
+
+		static inline size_t GetTextureSlotCount()
+		{
+			int slotCount;
+			glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &slotCount);
+			return slotCount;
 		}
 	};
 }

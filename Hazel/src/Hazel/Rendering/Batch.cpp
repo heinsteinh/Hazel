@@ -12,6 +12,7 @@ namespace Hazel
 		buffers(info),
 		whiteTexture(TextureBuilder(*graphicsContext).BuildFlatTexture(glm::vec4(1.0f)))
 	{
+		info.GraphicsContext->SetIndexFormat(info.IndexFormat);
 		textures.Add(whiteTexture);
 		BindBuffers();
 	}

@@ -10,7 +10,6 @@ namespace Hazel
 		shader(*info.GraphicsContext)
 	{
 		info.GraphicsContext->SetShader(shader);
-		info.GraphicsContext->SetIndexFormat(info.IndexFormat);
 		shader.InitSamplers(batch.GetMaxTextures());
 		batch.BindBuffers();
 	}
@@ -18,7 +17,6 @@ namespace Hazel
 	void Renderer2D::BeginScene(const OrthographicCamera &camera)
 	{
 		batch.PushConstant(glm::value_ptr(camera.GetViewProjectionMatrix()), sizeof(glm::mat4));
-		//shader.SetViewProjectionMatrix(camera.GetViewProjectionMatrix());
 		statistics.Reset();
 	}
 

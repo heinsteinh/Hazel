@@ -41,10 +41,11 @@ namespace Hazel
 		virtual void SetShader(const std::shared_ptr<Shader> &shader) override;
 		virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer> &indexBuffer) override;
 		virtual void SetVertexBuffer(const std::shared_ptr<VertexBuffer> &vertexBuffer) override;
+		virtual size_t GetConstantBufferBindingCount() override;
 		virtual void SetConstantBuffer(const std::shared_ptr<ConstantBuffer> &constantBuffer, uint32_t binding = 0) override;
 		virtual void SetInputLayout(const std::shared_ptr<InputLayout> &inputLayout) override;
-		virtual void SetTexture(const std::shared_ptr<Texture> &texture, uint32_t slot = 0) override;
 		virtual size_t GetTextureSlotCount() override;
+		virtual void SetTexture(const std::shared_ptr<Texture> &texture, uint32_t slot = 0) override;
 		virtual void SetViewport(const Rectangle &viewport) override;
 		virtual void SetClearColor(const glm::vec4 &color) override;
 		virtual void Clear() override;
