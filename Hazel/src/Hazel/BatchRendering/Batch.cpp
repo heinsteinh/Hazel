@@ -9,7 +9,7 @@ namespace Hazel
 		shader(graphicsContext)
 	{
 		graphicsContext.SetShader(shader);
-		shader.InitSamplers(info.MaxTextureSlotCount);
+		//shader.InitSamplers(info.MaxTextureSlotCount);
 	}
 
 	void Batch::SetViewProjectionMatrix(const glm::mat4 &viewProjection)

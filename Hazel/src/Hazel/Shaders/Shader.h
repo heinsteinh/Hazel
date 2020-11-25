@@ -7,17 +7,20 @@ namespace Hazel
 {
 	class Shader
 	{
+	private:
+		std::string name;
+
 	public:
+		inline Shader(const std::string &name)
+			: name(name)
+		{
+		}
+
 		virtual ~Shader() = default;
 
-		virtual const std::string &GetName() const = 0;
-		virtual void Set(const std::string &name, int value) = 0;
-		virtual void Set(const std::string &name, float value) = 0;
-		virtual void Set(const std::string &name, const glm::vec2 &value) = 0;
-		virtual void Set(const std::string &name, const glm::vec3 &value) = 0;
-		virtual void Set(const std::string &name, const glm::vec4 &value) = 0;
-		virtual void Set(const std::string &name, const glm::mat3 &value) = 0;
-		virtual void Set(const std::string &name, const glm::mat4 &value) = 0;
-		virtual void Set(const std::string &name, const int *values, size_t size) = 0;
+		inline const std::string &GetName() const
+		{
+			return name;
+		}
 	};
 }

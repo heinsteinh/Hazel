@@ -10,9 +10,9 @@ layout(location = 1) in vec4 a_Color;
 layout(location = 2) in vec2 a_TextureCoordinate;
 layout(location = 3) in float a_TextureIndex;
 
-out vec4 v_Color;
-out vec2 v_TextureCoordinate;
-out float v_TextureIndex;
+layout(location = 0) out vec4 v_Color;
+layout(location = 1) out vec2 v_TextureCoordinate;
+layout(location = 2) out float v_TextureIndex;
 
 void main()
 {

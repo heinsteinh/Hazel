@@ -13,8 +13,7 @@ namespace Hazel
 		GraphicsContext *graphicsContext = nullptr;
 		std::shared_ptr<IndexBuffer> indexBuffer;
 		std::shared_ptr<VertexBuffer> vertexBuffer;
-		std::shared_ptr<ConstantBuffer> matrixBuffer;
-		std::shared_ptr<ConstantBuffer> samplerBuffer;
+		std::shared_ptr<ConstantBuffer> constantBuffer;
 		std::shared_ptr<InputLayout> inputLayout;
 
 	public:
@@ -22,20 +21,17 @@ namespace Hazel
 			: graphicsContext(&graphicsContext),
 			indexBuffer(graphicsContext.CreateIndexBuffer(info.GetIndexBufferSize())),
 			vertexBuffer(graphicsContext.CreateVertexBuffer(info.GetVertexBufferSize())),
-			matrixBuffer(graphicsContext.CreateConstantBuffer(sizeof(glm::mat4))),
-			samplerBuffer(graphicsContext.CreateConstantBuffer(info.MaxTextureSlotCount * 4)),
+			constantBuffer(graphicsContext.CreateConstantBuffer(sizeof(glm::mat4))),
 			inputLayout(graphicsContext.CreateInputLayout(BatchVertex::Attributes))
 		{
 			Bind();
-			//BufferSamplers();
 		}
 
 		inline void Bind() const
 		{
 			graphicsContext->SetIndexBuffer(indexBuffer);
 			graphicsContext->SetVertexBuffer(vertexBuffer);
-			graphicsContext->SetConstantBuffer(matrixBuffer, 0);
-			graphicsContext->SetConstantBuffer(samplerBuffer, 1);
+			graphicsContext->SetConstantBuffer(constantBuffer, 0);
 			graphicsContext->SetInputLayout(inputLayout);
 		}
 
@@ -51,19 +47,7 @@ namespace Hazel
 
 		inline void BufferViewProjectionMatrix(const glm::mat4 &viewProjection)
 		{
-			matrixBuffer->BufferData(glm::value_ptr(viewProjection), sizeof(glm::mat4));
-		}
-
-		inline void BufferSamplers()
-		{
-			std::vector<int> samplers;
-			auto size = samplerBuffer->GetSize() / 4;
-			samplers.reserve(size);
-			for (size_t i = 0; i < size; i++)
-			{
-				samplers.push_back(static_cast<int>(i));
-			}
-			samplerBuffer->BufferData(samplers.data(), samplers.size());
+			constantBuffer->BufferData(glm::value_ptr(viewProjection), sizeof(glm::mat4));
 		}
 	};
 }
