@@ -2,6 +2,7 @@
 
 #include "Hazel.h"
 #include "ImGuiDockSpace.h"
+#include "TestParticle.h"
 
 namespace Sandbox
 {
@@ -9,6 +10,8 @@ namespace Sandbox
 	{
 	private:
 		float renderTime = 0.0f;
+		int maxVertices = 40000;
+		int maxIndices = 60000;
 		glm::vec2 bottomLeft{0.0f};
 		Hazel::Size size{2560.0f, 1664.0f};
 
@@ -18,6 +21,7 @@ namespace Sandbox
 		Hazel::DrawData drawData;
 		ImGuiDockSpace dockspace;
 		std::shared_ptr<Hazel::Texture> spriteSheet;
+		TestParticle particles;
 
 	public:
 		SandboxLayer();

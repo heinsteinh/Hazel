@@ -5,20 +5,15 @@
 
 namespace Sandbox
 {
-	class TestParticle : public Hazel::Layer
+	class TestParticle
 	{
 	private:
-		Hazel::OrthographicCamera camera;
-		Hazel::OrthographicCameraController controller;
-		std::shared_ptr<Hazel::Renderer2D> renderer;
+		Hazel::Renderer2D *renderer = nullptr;
 		Hazel::ScreenTransform screenTransform;
+		const Hazel::Input *input = nullptr;
 
-		float renderTime = 0.0f;
 		int nParticles = 5;
 		int maxParticles = 1000;
-
-		int maxIndices = 60000;
-		int maxVertices = 40000;
 
 		Hazel::ParticleInfo particleInfo;
 		Hazel::ParticleInfo defaultInfo;
@@ -27,10 +22,9 @@ namespace Sandbox
 	public:
 		TestParticle();
 
-		virtual void OnAttach() override;
-		virtual void OnDetach() override;
-		virtual void OnEvent(Hazel::Event &e) override;
-		virtual void OnUpdate(float deltaTime) override;
-		virtual void OnImGuiRender() override;
+		void OnAttach(Hazel::Renderer2D &renderer, Hazel::ScreenTransform screenTransform, const Hazel::Input &input);
+		void OnDetach();
+		void OnUpdate(float deltaTime);
+		void OnImGuiRender();
 	};
 }

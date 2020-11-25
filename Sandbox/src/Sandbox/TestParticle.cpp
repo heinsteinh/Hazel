@@ -3,8 +3,7 @@
 namespace Sandbox
 {
 	TestParticle::TestParticle()
-		: Layer("TestParticle"),
-		particleSystem(maxParticles)
+		: particleSystem(maxParticles)
 	{
 		defaultInfo.Position = {0.0f, 0.0f};
 		defaultInfo.LinearVelocity = {0.0f, 0.0f};
@@ -20,16 +19,11 @@ namespace Sandbox
 		particleInfo = defaultInfo;
 	}
 
-	void TestParticle::OnAttach()
+	void TestParticle::OnAttach(Hazel::Renderer2D &renderer, Hazel::ScreenTransform screenTransform, const Hazel::Input &input)
 	{
-		Hazel::RendererInfo rendererInfo;
-		rendererInfo.GraphicsContext = &GetGraphicsContext();
-		rendererInfo.MaxIndexCount = maxIndices;
-		rendererInfo.MaxVertexCount = maxVertices;
-		rendererInfo.IndexFormat = Hazel::IndexFormat::UInt16;
-		renderer = std::make_shared<Hazel::Renderer2D>(rendererInfo);
-		screenTransform = {GetWindow(), camera};
-		camera.SetAspectRatio(GetWindow().GetAspectRatio());
+		this->renderer = &renderer;
+		this->screenTransform = screenTransform;
+		this->input = &input;
 	}
 
 	void TestParticle::OnDetach()
@@ -38,14 +32,9 @@ namespace Sandbox
 
 	void TestParticle::OnUpdate(float deltaTime)
 	{
-		renderTime = deltaTime;
-		auto &input = GetInput();
-
-		controller.UpdateCamera(camera, input, deltaTime);
-
-		if (input.IsMouseButtonPressed(Hazel::MouseButton::B1))
+		if (input->IsMouseButtonPressed(Hazel::MouseButton::B1))
 		{
-			particleInfo.Position = screenTransform.GetWorldPosition(input.GetMousePosition());
+			particleInfo.Position = screenTransform.GetWorldPosition(input->GetMousePosition());
 			for (int i = 0; i < nParticles; i++)
 			{
 				particleSystem.EmitParticle(particleInfo);
@@ -58,19 +47,11 @@ namespace Sandbox
 		}
 
 		particleSystem.UpdateActiveParticles(deltaTime);
-		renderer->BeginScene(camera);
 		particleSystem.RenderActiveParticles(*renderer);
-		renderer->EndScene();
 	}
 
 	void TestParticle::OnImGuiRender()
 	{
-		ImGui::Begin("Info");
-		ImGui::Text("Update Time: %fms", 1000 * renderTime);
-		ImGui::Text("Camera Position: %f %f %f", camera.GetPosition().x, camera.GetPosition().y, camera.GetZoomLevel());
-		ImGui::Text("Camera Rotation: %fdeg", glm::degrees(camera.GetRotation()));
-		ImGui::End();
-
 		ImGui::Begin("ParticleInfo");
 		ImGui::SliderFloat2("Position", glm::value_ptr(particleInfo.Position), -1.0f, 1.0f);
 		ImGui::SliderFloat2("LinearVelocity", glm::value_ptr(particleInfo.LinearVelocity), -1.0f, 1.0f);
@@ -85,31 +66,5 @@ namespace Sandbox
 		ImGui::SliderInt("NParticles", &nParticles, 0, 100);
 		ImGui::SliderInt("MaxParticle", &maxParticles, 1, 100000);
 		ImGui::End();
-
-		ImGui::Begin("Renderer");
-		ImGui::SliderInt("MaxVertices", &maxVertices, 0, 100000);
-		ImGui::SliderInt("MaxIndices", &maxIndices, 0, 100000);
-		ImGui::Text("DrawCall: %zu", renderer->GetStatistics().DrawCallCount);
-		ImGui::Text("VertexCount: %zu", renderer->GetStatistics().VertexCount);
-		ImGui::Text("IndexCount: %zu", renderer->GetStatistics().IndexCount);
-		ImGui::Text("TextureCount: %zu", renderer->GetStatistics().TextureCount);
-		if (ImGui::Button("Reset"))
-		{
-			OnAttach();
-		}
-		ImGui::End();
-	}
-
-	inline void TestParticle::OnEvent(Hazel::Event &e)
-	{
-		controller.UpdateCamera(camera, e);
-		e.Dispatch([this](Hazel::KeyPressEvent &e)
-		{
-			if (e.GetKey() == Hazel::Key::Backspace)
-			{
-				camera = {};
-				camera.SetAspectRatio(GetWindow().GetAspectRatio());
-			}
-		});
 	}
 }

@@ -17,18 +17,20 @@ namespace Sandbox
 	{
 		Hazel::RendererInfo rendererInfo;
 		rendererInfo.GraphicsContext = &GetGraphicsContext();
-		rendererInfo.MaxIndexCount = 60000;
-		rendererInfo.MaxVertexCount = 40000;
+		rendererInfo.MaxIndexCount = maxIndices;
+		rendererInfo.MaxVertexCount = maxVertices;
 		renderer = std::make_shared<Hazel::Renderer2D>(rendererInfo);
 		spriteSheet = Hazel::TextureBuilder(GetGraphicsContext()).BuildFromFile("assets\\textures\\SpriteSheet.png");
 		drawData.Mesh->SetColor({1.0f, 1.0f, 1.0f, 1.0f});
 		drawData.Texture = spriteSheet;
 		drawData.Transform.SetScale({spriteSheet->GetAspectRatio(), 1.0f});
 		camera.SetAspectRatio(GetWindow().GetAspectRatio());
+		particles.OnAttach(*renderer, {GetWindow(), camera}, GetInput());
 	}
 
 	void SandboxLayer::OnDetach()
 	{
+		particles.OnDetach();
 	}
 
 	void SandboxLayer::OnUpdate(float deltaTime)
@@ -41,6 +43,7 @@ namespace Sandbox
 		//drawData.Transform.SetScale({drawData.Texture.GetAspectRatio(), 1.0f});
 
 		renderer->BeginScene(camera);
+		particles.OnUpdate(deltaTime);
 		renderer->Render(drawData);
 		renderer->EndScene();
 	}
@@ -49,7 +52,7 @@ namespace Sandbox
 	{
 		//dockspace.Begin();
 		ImGui::Begin("Info");
-		ImGui::Text("Update Time: %fms", 1000 * renderTime);
+		ImGui::Text("Update Time: %fms (%fFPS)", 1000 * renderTime, 1.0f / renderTime);
 		ImGui::Text("Camera Position: %f %f %f", camera.GetPosition().x, camera.GetPosition().y, camera.GetZoomLevel());
 		ImGui::Text("Camera Rotation: %fdeg", glm::degrees(camera.GetRotation()));
 		ImGui::End();
@@ -66,6 +69,22 @@ namespace Sandbox
 		ImGui::SliderFloat("Width", &size.Width, 0.0f, 2560.0f);
 		ImGui::SliderFloat("Height", &size.Height, 0.0f, 1664.0f);
 		ImGui::End();
+
+		ImGui::Begin("Renderer");
+		ImGui::SliderInt("MaxVertices", &maxVertices, 0, 100000);
+		ImGui::SliderInt("MaxIndices", &maxIndices, 0, 100000);
+		ImGui::Text("DrawCall: %zu", renderer->GetStatistics().DrawCallCount);
+		ImGui::Text("VertexCount: %zu", renderer->GetStatistics().VertexCount);
+		ImGui::Text("IndexCount: %zu", renderer->GetStatistics().IndexCount);
+		ImGui::Text("TextureCount: %zu", renderer->GetStatistics().TextureCount);
+		if (ImGui::Button("Reset"))
+		{
+			OnAttach();
+		}
+		ImGui::End();
+
+		particles.OnImGuiRender();
+
 		//dockspace.End();
 	}
 

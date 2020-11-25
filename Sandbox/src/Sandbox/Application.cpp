@@ -13,6 +13,7 @@ namespace Sandbox
 		Application()
 		{
 			Log::Info("Sandbox application creation");
+			SetWindowTitle("Sandbox");
 			//GetGraphicsContext().SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
 			PushLayer(std::make_shared<SandboxLayer>());
 			//PushLayer(std::make_shared<TestParticle>());
