@@ -10,7 +10,10 @@
 #include "Hazel/Events/MouseMoveEvent.h"
 #include "Hazel/Events/MouseScrollEvent.h"
 #include "Hazel/Input/InputUpdater.h"
+#include "Hazel/Exceptions/AssertionException.h"
 #include "Helpers/LayerContext.h"
+
+#define HZ_ASSERT_ATTACHED() HZ_ASSERT(context, "The layer is not attached to a running application")
 
 namespace Hazel
 {
@@ -34,21 +37,25 @@ namespace Hazel
 
 		inline void Quit()
 		{
+			HZ_ASSERT_ATTACHED();
 			context->SetRunning(false);
 		}
 
 		inline void EnableImGuiRender(bool renderImGui)
 		{
+			HZ_ASSERT_ATTACHED();
 			context->EnableImGuiRender(renderImGui);
 		}
 
 		inline Window &GetWindow() const
 		{
+			HZ_ASSERT_ATTACHED();
 			return context->GetWindow();
 		}
 
 		inline GraphicsContext &GetGraphicsContext() const
 		{
+			HZ_ASSERT_ATTACHED();
 			return context->GetGraphicsContext();
 		}
 
@@ -88,3 +95,5 @@ namespace Hazel
 		}
 	};
 }
+
+#undef HZ_ASSERT_ATTACHED

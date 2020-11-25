@@ -46,8 +46,8 @@ namespace Sandbox
 			particleSystem.SetMaxParticles(maxParticles);
 		}
 
-		particleSystem.UpdateActiveParticles(deltaTime);
-		particleSystem.RenderActiveParticles(*renderer);
+		particleSystem.UpdateParticles(deltaTime);
+		particleSystem.RenderParticles(*renderer);
 	}
 
 	void TestParticle::OnImGuiRender()

@@ -9,7 +9,7 @@ namespace Hazel
 	{
 	}
 
-	void ParticleSystem::UpdateActiveParticles(float deltaTime)
+	void ParticleSystem::UpdateParticles(float deltaTime)
 	{
 		for (auto &particle : pool)
 		{
@@ -17,7 +17,7 @@ namespace Hazel
 		}
 	}
 
-	void ParticleSystem::RenderActiveParticles(Renderer2D &renderer)
+	void ParticleSystem::RenderParticles(Renderer2D &renderer)
 	{
 		for (const auto &particle : pool)
 		{
