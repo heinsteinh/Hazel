@@ -1,27 +1,26 @@
 #pragma once
 
-#include "DrawData.h"
-#include "Vertex.h"
-#include "BatchIndices.h"
+#include "BatchInfo.h"
+#include "BatchMesh.h"
 #include "BatchTextures.h"
 #include "BatchBuffers.h"
+#include "BatchShader.h"
+#include "Hazel/Rendering/DrawData.h"
 
 namespace Hazel
 {
 	class Batch
 	{
 	private:
-		GraphicsContext *graphicsContext = nullptr;
-		BatchIndices indices;
-		BatchArray<Vertex> vertices;
+		BatchMesh mesh;
 		BatchTextures textures;
 		BatchBuffers buffers;
-		std::shared_ptr<Texture> whiteTexture;
+		BatchShader shader;
 
 	public:
-		Batch(const RendererInfo &info);
+		Batch(GraphicsContext &graphicsContext, const BatchInfo &info);
 
-		void PushConstant(const void *data, size_t size);
+		void SetViewProjectionMatrix(const glm::mat4 &viewProjection);
 		void Clear();
 		bool Add(const DrawData &drawData);
 		void BufferData();
@@ -30,32 +29,32 @@ namespace Hazel
 
 		inline size_t GetIndexCount() const
 		{
-			return indices.GetIndexCount();
+			return mesh.GetIndices().GetIndexCount();
 		}
 
 		inline size_t GetMaxIndexCount() const
 		{
-			return indices.GetMaxIndexCount();
+			return mesh.GetIndices().GetMaxIndexCount();
 		}
 
 		inline size_t GetVertexCount() const
 		{
-			return vertices.GetElementCount();
+			return mesh.GetVertices().GetElementCount();
 		}
 
 		inline size_t GetMaxVertices() const
 		{
-			return vertices.GetMaxElementCount();
+			return mesh.GetVertices().GetMaxElementCount();
 		}
 
 		inline size_t GetTextureCount() const
 		{
-			return textures.GetSize();
+			return textures.GetTextures().GetTextureCount();
 		}
 
-		inline size_t GetMaxTextures() const
+		inline size_t GetMaxTextureCount() const
 		{
-			return textures.GetMaxSize();
+			return textures.GetTextures().GetMaxTextureCount();
 		}
 
 	private:

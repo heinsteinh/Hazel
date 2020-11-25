@@ -21,8 +21,8 @@ namespace Hazel
 	{
 		MakeCurrent();
 		static OpenGLLoader loader;
-		buffers.InitBindingCount(OpenGLInfo::GetUniformBufferBindingCount());
-		textures.InitTextureSlots(OpenGLInfo::GetTextureSlotCount());
+		buffers.SetMaxUniformBufferBindingCount(OpenGLInfo::GetMaxUniformBufferBindingCount());
+		textures.SetMaxTextureSlotCount(OpenGLInfo::GetMaxTextureSlotCount());
 	}
 
 	void OpenGLGraphicsContext::MakeCurrent() const
@@ -114,9 +114,9 @@ namespace Hazel
 		this->buffers.SetVertexBuffer(vertexBuffer);
 	}
 
-	size_t OpenGLGraphicsContext::GetConstantBufferBindingCount()
+	size_t OpenGLGraphicsContext::GetMaxConstantBufferBindingCount()
 	{
-		return buffers.GetUniformBufferBindingCount();
+		return buffers.GetMaxUniformBufferBindingCount();
 	}
 
 	void OpenGLGraphicsContext::SetConstantBuffer(const std::shared_ptr<ConstantBuffer> &constantBuffer, uint32_t binding)
@@ -131,9 +131,9 @@ namespace Hazel
 		this->buffers.SetInputLayout(inputLayout);
 	}
 
-	size_t OpenGLGraphicsContext::GetTextureSlotCount()
+	size_t OpenGLGraphicsContext::GetMaxTextureSlotCount()
 	{
-		return textures.GetTextureSlotCount();
+		return textures.GetMaxTextureSlotCount();
 	}
 
 	void OpenGLGraphicsContext::SetTexture(const std::shared_ptr<Texture> &texture, uint32_t slot)

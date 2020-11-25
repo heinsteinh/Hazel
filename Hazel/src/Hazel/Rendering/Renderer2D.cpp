@@ -4,19 +4,27 @@
 
 namespace Hazel
 {
+	BatchInfo Renderer2D::GetBatchInfo(const RendererInfo &rendererInfo)
+	{
+		BatchInfo batchInfo;
+		batchInfo.MaxIndexCount = rendererInfo.MaxIndexCount;
+		batchInfo.MaxVertexCount = rendererInfo.MaxVertexCount;
+		batchInfo.MaxTextureSlotCount = rendererInfo.GraphicsContext->GetMaxTextureSlotCount();
+		batchInfo.IndexFormat = rendererInfo.IndexFormat;
+		return batchInfo;
+	}
+
 	Renderer2D::Renderer2D(const RendererInfo &info)
 		: info(info),
-		batch(info),
-		shader(*info.GraphicsContext)
+		batch(*info.GraphicsContext, GetBatchInfo(info))
 	{
-		info.GraphicsContext->SetShader(shader);
-		shader.InitSamplers(batch.GetMaxTextures());
-		batch.BindBuffers();
+		info.GraphicsContext->SetIndexFormat(info.IndexFormat);
+		info.GraphicsContext->SetPrimitiveTopology(PrimitiveTopology::Triangles);
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera &camera)
 	{
-		batch.PushConstant(glm::value_ptr(camera.GetViewProjectionMatrix()), sizeof(glm::mat4));
+		batch.SetViewProjectionMatrix(camera.GetViewProjectionMatrix());
 		statistics.Reset();
 	}
 

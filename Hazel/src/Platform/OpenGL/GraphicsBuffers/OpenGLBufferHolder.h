@@ -41,14 +41,14 @@ namespace Hazel
 			}
 		}
 
-		inline void InitBindingCount(size_t bindingCount)
-		{
-			uniformBuffers.resize(bindingCount);
-		}
-
-		inline size_t GetUniformBufferBindingCount() const
+		inline size_t GetMaxUniformBufferBindingCount() const
 		{
 			return uniformBuffers.size();
+		}
+
+		inline void SetMaxUniformBufferBindingCount(size_t maxUniformBufferBindingCount)
+		{
+			uniformBuffers.resize(maxUniformBufferBindingCount);
 		}
 
 		inline OpenGLUniformBuffer *GetUniformBuffer(uint32_t binding) const

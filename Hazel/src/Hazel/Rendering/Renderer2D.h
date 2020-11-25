@@ -1,10 +1,10 @@
 #pragma once
 
+#include "RendererInfo.h"
 #include "RendererStatistics.h"
 #include "Hazel/Camera/OrthographicCamera.h"
-#include "Hazel/Rendering/BatchShader.h"
-#include "Batch.h"
-#include "BatchException.h"
+#include "Hazel/BatchRendering/Batch.h"
+#include "Hazel/BatchRendering/BatchException.h"
 
 namespace Hazel
 {
@@ -13,8 +13,9 @@ namespace Hazel
 	private:
 		RendererInfo info;
 		Batch batch;
-		BatchShader shader;
 		RendererStatistics statistics;
+
+		static BatchInfo GetBatchInfo(const RendererInfo &rendererInfo);
 
 	public:
 		Renderer2D(const RendererInfo &info);
@@ -23,7 +24,7 @@ namespace Hazel
 		void Render(const DrawData &drawData);
 		void EndScene();
 
-		constexpr const RendererInfo &GetBatchInfo() const
+		constexpr const RendererInfo &GetInfo() const
 		{
 			return info;
 		}

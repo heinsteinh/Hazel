@@ -4,7 +4,7 @@
 
 namespace Hazel
 {
-	struct Vertex
+	struct BatchVertex
 	{
 		static inline const VertexAttributes Attributes = {
 			{ShaderDataType::Float3},
