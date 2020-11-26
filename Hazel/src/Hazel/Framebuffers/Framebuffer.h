@@ -20,8 +20,8 @@ namespace Hazel
 
 		virtual ~Framebuffer() = default;
 
-		virtual std::shared_ptr<Texture> GetColorAttachement() const = 0;
-		virtual std::shared_ptr<Texture> GetDepthAttachement() const = 0;
+		virtual std::shared_ptr<Texture> GetColorAttachment() const = 0;
+		virtual std::shared_ptr<Texture> GetDepthAttachment() const = 0;
 
 		constexpr const FramebufferInfo &GetInfo() const
 		{

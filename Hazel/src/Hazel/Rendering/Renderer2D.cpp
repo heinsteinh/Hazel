@@ -16,39 +16,22 @@ namespace Hazel
 
 	Renderer2D::Renderer2D(const RendererInfo &info)
 		: info(info),
-		batch(*info.GraphicsContext, GetBatchInfo(info))
+		batchRenderer(*info.GraphicsContext, GetBatchInfo(info))
 	{
-		info.GraphicsContext->SetIndexFormat(info.IndexFormat);
-		info.GraphicsContext->SetPrimitiveTopology(PrimitiveTopology::Triangles);
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera &camera)
 	{
-		batch.SetViewProjectionMatrix(camera.GetViewProjectionMatrix());
-		statistics.Reset();
+		batchRenderer.BeginScene(camera.GetViewProjectionMatrix());
 	}
 
 	void Renderer2D::Render(const DrawData &drawData)
 	{
-		if (!batch.Add(drawData))
-		{
-			EndScene();
-			if (!batch.Add(drawData))
-			{
-				throw BatchException("The batch is too small for the object.");
-			}
-		}
+		batchRenderer.Render(drawData);
 	}
 
 	void Renderer2D::EndScene()
 	{
-		batch.BindTextures();
-		batch.BufferData();
-		info.GraphicsContext->DrawIndexed(batch.GetIndexCount());
-		statistics.DrawCallCount++;
-		statistics.IndexCount += batch.GetIndexCount();
-		statistics.VertexCount += batch.GetVertexCount();
-		statistics.TextureCount = batch.GetTextureCount();
-		batch.Clear();
+		batchRenderer.EndScene();
 	}
 }

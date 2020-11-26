@@ -21,6 +21,7 @@ namespace Sandbox
 		Hazel::DrawData drawData;
 		ImGuiDockSpace dockspace;
 		std::shared_ptr<Hazel::Texture> spriteSheet;
+		std::shared_ptr<Hazel::Framebuffer> framebuffer;
 		TestParticle particles;
 
 	public:

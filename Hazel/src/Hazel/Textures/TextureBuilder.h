@@ -24,7 +24,7 @@ namespace Hazel
 		{
 			TextureInfo info;
 			info.Size = {1.0f, 1.0f};
-			info.Format = TextureFormat::Rgba;
+			info.Format = TextureFormat::Rgba8;
 			auto texture = graphicsContext.CreateTexture(info);
 			unsigned char data[4] = {
 				static_cast<unsigned char>(255.0f * color.r),

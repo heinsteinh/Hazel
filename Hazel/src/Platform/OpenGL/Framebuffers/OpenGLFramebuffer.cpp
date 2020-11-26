@@ -57,12 +57,12 @@ namespace Hazel
 		Attach(GL_DEPTH_STENCIL_ATTACHMENT, depthAttachment);
 	}
 
-	std::shared_ptr<Texture> OpenGLFramebuffer::GetColorAttachement() const
+	std::shared_ptr<Texture> OpenGLFramebuffer::GetColorAttachment() const
 	{
 		return colorAttachment;
 	}
 
-	std::shared_ptr<Texture> OpenGLFramebuffer::GetDepthAttachement() const
+	std::shared_ptr<Texture> OpenGLFramebuffer::GetDepthAttachment() const
 	{
 		return depthAttachment;
 	}

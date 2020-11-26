@@ -15,11 +15,17 @@ namespace Sandbox
 
 	void SandboxLayer::OnAttach()
 	{
+		auto &graphicsContext = GetGraphicsContext();
+
 		Hazel::RendererInfo rendererInfo;
-		rendererInfo.GraphicsContext = &GetGraphicsContext();
+		rendererInfo.GraphicsContext = &graphicsContext;
 		rendererInfo.MaxIndexCount = maxIndices;
 		rendererInfo.MaxVertexCount = maxVertices;
 		renderer = std::make_shared<Hazel::Renderer2D>(rendererInfo);
+
+		Hazel::FramebufferInfo framebufferInfo;
+		framebufferInfo.Size = GetWindow().GetSize();
+		framebuffer = graphicsContext.CreateFramebuffer(framebufferInfo);
 
 		spriteSheet = Hazel::TextureBuilder::CreateTextureFromFile(
 			GetGraphicsContext(),
@@ -47,15 +53,25 @@ namespace Sandbox
 
 		drawData.Texture.SetRegion(Hazel::Rectangle::FromBottomLeftAndSize(bottomLeft, size));
 
+		//GetGraphicsContext().SetFramebuffer(framebuffer);
 		renderer->BeginScene(camera);
 		particles.OnUpdate(deltaTime);
 		renderer->Render(drawData);
 		renderer->EndScene();
+		//GetGraphicsContext().SetFramebuffer(nullptr);
 	}
 
 	void SandboxLayer::OnImGuiRender()
 	{
 		//dockspace.Begin();
+		ImGui::Begin("Scene");
+		ImGui::Image(
+			framebuffer->GetColorAttachment()->GetHandle(),
+			{framebuffer->GetWidth(), framebuffer->GetHeight()},
+			{0.0f, 1.0f},
+			{1.0f, 0.0f});
+		ImGui::End();
+
 		ImGui::Begin("Info");
 		ImGui::Text("Update Time: %fms (%fFPS)", 1000 * renderTime, 1.0f / renderTime);
 		ImGui::Text("Camera Position: %f %f %f", camera.GetPosition().x, camera.GetPosition().y, camera.GetZoomLevel());

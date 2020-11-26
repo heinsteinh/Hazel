@@ -12,9 +12,9 @@ namespace Hazel
 			switch (numChannels)
 			{
 			case 3:
-				return TextureFormat::Rgb;
+				return TextureFormat::Rgb8;
 			case 4:
-				return TextureFormat::Rgba;
+				return TextureFormat::Rgba8;
 			default:
 				return TextureFormat::Unknown;
 			}
@@ -24,9 +24,9 @@ namespace Hazel
 		{
 			switch (format)
 			{
-			case TextureFormat::Rgb:
+			case TextureFormat::Rgb8:
 				return 3;
-			case TextureFormat::Rgba:
+			case TextureFormat::Rgba8:
 				return 4;
 			default:
 				return 0;

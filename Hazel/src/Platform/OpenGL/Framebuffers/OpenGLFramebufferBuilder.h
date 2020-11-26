@@ -11,7 +11,7 @@ namespace Hazel
 		static inline std::shared_ptr<OpenGLFramebuffer> Build(const FramebufferInfo &info)
 		{
 			auto framebuffer = std::make_shared<OpenGLFramebuffer>(info);
-			framebuffer->SetColorAttachment(std::make_shared<OpenGLTexture>(TextureInfo{info.Size, TextureFormat::Rgba}));
+			framebuffer->SetColorAttachment(std::make_shared<OpenGLTexture>(TextureInfo{info.Size, TextureFormat::Rgba8}));
 			framebuffer->SetDepthAttachment(std::make_shared<OpenGLTexture>(TextureInfo{info.Size, TextureFormat::DepthStencil}));
 			if (!framebuffer->IsComplete())
 			{

@@ -16,9 +16,9 @@ namespace Hazel
 		glTextureStorage2D(
 			id,
 			1,
-			OpenGLTextureFormat::GetStorageFormat(GetFormat()),
-			static_cast<int>(GetWidth()),
-			static_cast<int>(GetHeight()));
+			OpenGLTextureFormat::GetStorageFormat(info.Format),
+			static_cast<int>(info.Size.Width),
+			static_cast<int>(info.Size.Height));
 		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, OpenGLTextureFiltering::GetTextureFiltering(info.MinFilter));
 		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, OpenGLTextureFiltering::GetTextureFiltering(info.MagFilter));
 		glTextureParameteri(id, GL_TEXTURE_WRAP_S, OpenGLTextureWrapping::GetTextureWrapping(info.SWrap));

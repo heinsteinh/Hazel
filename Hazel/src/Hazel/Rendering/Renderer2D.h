@@ -3,8 +3,7 @@
 #include "RendererInfo.h"
 #include "RendererStatistics.h"
 #include "Hazel/Camera/OrthographicCamera.h"
-#include "Hazel/BatchRendering/Batch.h"
-#include "Hazel/BatchRendering/BatchException.h"
+#include "Hazel/BatchRendering/BatchRenderer.h"
 
 namespace Hazel
 {
@@ -12,8 +11,7 @@ namespace Hazel
 	{
 	private:
 		RendererInfo info;
-		Batch batch;
-		RendererStatistics statistics;
+		BatchRenderer batchRenderer;
 
 		static BatchInfo GetBatchInfo(const RendererInfo &rendererInfo);
 
@@ -24,14 +22,14 @@ namespace Hazel
 		void Render(const DrawData &drawData);
 		void EndScene();
 
-		constexpr const RendererInfo &GetInfo() const
+		inline const RendererInfo &GetInfo() const
 		{
 			return info;
 		}
 
-		constexpr const RendererStatistics &GetStatistics() const
+		inline const RendererStatistics &GetStatistics() const
 		{
-			return statistics;
+			return batchRenderer.GetStatistics();
 		}
 	};
 }

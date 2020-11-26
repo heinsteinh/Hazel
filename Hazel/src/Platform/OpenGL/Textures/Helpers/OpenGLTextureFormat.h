@@ -13,9 +13,9 @@ namespace Hazel
 		{
 			switch (format)
 			{
-			case TextureFormat::Rgb:
+			case TextureFormat::Rgb8:
 				return GL_RGB;
-			case TextureFormat::Rgba:
+			case TextureFormat::Rgba8:
 				return GL_RGBA;
 			case TextureFormat::DepthStencil:
 				return GL_DEPTH_STENCIL;
@@ -27,9 +27,9 @@ namespace Hazel
 		{
 			switch (format)
 			{
-			case TextureFormat::Rgb:
+			case TextureFormat::Rgb8:
 				return GL_RGB8;
-			case TextureFormat::Rgba:
+			case TextureFormat::Rgba8:
 				return GL_RGBA8;
 			case TextureFormat::DepthStencil:
 				return GL_DEPTH24_STENCIL8;
