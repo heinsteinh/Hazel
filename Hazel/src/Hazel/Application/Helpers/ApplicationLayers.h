@@ -19,12 +19,12 @@ namespace Hazel
 		void UpdateLayers(float deltaTime);
 		void RenderImGui();
 
-		inline void PushLayer(const std::shared_ptr<Layer> &layer)
+		void PushLayer(const std::shared_ptr<Layer> &layer)
 		{
 			layers.PushLayer(layer);
 		}
 
-		inline void PushOverlay(const std::shared_ptr<Layer> &overlay)
+		void PushOverlay(const std::shared_ptr<Layer> &overlay)
 		{
 			layers.PushOverlay(overlay);
 		}

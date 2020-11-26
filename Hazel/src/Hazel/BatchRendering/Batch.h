@@ -28,32 +28,32 @@ namespace Hazel
 		void BindBuffers() const;
 		void BindTextures() const;
 
-		inline size_t GetIndexCount() const
+		size_t GetIndexCount() const
 		{
 			return indices.GetIndexCount();
 		}
 
-		inline size_t GetMaxIndexCount() const
+		size_t GetMaxIndexCount() const
 		{
 			return indices.GetMaxIndexCount();
 		}
 
-		inline size_t GetVertexCount() const
+		size_t GetVertexCount() const
 		{
 			return vertices.GetElementCount();
 		}
 
-		inline size_t GetMaxVertices() const
+		size_t GetMaxVertices() const
 		{
 			return vertices.GetMaxElementCount();
 		}
 
-		inline size_t GetTextureCount() const
+		size_t GetTextureCount() const
 		{
 			return textures.GetTextures().GetTextureCount();
 		}
 
-		inline size_t GetMaxTextureCount() const
+		size_t GetMaxTextureCount() const
 		{
 			return textures.GetTextures().GetMaxTextureCount();
 		}

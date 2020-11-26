@@ -10,7 +10,7 @@ namespace Hazel
 		VertexAttributes attributes;
 
 	public:
-		inline InputLayout(const VertexAttributes &attributes)
+		InputLayout(const VertexAttributes &attributes)
 			: attributes(attributes)
 		{
 		}

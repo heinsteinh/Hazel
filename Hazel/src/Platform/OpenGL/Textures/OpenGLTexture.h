@@ -18,7 +18,7 @@ namespace Hazel
 		virtual void BufferData(const void *data) override;
 		virtual void *GetHandle() const override;
 
-		constexpr uint32_t GetId() const
+		uint32_t GetId() const
 		{
 			return id;
 		}

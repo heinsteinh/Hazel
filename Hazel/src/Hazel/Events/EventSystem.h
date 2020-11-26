@@ -21,12 +21,12 @@ namespace Hazel
 		void PollEvents();
 		void RemoveWindow();
 
-		inline void SendEvent(Event &e)
+		void SendEvent(Event &e)
 		{
 			receiver.SendEvent(e);
 		}
 
-		inline void SetCallback(const Callback &callback)
+		void SetCallback(const Callback &callback)
 		{
 			receiver.SetCallback(callback);
 		}

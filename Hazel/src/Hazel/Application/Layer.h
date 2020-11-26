@@ -25,72 +25,72 @@ namespace Hazel
 		LayerContext *context = nullptr;
 
 	public:
-		inline Layer(const std::string &name = "Unknown")
+		Layer(const std::string &name = "Unknown")
 			: name(name)
 		{
 		}
 
-		inline const std::string &GetName() const
+		const std::string &GetName() const
 		{
 			return name;
 		}
 
-		inline void Quit()
+		void Quit()
 		{
 			HZ_ASSERT_ATTACHED();
 			context->SetRunning(false);
 		}
 
-		inline void EnableImGuiRender(bool renderImGui)
+		void EnableImGuiRender(bool renderImGui)
 		{
 			HZ_ASSERT_ATTACHED();
 			context->EnableImGuiRender(renderImGui);
 		}
 
-		inline Window &GetWindow() const
+		Window &GetWindow() const
 		{
 			HZ_ASSERT_ATTACHED();
 			return context->GetWindow();
 		}
 
-		inline GraphicsContext &GetGraphicsContext() const
+		GraphicsContext &GetGraphicsContext() const
 		{
 			HZ_ASSERT_ATTACHED();
 			return context->GetGraphicsContext();
 		}
 
-		inline const Input &GetInput() const
+		const Input &GetInput() const
 		{
 			return input;
 		}
 
-		inline void SetContext(LayerContext &context)
+		void SetContext(LayerContext &context)
 		{
 			this->context = &context;
 		}
 
-		inline void UpdateInput(Event &e)
+		void UpdateInput(Event &e)
 		{
 			InputUpdater::UpdateInput(input, e);
 		}
 
-		inline virtual void OnAttach()
+		virtual void OnAttach()
 		{
 		}
 
-		inline virtual void OnDetach()
+		virtual void OnDetach()
 		{
 		}
 
-		inline virtual void OnEvent(Event &e)
+		virtual void OnEvent(Event &e)
 		{
 		}
 
-		inline virtual void OnUpdate(float deltaTime)
+		virtual void OnUpdate(float deltaTime)
 		{
 		}
 
-		inline virtual void OnImGuiRender()
+		virtual void OnImGuiRender()
 		{
 		}
 	};

@@ -14,12 +14,12 @@ namespace Hazel
 		{
 		}
 
-		inline auto begin() const
+		auto begin() const
 		{
 			return first;
 		}
 
-		inline auto end() const
+		auto end() const
 		{
 			return last;
 		}

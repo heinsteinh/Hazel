@@ -9,7 +9,7 @@ namespace Hazel
 	class ApplicationMainLoop
 	{
 	public:
-		static inline void Run(ApplicationContext &context)
+		static void Run(ApplicationContext &context)
 		{
 			ApplicationSetup::Setup(context);
 			context.SetRunning(true);

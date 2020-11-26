@@ -17,22 +17,22 @@ namespace Hazel
 		OpenGLVertexArray *vertexArray = nullptr;
 
 	public:
-		inline OpenGLIndexBuffer *GetIndexBuffer() const
+		OpenGLIndexBuffer *GetIndexBuffer() const
 		{
 			return indexBuffer;
 		}
 
-		inline void SetIndexBuffer(const std::shared_ptr<IndexBuffer> &indexBuffer)
+		void SetIndexBuffer(const std::shared_ptr<IndexBuffer> &indexBuffer)
 		{
 			OpenGLBinder::Bind(this->indexBuffer, indexBuffer);
 		}
 
-		inline OpenGLVertexBuffer *GetVertexBuffer() const
+		OpenGLVertexBuffer *GetVertexBuffer() const
 		{
 			return vertexBuffer;
 		}
 
-		inline void SetVertexBuffer(const std::shared_ptr<VertexBuffer> &vertexBuffer)
+		void SetVertexBuffer(const std::shared_ptr<VertexBuffer> &vertexBuffer)
 		{
 			OpenGLBinder::Bind(this->vertexBuffer, vertexBuffer);
 			if (vertexArray)
@@ -41,23 +41,23 @@ namespace Hazel
 			}
 		}
 
-		inline size_t GetMaxUniformBufferBindingCount() const
+		size_t GetMaxUniformBufferBindingCount() const
 		{
 			return uniformBuffers.size();
 		}
 
-		inline void SetMaxUniformBufferBindingCount(size_t maxUniformBufferBindingCount)
+		void SetMaxUniformBufferBindingCount(size_t maxUniformBufferBindingCount)
 		{
 			uniformBuffers.resize(maxUniformBufferBindingCount);
 		}
 
-		inline OpenGLUniformBuffer *GetUniformBuffer(uint32_t binding) const
+		OpenGLUniformBuffer *GetUniformBuffer(uint32_t binding) const
 		{
 			HZ_ASSERT(binding < uniformBuffers.size(), "Binding out of range");
 			return uniformBuffers[binding];
 		}
 
-		inline void SetConstantBuffer(const std::shared_ptr<ConstantBuffer> &constantBuffer, uint32_t binding)
+		void SetConstantBuffer(const std::shared_ptr<ConstantBuffer> &constantBuffer, uint32_t binding)
 		{
 			HZ_ASSERT(binding < uniformBuffers.size(), "Binding out of range");
 			auto &uniformBuffer = uniformBuffers[binding];
@@ -68,12 +68,12 @@ namespace Hazel
 			}
 		}
 
-		inline OpenGLVertexArray *GetVertexArray() const
+		OpenGLVertexArray *GetVertexArray() const
 		{
 			return vertexArray;
 		}
 
-		inline void SetInputLayout(const std::shared_ptr<InputLayout> &inputLayout)
+		void SetInputLayout(const std::shared_ptr<InputLayout> &inputLayout)
 		{
 			OpenGLBinder::Bind(this->vertexArray, inputLayout);
 			if (vertexBuffer)

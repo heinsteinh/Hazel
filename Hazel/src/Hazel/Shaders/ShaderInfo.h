@@ -12,7 +12,7 @@ namespace Hazel
 		std::string Name;
 		ShaderSourceMap Sources;
 
-		static inline ShaderInfo FromFiles(const std::vector<std::pair<ShaderType, std::string>> &files)
+		static ShaderInfo FromFiles(const std::vector<std::pair<ShaderType, std::string>> &files)
 		{
 			ShaderInfo result;
 			for (const auto &[type, file] : files)

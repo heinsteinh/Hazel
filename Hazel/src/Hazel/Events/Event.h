@@ -47,7 +47,7 @@ namespace Hazel
 			handled = true;
 		}
 
-		inline const char *GetName() const
+		const char *GetName() const
 		{
 			return typeid(*this).name() + 13;
 		}
@@ -65,7 +65,7 @@ namespace Hazel
 			}
 		}
 
-		inline virtual std::string ToString() const
+		virtual std::string ToString() const
 		{
 			return GetName();
 		}

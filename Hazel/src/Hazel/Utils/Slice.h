@@ -18,12 +18,12 @@ namespace Hazel
         {
         }
 
-        inline auto begin()
+        auto begin()
         {
             return iterable.begin() + start;
         }
 
-        inline auto end()
+        auto end()
         {
             return end < start ? iterable.end() : iterable.begin() + end;
         }

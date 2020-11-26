@@ -18,103 +18,103 @@ namespace Hazel
 		Chrono chrono;
 
 	public:
-		inline const std::shared_ptr<GraphicsApi> &GetGraphicsApi() const
+		const std::shared_ptr<GraphicsApi> &GetGraphicsApi() const
 		{
 			return graphicsApi;
 		}
 
-		inline void SetGraphicsApi(const std::shared_ptr<GraphicsApi> &graphicsApi)
+		void SetGraphicsApi(const std::shared_ptr<GraphicsApi> &graphicsApi)
 		{
 			this->graphicsApi = graphicsApi;
 			windowInfo.GraphicsApi = graphicsApi.get();
 		}
 
-		inline bool IsImGuiEnabled() const
+		bool IsImGuiEnabled() const
 		{
 			return imGuiEnabled;
 		}
 
-		inline void EnableImGui(bool imGuiEnabled)
+		void EnableImGui(bool imGuiEnabled)
 		{
 			this->imGuiEnabled = imGuiEnabled;
 		}
 
-		inline bool IsRunning() const
+		bool IsRunning() const
 		{
 			return layerContext.IsRunning();
 		}
 
-		inline void SetRunning(bool running)
+		void SetRunning(bool running)
 		{
 			layerContext.SetRunning(running);
 		}
 
-		inline bool IsImGuiRenderEnabled() const
+		bool IsImGuiRenderEnabled() const
 		{
 			return layerContext.IsImGuiRenderEnabled();
 		}
 
-		inline void EnableImGuiRender(bool imGuiRenderEnabled)
+		void EnableImGuiRender(bool imGuiRenderEnabled)
 		{
 			layerContext.EnableImGuiRender(imGuiRenderEnabled);
 		}
 
-		inline void SetWindowTitle(const std::string &title)
+		void SetWindowTitle(const std::string &title)
 		{
 			windowInfo.Title = title;
 		}
 
-		inline void SetWindowResolution(Size resolution)
+		void SetWindowResolution(Size resolution)
 		{
 			windowInfo.Resolution = resolution;
 		}
 
-		inline void SetVerticalSynchronization(bool verticalSynchronization)
+		void SetVerticalSynchronization(bool verticalSynchronization)
 		{
 			windowInfo.VerticalSynchronization = verticalSynchronization;
 		}
 
-		inline void CreateApplicationWindow()
+		void CreateApplicationWindow()
 		{
 			layerContext.CreateApplicationWindow(windowInfo);
 		}
 
-		inline Window &GetWindow() const
+		Window &GetWindow() const
 		{
 			return layerContext.GetWindow();
 		}
 
-		inline GraphicsContext &GetGraphicsContext() const
+		GraphicsContext &GetGraphicsContext() const
 		{
 			return layerContext.GetGraphicsContext();
 		}
 
-		inline void SetEventCallback(const EventSystem::Callback &callback)
+		void SetEventCallback(const EventSystem::Callback &callback)
 		{
 			layerContext.SetEventCallback(callback);
 		}
 
-		inline void PollEvents()
+		void PollEvents()
 		{
 			layerContext.PollEvents();
 		}
 
-		inline void AttachLayers()
+		void AttachLayers()
 		{
 			layers.AttachLayers(layerContext);
 		}
 
-		inline ApplicationLayers &GetLayers()
+		ApplicationLayers &GetLayers()
 		{
 			return layers;
 		}
 
-		inline const ApplicationLayers &GetLayers() const
+		const ApplicationLayers &GetLayers() const
 		{
 			return layers;
 		}
 
-		inline float GetDeltaTime()
+		float GetDeltaTime()
 		{
 			return chrono.Reset();
 		}

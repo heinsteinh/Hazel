@@ -7,13 +7,13 @@ namespace Hazel
 	class OpenGLShaderCompiler
 	{
 	public:
-		static inline std::shared_ptr<OpenGLProgram> Compile(const ShaderInfo &info)
+		static std::shared_ptr<OpenGLProgram> Compile(const ShaderInfo &info)
 		{
 			return Link(info.Name, CompileShaders(info.Sources));
 		}
 
 	private:
-		static inline std::vector<OpenGLShader> CompileShaders(const ShaderSourceMap &sources)
+		static std::vector<OpenGLShader> CompileShaders(const ShaderSourceMap &sources)
 		{
 			std::vector<OpenGLShader> shaders;
 			shaders.reserve(sources.GetSize());
@@ -24,7 +24,7 @@ namespace Hazel
 			return shaders;
 		}
 
-		static inline OpenGLShader CompileShader(ShaderType type, const std::string &source)
+		static OpenGLShader CompileShader(ShaderType type, const std::string &source)
 		{
 			OpenGLShader shader(type, source);
 			if (!shader.IsCompiled())
@@ -34,7 +34,7 @@ namespace Hazel
 			return shader;
 		}
 
-		static inline std::shared_ptr<OpenGLProgram> Link(const std::string &name, const std::vector<OpenGLShader> &shaders)
+		static std::shared_ptr<OpenGLProgram> Link(const std::string &name, const std::vector<OpenGLShader> &shaders)
 		{
 			auto program = std::make_shared<OpenGLProgram>(name);
 			for (const auto &shader : shaders)

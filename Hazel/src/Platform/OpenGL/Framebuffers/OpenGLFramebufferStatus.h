@@ -22,7 +22,7 @@ namespace Hazel
 		};
 
 	public:
-		static inline const std::string &GetStatusName(int status)
+		static const std::string &GetStatusName(int status)
 		{
 			auto i = names.find(status);
 			return i == names.end() ? unknown : i->second;

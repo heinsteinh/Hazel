@@ -29,7 +29,7 @@ namespace Hazel
 			return repeatCount != 0;
 		}
 
-		inline virtual std::string ToString() const override
+		virtual std::string ToString() const override
 		{
 			return (std::ostringstream()
 				<< KeyEvent::ToString()

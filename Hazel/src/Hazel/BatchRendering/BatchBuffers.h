@@ -17,7 +17,7 @@ namespace Hazel
 		std::shared_ptr<InputLayout> inputLayout;
 
 	public:
-		inline BatchBuffers(GraphicsContext &graphicsContext, const BatchInfo &info)
+		BatchBuffers(GraphicsContext &graphicsContext, const BatchInfo &info)
 			: graphicsContext(&graphicsContext),
 			indexBuffer(graphicsContext.CreateIndexBuffer(info.GetIndexBufferSize())),
 			vertexBuffer(graphicsContext.CreateVertexBuffer(info.GetVertexBufferSize())),
@@ -27,7 +27,7 @@ namespace Hazel
 			Bind();
 		}
 
-		inline void Bind() const
+		void Bind() const
 		{
 			graphicsContext->SetIndexBuffer(indexBuffer);
 			graphicsContext->SetVertexBuffer(vertexBuffer);
@@ -35,17 +35,17 @@ namespace Hazel
 			graphicsContext->SetInputLayout(inputLayout);
 		}
 
-		inline void BufferIndices(const BatchIndices &indices)
+		void BufferIndices(const BatchIndices &indices)
 		{
 			indexBuffer->BufferData(indices.GetData(), indices.GetSize());
 		}
 
-		inline void BufferVertices(const BatchArray<BatchVertex> &vertices)
+		void BufferVertices(const BatchArray<BatchVertex> &vertices)
 		{
 			vertexBuffer->BufferData(vertices.GetData(), vertices.GetSize());
 		}
 
-		inline void BufferViewProjectionMatrix(const glm::mat4 &viewProjection)
+		void BufferViewProjectionMatrix(const glm::mat4 &viewProjection)
 		{
 			constantBuffer->BufferData(glm::value_ptr(viewProjection), sizeof(glm::mat4));
 		}

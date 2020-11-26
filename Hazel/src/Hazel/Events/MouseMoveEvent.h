@@ -24,7 +24,7 @@ namespace Hazel
 			return position;
 		}
 
-		inline virtual std::string ToString() const override
+		virtual std::string ToString() const override
 		{
 			return (std::ostringstream() << GetName() << ": " << position.x << ", " << position.y).str();
 		}

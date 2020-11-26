@@ -15,17 +15,17 @@ namespace Hazel
 		int primitiveTopology = GL_TRIANGLES;
 
 	public:
-		inline void SetIndexFormat(IndexFormat indexFormat)
+		void SetIndexFormat(IndexFormat indexFormat)
 		{
 			this->indexFormat = OpenGLIndexFormat::GetIndexFormat(indexFormat);
 		}
 
-		inline void SetPrimitiveTopology(PrimitiveTopology primitiveTopology)
+		void SetPrimitiveTopology(PrimitiveTopology primitiveTopology)
 		{
 			this->primitiveTopology = OpenGLPrimitiveTopology::GetPrimitiveTopology(primitiveTopology);
 		}
 
-		inline void SetViewport(const Rectangle &viewport)
+		void SetViewport(const Rectangle &viewport)
 		{
 			glViewport(
 				static_cast<int>(viewport.Left),
@@ -34,17 +34,17 @@ namespace Hazel
 				static_cast<int>(viewport.GetHeight()));
 		}
 
-		inline void SetClearColor(const glm::vec4 &color)
+		void SetClearColor(const glm::vec4 &color)
 		{
 			glClearColor(color.r, color.g, color.b, color.a);
 		}
 
-		inline void Clear()
+		void Clear()
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 
-		inline void DrawIndexed(size_t indexCount)
+		void DrawIndexed(size_t indexCount)
 		{
 			glDrawElements(
 				primitiveTopology,

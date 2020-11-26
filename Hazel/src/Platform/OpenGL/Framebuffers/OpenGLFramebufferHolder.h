@@ -11,12 +11,12 @@ namespace Hazel
 		OpenGLFramebuffer *framebuffer = nullptr;
 
 	public:
-		inline OpenGLFramebuffer *GetFramebuffer() const
+		OpenGLFramebuffer *GetFramebuffer() const
 		{
 			return framebuffer;
 		}
 
-		inline void SetFramebuffer(const std::shared_ptr<Framebuffer> &framebuffer)
+		void SetFramebuffer(const std::shared_ptr<Framebuffer> &framebuffer)
 		{
 			OpenGLBinder::Bind(this->framebuffer, framebuffer);
 		}

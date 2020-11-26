@@ -14,7 +14,7 @@ namespace Hazel
 	public:
 		VertexAttribute() = default;
 
-		inline VertexAttribute(ShaderDataType type, bool normalized = false)
+		VertexAttribute(ShaderDataType type, bool normalized = false)
 			: type(type),
 			normalized(normalized)
 		{

@@ -12,7 +12,7 @@ namespace Hazel
 	class InputUpdater
 	{
 	public:
-		static inline void UpdateInput(Input &input, Event &e)
+		static void UpdateInput(Input &input, Event &e)
 		{
 			e.Dispatch([&](KeyPressEvent &e)
 			{

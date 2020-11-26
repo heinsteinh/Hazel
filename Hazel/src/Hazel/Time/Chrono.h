@@ -10,17 +10,17 @@ namespace Hazel
 		float referenceTime = 0.0f;
 
 	public:
-		inline Chrono()
+		Chrono()
 			: referenceTime(Time::GetTime())
 		{
 		}
 
-		inline float Read()
+		float Read()
 		{
 			return Time::GetTime() - referenceTime;
 		}
 
-		inline float Reset()
+		float Reset()
 		{
 			auto time = Time::GetTime();
 			auto deltaTime = time - referenceTime;

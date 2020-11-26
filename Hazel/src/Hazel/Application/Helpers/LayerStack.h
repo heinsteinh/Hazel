@@ -11,38 +11,38 @@ namespace Hazel
 		size_t top = 0;
 
 	public:
-		inline auto begin()
+		auto begin()
 		{
 			return layers.begin();
 		}
 
-		inline auto end()
+		auto end()
 		{
 			return layers.end();
 		}
 
-		inline auto rbegin()
+		auto rbegin()
 		{
 			return layers.rbegin();
 		}
 
-		inline auto rend()
+		auto rend()
 		{
 			return layers.rend();
 		}
 
-		inline void LayerStack::PushLayer(const std::shared_ptr<Layer> &layer)
+		void LayerStack::PushLayer(const std::shared_ptr<Layer> &layer)
 		{
 			layers.emplace(layers.begin() + top, layer);
 			top++;
 		}
 
-		inline void LayerStack::PushOverlay(const std::shared_ptr<Layer> &overlay)
+		void LayerStack::PushOverlay(const std::shared_ptr<Layer> &overlay)
 		{
 			layers.emplace_back(overlay);
 		}
 
-		inline void LayerStack::PopLayer(const std::shared_ptr<Layer> &layer)
+		void LayerStack::PopLayer(const std::shared_ptr<Layer> &layer)
 		{
 			auto i = std::find(layers.begin(), layers.end(), layer);
 			if (i != layers.end())
@@ -52,7 +52,7 @@ namespace Hazel
 			}
 		}
 
-		inline void LayerStack::PopOverlay(const std::shared_ptr<Layer> &overlay)
+		void LayerStack::PopOverlay(const std::shared_ptr<Layer> &overlay)
 		{
 			auto i = std::find(layers.begin(), layers.end(), overlay);
 			if (i != layers.end())

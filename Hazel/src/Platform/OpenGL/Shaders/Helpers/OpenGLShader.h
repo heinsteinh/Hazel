@@ -21,7 +21,7 @@ namespace Hazel
 		OpenGLShader &operator=(const OpenGLShader &other) = delete;
 		OpenGLShader &operator=(OpenGLShader &&other) noexcept;
 
-		constexpr uint32_t GetId() const
+		uint32_t GetId() const
 		{
 			return id;
 		}

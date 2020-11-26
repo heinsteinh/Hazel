@@ -14,12 +14,12 @@ namespace Hazel
 		{
 		}
 
-		inline auto begin()
+		auto begin()
 		{
 			return iterable.rbegin();
 		}
 
-		inline auto end()
+		auto end()
 		{
 			return iterable.rend();
 		}

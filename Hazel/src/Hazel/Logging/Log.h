@@ -10,12 +10,12 @@ namespace Hazel
 		static inline Logger logger{"Hazel"};
 
 	public:
-		static inline LogLevel GetLevel()
+		static LogLevel GetLevel()
 		{
 			return logger.GetLevel();
 		}
 
-		static inline void SetLevel(LogLevel level)
+		static void SetLevel(LogLevel level)
 		{
 			logger.SetLevel(level);
 		}

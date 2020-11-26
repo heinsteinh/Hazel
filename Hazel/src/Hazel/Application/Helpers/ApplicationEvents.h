@@ -7,7 +7,7 @@ namespace Hazel
 	class ApplicationEvents
 	{
 	public:
-		static inline void ProcessEvent(ApplicationContext &context, Event &e)
+		static void ProcessEvent(ApplicationContext &context, Event &e)
 		{
 			Log::Debug("{}.", e);
 			e.Dispatch([&](WindowCloseEvent &e)

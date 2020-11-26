@@ -24,7 +24,7 @@ namespace Hazel
 			return offset;
 		}
 
-		inline virtual std::string ToString() const override
+		virtual std::string ToString() const override
 		{
 			return (std::ostringstream() << GetName() << ": " << offset.x << ", " << offset.y).str();
 		}

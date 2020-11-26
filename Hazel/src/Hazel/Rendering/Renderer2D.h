@@ -22,12 +22,12 @@ namespace Hazel
 		void Render(const DrawData &drawData);
 		void EndScene();
 
-		inline const RendererInfo &GetInfo() const
+		const RendererInfo &GetInfo() const
 		{
 			return info;
 		}
 
-		inline const RendererStatistics &GetStatistics() const
+		const RendererStatistics &GetStatistics() const
 		{
 			return batchRenderer.GetStatistics();
 		}

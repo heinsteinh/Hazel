@@ -14,54 +14,54 @@ namespace Hazel
 		EventSystem eventSystem;
 
 	public:
-		inline bool IsRunning() const
+		bool IsRunning() const
 		{
 			return running;
 		}
 
-		inline void SetRunning(bool running)
+		void SetRunning(bool running)
 		{
 			this->running = running;
 		}
 
-		inline bool IsImGuiRenderEnabled() const
+		bool IsImGuiRenderEnabled() const
 		{
 			return imGuiRenderEnabled;
 		}
 
-		inline void EnableImGuiRender(bool imGuiRenderEnabled)
+		void EnableImGuiRender(bool imGuiRenderEnabled)
 		{
 			this->imGuiRenderEnabled = imGuiRenderEnabled;
 		}
 
-		inline Window &CreateApplicationWindow(const WindowInfo &info)
+		Window &CreateApplicationWindow(const WindowInfo &info)
 		{
 			window = std::make_unique<Window>(info);
 			eventSystem.SetWindow(*window);
 			return *window;
 		}
 
-		inline Window &GetWindow() const
+		Window &GetWindow() const
 		{
 			return *window;
 		}
 
-		inline GraphicsContext &GetGraphicsContext() const
+		GraphicsContext &GetGraphicsContext() const
 		{
 			return window->GetGraphicsContext();
 		}
 
-		inline void SetEventCallback(const EventSystem::Callback &callback)
+		void SetEventCallback(const EventSystem::Callback &callback)
 		{
 			eventSystem.SetCallback(callback);
 		}
 
-		inline void SendEvent(Event &e)
+		void SendEvent(Event &e)
 		{
 			eventSystem.SendEvent(e);
 		}
 
-		inline void PollEvents()
+		void PollEvents()
 		{
 			eventSystem.PollEvents();
 		}

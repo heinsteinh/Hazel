@@ -15,13 +15,13 @@ namespace Hazel
 		BatchArray<uint32_t> data32;
 
 	public:
-		inline BatchIndices(size_t maxIndexCount = 0, IndexFormat format = IndexFormat::UInt32)
+		BatchIndices(size_t maxIndexCount = 0, IndexFormat format = IndexFormat::UInt32)
 			: format(format)
 		{
 			SetMaxIndexCount(maxIndexCount);
 		}
 
-		inline size_t GetMaxIndexCount() const
+		size_t GetMaxIndexCount() const
 		{
 			switch (format)
 			{
@@ -35,7 +35,7 @@ namespace Hazel
 			HZ_ASSERT(false, "Invalid index format");
 		}
 
-		inline void SetMaxIndexCount(size_t maxIndexCount)
+		void SetMaxIndexCount(size_t maxIndexCount)
 		{
 			switch (format)
 			{
@@ -49,7 +49,7 @@ namespace Hazel
 			HZ_ASSERT(false, "Invalid index format");
 		}
 
-		inline size_t GetIndexCount() const
+		size_t GetIndexCount() const
 		{
 			switch (format)
 			{
@@ -63,7 +63,7 @@ namespace Hazel
 			HZ_ASSERT(false, "Invalid index format");
 		}
 
-		inline void SetIndexCount(size_t indexCount)
+		void SetIndexCount(size_t indexCount)
 		{
 			switch (format)
 			{
@@ -77,7 +77,7 @@ namespace Hazel
 			HZ_ASSERT(false, "Invalid index format");
 		}
 
-		inline void Clear()
+		void Clear()
 		{
 			switch (format)
 			{
@@ -91,12 +91,12 @@ namespace Hazel
 			HZ_ASSERT(false, "Invalid index format");
 		}
 
-		inline bool CanContain(size_t indexCount) const
+		bool CanContain(size_t indexCount) const
 		{
 			return GetIndexCount() + indexCount <= GetMaxIndexCount();
 		}
 
-		inline void Add(uint32_t index)
+		void Add(uint32_t index)
 		{
 			switch (format)
 			{
@@ -110,7 +110,7 @@ namespace Hazel
 			HZ_ASSERT(false, "Invalid index format");
 		}
 
-		inline const void *GetData() const
+		const void *GetData() const
 		{
 			switch (format)
 			{
@@ -124,7 +124,7 @@ namespace Hazel
 			HZ_ASSERT(false, "Invalid index format");
 		}
 
-		inline size_t GetSize() const
+		size_t GetSize() const
 		{
 			switch (format)
 			{

@@ -14,7 +14,7 @@ namespace Hazel
 		LogLevel level;
 
 	public:
-		inline Logger(const std::string &tag)
+		Logger(const std::string &tag)
 			: logger(spdlog::stdout_color_mt(tag))
 		{
 			SetLevel(LogLevel::Debug);
@@ -29,14 +29,14 @@ namespace Hazel
 			return level;
 		}
 
-		inline void SetLevel(LogLevel level)
+		void SetLevel(LogLevel level)
 		{
 			this->level = level;
 			logger->set_level(static_cast<spdlog::level::level_enum>(level));
 		}
 
 		template<typename ...Args>
-		inline void Log(LogLevel level, Args &&...args)
+		void Log(LogLevel level, Args &&...args)
 		{
 			logger->log(static_cast<spdlog::level::level_enum>(level), std::forward<Args>(args)...);
 		}

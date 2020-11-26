@@ -9,7 +9,7 @@ namespace Hazel
 	class TextureBuilder
 	{
 	public:
-		static inline std::shared_ptr<Texture> CreateTextureFromFile(GraphicsContext &graphicsContext, const std::string &filename)
+		static std::shared_ptr<Texture> CreateTextureFromFile(GraphicsContext &graphicsContext, const std::string &filename)
 		{
 			Image image(filename);
 			TextureInfo info;
@@ -20,7 +20,7 @@ namespace Hazel
 			return texture;
 		}
 
-		static inline std::shared_ptr<Texture> CreateFlatTexture(GraphicsContext &graphicsContext, const glm::vec4 &color)
+		static std::shared_ptr<Texture> CreateFlatTexture(GraphicsContext &graphicsContext, const glm::vec4 &color)
 		{
 			TextureInfo info;
 			info.Size = {1.0f, 1.0f};

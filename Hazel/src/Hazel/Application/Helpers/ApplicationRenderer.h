@@ -7,12 +7,12 @@ namespace Hazel
 	class ApplicationRenderer
 	{
 	public:
-		static inline void BeginRender(ApplicationContext &context)
+		static void BeginRender(ApplicationContext &context)
 		{
 			context.GetGraphicsContext().Clear();
 		}
 
-		static inline void RenderNewFrame(ApplicationContext &context, float deltaTime)
+		static void RenderNewFrame(ApplicationContext &context, float deltaTime)
 		{
 			auto &layers = context.GetLayers();
 			if (!context.GetWindow().IsMinimized())
@@ -25,7 +25,7 @@ namespace Hazel
 			}
 		}
 
-		static inline void EndRender(ApplicationContext &context)
+		static void EndRender(ApplicationContext &context)
 		{
 			context.GetGraphicsContext().SwapBuffers();
 		}

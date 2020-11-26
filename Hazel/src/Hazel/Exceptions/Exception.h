@@ -8,12 +8,12 @@ namespace Hazel
 		std::string description;
 
 	public:
-		inline Exception(const std::string &description)
+		Exception(const std::string &description)
 			: description(description)
 		{
 		}
 
-		inline Exception(std::string &&description)
+		Exception(std::string &&description)
 			: description(std::move(description))
 		{
 		}
@@ -23,7 +23,7 @@ namespace Hazel
 			return description;
 		}
 
-		inline virtual const char *what() const override
+		virtual const char *what() const override
 		{
 			return description.c_str();
 		}

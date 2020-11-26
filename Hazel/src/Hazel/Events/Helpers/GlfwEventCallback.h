@@ -9,13 +9,13 @@ namespace Hazel
 	class GlfwEventCallback
 	{
 	private:
-		static inline EventReceiver &GetReceiver(GLFWwindow *window)
+		static EventReceiver &GetReceiver(GLFWwindow *window)
 		{
 			return *static_cast<EventReceiver *>(glfwGetWindowUserPointer(window));
 		}
 
 	public:
-		static inline void RemoveCallbacks(GLFWwindow *window)
+		static void RemoveCallbacks(GLFWwindow *window)
 		{
 			glfwSetWindowSizeCallback(window, nullptr);
 			glfwSetWindowCloseCallback(window, nullptr);
@@ -26,7 +26,7 @@ namespace Hazel
 			glfwSetCursorPosCallback(window, nullptr);
 		}
 
-		static inline void SetupCallbacks(GLFWwindow *window, EventReceiver &receiver)
+		static void SetupCallbacks(GLFWwindow *window, EventReceiver &receiver)
 		{
 			glfwSetWindowUserPointer(window, &receiver);
 			glfwSetWindowSizeCallback(window, [](GLFWwindow *window, int width, int height)

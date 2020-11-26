@@ -7,7 +7,7 @@ namespace Hazel
 	class GladException : public Exception
 	{
 	public:
-		inline GladException(const std::string &description)
+		GladException(const std::string &description)
 			: Exception(description)
 		{
 		}

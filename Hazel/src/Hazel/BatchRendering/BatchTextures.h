@@ -15,7 +15,7 @@ namespace Hazel
 		std::shared_ptr<Texture> whiteTexture;
 
 	public:
-		inline BatchTextures(GraphicsContext &graphicsContext, size_t maxTextureSlotCount)
+		BatchTextures(GraphicsContext &graphicsContext, size_t maxTextureSlotCount)
 			: graphicsContext(&graphicsContext),
 			textures(maxTextureSlotCount),
 			whiteTexture(TextureBuilder::CreateFlatTexture(graphicsContext, glm::vec4(1.0f)))
@@ -23,7 +23,7 @@ namespace Hazel
 			textures.Add(whiteTexture);
 		}
 
-		inline void Bind() const
+		void Bind() const
 		{
 			for (size_t i = 0; i < textures.GetTextureCount(); i++)
 			{
@@ -31,17 +31,17 @@ namespace Hazel
 			}
 		}
 
-		inline const BatchTextureArray &GetTextures() const
+		const BatchTextureArray &GetTextures() const
 		{
 			return textures;
 		}
 
-		inline void Clear()
+		void Clear()
 		{
 			textures.SetTextureCount(1);
 		}
 
-		inline std::optional<uint32_t> Add(const std::shared_ptr<Texture> &texture)
+		std::optional<uint32_t> Add(const std::shared_ptr<Texture> &texture)
 		{
 			if (!texture)
 			{

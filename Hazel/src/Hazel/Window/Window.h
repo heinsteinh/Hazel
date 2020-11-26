@@ -34,37 +34,37 @@ namespace Hazel
 			return window;
 		}
 
-		inline GraphicsContext &GetGraphicsContext() const
+		GraphicsContext &GetGraphicsContext() const
 		{
 			return *graphicsContext;
 		}
 
-		inline bool IsMinimized() const
+		bool IsMinimized() const
 		{
 			return GetSize().IsEmpty();
 		}
 
-		inline float GetAspectRatio() const
+		float GetAspectRatio() const
 		{
 			return GetSize().GetAspectRatio();
 		}
 
-		inline float GetWidth() const
+		float GetWidth() const
 		{
 			return GetSize().Width;
 		}
 
-		inline void SetWidth(float width)
+		void SetWidth(float width)
 		{
 			Resize({width, GetHeight()});
 		}
 
-		inline float GetHeight() const
+		float GetHeight() const
 		{
 			return GetSize().Height;
 		}
 
-		inline void SetHeight(float height)
+		void SetHeight(float height)
 		{
 			Resize({GetWidth(), height});
 		}

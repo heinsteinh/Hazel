@@ -11,12 +11,12 @@ namespace Hazel
 		OpenGLProgram *program = nullptr;
 
 	public:
-		inline OpenGLProgram *GetShader() const
+		OpenGLProgram *GetShader() const
 		{
 			return program;
 		}
 
-		inline void SetShader(const std::shared_ptr<Shader> &shader)
+		void SetShader(const std::shared_ptr<Shader> &shader)
 		{
 			OpenGLBinder::Bind(program, shader);
 		}

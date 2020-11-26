@@ -10,23 +10,23 @@ namespace Hazel
 		std::vector<OpenGLTexture *> textures;
 
 	public:
-		inline size_t GetMaxTextureSlotCount() const
+		size_t GetMaxTextureSlotCount() const
 		{
 			return textures.size();
 		}
 
-		inline void SetMaxTextureSlotCount(size_t maxTextureSlotCount)
+		void SetMaxTextureSlotCount(size_t maxTextureSlotCount)
 		{
 			textures.resize(maxTextureSlotCount, nullptr);
 		}
 
-		inline OpenGLTexture *GetTexture(uint32_t slot) const
+		OpenGLTexture *GetTexture(uint32_t slot) const
 		{
 			HZ_ASSERT(slot < textures.size(), "Not enough texture slots.");
 			return textures[slot];
 		}
 
-		inline void SetTexture(const std::shared_ptr<Texture> &texture, uint32_t slot)
+		void SetTexture(const std::shared_ptr<Texture> &texture, uint32_t slot)
 		{
 			HZ_ASSERT(slot < textures.size(), "Not enough texture slots.");
 			auto &currentTexture = textures[slot];

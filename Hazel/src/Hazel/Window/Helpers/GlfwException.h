@@ -7,7 +7,7 @@ namespace Hazel
 	class GlfwException : public Exception
 	{
 	public:
-		inline GlfwException(const std::string &description)
+		GlfwException(const std::string &description)
 			: Exception(description)
 		{
 		}

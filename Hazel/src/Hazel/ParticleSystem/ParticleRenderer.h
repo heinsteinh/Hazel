@@ -12,12 +12,12 @@ namespace Hazel
 		DrawData drawData;
 
 	public:
-		inline ParticleRenderer()
+		ParticleRenderer()
 			: drawData({SquareMesh::CreateMesh()})
 		{
 		}
 
-		inline void RenderParticle(Renderer2D &renderer, const Particle &particle)
+		void RenderParticle(Renderer2D &renderer, const Particle &particle)
 		{
 			if (particle.Active)
 			{

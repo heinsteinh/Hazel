@@ -11,14 +11,14 @@ namespace Hazel
 		std::string name;
 
 	public:
-		inline Shader(const std::string &name)
+		Shader(const std::string &name)
 			: name(name)
 		{
 		}
 
 		virtual ~Shader() = default;
 
-		inline const std::string &GetName() const
+		const std::string &GetName() const
 		{
 			return name;
 		}

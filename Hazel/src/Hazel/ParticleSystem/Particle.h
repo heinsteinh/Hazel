@@ -17,7 +17,7 @@ namespace Hazel
 		float LifeTime = 1.0f;
 		float RemainingLifeTime = 0.0f;
 
-		inline float GetSize() const
+		float GetSize() const
 		{
 			return glm::mix(SizeEnd, SizeBegin, GetLife());
 		}
@@ -27,7 +27,7 @@ namespace Hazel
 			return RemainingLifeTime / LifeTime;
 		}
 
-		inline glm::vec4 GetColor() const
+		glm::vec4 GetColor() const
 		{
 			auto life = GetLife();
 			auto color = glm::mix(ColorEnd, ColorBegin, life);

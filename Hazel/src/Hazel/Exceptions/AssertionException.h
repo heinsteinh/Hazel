@@ -7,7 +7,7 @@ namespace Hazel
 	class AssertionException : public Exception
 	{
 	public:
-		inline AssertionException(const std::string &description)
+		AssertionException(const std::string &description)
 			: Exception(description)
 		{
 		}

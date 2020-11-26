@@ -18,7 +18,7 @@ namespace Hazel
 			return keys[static_cast<size_t>(key)];
 		}
 
-		inline void SetKeyPressed(Key key, bool pressed)
+		void SetKeyPressed(Key key, bool pressed)
 		{
 			keys[static_cast<size_t>(key)] = pressed;
 		}
@@ -28,7 +28,7 @@ namespace Hazel
 			return buttons[static_cast<size_t>(button)];
 		}
 
-		inline void SetMouseButtonPressed(MouseButton button, bool pressed)
+		void SetMouseButtonPressed(MouseButton button, bool pressed)
 		{
 			buttons[static_cast<size_t>(button)] = pressed;
 		}

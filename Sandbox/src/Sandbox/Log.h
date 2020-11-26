@@ -10,12 +10,12 @@ namespace Sandbox
 		static inline Hazel::Logger logger{"Sandbox"};
 
 	public:
-		static inline LogLevel GetLevel()
+		static LogLevel GetLevel()
 		{
 			return logger.GetLevel();
 		}
 
-		static inline void SetLevel(LogLevel level)
+		static void SetLevel(LogLevel level)
 		{
 			logger.SetLevel(level);
 		}
@@ -55,7 +55,5 @@ namespace Sandbox
 		{
 			logger.Critical(std::forward<Args>(args)...);
 		}
-
-		Log() = delete;
 	};
 }

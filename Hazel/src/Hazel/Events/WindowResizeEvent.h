@@ -25,7 +25,7 @@ namespace Hazel
 			return size;
 		}
 
-		inline virtual std::string ToString() const override
+		virtual std::string ToString() const override
 		{
 			return (std::ostringstream() << GetName() << ": " << size.Width << ", " << size.Height).str();
 		}

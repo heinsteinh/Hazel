@@ -26,7 +26,7 @@ namespace Hazel
 			return transform.Position;
 		}
 
-		inline float GetRotation() const
+		float GetRotation() const
 		{
 			return transform.Angle;
 		}

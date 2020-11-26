@@ -19,7 +19,7 @@ namespace Hazel
 			Position += glm::vec3(translation.x, translation.y, 0.0f);
 		}
 
-		inline glm::quat GetRotation() const
+		glm::quat GetRotation() const
 		{
 			return glm::angleAxis(Angle, Axis);
 		}
@@ -40,7 +40,7 @@ namespace Hazel
 			Scale.y *= scale.y;
 		}
 
-		inline glm::mat4 ToMatrix() const
+		glm::mat4 ToMatrix() const
 		{
 			return glm::scale(
 				glm::rotate(

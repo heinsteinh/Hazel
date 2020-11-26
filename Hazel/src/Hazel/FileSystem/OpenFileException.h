@@ -11,7 +11,7 @@ namespace Hazel
 		std::string filename;
 
 	public:
-		inline OpenFileException(const std::string &filename, int code)
+		OpenFileException(const std::string &filename, int code)
 			: Exception(fmt::format("Cannot open file {} (code: {}).", filename, code)),
 			code(code),
 			filename(filename)

@@ -7,7 +7,7 @@ namespace Hazel
 	class SquareMesh
 	{
 	public:
-		static inline std::shared_ptr<Mesh> CreateMesh()
+		static std::shared_ptr<Mesh> CreateMesh()
 		{
 			std::shared_ptr<Mesh> result = std::make_shared<Mesh>();
 			result->Indices = {0, 1, 2, 2, 3, 0};

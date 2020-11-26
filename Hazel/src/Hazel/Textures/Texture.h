@@ -10,7 +10,7 @@ namespace Hazel
 		TextureInfo info;
 
 	public:
-		inline Texture(const TextureInfo &info)
+		Texture(const TextureInfo &info)
 			: info(info)
 		{
 		}

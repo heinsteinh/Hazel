@@ -13,7 +13,7 @@ namespace Hazel
 		FramebufferInfo info;
 
 	public:
-		inline Framebuffer(const FramebufferInfo &info)
+		Framebuffer(const FramebufferInfo &info)
 			: info(info)
 		{
 		}

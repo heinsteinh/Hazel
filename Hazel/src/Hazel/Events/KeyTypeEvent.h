@@ -24,7 +24,7 @@ namespace Hazel
 			return key;
 		}
 
-		inline virtual std::string ToString() const override
+		virtual std::string ToString() const override
 		{
 			return (std::ostringstream() << GetName() << ": " << key).str();
 		}

@@ -14,12 +14,12 @@ namespace Hazel
 		IndexFormat IndexFormat = IndexFormat::UInt32;
 		PrimitiveTopology PrimitiveTopology = PrimitiveTopology::Triangles;
 
-		inline size_t GetIndexBufferSize() const
+		size_t GetIndexBufferSize() const
 		{
 			return IndexFormatHelper::GetSize(MaxIndexCount, IndexFormat);
 		}
 
-		inline size_t GetVertexBufferSize() const
+		size_t GetVertexBufferSize() const
 		{
 			return MaxVertexCount * sizeof(BatchVertex);
 		}

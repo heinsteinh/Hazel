@@ -7,7 +7,7 @@ namespace Hazel
 	class FramebufferCreationException : public Exception
 	{
 	public:
-		inline FramebufferCreationException(const std::string &description)
+		FramebufferCreationException(const std::string &description)
 			: Exception(description)
 		{
 		}

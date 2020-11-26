@@ -16,18 +16,18 @@ namespace Hazel
 	public:
 		SubTexture() = default;
 
-		inline SubTexture(const std::shared_ptr<Texture> &texture)
+		SubTexture(const std::shared_ptr<Texture> &texture)
 			: texture(texture)
 		{
 		}
 
-		inline SubTexture(const std::shared_ptr<Texture> &texture, const Rectangle &region)
+		SubTexture(const std::shared_ptr<Texture> &texture, const Rectangle &region)
 			: texture(texture)
 		{
 			SetRegion(region);
 		}
 
-		inline void SetRegion(const Rectangle &region)
+		void SetRegion(const Rectangle &region)
 		{
 			if (texture)
 			{
@@ -38,7 +38,7 @@ namespace Hazel
 			}
 		}
 
-		inline glm::vec2 GetSourceCoordinates(const glm::vec2 &coordinates) const
+		glm::vec2 GetSourceCoordinates(const glm::vec2 &coordinates) const
 		{
 			return texture ? translation + scale * coordinates : glm::vec2(0.0f);
 		}
@@ -48,7 +48,7 @@ namespace Hazel
 			return aspectRatio;
 		}
 
-		inline operator bool() const
+		operator bool() const
 		{
 			return static_cast<bool>(texture);
 		}

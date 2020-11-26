@@ -20,7 +20,7 @@ namespace Hazel
 		void Render(const DrawData &drawData);
 		void EndScene();
 
-		inline const RendererStatistics &GetStatistics() const
+		const RendererStatistics &GetStatistics() const
 		{
 			return statistics;
 		}

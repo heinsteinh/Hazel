@@ -7,7 +7,7 @@ namespace Hazel
 	class BatchException : public Exception
 	{
 	public:
-		inline BatchException(const std::string &description)
+		BatchException(const std::string &description)
 			: Exception(description)
 		{
 		}

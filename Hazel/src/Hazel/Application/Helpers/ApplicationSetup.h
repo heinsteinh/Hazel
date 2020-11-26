@@ -8,7 +8,7 @@ namespace Hazel
 	class ApplicationSetup
 	{
 	public:
-		static inline void Setup(ApplicationContext &context)
+		static void Setup(ApplicationContext &context)
 		{
 			Log::Debug("Application setup.");
 			if (!context.GetGraphicsApi())

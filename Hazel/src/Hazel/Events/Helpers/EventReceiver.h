@@ -30,12 +30,12 @@ namespace Hazel
 		void OnMouseScrolled(double x, double y);
 		void OnMouseMoved(double x, double y);
 
-		inline void SendEvent(Event &e)
+		void SendEvent(Event &e)
 		{
 			callback(e);
 		}
 
-		inline void SetCallback(const Callback &callback)
+		void SetCallback(const Callback &callback)
 		{
 			this->callback = callback;
 		}

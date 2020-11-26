@@ -15,37 +15,37 @@ namespace Hazel
 
 		void Run();
 
-		inline void SetGraphicsApi(const std::shared_ptr<GraphicsApi> &graphicsApi)
+		void SetGraphicsApi(const std::shared_ptr<GraphicsApi> &graphicsApi)
 		{
 			context.SetGraphicsApi(graphicsApi);
 		}
 
-		inline void SetWindowTitle(const std::string &title)
+		void SetWindowTitle(const std::string &title)
 		{
 			context.SetWindowTitle(title);
 		}
 
-		inline void SetWindowResolution(Size resolution)
+		void SetWindowResolution(Size resolution)
 		{
 			context.SetWindowResolution(resolution);
 		}
 
-		inline void SetVerticalSynchronization(bool verticalSynchronization)
+		void SetVerticalSynchronization(bool verticalSynchronization)
 		{
 			context.SetVerticalSynchronization(verticalSynchronization);
 		}
 
-		inline void EnableImGui(bool imGuiEnabled)
+		void EnableImGui(bool imGuiEnabled)
 		{
 			context.EnableImGui(imGuiEnabled);
 		}
 
-		inline void EnableImGuiRender(bool imGuiRenderEnabled)
+		void EnableImGuiRender(bool imGuiRenderEnabled)
 		{
 			context.EnableImGuiRender(imGuiRenderEnabled);
 		}
 
-		inline void PushLayer(const std::shared_ptr<Layer> &layer)
+		void PushLayer(const std::shared_ptr<Layer> &layer)
 		{
 			context.GetLayers().PushLayer(layer);
 		}

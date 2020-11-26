@@ -20,7 +20,7 @@ namespace Hazel
 		{
 		}
 
-		inline glm::vec3 GetWorldPosition(const glm::vec2 &screenPosition) const
+		glm::vec3 GetWorldPosition(const glm::vec2 &screenPosition) const
 		{
 			auto [width, height] = window->GetSize();
 			return glm::unProject(
@@ -30,7 +30,7 @@ namespace Hazel
 				glm::vec4(0.0f, height, width, -height));
 		};
 
-		inline glm::vec2 GetScreenPosition(const glm::vec3 &worldPosition) const
+		glm::vec2 GetScreenPosition(const glm::vec3 &worldPosition) const
 		{
 			auto [width, height] = window->GetSize();
 			return glm::project(
