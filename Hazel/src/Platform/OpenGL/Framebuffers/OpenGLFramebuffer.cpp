@@ -22,7 +22,8 @@ namespace Hazel
 	void OpenGLFramebuffer::Bind() const
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, id);
-		glViewport(0, 0, static_cast<int>(GetWidth()), static_cast<int>(GetHeight()));
+		auto size = GetSize();
+		glViewport(0, 0, static_cast<int>(size.Width), static_cast<int>(size.Height));
 	}
 
 	void OpenGLFramebuffer::Unbind() const
@@ -48,12 +49,14 @@ namespace Hazel
 	void OpenGLFramebuffer::SetColorAttachment(const std::shared_ptr<OpenGLTexture> &colorAttachment)
 	{
 		this->colorAttachment = colorAttachment;
+		colorAttachment->Bind();
 		Attach(GL_COLOR_ATTACHMENT0, colorAttachment);
 	}
 
 	void OpenGLFramebuffer::SetDepthAttachment(const std::shared_ptr<OpenGLTexture> &depthAttachment)
 	{
 		this->depthAttachment = depthAttachment;
+		depthAttachment->Bind();
 		Attach(GL_DEPTH_STENCIL_ATTACHMENT, depthAttachment);
 	}
 

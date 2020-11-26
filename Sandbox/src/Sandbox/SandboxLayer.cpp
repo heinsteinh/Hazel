@@ -53,12 +53,13 @@ namespace Sandbox
 
 		drawData.Texture.SetRegion(Hazel::Rectangle::FromBottomLeftAndSize(bottomLeft, size));
 
-		//GetGraphicsContext().SetFramebuffer(framebuffer);
+		GetGraphicsContext().SetFramebuffer(framebuffer);
+		GetGraphicsContext().Clear();
 		renderer->BeginScene(camera);
 		particles.OnUpdate(deltaTime);
 		renderer->Render(drawData);
 		renderer->EndScene();
-		//GetGraphicsContext().SetFramebuffer(nullptr);
+		GetGraphicsContext().SetFramebuffer(nullptr);
 	}
 
 	void SandboxLayer::OnImGuiRender()
