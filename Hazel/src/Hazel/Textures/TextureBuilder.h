@@ -17,19 +17,23 @@ namespace Hazel
 		{
 		}
 
-		inline std::shared_ptr<Texture> BuildFromFile(const std::string &filename)
+		inline std::shared_ptr<Texture> CreateTextureFromImageFile(const std::string &filename)
 		{
 			Image image(filename);
-			auto texture = graphicsContext->CreateTexture({
-				{image.GetWidth(), image.GetHeight()},
-				TextureFormatHelper::GetTextureFormat(image.GetChannelCount())});
+			TextureInfo info;
+			info.Size = {image.GetWidth(), image.GetHeight()};
+			info.Format = TextureFormatHelper::GetTextureFormat(image.GetChannelCount());
+			auto texture = graphicsContext->CreateTexture(info);
 			texture->SetData(image.GetData());
 			return texture;
 		}
 
-		inline std::shared_ptr<Texture> BuildFlatTexture(const glm::vec4 &color)
+		inline std::shared_ptr<Texture> CreateFlatTexture(const glm::vec4 &color)
 		{
-			auto texture = graphicsContext->CreateTexture({{1, 1}, TextureFormat::Rgba});
+			TextureInfo info;
+			info.Size = {1.0f, 1.0f};
+			info.Format = TextureFormat::Rgba;
+			auto texture = graphicsContext->CreateTexture(info);
 			unsigned char data[4] = {
 				static_cast<unsigned char>(255.0f * color.r),
 				static_cast<unsigned char>(255.0f * color.g),

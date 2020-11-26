@@ -18,7 +18,7 @@ namespace Hazel
 		inline BatchTextures(GraphicsContext &graphicsContext, size_t maxTextureSlotCount)
 			: graphicsContext(&graphicsContext),
 			textures(maxTextureSlotCount),
-			whiteTexture(TextureBuilder(graphicsContext).BuildFlatTexture(glm::vec4(1.0f)))
+			whiteTexture(TextureBuilder(graphicsContext).CreateFlatTexture(glm::vec4(1.0f)))
 		{
 			textures.Add(whiteTexture);
 		}
