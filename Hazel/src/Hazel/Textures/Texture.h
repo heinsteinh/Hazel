@@ -17,7 +17,7 @@ namespace Hazel
 
 		virtual ~Texture() = default;
 
-		virtual void SetData(const void *data) = 0;
+		virtual void BufferData(const void *data) = 0;
 		virtual void *GetHandle() const = 0;
 
 		constexpr const TextureInfo &GetInfo() const

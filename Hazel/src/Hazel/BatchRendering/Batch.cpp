@@ -3,13 +3,13 @@
 namespace Hazel
 {
 	Batch::Batch(GraphicsContext &graphicsContext, const BatchInfo &info)
-		: mesh(info),
+		: indices(info.MaxIndexCount, info.IndexFormat),
+		vertices(info.MaxVertexCount),
 		textures(graphicsContext, info.MaxTextureSlotCount),
 		buffers(graphicsContext, info),
 		shader(graphicsContext)
 	{
 		graphicsContext.SetShader(shader);
-		//shader.InitSamplers(info.MaxTextureSlotCount);
 	}
 
 	void Batch::SetViewProjectionMatrix(const glm::mat4 &viewProjection)
@@ -19,7 +19,8 @@ namespace Hazel
 
 	void Batch::Clear()
 	{
-		mesh.Clear();
+		indices.Clear();
+		vertices.Clear();
 		textures.Clear();
 	}
 
@@ -30,8 +31,8 @@ namespace Hazel
 
 	void Batch::BufferData()
 	{
-		buffers.BufferIndices(mesh.GetIndices());
-		buffers.BufferVertices(mesh.GetVertices());
+		buffers.BufferIndices(indices);
+		buffers.BufferVertices(vertices);
 	}
 
 	void Batch::BindBuffers() const
@@ -46,8 +47,8 @@ namespace Hazel
 
 	bool Batch::CanContain(const DrawData &drawData) const
 	{
-		return mesh.GetIndices().CanContain(drawData.Mesh->Indices.size())
-			&& mesh.GetVertices().CanContain(drawData.Mesh->Vertices.size());
+		return indices.CanContain(drawData.Mesh->Indices.size())
+			&& vertices.CanContain(drawData.Mesh->Vertices.size());
 	}
 
 	bool Batch::TryAdd(const DrawData &drawData)
@@ -66,7 +67,7 @@ namespace Hazel
 	{
 		for (auto index : drawData.Mesh->Indices)
 		{
-			mesh.AddIndex(index);
+			indices.Add(static_cast<uint32_t>(vertices.GetElementCount() + index));
 		}
 	}
 
@@ -75,7 +76,7 @@ namespace Hazel
 		auto matrix = drawData.Transform.ToMatrix();
 		for (const auto &vertexInfo : drawData.Mesh->Vertices)
 		{
-			auto &vertex = mesh.EmplaceVertex();
+			auto &vertex = vertices.Emplace();
 			vertex.Position = matrix * vertexInfo.Position;
 			vertex.Color = vertexInfo.Color;
 			vertex.TextureCoordinate = drawData.Texture.GetSourceCoordinates(vertexInfo.TextureCoordinate);

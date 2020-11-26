@@ -36,7 +36,7 @@ namespace Hazel
 		glBindTextureUnit(slot, id);
 	}
 
-	void OpenGLTexture::SetData(const void *data)
+	void OpenGLTexture::BufferData(const void *data)
 	{
 		glTextureSubImage2D(
 			id,

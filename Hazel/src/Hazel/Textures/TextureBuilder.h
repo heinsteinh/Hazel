@@ -24,7 +24,7 @@ namespace Hazel
 			info.Size = {image.GetWidth(), image.GetHeight()};
 			info.Format = TextureFormatHelper::GetTextureFormat(image.GetChannelCount());
 			auto texture = graphicsContext->CreateTexture(info);
-			texture->SetData(image.GetData());
+			texture->BufferData(image.GetData());
 			return texture;
 		}
 
@@ -40,7 +40,7 @@ namespace Hazel
 				static_cast<unsigned char>(255.0f * color.b),
 				static_cast<unsigned char>(255.0f * color.a)
 			};
-			texture->SetData(data);
+			texture->BufferData(data);
 			return texture;
 		}
 	};

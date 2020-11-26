@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BatchInfo.h"
-#include "BatchMesh.h"
+#include "BatchIndices.h"
 #include "BatchTextures.h"
 #include "BatchBuffers.h"
 #include "BatchShader.h"
@@ -12,7 +12,8 @@ namespace Hazel
 	class Batch
 	{
 	private:
-		BatchMesh mesh;
+		BatchIndices indices;
+		BatchArray<BatchVertex> vertices;
 		BatchTextures textures;
 		BatchBuffers buffers;
 		BatchShader shader;
@@ -29,22 +30,22 @@ namespace Hazel
 
 		inline size_t GetIndexCount() const
 		{
-			return mesh.GetIndices().GetIndexCount();
+			return indices.GetIndexCount();
 		}
 
 		inline size_t GetMaxIndexCount() const
 		{
-			return mesh.GetIndices().GetMaxIndexCount();
+			return indices.GetMaxIndexCount();
 		}
 
 		inline size_t GetVertexCount() const
 		{
-			return mesh.GetVertices().GetElementCount();
+			return vertices.GetElementCount();
 		}
 
 		inline size_t GetMaxVertices() const
 		{
-			return mesh.GetVertices().GetMaxElementCount();
+			return vertices.GetMaxElementCount();
 		}
 
 		inline size_t GetTextureCount() const
