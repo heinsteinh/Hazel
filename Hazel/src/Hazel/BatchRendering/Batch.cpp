@@ -78,7 +78,7 @@ namespace Hazel
 			auto &vertex = mesh.EmplaceVertex();
 			vertex.Position = matrix * vertexInfo.Position;
 			vertex.Color = vertexInfo.Color;
-			vertex.TextureCoordinate = drawData.Texture.MapCoordinates(vertexInfo.TextureCoordinate);
+			vertex.TextureCoordinate = drawData.Texture.GetSourceCoordinates(vertexInfo.TextureCoordinate);
 			vertex.TextureIndex = static_cast<float>(textureSlot);
 		};
 	}

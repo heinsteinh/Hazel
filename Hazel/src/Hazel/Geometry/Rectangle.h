@@ -11,6 +11,16 @@ namespace Hazel
 		float Bottom = 0.0f;
 		float Top = 0.0f;
 
+		static constexpr Rectangle FromBottomLeftAndSize(const glm::vec2 &bottomLeft, Size size)
+		{
+			return {
+				bottomLeft.x,
+				bottomLeft.x + size.Width,
+				bottomLeft.y,
+				bottomLeft.y + size.Height
+			};
+		}
+
 		constexpr glm::vec2 GetPosition() const
 		{
 			return {

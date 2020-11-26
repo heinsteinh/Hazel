@@ -39,8 +39,7 @@ namespace Sandbox
 
 		cameraController.UpdateCamera(camera, GetInput(), deltaTime);
 
-		drawData.Texture.SetCoordinates({bottomLeft, size});
-		//drawData.Transform.SetScale({drawData.Texture.GetAspectRatio(), 1.0f});
+		drawData.Texture.SetRegion(Hazel::Rectangle::FromBottomLeftAndSize(bottomLeft, size));
 
 		renderer->BeginScene(camera);
 		particles.OnUpdate(deltaTime);

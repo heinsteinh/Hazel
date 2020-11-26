@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Texture.h"
-#include "TextureCoordinates.h"
+#include "TextureRegion.h"
 
 namespace Hazel
 {
@@ -9,7 +9,7 @@ namespace Hazel
 	{
 	private:
 		std::shared_ptr<Texture> texture;
-		glm::vec2 shift{0.0f};
+		glm::vec2 translation{0.0f};
 		glm::vec2 scale{0.0f};
 		float aspectRatio = 0.0f;
 
@@ -21,26 +21,26 @@ namespace Hazel
 		{
 		}
 
-		inline SubTexture(const std::shared_ptr<Texture> &texture, const TextureCoordinates &coordinates)
+		inline SubTexture(const std::shared_ptr<Texture> &texture, const Rectangle &region)
 			: texture(texture)
 		{
-			SetCoordinates(coordinates);
+			SetRegion(region);
 		}
 
-		inline void SetCoordinates(const TextureCoordinates &coordinates)
+		inline void SetRegion(const Rectangle &region)
 		{
 			if (texture)
 			{
 				auto size = texture->GetSize();
-				shift = coordinates.GetShift(size);
-				scale = coordinates.GetScale(size);
-				aspectRatio = coordinates.GetAspectRatio();
+				translation = TextureRegion::GetNormalizedTranslation(region, size);
+				scale = TextureRegion::GetScaleRatio(region, size);
+				aspectRatio = region.GetAspectRatio();
 			}
 		}
 
-		inline glm::vec2 MapCoordinates(const glm::vec2 &coordinates) const
+		inline glm::vec2 GetSourceCoordinates(const glm::vec2 &coordinates) const
 		{
-			return texture ? shift + coordinates * scale : glm::vec2(0.0f);
+			return texture ? translation + scale * coordinates : glm::vec2(0.0f);
 		}
 
 		constexpr float GetAspectRatio() const
