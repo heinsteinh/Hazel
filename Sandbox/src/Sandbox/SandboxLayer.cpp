@@ -20,7 +20,7 @@ namespace Sandbox
 		rendererInfo.MaxIndexCount = maxIndices;
 		rendererInfo.MaxVertexCount = maxVertices;
 		renderer = std::make_shared<Hazel::Renderer2D>(rendererInfo);
-		spriteSheet = Hazel::TextureBuilder(GetGraphicsContext()).CreateTextureFromImageFile("assets\\textures\\SpriteSheet.png");
+		spriteSheet = Hazel::TextureBuilder(GetGraphicsContext()).CreateTextureFromFile("assets\\textures\\SpriteSheet.png");
 		drawData.Mesh->SetColor({1.0f, 1.0f, 1.0f, 1.0f});
 		drawData.Texture = spriteSheet;
 		drawData.Transform.SetScale({spriteSheet->GetAspectRatio(), 1.0f});

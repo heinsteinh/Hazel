@@ -17,7 +17,7 @@ namespace Hazel
 		{
 		}
 
-		inline std::shared_ptr<Texture> CreateTextureFromImageFile(const std::string &filename)
+		inline std::shared_ptr<Texture> CreateTextureFromFile(const std::string &filename)
 		{
 			Image image(filename);
 			TextureInfo info;
