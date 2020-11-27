@@ -63,7 +63,14 @@ namespace Hazel
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
 		ImGui::Begin("Viewport");
-		EnableImGuiEventFilter(!ImGui::IsWindowFocused());
+
+		bool blockEvents = !ImGui::IsWindowHovered();
+		EnableImGuiEventFilter(blockEvents);
+		if (!this->blockEvents && blockEvents)
+		{
+			GetInput().Clear();
+		}
+
 		auto viewportSize = ImGui::GetContentRegionAvail();
 		Size newSize = {viewportSize.x, viewportSize.y};
 		if (newSize != framebuffer->GetSize())
@@ -72,11 +79,13 @@ namespace Hazel
 			framebuffer = GetGraphicsContext().CreateFramebuffer({newSize});
 			cameraController.UpdateCamera(camera, WindowResizeEvent(newSize.Width, newSize.Height));
 		}
+
 		ImGui::Image(
 			framebuffer->GetColorAttachment()->GetHandle(),
 			viewportSize,
 			{0.0f, 1.0f},
 			{1.0f, 0.0f});
+
 		ImGui::End();
 		ImGui::PopStyleVar();
 

@@ -70,6 +70,11 @@ namespace Hazel
 			return input;
 		}
 
+		Input &GetInput()
+		{
+			return input;
+		}
+
 		void SetContext(LayerContext &context)
 		{
 			this->context = &context;

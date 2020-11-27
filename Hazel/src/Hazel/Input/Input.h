@@ -9,7 +9,7 @@ namespace Hazel
 	{
 	private:
 		std::bitset<static_cast<size_t>(Key::Count)> keys;
-		std::bitset<static_cast<size_t>(MouseButton::Count)> buttons;
+		std::bitset<static_cast<size_t>(MouseButton::Count)> mouseButtons;
 		glm::vec2 mousePosition{0.0f};
 
 	public:
@@ -23,14 +23,14 @@ namespace Hazel
 			keys[static_cast<size_t>(key)] = pressed;
 		}
 
-		constexpr bool IsMouseButtonPressed(MouseButton button) const
+		constexpr bool IsMouseButtonPressed(MouseButton mouseButton) const
 		{
-			return buttons[static_cast<size_t>(button)];
+			return mouseButtons[static_cast<size_t>(mouseButton)];
 		}
 
-		void SetMouseButtonPressed(MouseButton button, bool pressed)
+		void SetMouseButtonPressed(MouseButton mouseButton, bool pressed)
 		{
-			buttons[static_cast<size_t>(button)] = pressed;
+			mouseButtons[static_cast<size_t>(mouseButton)] = pressed;
 		}
 
 		constexpr glm::vec2 GetMousePosition() const
@@ -41,6 +41,22 @@ namespace Hazel
 		constexpr void SetMousePosition(const glm::vec2 &mousePosition)
 		{
 			this->mousePosition = mousePosition;
+		}
+
+		void ClearKeys()
+		{
+			keys.reset();
+		}
+
+		void ClearMouseButtons()
+		{
+			mouseButtons.reset();
+		}
+
+		void Clear()
+		{
+			ClearKeys();
+			ClearMouseButtons();
 		}
 	};
 }
