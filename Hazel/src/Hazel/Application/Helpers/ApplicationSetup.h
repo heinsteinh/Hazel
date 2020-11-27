@@ -25,6 +25,7 @@ namespace Hazel
 			{
 				ApplicationEvents::ProcessEvent(context, e);
 			});
+			context.GetGraphicsContext().SetClearColor({0.45f, 0.55f, 0.60f, 1.00f});
 		}
 	};
 }

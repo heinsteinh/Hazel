@@ -1,6 +1,6 @@
 workspace "Hazel"
     architecture "x64"
-    startproject "Sandbox"
+    startproject "HazelEditor"
 
     configurations {
         "Debug",
@@ -18,4 +18,5 @@ workspace "Hazel"
 
     group ""
         include "Hazel"
+        include "HazelEditor"
         include "Sandbox"

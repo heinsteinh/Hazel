@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Hazel/FileSystem/OpenFileException.h"
+
 namespace Hazel
 {
 	class Image

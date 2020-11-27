@@ -10,6 +10,10 @@ namespace Hazel
 		int width = 0;
 		int height = 0;
 		data = stbi_load(filename.c_str(), &width, &height, &channelCount, 0);
+		if (!data)
+		{
+			throw OpenFileException(filename, 0);
+		}
 		this->width = static_cast<float>(width);
 		this->height = static_cast<float>(height);
 	}

@@ -49,14 +49,12 @@ namespace Hazel
 	void OpenGLFramebuffer::SetColorAttachment(const std::shared_ptr<OpenGLTexture> &colorAttachment)
 	{
 		this->colorAttachment = colorAttachment;
-		colorAttachment->Bind();
 		Attach(GL_COLOR_ATTACHMENT0, colorAttachment);
 	}
 
 	void OpenGLFramebuffer::SetDepthAttachment(const std::shared_ptr<OpenGLTexture> &depthAttachment)
 	{
 		this->depthAttachment = depthAttachment;
-		depthAttachment->Bind();
 		Attach(GL_DEPTH_STENCIL_ATTACHMENT, depthAttachment);
 	}
 
