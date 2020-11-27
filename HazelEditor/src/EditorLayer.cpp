@@ -4,12 +4,13 @@
 
 #include "Hazel/Textures/TextureBuilder.h"
 #include "Hazel/Rendering/SquareMesh.h"
+#include "Hazel/Logging/Log.h"
 
 namespace Hazel
 {
 	EditorLayer::EditorLayer()
 		: Layer("Hazel Editor"),
-		drawData({Hazel::SquareMesh::CreateMesh()})
+		drawData({SquareMesh::CreateMesh()})
 	{
 	}
 
@@ -17,17 +18,15 @@ namespace Hazel
 	{
 		auto &graphicsContext = GetGraphicsContext();
 
-		Hazel::RendererInfo rendererInfo;
+		RendererInfo rendererInfo;
 		rendererInfo.GraphicsContext = &graphicsContext;
 		rendererInfo.MaxIndexCount = maxIndices;
 		rendererInfo.MaxVertexCount = maxVertices;
-		renderer = std::make_shared<Hazel::Renderer2D>(rendererInfo);
+		renderer = std::make_shared<Renderer2D>(rendererInfo);
 
-		Hazel::FramebufferInfo framebufferInfo;
-		framebufferInfo.Size = GetWindow().GetSize();
-		framebuffer = graphicsContext.CreateFramebuffer(framebufferInfo);
+		framebuffer = graphicsContext.CreateFramebuffer({GetWindow().GetSize()});
 
-		spriteSheet = Hazel::TextureBuilder::CreateTextureFromFile(
+		spriteSheet = TextureBuilder::CreateTextureFromFile(
 			GetGraphicsContext(),
 			"assets\\textures\\SpriteSheet.png");
 
@@ -48,7 +47,7 @@ namespace Hazel
 
 		cameraController.UpdateCamera(camera, GetInput(), deltaTime);
 
-		drawData.Texture.SetRegion(Hazel::Rectangle::FromBottomLeftAndSize(bottomLeft, size));
+		drawData.Texture.SetRegion(Rectangle::FromBottomLeftAndSize(bottomLeft, size));
 
 		GetGraphicsContext().SetFramebuffer(framebuffer);
 		GetGraphicsContext().Clear();
@@ -61,13 +60,24 @@ namespace Hazel
 	void EditorLayer::OnImGuiRender()
 	{
 		dockspace.Begin();
+
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
 		ImGui::Begin("Scene");
+		auto viewportSize = ImGui::GetContentRegionAvail();
+		Size newSize = {viewportSize.x, viewportSize.y};
+		if (newSize != framebuffer->GetSize())
+		{
+			Log::Debug("New viewport size: {} {}", newSize.Width, newSize.Height);
+			framebuffer = GetGraphicsContext().CreateFramebuffer({newSize});
+			cameraController.UpdateCamera(camera, WindowResizeEvent(newSize.Width, newSize.Height));
+		}
 		ImGui::Image(
 			framebuffer->GetColorAttachment()->GetHandle(),
-			{framebuffer->GetWidth(), framebuffer->GetHeight()},
+			viewportSize,
 			{0.0f, 1.0f},
 			{1.0f, 0.0f});
 		ImGui::End();
+		ImGui::PopStyleVar();
 
 		ImGui::Begin("Info");
 		ImGui::Text("Update Time: %fms (%fFPS)", 1000 * renderTime, 1.0f / renderTime);
@@ -104,12 +114,12 @@ namespace Hazel
 		dockspace.End();
 	}
 
-	void EditorLayer::OnEvent(Hazel::Event &e)
+	void EditorLayer::OnEvent(Event &e)
 	{
 		cameraController.UpdateCamera(camera, e);
-		e.Dispatch([this](Hazel::KeyPressEvent &e)
+		e.Dispatch([this](KeyPressEvent &e)
 		{
-			if (e.GetKey() == Hazel::Key::Backspace)
+			if (e.GetKey() == Key::Backspace)
 			{
 				camera = {};
 				camera.SetAspectRatio(GetWindow().GetAspectRatio());

@@ -21,5 +21,15 @@ namespace Hazel
 		{
 			return Width == 0.0f || Height == 0.0f;
 		}
+
+		constexpr bool operator==(const Size &other) const
+		{
+			return Width == other.Width && Height == other.Height;
+		}
+
+		constexpr bool operator!=(const Size &other) const
+		{
+			return !(*this == other);
+		}
 	};
 }
