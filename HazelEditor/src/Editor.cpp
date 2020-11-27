@@ -6,19 +6,19 @@
 
 namespace Hazel
 {
-	class Editor : public Hazel::Application
+	class Editor : public Application
 	{
 	public:
 		Editor()
 		{
 			Log::Info("Sandbox application creation");
-			SetWindowTitle("Sandbox");
+			SetWindowTitle("Hazel Editor");
 			PushLayer(std::make_shared<EditorLayer>());
 		};
 	};
-}
 
-std::unique_ptr<Hazel::Application> CreateApplication(int argc, char *argv[])
-{
-	return std::make_unique<Hazel::Editor>();
+	std::unique_ptr<Application> CreateApplication(int argc, char *argv[])
+	{
+		return std::make_unique<Editor>();
+	}
 }

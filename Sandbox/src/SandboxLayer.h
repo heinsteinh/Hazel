@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Hazel.h"
-#include "ImGuiDockSpace.h"
 #include "TestParticle.h"
 
 namespace Sandbox
@@ -19,7 +18,6 @@ namespace Sandbox
 		Hazel::OrthographicCamera camera;
 		Hazel::OrthographicCameraController cameraController;
 		Hazel::DrawData drawData;
-		ImGuiDockSpace dockspace;
 		std::shared_ptr<Hazel::Texture> spriteSheet;
 		std::shared_ptr<Hazel::Framebuffer> framebuffer;
 		TestParticle particles;

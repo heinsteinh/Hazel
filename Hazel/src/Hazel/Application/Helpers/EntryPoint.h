@@ -3,16 +3,16 @@
 #include "Hazel/Application/Application.h"
 #include "Hazel/Logging/Log.h"
 
-extern std::unique_ptr<Hazel::Application> CreateApplication(int argc, char *argv[]);
+extern std::unique_ptr<Hazel::Application> Hazel::CreateApplication(int argc, char *argv[]);
 
 int main(int argc, char *argv[])
 {
 #ifdef HZ_DEBUG
-	CreateApplication(argc, argv)->Run();
+	Hazel::CreateApplication(argc, argv)->Run();
 #else
 	try
 	{
-		CreateApplication(argc, argv)->Run();
+		Hazel::CreateApplication(argc, argv)->Run();
 	}
 	catch (Hazel::Exception &e)
 	{

@@ -64,7 +64,6 @@ namespace Sandbox
 
 	void SandboxLayer::OnImGuiRender()
 	{
-		//dockspace.Begin();
 		ImGui::Begin("Scene");
 		ImGui::Image(
 			framebuffer->GetColorAttachment()->GetHandle(),
@@ -106,8 +105,6 @@ namespace Sandbox
 		ImGui::End();
 
 		particles.OnImGuiRender();
-
-		//dockspace.End();
 	}
 
 	void SandboxLayer::OnEvent(Hazel::Event &e)
