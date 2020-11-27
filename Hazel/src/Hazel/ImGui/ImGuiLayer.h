@@ -9,6 +9,7 @@ namespace Hazel
 	class ImGuiLayer : public Layer
 	{
 	private:
+		bool eventFilterEnabled = true;
 		std::unique_ptr<ImGuiContextHolder> imGuiContext;
 		std::shared_ptr<ImGuiRenderer> renderer;
 
@@ -24,5 +25,10 @@ namespace Hazel
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
 		virtual void OnEvent(Event &e) override;
+
+		void EnableEventFilter(bool eventFilterEnabled)
+		{
+			this->eventFilterEnabled = eventFilterEnabled;
+		}
 	};
 }

@@ -47,6 +47,12 @@ namespace Hazel
 			context->EnableImGuiRender(renderImGui);
 		}
 
+		void EnableImGuiEventFilter(bool imGuiEventFilterEnabled)
+		{
+			HZ_ASSERT_ATTACHED();
+			context->EnableImGuiEventFilter(imGuiEventFilterEnabled);
+		}
+
 		Window &GetWindow() const
 		{
 			HZ_ASSERT_ATTACHED();

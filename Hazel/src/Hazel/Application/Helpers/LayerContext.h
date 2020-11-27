@@ -10,6 +10,7 @@ namespace Hazel
 	private:
 		bool running = false;
 		bool imGuiRenderEnabled = true;
+		bool imGuiEventFilterEnabled = true;
 		std::unique_ptr<Window> window;
 		EventSystem eventSystem;
 
@@ -32,6 +33,16 @@ namespace Hazel
 		void EnableImGuiRender(bool imGuiRenderEnabled)
 		{
 			this->imGuiRenderEnabled = imGuiRenderEnabled;
+		}
+
+		bool IsImGuiEventFilterEnabled() const
+		{
+			return imGuiEventFilterEnabled;
+		}
+
+		void EnableImGuiEventFilter(bool imGuiEventFilterEnabled)
+		{
+			this->imGuiEventFilterEnabled = imGuiEventFilterEnabled;
 		}
 
 		Window &CreateApplicationWindow(const WindowInfo &info)

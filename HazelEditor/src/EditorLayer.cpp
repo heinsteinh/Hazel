@@ -62,7 +62,8 @@ namespace Hazel
 		dockspace.Begin();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
-		ImGui::Begin("Scene");
+		ImGui::Begin("Viewport");
+		EnableImGuiEventFilter(!ImGui::IsWindowFocused());
 		auto viewportSize = ImGui::GetContentRegionAvail();
 		Size newSize = {viewportSize.x, viewportSize.y};
 		if (newSize != framebuffer->GetSize())

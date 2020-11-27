@@ -59,6 +59,11 @@ namespace Hazel
 			layerContext.EnableImGuiRender(imGuiRenderEnabled);
 		}
 
+		bool IsImGuiEventFilterEnabled() const
+		{
+			return layerContext.IsImGuiEventFilterEnabled();
+		}
+
 		void SetWindowTitle(const std::string &title)
 		{
 			windowInfo.Title = title;

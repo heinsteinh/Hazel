@@ -51,12 +51,7 @@ namespace Hazel
 
 	void ImGuiLayer::OnEvent(Event &e)
 	{
-		e.Dispatch([this](WindowResizeEvent &e)
-		{
-			auto size = e.GetSize();
-			ImGui::GetIO().DisplaySize = {size.Width, size.Height};
-		});
-		if (WantBlockEvent(e))
+		if (eventFilterEnabled && WantBlockEvent(e))
 		{
 			e.Discard();
 		}

@@ -28,5 +28,10 @@ namespace Hazel
 		{
 			layers.PushOverlay(overlay);
 		}
+
+		void EnableImGuiEventFilter(bool imguiEventFilterEnabled)
+		{
+			imGuiLayer->EnableEventFilter(imguiEventFilterEnabled);
+		}
 	};
 }
