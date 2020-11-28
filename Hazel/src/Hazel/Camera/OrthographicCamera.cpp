@@ -31,8 +31,8 @@ namespace Hazel
 		return glm::rotate(
 			glm::translate(
 				glm::mat4(1.0f),
-				transform.Position),
-			transform.Angle,
+				-transform.Position),
+			-transform.Angle,
 			transform.Axis);
 	}
 

@@ -64,7 +64,7 @@ namespace Hazel
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
 		ImGui::Begin("Viewport");
 
-		bool blockEvents = !ImGui::IsWindowHovered();
+		bool blockEvents = !ImGui::IsWindowFocused() || !ImGui::IsWindowHovered();
 		EnableImGuiEventFilter(blockEvents);
 		if (!this->blockEvents && blockEvents)
 		{
