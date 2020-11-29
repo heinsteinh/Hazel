@@ -1,16 +1,19 @@
 #include "OrthographicCamera.h"
 
+#include "Hazel/Geometry/MvpMatrix.h"
+#include "Hazel/Geometry/Viewport.h"
+
 namespace Hazel
 {
-	void OrthographicCamera::SetAspectRatio(float aspectRatio)
+	void OrthographicCamera::SetWindowSize(const glm::vec2 &windowSize)
 	{
-		viewport.AspectRatio = aspectRatio;
+		this->windowSize = windowSize;
 		RecomputeProjectionMatrix();
 	}
 
 	void OrthographicCamera::SetZoomLevel(float zoomLevel)
 	{
-		viewport.ZoomLevel = zoomLevel;
+		this->zoomLevel = zoomLevel;
 		RecomputeProjectionMatrix();
 	}
 
@@ -26,25 +29,15 @@ namespace Hazel
 		RecomputeViewMatrix();
 	}
 
-	glm::mat4 OrthographicCamera::ComputeViewMatrix() const
-	{
-		return glm::rotate(
-			glm::translate(
-				glm::mat4(1.0f),
-				-transform.Position),
-			-transform.Angle,
-			transform.Axis);
-	}
-
 	void OrthographicCamera::RecomputeViewMatrix()
 	{
-		viewMatrix = ComputeViewMatrix();
+		viewMatrix = MvpMatrix::GetViewMatrix(transform);
 		RecomputeViewProjectionMatrix();
 	}
 
 	void OrthographicCamera::RecomputeProjectionMatrix()
 	{
-		projectionMatrix = viewport.ToProjectionMatrix();
+		projectionMatrix = MvpMatrix::GetProjectionMatrix(Viewport::FromAspectRatio(GetAspectRatio(), GetZoomLevel()));
 		RecomputeViewProjectionMatrix();
 	}
 

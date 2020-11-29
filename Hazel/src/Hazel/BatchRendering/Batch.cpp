@@ -1,5 +1,7 @@
 #include "Batch.h"
 
+#include "Hazel/Geometry/MvpMatrix.h"
+
 namespace Hazel
 {
 	Batch::Batch(GraphicsContext &graphicsContext, const BatchInfo &info)
@@ -14,7 +16,7 @@ namespace Hazel
 
 	void Batch::SetViewProjectionMatrix(const glm::mat4 &viewProjection)
 	{
-		buffers.BufferViewProjectionMatrix(viewProjection);
+		constants.ViewProjection = viewProjection;
 	}
 
 	void Batch::Clear()
@@ -33,6 +35,7 @@ namespace Hazel
 	{
 		buffers.BufferIndices(indices);
 		buffers.BufferVertices(vertices);
+		buffers.BufferConstants(constants);
 	}
 
 	void Batch::BindBuffers() const
@@ -73,7 +76,7 @@ namespace Hazel
 
 	void Batch::AddVertices(const DrawData &drawData, size_t textureSlot)
 	{
-		auto matrix = drawData.Transform.ToMatrix();
+		auto matrix = MvpMatrix::GetModelMatrix(drawData.Transform);
 		for (const auto &vertexInfo : drawData.Mesh->Vertices)
 		{
 			auto &vertex = vertices.Emplace();

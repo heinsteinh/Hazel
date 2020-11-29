@@ -14,9 +14,14 @@ namespace Hazel
 		{
 		}
 
-		float NextFloat()
+		float GetFloat()
 		{
 			return static_cast<float>(distribution(engine)) / static_cast<float>(std::numeric_limits<uint32_t>::max());
+		}
+
+		glm::vec2 GetVector2D()
+		{
+			return {GetFloat() - 0.5f, GetFloat() - 0.5f};
 		}
 	};
 }

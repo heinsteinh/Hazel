@@ -3,6 +3,7 @@
 #include "BatchInfo.h"
 #include "BatchVertex.h"
 #include "BatchIndices.h"
+#include "BatchConstants.h"
 #include "Hazel/GraphicsContext/GraphicsContext.h"
 
 namespace Hazel
@@ -21,7 +22,7 @@ namespace Hazel
 			: graphicsContext(&graphicsContext),
 			indexBuffer(graphicsContext.CreateIndexBuffer(info.GetIndexBufferSize())),
 			vertexBuffer(graphicsContext.CreateVertexBuffer(info.GetVertexBufferSize())),
-			constantBuffer(graphicsContext.CreateConstantBuffer(sizeof(glm::mat4))),
+			constantBuffer(graphicsContext.CreateConstantBuffer(sizeof(BatchConstants))),
 			inputLayout(graphicsContext.CreateInputLayout(BatchVertex::Attributes))
 		{
 			Bind();
@@ -45,9 +46,9 @@ namespace Hazel
 			vertexBuffer->BufferData(vertices.GetData(), vertices.GetSize());
 		}
 
-		void BufferViewProjectionMatrix(const glm::mat4 &viewProjection)
+		void BufferConstants(const BatchConstants &constants)
 		{
-			constantBuffer->BufferData(glm::value_ptr(viewProjection), sizeof(glm::mat4));
+			constantBuffer->BufferData(&constants, sizeof(BatchConstants));
 		}
 	};
 }

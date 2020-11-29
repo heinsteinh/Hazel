@@ -31,9 +31,9 @@ namespace Hazel
 		{
 			if (texture)
 			{
-				auto size = texture->GetSize();
-				translation = TextureRegion::GetNormalizedTranslation(region, size);
-				scale = TextureRegion::GetScaleRatio(region, size);
+				auto textureSize = texture->GetSize();
+				translation = TextureRegion::GetNormalizedTranslation(region, textureSize);
+				scale = TextureRegion::GetScaleRatio(region, textureSize);
 				aspectRatio = region.GetAspectRatio();
 			}
 		}

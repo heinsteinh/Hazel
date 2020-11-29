@@ -4,6 +4,7 @@
 #include "FramebufferAttachmentType.h"
 #include "FramebufferCreationException.h"
 #include "Hazel/Textures/Texture.h"
+#include "Hazel/Geometry/Size.h"
 
 namespace Hazel
 {
@@ -28,24 +29,24 @@ namespace Hazel
 			return info;
 		}
 
-		constexpr Size GetSize() const
+		constexpr const glm::vec2 &GetSize() const
 		{
 			return GetInfo().Size;
 		}
 
 		constexpr float GetWidth() const
 		{
-			return GetSize().Width;
+			return GetSize().x;
 		}
 
 		constexpr float GetHeight() const
 		{
-			return GetSize().Height;
+			return GetSize().y;
 		}
 
 		constexpr float GetAspectRatio() const
 		{
-			return GetSize().GetAspectRatio();
+			return Size::GetAspectRatio(GetSize());
 		}
 	};
 }

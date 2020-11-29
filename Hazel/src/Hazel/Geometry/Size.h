@@ -2,34 +2,22 @@
 
 namespace Hazel
 {
-	struct Size
+	class Size
 	{
-		float Width = 0.0f;
-		float Height = 0.0f;
-
-		constexpr float GetArea() const
+	public:
+		static constexpr float GetArea(const glm::vec2 &size)
 		{
-			return Width * Height;
+			return size.x * size.y;
 		}
 
-		constexpr float GetAspectRatio() const
+		static constexpr float GetAspectRatio(const glm::vec2 &size)
 		{
-			return Height ? Width / Height : 0.0f;
+			return size.y ? size.x / size.y : 0.0f;
 		}
 
-		constexpr bool IsEmpty() const
+		static constexpr bool IsEmpty(const glm::vec2 &size)
 		{
-			return Width == 0.0f || Height == 0.0f;
-		}
-
-		constexpr bool operator==(const Size &other) const
-		{
-			return Width == other.Width && Height == other.Height;
-		}
-
-		constexpr bool operator!=(const Size &other) const
-		{
-			return !(*this == other);
+			return size.x == 0.0f || size.y == 0.0f;
 		}
 	};
 }

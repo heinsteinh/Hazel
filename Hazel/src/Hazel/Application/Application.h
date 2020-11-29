@@ -22,27 +22,27 @@ namespace Hazel
 
 		void SetWindowTitle(const std::string &title)
 		{
-			context.SetWindowTitle(title);
+			context.GetWindowInfo().Title = title;
 		}
 
-		void SetWindowResolution(Size resolution)
+		void SetWindowResolution(const glm::vec2 &resolution)
 		{
-			context.SetWindowResolution(resolution);
+			context.GetWindowInfo().Resolution = resolution;
 		}
 
 		void SetVerticalSynchronization(bool verticalSynchronization)
 		{
-			context.SetVerticalSynchronization(verticalSynchronization);
+			context.GetWindowInfo().VerticalSynchronization = verticalSynchronization;
 		}
 
 		void EnableImGui(bool imGuiEnabled)
 		{
-			context.EnableImGui(imGuiEnabled);
+			context.GetSettings().ImGuiEnabled = imGuiEnabled;
 		}
 
 		void EnableImGuiRender(bool imGuiRenderEnabled)
 		{
-			context.EnableImGuiRender(imGuiRenderEnabled);
+			context.GetSettings().ImGuiRenderEnabled = imGuiRenderEnabled;
 		}
 
 		void PushLayer(const std::shared_ptr<Layer> &layer)

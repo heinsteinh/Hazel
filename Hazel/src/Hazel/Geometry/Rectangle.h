@@ -11,13 +11,13 @@ namespace Hazel
 		float Bottom = 0.0f;
 		float Top = 0.0f;
 
-		static constexpr Rectangle FromBottomLeftAndSize(const glm::vec2 &bottomLeft, Size size)
+		static constexpr Rectangle FromBottomLeftAndSize(const glm::vec2 &bottomLeft, const glm::vec2 &size)
 		{
 			return {
 				bottomLeft.x,
-				bottomLeft.x + size.Width,
+				bottomLeft.x + size.x,
 				bottomLeft.y,
-				bottomLeft.y + size.Height
+				bottomLeft.y + size.y
 			};
 		}
 
@@ -39,24 +39,37 @@ namespace Hazel
 			return Top - Bottom;
 		}
 
-		constexpr Size GetSize() const
+		constexpr glm::vec2 GetSize() const
 		{
 			return {GetWidth(), GetHeight()};
 		}
 
 		constexpr float GetArea() const
 		{
-			return GetSize().GetArea();
+			return GetWidth() * GetHeight();
 		}
 
 		constexpr float GetAspectRatio() const
 		{
-			return GetSize().GetAspectRatio();
+			return Size::GetAspectRatio(GetSize());
 		}
 
 		constexpr bool IsEmpty() const
 		{
 			return GetWidth() == 0.0f || GetHeight() == 0.0f;
+		}
+
+		constexpr void Scale(float scale)
+		{
+			Scale(scale, scale);
+		}
+
+		constexpr void Scale(float scaleX, float scaleY)
+		{
+			Left *= scaleX;
+			Right *= scaleX;
+			Bottom *= scaleY;
+			Top *= scaleY;
 		}
 	};
 }

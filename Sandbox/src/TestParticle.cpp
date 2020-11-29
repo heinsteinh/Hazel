@@ -1,5 +1,7 @@
 #include "TestParticle.h"
 
+#include "Hazel/Geometry/ScreenTransform.h"
+
 namespace Sandbox
 {
 	TestParticle::TestParticle()
@@ -19,10 +21,10 @@ namespace Sandbox
 		particleInfo = defaultInfo;
 	}
 
-	void TestParticle::OnAttach(Hazel::Renderer2D &renderer, Hazel::ScreenTransform screenTransform, const Hazel::Input &input)
+	void TestParticle::OnAttach(Hazel::Renderer2D &renderer, const Hazel::OrthographicCamera &camera, const Hazel::Input &input)
 	{
 		this->renderer = &renderer;
-		this->screenTransform = screenTransform;
+		this->camera = &camera;
 		this->input = &input;
 	}
 
@@ -34,7 +36,7 @@ namespace Sandbox
 	{
 		if (input->IsMouseButtonPressed(Hazel::MouseButton::B1))
 		{
-			particleInfo.Position = screenTransform.GetWorldPosition(input->GetMousePosition());
+			particleInfo.Position = Hazel::ScreenTransform::GetWorldPosition(*camera, input->GetMousePosition());
 			for (int i = 0; i < nParticles; i++)
 			{
 				particleSystem.EmitParticle(particleInfo);

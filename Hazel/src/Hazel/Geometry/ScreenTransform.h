@@ -1,43 +1,30 @@
 #pragma once
 
-#include "Hazel/Window/Window.h"
 #include "Hazel/Camera/OrthographicCamera.h"
 
 namespace Hazel
 {
 	class ScreenTransform
 	{
-	private:
-		const Window *window = nullptr;
-		const OrthographicCamera *camera = nullptr;
-
 	public:
-		ScreenTransform() = default;
-
-		constexpr ScreenTransform(const Window &window, const OrthographicCamera &camera)
-			: window(&window),
-			camera(&camera)
+		static glm::vec3 GetWorldPosition(const OrthographicCamera &camera, const glm::vec2 &screenPosition)
 		{
-		}
-
-		glm::vec3 GetWorldPosition(const glm::vec2 &screenPosition) const
-		{
-			auto [width, height] = window->GetSize();
+			auto &windowSize = camera.GetWindowSize();
 			return glm::unProject(
 				glm::vec3(screenPosition, 0.0f),
-				camera->GetViewMatrix(),
-				camera->GetProjectionMatrix(),
-				glm::vec4(0.0f, height, width, -height));
+				camera.GetViewMatrix(),
+				camera.GetProjectionMatrix(),
+				glm::vec4(0.0f, windowSize.y, windowSize.x, -windowSize.y));
 		};
 
-		glm::vec2 GetScreenPosition(const glm::vec3 &worldPosition) const
+		static glm::vec2 GetScreenPosition(const OrthographicCamera &camera, const glm::vec3 &worldPosition)
 		{
-			auto [width, height] = window->GetSize();
+			auto &windowSize = camera.GetWindowSize();
 			return glm::project(
 				worldPosition,
-				camera->GetViewMatrix(),
-				camera->GetProjectionMatrix(),
-				glm::vec4(0.0f, height, width, -height));
+				camera.GetViewMatrix(),
+				camera.GetProjectionMatrix(),
+				glm::vec4(0.0f, windowSize.y, windowSize.x, -windowSize.y));
 		};
 	};
 }

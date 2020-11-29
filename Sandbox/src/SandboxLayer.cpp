@@ -23,10 +23,6 @@ namespace Sandbox
 		rendererInfo.MaxVertexCount = maxVertices;
 		renderer = std::make_shared<Hazel::Renderer2D>(rendererInfo);
 
-		Hazel::FramebufferInfo framebufferInfo;
-		framebufferInfo.Size = GetWindow().GetSize();
-		framebuffer = graphicsContext.CreateFramebuffer(framebufferInfo);
-
 		spriteSheet = Hazel::TextureBuilder::CreateTextureFromFile(
 			GetGraphicsContext(),
 			"assets\\textures\\SpriteSheet.png");
@@ -35,9 +31,9 @@ namespace Sandbox
 		drawData.Texture = spriteSheet;
 		drawData.Transform.SetScale({spriteSheet->GetAspectRatio(), 1.0f});
 
-		camera.SetAspectRatio(GetWindow().GetAspectRatio());
+		cameraController.OnAttach(camera, GetWindow().GetSize());
 
-		particles.OnAttach(*renderer, {GetWindow(), camera}, GetInput());
+		particles.OnAttach(*renderer, camera, GetInput());
 	}
 
 	void SandboxLayer::OnDetach()
@@ -49,29 +45,18 @@ namespace Sandbox
 	{
 		renderTime = deltaTime;
 
-		cameraController.UpdateCamera(camera, GetInput(), deltaTime);
+		cameraController.OnUpdate(camera, GetInput(), deltaTime);
 
 		drawData.Texture.SetRegion(Hazel::Rectangle::FromBottomLeftAndSize(bottomLeft, size));
 
-		GetGraphicsContext().SetFramebuffer(framebuffer);
-		GetGraphicsContext().Clear();
 		renderer->BeginScene(camera);
 		particles.OnUpdate(deltaTime);
 		renderer->Render(drawData);
 		renderer->EndScene();
-		GetGraphicsContext().SetFramebuffer(nullptr);
 	}
 
 	void SandboxLayer::OnImGuiRender()
 	{
-		ImGui::Begin("Scene");
-		ImGui::Image(
-			framebuffer->GetColorAttachment()->GetHandle(),
-			{framebuffer->GetWidth(), framebuffer->GetHeight()},
-			{0.0f, 1.0f},
-			{1.0f, 0.0f});
-		ImGui::End();
-
 		ImGui::Begin("Info");
 		ImGui::Text("Update Time: %fms (%fFPS)", 1000 * renderTime, 1.0f / renderTime);
 		ImGui::Text("Camera Position: %f %f %f", camera.GetPosition().x, camera.GetPosition().y, camera.GetZoomLevel());
@@ -87,8 +72,8 @@ namespace Sandbox
 		ImGui::Begin("Texture Coordinates");
 		ImGui::SliderFloat("Left", &bottomLeft.x, 0.0f, 2560.0f);
 		ImGui::SliderFloat("Bottom", &bottomLeft.y, 0.0f, 1664.0f);
-		ImGui::SliderFloat("Width", &size.Width, 0.0f, 2560.0f);
-		ImGui::SliderFloat("Height", &size.Height, 0.0f, 1664.0f);
+		ImGui::SliderFloat("Width", &size.x, 0.0f, 2560.0f);
+		ImGui::SliderFloat("Height", &size.y, 0.0f, 1664.0f);
 		ImGui::End();
 
 		ImGui::Begin("Renderer");
@@ -109,13 +94,13 @@ namespace Sandbox
 
 	void SandboxLayer::OnEvent(Hazel::Event &e)
 	{
-		cameraController.UpdateCamera(camera, e);
+		cameraController.OnEvent(camera, e);
 		e.Dispatch([this](Hazel::KeyPressEvent &e)
 		{
 			if (e.GetKey() == Hazel::Key::Backspace)
 			{
 				camera = {};
-				camera.SetAspectRatio(GetWindow().GetAspectRatio());
+				cameraController.OnAttach(camera, GetWindow().GetSize());
 			}
 		});
 	}

@@ -24,7 +24,7 @@ namespace Hazel
 
 		constexpr float GetLife() const
 		{
-			return RemainingLifeTime / LifeTime;
+			return LifeTime ? RemainingLifeTime / LifeTime : 0.0f;
 		}
 
 		glm::vec4 GetColor() const

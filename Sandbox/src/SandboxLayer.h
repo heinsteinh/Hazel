@@ -12,14 +12,13 @@ namespace Sandbox
 		int maxVertices = 40000;
 		int maxIndices = 60000;
 		glm::vec2 bottomLeft{0.0f};
-		Hazel::Size size{2560.0f, 1664.0f};
+		glm::vec2 size{2560.0f, 1664.0f};
 
 		std::shared_ptr<Hazel::Renderer2D> renderer;
 		Hazel::OrthographicCamera camera;
 		Hazel::OrthographicCameraController cameraController;
 		Hazel::DrawData drawData;
 		std::shared_ptr<Hazel::Texture> spriteSheet;
-		std::shared_ptr<Hazel::Framebuffer> framebuffer;
 		TestParticle particles;
 
 	public:

@@ -11,8 +11,8 @@ namespace Hazel
 	{
 		static GlfwLoader glfwLoader;
 		window = glfwCreateWindow(
-			static_cast<int>(info.Resolution.Width),
-			static_cast<int>(info.Resolution.Height),
+			static_cast<int>(info.Resolution.x),
+			static_cast<int>(info.Resolution.y),
 			info.Title.c_str(),
 			nullptr,
 			nullptr);
@@ -48,16 +48,16 @@ namespace Hazel
 		glfwSetWindowTitle(window, title.c_str());
 	}
 
-	Size Window::GetSize() const
+	glm::vec2 Window::GetSize() const
 	{
 		int width, height;
 		glfwGetWindowSize(window, &width, &height);
 		return {static_cast<float>(width), static_cast<float>(height)};
 	}
 
-	void Window::Resize(Size size)
+	void Window::Resize(const glm::vec2 &size)
 	{
-		glfwSetWindowSize(window, static_cast<int>(size.Width), static_cast<int>(size.Height));
+		glfwSetWindowSize(window, static_cast<int>(size.x), static_cast<int>(size.y));
 	}
 
 	bool Window::HasVerticalSynchonization() const

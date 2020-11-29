@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ApplicationContext.h"
+#include "Hazel/Geometry/Viewport.h"
 
 namespace Hazel
 {
@@ -12,12 +13,12 @@ namespace Hazel
 			Log::Debug("{}.", e);
 			e.Dispatch([&](WindowCloseEvent &e)
 			{
-				context.SetRunning(false);
+				context.GetSettings().Running = false;
 			});
 			e.Dispatch([&](WindowResizeEvent &e)
 			{
-				auto size = e.GetSize();
-				context.GetGraphicsContext().SetViewport({0.0f, size.Width, 0.0f, size.Height});
+				auto &windowSize = e.GetWindowSize();
+				context.GetGraphicsContext().SetViewport({0.0f, windowSize.x, 0.0f, windowSize.y});
 			});
 			context.GetLayers().DispatchEvent(e);
 		}

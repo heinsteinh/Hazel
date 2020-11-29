@@ -34,7 +34,7 @@ namespace Hazel
 		drawData.Texture = spriteSheet;
 		drawData.Transform.SetScale({spriteSheet->GetAspectRatio(), 1.0f});
 
-		camera.SetAspectRatio(GetWindow().GetAspectRatio());
+		cameraController.OnAttach(camera, GetWindow().GetSize());
 	}
 
 	void EditorLayer::OnDetach()
@@ -45,7 +45,7 @@ namespace Hazel
 	{
 		renderTime = deltaTime;
 
-		cameraController.UpdateCamera(camera, GetInput(), deltaTime);
+		cameraController.OnUpdate(camera, GetInput(), deltaTime);
 
 		drawData.Texture.SetRegion(Rectangle::FromBottomLeftAndSize(bottomLeft, size));
 
@@ -72,12 +72,12 @@ namespace Hazel
 		}
 
 		auto viewportSize = ImGui::GetContentRegionAvail();
-		Size newSize = {viewportSize.x, viewportSize.y};
+		glm::vec2 newSize = {viewportSize.x, viewportSize.y};
 		if (newSize != framebuffer->GetSize())
 		{
-			Log::Debug("New viewport size: {} {}", newSize.Width, newSize.Height);
+			Log::Debug("New viewport size: {} {}", newSize.x, newSize.y);
 			framebuffer = GetGraphicsContext().CreateFramebuffer({newSize});
-			cameraController.UpdateCamera(camera, WindowResizeEvent(newSize.Width, newSize.Height));
+			cameraController.OnEvent(camera, WindowResizeEvent(newSize.x, newSize.y));
 		}
 
 		ImGui::Image(
@@ -104,8 +104,8 @@ namespace Hazel
 		ImGui::Begin("Texture Coordinates");
 		ImGui::SliderFloat("Left", &bottomLeft.x, 0.0f, 2560.0f);
 		ImGui::SliderFloat("Bottom", &bottomLeft.y, 0.0f, 1664.0f);
-		ImGui::SliderFloat("Width", &size.Width, 0.0f, 2560.0f);
-		ImGui::SliderFloat("Height", &size.Height, 0.0f, 1664.0f);
+		ImGui::SliderFloat("Width", &size.x, 0.0f, 2560.0f);
+		ImGui::SliderFloat("Height", &size.y, 0.0f, 1664.0f);
 		ImGui::End();
 
 		ImGui::Begin("Renderer");
@@ -126,13 +126,13 @@ namespace Hazel
 
 	void EditorLayer::OnEvent(Event &e)
 	{
-		cameraController.UpdateCamera(camera, e);
+		cameraController.OnEvent(camera, e);
 		e.Dispatch([this](KeyPressEvent &e)
 		{
 			if (e.GetKey() == Key::Backspace)
 			{
 				camera = {};
-				camera.SetAspectRatio(GetWindow().GetAspectRatio());
+				cameraController.OnAttach(camera, GetWindow().GetSize());
 			}
 		});
 	}

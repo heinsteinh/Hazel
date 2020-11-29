@@ -4,25 +4,27 @@
 
 namespace Hazel
 {
-	struct Viewport
+	class Viewport
 	{
-		float AspectRatio = 1.0f;
-		float ZoomLevel = 1.0f;
-
-		glm::mat4 ToProjectionMatrix() const
-		{
-			auto viewport = ToRectangle();
-			return glm::ortho(viewport.Left, viewport.Right, viewport.Bottom, viewport.Top);
-		}
-
-		constexpr Rectangle ToRectangle() const
+	public:
+		static constexpr Rectangle FromAspectRatio(float aspectRatio, float zoomLevel = 1.0f)
 		{
 			return {
-				-AspectRatio * ZoomLevel,
-				AspectRatio * ZoomLevel,
-				-ZoomLevel,
-				ZoomLevel
+				-aspectRatio * zoomLevel,
+				aspectRatio * zoomLevel,
+				-zoomLevel,
+				zoomLevel
 			};
+		}
+
+		static constexpr float GetAspectRatio(const Rectangle &viewport)
+		{
+			return viewport.GetAspectRatio();
+		}
+
+		static constexpr float GetZoomLevel(const Rectangle &viewport)
+		{
+			return viewport.GetHeight() / 2.0f;
 		}
 	};
 }

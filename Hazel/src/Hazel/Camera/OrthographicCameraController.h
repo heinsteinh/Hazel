@@ -15,8 +15,9 @@ namespace Hazel
 	public:
 		OrthographicCameraController(const OrthographicCameraControllerSettings &settings = {});
 
-		void UpdateCamera(OrthographicCamera &camera, Event &e);
-		void UpdateCamera(OrthographicCamera &camera, const Input &input, float deltaTime);
+		void OnAttach(OrthographicCamera &camera, const glm::vec2 &windowSize) const;
+		void OnEvent(OrthographicCamera &camera, Event &e) const;
+		void OnUpdate(OrthographicCamera &camera, const Input &input, float deltaTime) const;
 
 		constexpr OrthographicCameraControllerSettings &GetSettings()
 		{
@@ -29,7 +30,7 @@ namespace Hazel
 		}
 
 	private:
-		void UpdateCameraPosition(OrthographicCamera &camera, const Input &input, float deltaTime);
-		void UpdateCameraRotation(OrthographicCamera &camera, const Input &input, float deltaTime);
+		void UpdateCameraPosition(OrthographicCamera &camera, const Input &input, float deltaTime) const;
+		void UpdateCameraRotation(OrthographicCamera &camera, const Input &input, float deltaTime) const;
 	};
 }

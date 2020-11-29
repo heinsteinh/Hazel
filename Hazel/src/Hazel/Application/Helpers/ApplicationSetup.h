@@ -16,7 +16,7 @@ namespace Hazel
 				context.SetGraphicsApi(GraphicsApiFactory::CreateOpenGLInstance());
 			}
 			context.CreateApplicationWindow();
-			if (context.IsImGuiEnabled())
+			if (context.GetSettings().ImGuiEnabled)
 			{
 				context.GetLayers().PushImGuiLayer();
 			}

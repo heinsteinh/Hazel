@@ -3,6 +3,7 @@
 #include "WindowInfo.h"
 #include "Hazel/Input/Key.h"
 #include "Hazel/Input/MouseButton.h"
+#include "Hazel/Geometry/Size.h"
 
 struct GLFWwindow;
 
@@ -24,8 +25,8 @@ namespace Hazel
 		void Close();
 		const std::string &GetTitle() const;
 		void SetTitle(const std::string &title);
-		Size GetSize() const;
-		void Resize(Size size);
+		glm::vec2 GetSize() const;
+		void Resize(const glm::vec2 &size);
 		bool HasVerticalSynchonization() const;
 		void SetVerticalSynchronization(bool verticalSynchronization);
 
@@ -41,17 +42,17 @@ namespace Hazel
 
 		bool IsMinimized() const
 		{
-			return GetSize().IsEmpty();
+			return Size::IsEmpty(GetSize());
 		}
 
 		float GetAspectRatio() const
 		{
-			return GetSize().GetAspectRatio();
+			return Size::GetAspectRatio(GetSize());
 		}
 
 		float GetWidth() const
 		{
-			return GetSize().Width;
+			return GetSize().x;
 		}
 
 		void SetWidth(float width)
@@ -61,7 +62,7 @@ namespace Hazel
 
 		float GetHeight() const
 		{
-			return GetSize().Height;
+			return GetSize().y;
 		}
 
 		void SetHeight(float height)

@@ -14,13 +14,11 @@ namespace Hazel
 		{
 			throw OpenFileException(filename, 0);
 		}
-		this->width = static_cast<float>(width);
-		this->height = static_cast<float>(height);
+		size = {static_cast<float>(width), static_cast<float>(height)};
 	}
 
 	Image::Image(Image &&other) noexcept
-		: width(other.width),
-		height(other.height),
+		: size(other.size),
 		channelCount(other.channelCount),
 		data(std::exchange(other.data, nullptr))
 	{
@@ -36,8 +34,7 @@ namespace Hazel
 
 	Image &Image::operator=(Image &&other) noexcept
 	{
-		std::swap(width, other.width);
-		std::swap(height, other.height);
+		std::swap(size, other.size);
 		std::swap(channelCount, other.channelCount);
 		std::swap(data, other.data);
 		return *this;

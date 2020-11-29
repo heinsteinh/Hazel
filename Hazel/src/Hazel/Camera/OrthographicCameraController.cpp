@@ -2,6 +2,7 @@
 
 #include "Hazel/Events/WindowResizeEvent.h"
 #include "Hazel/Events/MouseScrollEvent.h"
+#include "Hazel/Geometry/Size.h"
 
 namespace Hazel
 {
@@ -10,25 +11,30 @@ namespace Hazel
 	{
 	}
 
-	void OrthographicCameraController::UpdateCamera(OrthographicCamera &camera, Event &e)
+	void OrthographicCameraController::OnAttach(OrthographicCamera &camera, const glm::vec2 &windowSize) const
+	{
+		camera.SetWindowSize(windowSize);
+	}
+
+	void OrthographicCameraController::OnEvent(OrthographicCamera &camera, Event &e) const
 	{
 		e.Dispatch([&](WindowResizeEvent &e)
 		{
-			camera.SetAspectRatio(e.GetSize().GetAspectRatio());
+			camera.SetWindowSize(e.GetWindowSize());
 		});
 		e.Dispatch([&](MouseScrollEvent &e)
 		{
-			camera.SetZoomLevel(settings.Bounds.ClampZ(camera.GetZoomLevel() + e.GetOffset().y * settings.ZoomSpeed));
+			camera.SetZoomLevel(settings.Bounds.ClampZ(camera.GetZoomLevel() - settings.ZoomSpeed * e.GetOffset().y));
 		});
 	}
 
-	void OrthographicCameraController::UpdateCamera(OrthographicCamera &camera, const Input &input, float deltaTime)
+	void OrthographicCameraController::OnUpdate(OrthographicCamera &camera, const Input &input, float deltaTime) const
 	{
 		UpdateCameraPosition(camera, input, deltaTime);
 		UpdateCameraRotation(camera, input, deltaTime);
 	}
 
-	void OrthographicCameraController::UpdateCameraPosition(OrthographicCamera &camera, const Input &input, float deltaTime)
+	void OrthographicCameraController::UpdateCameraPosition(OrthographicCamera &camera, const Input &input, float deltaTime) const
 	{
 		auto position = camera.GetPosition();
 		auto deltaPosition = settings.TranslationSpeed * deltaTime;
@@ -48,10 +54,13 @@ namespace Hazel
 		{
 			position.x -= deltaPosition;
 		}
-		camera.SetPosition(settings.Bounds.Clamp(position));
+		if (position != camera.GetPosition())
+		{
+			camera.SetPosition(settings.Bounds.Clamp(position));
+		}
 	}
 
-	void OrthographicCameraController::UpdateCameraRotation(OrthographicCamera &camera, const Input &input, float deltaTime)
+	void OrthographicCameraController::UpdateCameraRotation(OrthographicCamera &camera, const Input &input, float deltaTime) const
 	{
 		auto rotation = camera.GetRotation();
 		auto deltaRotation = settings.RotationSpeed * deltaTime;
@@ -63,6 +72,9 @@ namespace Hazel
 		{
 			rotation += deltaRotation;
 		}
-		camera.SetRotation(glm::mod(rotation, 2.0f * glm::pi<float>()));
+		if (rotation != camera.GetRotation())
+		{
+			camera.SetRotation(glm::mod(rotation, 2.0f * glm::pi<float>()));
+		}
 	}
 }

@@ -12,7 +12,7 @@ namespace Hazel
 		int maxVertices = 40000;
 		int maxIndices = 60000;
 		glm::vec2 bottomLeft{0.0f};
-		Size size{2560.0f, 1664.0f};
+		glm::vec2 size{2560.0f, 1664.0f};
 		bool blockEvents = false;
 
 		std::shared_ptr<Renderer2D> renderer;

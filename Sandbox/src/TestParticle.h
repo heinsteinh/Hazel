@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Hazel.h"
-#include "Hazel/Geometry/ScreenTransform.h"
 
 namespace Sandbox
 {
@@ -9,7 +8,7 @@ namespace Sandbox
 	{
 	private:
 		Hazel::Renderer2D *renderer = nullptr;
-		Hazel::ScreenTransform screenTransform;
+		const Hazel::OrthographicCamera *camera = nullptr;
 		const Hazel::Input *input = nullptr;
 
 		int nParticles = 5;
@@ -22,7 +21,7 @@ namespace Sandbox
 	public:
 		TestParticle();
 
-		void OnAttach(Hazel::Renderer2D &renderer, Hazel::ScreenTransform screenTransform, const Hazel::Input &input);
+		void OnAttach(Hazel::Renderer2D &renderer, const Hazel::OrthographicCamera &camera, const Hazel::Input &input);
 		void OnDetach();
 		void OnUpdate(float deltaTime);
 		void OnImGuiRender();

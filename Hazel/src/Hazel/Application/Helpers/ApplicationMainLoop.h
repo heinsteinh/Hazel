@@ -12,8 +12,9 @@ namespace Hazel
 		static void Run(ApplicationContext &context)
 		{
 			ApplicationSetup::Setup(context);
-			context.SetRunning(true);
-			while (context.IsRunning())
+			auto &settings = context.GetSettings();
+			settings.Running = true;
+			while (settings.Running)
 			{
 				ApplicationUpdater::Update(context);
 			}

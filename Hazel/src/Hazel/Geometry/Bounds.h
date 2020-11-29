@@ -1,64 +1,66 @@
 #pragma once
 
+#include "Clamper.h"
+
 namespace Hazel
 {
 	struct Bounds
 	{
-		glm::vec3 MinValue = {-1.0f, -1.0f, -1.0f};
-		glm::vec3 MaxValue = {1.0f, 1.0f, 1.0f};
-
-		constexpr glm::vec3 Clamp(const glm::vec3 &position) const
-		{
-			return glm::clamp(position, MinValue, MaxValue);
-		}
-
-		constexpr glm::vec2 Clamp(const glm::vec2 &position) const
-		{
-			return {glm::clamp(position.x, MinValue.x, MaxValue.x),
-				glm::clamp(position.y, MinValue.y, MaxValue.y)};
-		}
-
-		constexpr float ClampX(float position) const
-		{
-			return glm::clamp(position, MinValue.x, MaxValue.x);
-		}
-
-		constexpr float ClampY(float position) const
-		{
-			return glm::clamp(position, MinValue.y, MaxValue.y);
-		}
-
-		constexpr float ClampZ(float position) const
-		{
-			return glm::clamp(position, MinValue.z, MaxValue.z);
-		}
-
-		constexpr bool Contains(const glm::vec3 &position) const
-		{
-			return position.x <= MaxValue.x && position.x >= MinValue.x
-				&& position.y <= MaxValue.y && position.y >= MinValue.y
-				&& position.z <= MaxValue.z && position.x >= MinValue.z;
-		}
-
-		constexpr bool Contains(const glm::vec2 &position) const
-		{
-			return position.x <= MaxValue.x && position.x >= MinValue.x
-				&& position.y <= MaxValue.y && position.y >= MinValue.y;
-		}
+		std::optional<float> MinX;
+		std::optional<float> MaxX;
+		std::optional<float> MinY;
+		std::optional<float> MaxY;
+		std::optional<float> MinZ;
+		std::optional<float> MaxZ;
 
 		constexpr bool ContainsX(float position) const
 		{
-			return position <= MaxValue.x && position >= MinValue.x;
+			return (!MinX || position >= MinX) && (!MaxX || position <= MaxX);
 		}
 
 		constexpr bool ContainsY(float position) const
 		{
-			return position <= MaxValue.y && position >= MinValue.y;
+			return (!MinY || position >= MinY) && (!MaxY || position <= MaxY);
 		}
 
 		constexpr bool ContainsZ(float position) const
 		{
-			return position <= MaxValue.z && position >= MinValue.z;
+			return (!MinZ || position >= MinZ) && (!MaxZ || position <= MaxZ);
+		}
+
+		constexpr bool Contains(const glm::vec2 &position) const
+		{
+			return ContainsX(position.x) && ContainsY(position.y);
+		}
+
+		constexpr bool Contains(const glm::vec3 &position) const
+		{
+			return ContainsX(position.x) && ContainsY(position.y) && ContainsZ(position.z);
+		}
+
+		constexpr float ClampX(float position) const
+		{
+			return Clamper::Clamp(position, MinX, MaxX);
+		}
+
+		constexpr float ClampY(float position) const
+		{
+			return Clamper::Clamp(position, MinY, MaxY);
+		}
+
+		constexpr float ClampZ(float position) const
+		{
+			return Clamper::Clamp(position, MinZ, MaxZ);
+		}
+
+		constexpr glm::vec2 Clamp(const glm::vec2 &position) const
+		{
+			return {ClampX(position.x), ClampY(position.y)};
+		}
+
+		constexpr glm::vec3 Clamp(const glm::vec3 &position) const
+		{
+			return {ClampX(position.x), ClampY(position.y), ClampZ(position.z)};
 		}
 	};
 }

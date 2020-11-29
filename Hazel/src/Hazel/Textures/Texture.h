@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TextureInfo.h"
+#include "Hazel/Geometry/Size.h"
 
 namespace Hazel
 {
@@ -30,24 +31,24 @@ namespace Hazel
 			return info.Format;
 		}
 
-		constexpr Size GetSize() const
+		constexpr const glm::vec2 &GetSize() const
 		{
 			return info.Size;
 		}
 
 		constexpr float GetWidth() const
 		{
-			return info.Size.Width;
+			return info.Size.x;
 		}
 
 		constexpr float GetHeight() const
 		{
-			return info.Size.Height;
+			return info.Size.y;
 		}
 
 		constexpr float GetAspectRatio() const
 		{
-			return info.Size.GetAspectRatio();
+			return Size::GetAspectRatio(info.Size);
 		}
 	};
 }

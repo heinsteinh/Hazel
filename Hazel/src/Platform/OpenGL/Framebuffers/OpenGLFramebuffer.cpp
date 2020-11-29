@@ -23,7 +23,7 @@ namespace Hazel
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, id);
 		auto size = GetSize();
-		glViewport(0, 0, static_cast<int>(size.Width), static_cast<int>(size.Height));
+		glViewport(0, 0, static_cast<int>(size.x), static_cast<int>(size.y));
 	}
 
 	void OpenGLFramebuffer::Unbind() const

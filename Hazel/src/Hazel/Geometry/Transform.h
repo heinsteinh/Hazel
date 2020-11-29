@@ -39,17 +39,5 @@ namespace Hazel
 			Scale.x *= scale.x;
 			Scale.y *= scale.y;
 		}
-
-		glm::mat4 ToMatrix() const
-		{
-			return glm::scale(
-				glm::rotate(
-					glm::translate(
-						glm::mat4(1.0f),
-						Position),
-					Angle,
-					Axis),
-				Scale);
-		}
 	};
 }

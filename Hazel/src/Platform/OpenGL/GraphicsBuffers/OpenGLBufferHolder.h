@@ -35,7 +35,7 @@ namespace Hazel
 		void SetVertexBuffer(const std::shared_ptr<VertexBuffer> &vertexBuffer)
 		{
 			OpenGLBinder::Bind(this->vertexBuffer, vertexBuffer);
-			if (vertexArray)
+			if (this->vertexBuffer && vertexArray)
 			{
 				vertexArray->AddCurrentVertexBuffer();
 			}
@@ -76,11 +76,11 @@ namespace Hazel
 		void SetInputLayout(const std::shared_ptr<InputLayout> &inputLayout)
 		{
 			OpenGLBinder::Bind(this->vertexArray, inputLayout);
-			if (vertexBuffer)
+			if (this->vertexArray && vertexBuffer)
 			{
 				vertexArray->AddCurrentVertexBuffer();
 			}
-			if (indexBuffer)
+			if (this->vertexArray && indexBuffer)
 			{
 				indexBuffer->Bind();
 			}

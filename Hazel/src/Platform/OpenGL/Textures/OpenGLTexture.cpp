@@ -17,8 +17,8 @@ namespace Hazel
 			id,
 			1,
 			OpenGLTextureFormat::GetStorageFormat(info.Format),
-			static_cast<int>(info.Size.Width),
-			static_cast<int>(info.Size.Height));
+			static_cast<int>(info.Size.x),
+			static_cast<int>(info.Size.y));
 		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, OpenGLTextureFiltering::GetTextureFiltering(info.MinFilter));
 		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, OpenGLTextureFiltering::GetTextureFiltering(info.MagFilter));
 		glTextureParameteri(id, GL_TEXTURE_WRAP_S, OpenGLTextureWrapping::GetTextureWrapping(info.SWrap));

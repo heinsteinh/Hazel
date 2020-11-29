@@ -7,8 +7,7 @@ namespace Hazel
 	class Image
 	{
 	private:
-		float width = 0.0f;
-		float height = 0.0f;
+		glm::vec2 size{0.0f};
 		int channelCount = 0;
 		void *data = nullptr;
 
@@ -22,14 +21,19 @@ namespace Hazel
 		Image &operator=(const Image &other) = delete;
 		Image &operator=(Image &&other) noexcept;
 
+		constexpr glm::vec2 GetSize() const
+		{
+			return size;
+		}
+
 		constexpr float GetWidth() const
 		{
-			return width;
+			return size.x;
 		}
 
 		constexpr float GetHeight() const
 		{
-			return height;
+			return size.y;
 		}
 
 		constexpr int GetChannelCount() const

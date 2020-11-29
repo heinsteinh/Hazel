@@ -19,7 +19,7 @@ namespace Hazel
 			{
 				layers.UpdateLayers(deltaTime);
 			}
-			if (context.IsImGuiRenderEnabled())
+			if (context.GetSettings().ImGuiRenderEnabled)
 			{
 				layers.RenderImGui();
 			}

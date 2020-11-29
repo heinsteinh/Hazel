@@ -11,7 +11,6 @@ namespace Hazel
 	{
 	private:
 		std::shared_ptr<GraphicsApi> graphicsApi;
-		bool imGuiEnabled = true;
 		WindowInfo windowInfo;
 		LayerContext layerContext;
 		ApplicationLayers layers;
@@ -29,54 +28,24 @@ namespace Hazel
 			windowInfo.GraphicsApi = graphicsApi.get();
 		}
 
-		bool IsImGuiEnabled() const
+		ApplicationSettings &GetSettings()
 		{
-			return imGuiEnabled;
+			return layerContext.GetSettings();
 		}
 
-		void EnableImGui(bool imGuiEnabled)
+		const ApplicationSettings &GetSettings() const
 		{
-			this->imGuiEnabled = imGuiEnabled;
+			return layerContext.GetSettings();
 		}
 
-		bool IsRunning() const
+		WindowInfo &GetWindowInfo()
 		{
-			return layerContext.IsRunning();
+			return windowInfo;
 		}
 
-		void SetRunning(bool running)
+		const WindowInfo &GetWindowInfo() const
 		{
-			layerContext.SetRunning(running);
-		}
-
-		bool IsImGuiRenderEnabled() const
-		{
-			return layerContext.IsImGuiRenderEnabled();
-		}
-
-		void EnableImGuiRender(bool imGuiRenderEnabled)
-		{
-			layerContext.EnableImGuiRender(imGuiRenderEnabled);
-		}
-
-		bool IsImGuiEventFilterEnabled() const
-		{
-			return layerContext.IsImGuiEventFilterEnabled();
-		}
-
-		void SetWindowTitle(const std::string &title)
-		{
-			windowInfo.Title = title;
-		}
-
-		void SetWindowResolution(Size resolution)
-		{
-			windowInfo.Resolution = resolution;
-		}
-
-		void SetVerticalSynchronization(bool verticalSynchronization)
-		{
-			windowInfo.VerticalSynchronization = verticalSynchronization;
+			return windowInfo;
 		}
 
 		void CreateApplicationWindow()
@@ -91,7 +60,7 @@ namespace Hazel
 
 		GraphicsContext &GetGraphicsContext() const
 		{
-			return layerContext.GetGraphicsContext();
+			return GetWindow().GetGraphicsContext();
 		}
 
 		void SetEventCallback(const EventSystem::Callback &callback)

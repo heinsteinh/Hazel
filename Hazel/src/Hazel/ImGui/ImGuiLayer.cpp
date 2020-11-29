@@ -51,7 +51,7 @@ namespace Hazel
 
 	void ImGuiLayer::OnEvent(Event &e)
 	{
-		if (eventFilterEnabled && WantBlockEvent(e))
+		if (IsImGuiEventFilterEnabled() && WantBlockEvent(e))
 		{
 			e.Discard();
 		}

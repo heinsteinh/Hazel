@@ -38,19 +38,25 @@ namespace Hazel
 		void Quit()
 		{
 			HZ_ASSERT_ATTACHED();
-			context->SetRunning(false);
+			context->GetSettings().Running = false;
 		}
 
-		void EnableImGuiRender(bool renderImGui)
+		void EnableImGuiRender(bool imGuiRenderEnabled)
 		{
 			HZ_ASSERT_ATTACHED();
-			context->EnableImGuiRender(renderImGui);
+			context->GetSettings().ImGuiRenderEnabled = imGuiRenderEnabled;
+		}
+
+		bool IsImGuiEventFilterEnabled() const
+		{
+			HZ_ASSERT_ATTACHED();
+			return context->GetSettings().ImGuiEventFilterEnabled;
 		}
 
 		void EnableImGuiEventFilter(bool imGuiEventFilterEnabled)
 		{
 			HZ_ASSERT_ATTACHED();
-			context->EnableImGuiEventFilter(imGuiEventFilterEnabled);
+			context->GetSettings().ImGuiEventFilterEnabled = imGuiEventFilterEnabled;
 		}
 
 		Window &GetWindow() const
@@ -62,7 +68,7 @@ namespace Hazel
 		GraphicsContext &GetGraphicsContext() const
 		{
 			HZ_ASSERT_ATTACHED();
-			return context->GetGraphicsContext();
+			return context->GetWindow().GetGraphicsContext();
 		}
 
 		const Input &GetInput() const

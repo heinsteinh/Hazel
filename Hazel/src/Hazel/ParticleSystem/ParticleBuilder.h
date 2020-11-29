@@ -26,12 +26,12 @@ namespace Hazel
 		void BuildPosition(Particle &particle, const ParticleInfo &info)
 		{
 			particle.Transform.SetPosition(info.Position);
-			particle.Transform.Angle = random.NextFloat() * 2 * glm::pi<float>();
+			particle.Transform.Angle = random.GetFloat() * 2 * glm::pi<float>();
 		}
 
 		void BuildVelocity(Particle &particle, const ParticleInfo &info)
 		{
-			particle.LinearVelocity = info.LinearVelocity + info.LinearVelocityVariation * GetRandomDirection();
+			particle.LinearVelocity = info.LinearVelocity + info.LinearVelocityVariation * random.GetVector2D();
 		}
 
 		void BuildColor(Particle &particle, const ParticleInfo &info)
@@ -48,13 +48,8 @@ namespace Hazel
 
 		void BuildSize(Particle &particle, const ParticleInfo &info)
 		{
-			particle.SizeBegin = info.SizeBegin + info.SizeVariation * (random.NextFloat() - 0.5f);
+			particle.SizeBegin = info.SizeBegin + info.SizeVariation * (random.GetFloat() - 0.5f);
 			particle.SizeEnd = info.SizeEnd;
-		}
-
-		glm::vec2 GetRandomDirection()
-		{
-			return {random.NextFloat() - 0.5f, random.NextFloat() - 0.5f};
 		}
 	};
 }

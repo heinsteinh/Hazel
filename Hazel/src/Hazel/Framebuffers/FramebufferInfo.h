@@ -1,11 +1,9 @@
 #pragma once
 
-#include "Hazel/Geometry/Size.h"
-
 namespace Hazel
 {
 	struct FramebufferInfo
 	{
-		Size Size;
+		glm::vec2 Size{0.0f};
 	};
 }

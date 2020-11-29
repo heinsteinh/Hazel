@@ -2,6 +2,7 @@
 
 #include "BatchInfo.h"
 #include "BatchIndices.h"
+#include "BatchConstants.h"
 #include "BatchTextures.h"
 #include "BatchBuffers.h"
 #include "BatchShader.h"
@@ -14,6 +15,7 @@ namespace Hazel
 	private:
 		BatchIndices indices;
 		BatchArray<BatchVertex> vertices;
+		BatchConstants constants;
 		BatchTextures textures;
 		BatchBuffers buffers;
 		BatchShader shader;

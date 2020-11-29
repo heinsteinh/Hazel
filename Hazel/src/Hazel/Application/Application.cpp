@@ -13,7 +13,7 @@ namespace Hazel
 	Application::~Application()
 	{
 		Log::Info("Application destroyed.");
-		context.SetRunning(false);
+		context.GetSettings().Running = false;
 	}
 
 	void Application::Run()

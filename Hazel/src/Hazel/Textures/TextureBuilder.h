@@ -13,7 +13,7 @@ namespace Hazel
 		{
 			Image image(filename);
 			TextureInfo info;
-			info.Size = {image.GetWidth(), image.GetHeight()};
+			info.Size = image.GetSize();
 			info.Format = TextureFormatHelper::GetTextureFormat(image.GetChannelCount());
 			auto texture = graphicsContext.CreateTexture(info);
 			texture->BufferData(image.GetData());
