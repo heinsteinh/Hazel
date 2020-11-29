@@ -10,9 +10,9 @@
 #include "Platform/OpenGL/GraphicsBuffers/OpenGLVertexArray.h"
 #include "Platform/OpenGL/GraphicsBuffers/OpenGLIndexBuffer.h"
 #include "Platform/OpenGL/Textures/OpenGLTexture.h"
-#include "Helpers/OpenGLLoader.h"
-#include "Helpers/OpenGLDrawer.h"
-#include "Helpers/OpenGLInfo.h"
+#include "Private/OpenGLLoader.h"
+#include "Private/OpenGLDrawer.h"
+#include "Private/OpenGLInfo.h"
 
 namespace Hazel
 {

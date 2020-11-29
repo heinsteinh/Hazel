@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel/Application/Layer.h"
-#include "Helpers/ImGuiContextHolder.h"
+#include "Private/ImGuiContextHolder.h"
 #include "ImGuiRenderer.h"
 
 namespace Hazel

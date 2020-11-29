@@ -5,7 +5,7 @@
 #include "Platform/OpenGL/Shaders/OpenGLShaderHolder.h"
 #include "Platform/OpenGL/GraphicsBuffers/OpenGLBufferHolder.h"
 #include "Platform/OpenGL/Textures/OpenGLTextureHolder.h"
-#include "Helpers/OpenGLDrawer.h"
+#include "Private/OpenGLDrawer.h"
 
 struct GLFWwindow;
 

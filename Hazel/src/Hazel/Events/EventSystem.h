@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel/Window/Window.h"
-#include "Helpers/EventReceiver.h"
+#include "Private/EventReceiver.h"
 
 namespace Hazel
 {

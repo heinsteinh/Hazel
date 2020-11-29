@@ -11,7 +11,7 @@
 #include "Hazel/Events/MouseScrollEvent.h"
 #include "Hazel/Input/InputUpdater.h"
 #include "Hazel/Exceptions/AssertionException.h"
-#include "Helpers/LayerContext.h"
+#include "Private/LayerContext.h"
 
 #define HZ_ASSERT_ATTACHED() HZ_ASSERT(context, "The layer is not attached to a running application")
 

@@ -1,6 +1,6 @@
 #include "EventSystem.h"
 
-#include "Helpers/GlfwEventCallback.h"
+#include "Private/GlfwEventCallback.h"
 
 namespace Hazel
 {

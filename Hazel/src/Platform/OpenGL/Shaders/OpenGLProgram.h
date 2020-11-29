@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel/Shaders/Shader.h"
-#include "Helpers/OpenGLShader.h"
+#include "Private/OpenGLShader.h"
 
 namespace Hazel
 {

@@ -2,9 +2,9 @@
 
 #include "glad/glad.h"
 
-#include "Helpers/OpenGLTextureFiltering.h"
-#include "Helpers/OpenGLTextureWrapping.h"
-#include "Helpers/OpenGLTextureFormat.h"
+#include "Private/OpenGLTextureFiltering.h"
+#include "Private/OpenGLTextureWrapping.h"
+#include "Private/OpenGLTextureFormat.h"
 
 namespace Hazel
 {

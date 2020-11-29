@@ -1,7 +1,7 @@
 #include "Application.h"
 
-#include "Helpers/ApplicationMainLoop.h"
-#include "Helpers/EntryPoint.h"
+#include "Private/ApplicationMainLoop.h"
+#include "Private/EntryPoint.h"
 
 namespace Hazel
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Helpers/ApplicationContext.h"
+#include "Private/ApplicationContext.h"
 
 namespace Hazel
 {

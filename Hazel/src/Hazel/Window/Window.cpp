@@ -2,7 +2,7 @@
 
 #include "GLFW/glfw3.h"
 
-#include "Helpers/GlfwLoader.h"
+#include "Private/GlfwLoader.h"
 
 namespace Hazel
 {
