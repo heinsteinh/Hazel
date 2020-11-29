@@ -7,6 +7,7 @@ namespace Hazel
 		bool ImGuiEnabled = true;
 		bool Running = false;
 		bool ImGuiRenderEnabled = true;
-		bool ImGuiEventFilterEnabled = true;
+		bool ImGuiKeyboardFilterEnabled = true;
+		bool ImGuiMouseFilterEnabled = true;
 	};
 }

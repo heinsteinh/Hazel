@@ -13,7 +13,8 @@ namespace Hazel
 		int maxIndices = 60000;
 		glm::vec2 bottomLeft{0.0f};
 		glm::vec2 size{2560.0f, 1664.0f};
-		bool blockEvents = false;
+		bool blockKeyboard = false;
+		bool blockMouse = false;
 
 		std::shared_ptr<Renderer2D> renderer;
 		OrthographicCamera camera;

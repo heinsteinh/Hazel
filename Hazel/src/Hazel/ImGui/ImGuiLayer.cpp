@@ -33,8 +33,8 @@ namespace Hazel
 
 	bool ImGuiLayer::WantBlockEvent(Event &e) const
 	{
-		return e.IsInCategory(EventCategory::Keyboard) && WantCaptureKeyboard()
-			|| e.IsInCategory(EventCategory::Mouse) && WantCaptureMouse();
+		return e.IsInCategory(EventCategory::Keyboard) && WantCaptureKeyboard() && IsImGuiKeyboardFilterEnabled()
+			|| e.IsInCategory(EventCategory::Mouse) && WantCaptureMouse() && IsImGuiMouseFilterEnabled();
 	}
 
 	void ImGuiLayer::OnAttach()
@@ -51,7 +51,7 @@ namespace Hazel
 
 	void ImGuiLayer::OnEvent(Event &e)
 	{
-		if (IsImGuiEventFilterEnabled() && WantBlockEvent(e))
+		if (WantBlockEvent(e))
 		{
 			e.Discard();
 		}

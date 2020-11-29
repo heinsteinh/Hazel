@@ -47,16 +47,28 @@ namespace Hazel
 			context->GetSettings().ImGuiRenderEnabled = imGuiRenderEnabled;
 		}
 
-		bool IsImGuiEventFilterEnabled() const
+		bool IsImGuiKeyboardFilterEnabled() const
 		{
 			HZ_ASSERT_ATTACHED();
-			return context->GetSettings().ImGuiEventFilterEnabled;
+			return context->GetSettings().ImGuiKeyboardFilterEnabled;
 		}
 
-		void EnableImGuiEventFilter(bool imGuiEventFilterEnabled)
+		void EnableImGuiKeyboardFilter(bool imGuiKeyboardFilterEnabled)
 		{
 			HZ_ASSERT_ATTACHED();
-			context->GetSettings().ImGuiEventFilterEnabled = imGuiEventFilterEnabled;
+			context->GetSettings().ImGuiKeyboardFilterEnabled = imGuiKeyboardFilterEnabled;
+		}
+
+		bool IsImGuiMouseFilterEnabled() const
+		{
+			HZ_ASSERT_ATTACHED();
+			return context->GetSettings().ImGuiMouseFilterEnabled;
+		}
+
+		void EnableImGuiMouseFilter(bool imGuiMouseFilterEnabled)
+		{
+			HZ_ASSERT_ATTACHED();
+			context->GetSettings().ImGuiMouseFilterEnabled = imGuiMouseFilterEnabled;
 		}
 
 		Window &GetWindow() const

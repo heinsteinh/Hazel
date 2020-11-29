@@ -64,13 +64,20 @@ namespace Hazel
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
 		ImGui::Begin("Viewport");
 
-		bool blockEvents = !ImGui::IsWindowFocused();
-		EnableImGuiEventFilter(blockEvents);
-		if (!this->blockEvents && blockEvents)
+		bool blockKeyboard = !ImGui::IsWindowFocused();
+		bool blockMouse = !ImGui::IsWindowHovered();
+		EnableImGuiKeyboardFilter(blockKeyboard);
+		EnableImGuiMouseFilter(blockMouse);
+		if (!this->blockKeyboard && blockKeyboard)
 		{
-			GetInput().Clear();
+			GetInput().ClearKeys();
 		}
-		this->blockEvents = blockEvents;
+		if (!this->blockMouse && blockMouse)
+		{
+			GetInput().ClearMouseButtons();
+		}
+		this->blockKeyboard = blockKeyboard;
+		this->blockMouse = blockMouse;
 
 		auto viewportSize = ImGui::GetContentRegionAvail();
 		glm::vec2 newSize = {viewportSize.x, viewportSize.y};
