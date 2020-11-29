@@ -30,6 +30,8 @@ namespace Hazel
 		{
 		}
 
+		virtual ~Layer() = default;
+
 		const std::string &GetName() const
 		{
 			return name;
