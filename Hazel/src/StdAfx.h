@@ -30,5 +30,7 @@
 
 #include "spdlog/spdlog.h"
 
+#include "entt/entt.hpp"
+
 #include "Hazel/Logging/Log.h"
 #include "Hazel/Exceptions/AssertionException.h"

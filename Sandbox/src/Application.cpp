@@ -3,7 +3,6 @@
 
 #include "Log.h"
 #include "SandboxLayer.h"
-#include "TestParticle.h"
 
 namespace Sandbox
 {

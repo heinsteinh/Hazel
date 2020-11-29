@@ -21,7 +21,8 @@ project "Sandbox"
         "../Hazel/src",
         "../Hazel/vendor/spdlog/include",
         "../Hazel/vendor/imgui",
-        "../Hazel/vendor/glm"
+        "../Hazel/vendor/glm",
+        "../Hazel/vendor/entt/single_include"
     }
 
     links {

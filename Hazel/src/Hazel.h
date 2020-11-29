@@ -2,6 +2,8 @@
 
 #include "imgui.h"
 
+#include "entt/entt.hpp"
+
 #include "spdlog/fmt/fmt.h"
 
 #include "Hazel/Application/Application.h"
