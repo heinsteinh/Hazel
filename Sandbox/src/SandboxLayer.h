@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel.h"
-#include "TestParticle.h"
+#include "Hazel/Tests/TestParticle.h"
 
 namespace Sandbox
 {
@@ -19,7 +19,7 @@ namespace Sandbox
 		Hazel::OrthographicCameraController cameraController;
 		Hazel::DrawData drawData;
 		std::shared_ptr<Hazel::Texture> spriteSheet;
-		TestParticle particles;
+		std::shared_ptr<Hazel::TestParticle> particles;
 
 	public:
 		SandboxLayer();

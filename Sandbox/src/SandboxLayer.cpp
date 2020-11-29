@@ -33,12 +33,11 @@ namespace Sandbox
 
 		cameraController.OnAttach(camera, GetWindow().GetSize());
 
-		particles.OnAttach(*renderer, camera, GetInput());
+		particles = std::make_shared<Hazel::TestParticle>(*renderer, camera, GetInput());
 	}
 
 	void SandboxLayer::OnDetach()
 	{
-		particles.OnDetach();
 	}
 
 	void SandboxLayer::OnUpdate(float deltaTime)
@@ -50,7 +49,7 @@ namespace Sandbox
 		drawData.Texture.SetRegion(Hazel::Rectangle::FromBottomLeftAndSize(bottomLeft, size));
 
 		renderer->BeginScene(camera);
-		particles.OnUpdate(deltaTime);
+		particles->OnUpdate(deltaTime);
 		renderer->Render(drawData);
 		renderer->EndScene();
 	}
@@ -89,7 +88,7 @@ namespace Sandbox
 		}
 		ImGui::End();
 
-		particles.OnImGuiRender();
+		particles->OnImGuiRender();
 	}
 
 	void SandboxLayer::OnEvent(Hazel::Event &e)

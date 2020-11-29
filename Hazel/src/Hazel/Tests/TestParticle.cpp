@@ -1,11 +1,16 @@
 #include "TestParticle.h"
 
+#include "imgui.h"
+
 #include "Hazel/Geometry/ScreenTransform.h"
 
-namespace Sandbox
+namespace Hazel
 {
-	TestParticle::TestParticle()
-		: particleSystem(maxParticles)
+	TestParticle::TestParticle(Renderer2D &renderer, const OrthographicCamera &camera, const Input &input)
+		: renderer(&renderer),
+		camera(&camera),
+		input(&input),
+		particleSystem(maxParticles)
 	{
 		defaultInfo.Position = {0.0f, 0.0f};
 		defaultInfo.LinearVelocity = {0.0f, 0.0f};
@@ -17,19 +22,7 @@ namespace Sandbox
 		defaultInfo.SizeEnd = 0.0f;
 		defaultInfo.SizeVariation = 0.1f;
 		defaultInfo.LifeTime = 2.0f;
-
 		particleInfo = defaultInfo;
-	}
-
-	void TestParticle::OnAttach(Hazel::Renderer2D &renderer, const Hazel::OrthographicCamera &camera, const Hazel::Input &input)
-	{
-		this->renderer = &renderer;
-		this->camera = &camera;
-		this->input = &input;
-	}
-
-	void TestParticle::OnDetach()
-	{
 	}
 
 	void TestParticle::OnUpdate(float deltaTime)
