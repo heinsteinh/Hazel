@@ -147,7 +147,7 @@ namespace Hazel
 			if (e.GetKey() == Key::Backspace)
 			{
 				camera = {};
-				cameraController.OnAttach(camera, GetWindow().GetSize());
+				cameraController.OnAttach(camera, framebuffer->GetSize());
 			}
 		});
 	}
