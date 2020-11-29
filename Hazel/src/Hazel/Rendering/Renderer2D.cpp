@@ -20,6 +20,14 @@ namespace Hazel
 	{
 	}
 
+	void Renderer2D::OnEvent(Event &e)
+	{
+		e.Dispatch([&](WindowResizeEvent &e)
+		{
+			info.GraphicsContext->SetViewport({0.0f, e.GetWidth(), 0.0f, e.GetHeight()});
+		});
+	}
+
 	void Renderer2D::BeginScene(const OrthographicCamera &camera)
 	{
 		batchRenderer.BeginScene(camera.GetViewProjectionMatrix());

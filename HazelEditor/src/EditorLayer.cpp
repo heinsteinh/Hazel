@@ -77,8 +77,10 @@ namespace Hazel
 		if (newSize != framebuffer->GetSize())
 		{
 			Log::Debug("New viewport size: {} {}", newSize.x, newSize.y);
+			WindowResizeEvent e(newSize.x, newSize.y);
 			framebuffer = GetGraphicsContext().CreateFramebuffer({newSize});
-			cameraController.OnEvent(camera, WindowResizeEvent(newSize.x, newSize.y));
+			cameraController.OnEvent(camera, e);
+			renderer->OnEvent(e);
 		}
 
 		ImGui::Image(
@@ -127,7 +129,12 @@ namespace Hazel
 
 	void EditorLayer::OnEvent(Event &e)
 	{
+		e.Dispatch([&](WindowResizeEvent &e)
+		{
+			e.Discard();
+		});
 		cameraController.OnEvent(camera, e);
+		renderer->OnEvent(e);
 		e.Dispatch([this](KeyPressEvent &e)
 		{
 			if (e.GetKey() == Key::Backspace)

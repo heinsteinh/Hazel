@@ -20,17 +20,27 @@ namespace Hazel
 		{
 		}
 
-		constexpr const glm::vec2 &GetWindowSize() const
+		constexpr const glm::vec2 &GetSize() const
 		{
 			return size;
 		}
 
-		constexpr float GetWindowAspectRatio() const
+		constexpr float GetWidth() const
+		{
+			return size.x;
+		}
+
+		constexpr float GetHeight() const
+		{
+			return size.y;
+		}
+
+		constexpr float GetAspectRatio() const
 		{
 			return Size::GetAspectRatio(size);
 		}
 
-		constexpr bool IsWindowMinimized() const
+		constexpr bool IsMinimized() const
 		{
 			return Size::IsEmpty(size);
 		}

@@ -20,7 +20,7 @@ namespace Hazel
 	{
 		e.Dispatch([&](WindowResizeEvent &e)
 		{
-			camera.SetWindowSize(e.GetWindowSize());
+			camera.SetWindowSize(e.GetSize());
 		});
 		e.Dispatch([&](MouseScrollEvent &e)
 		{

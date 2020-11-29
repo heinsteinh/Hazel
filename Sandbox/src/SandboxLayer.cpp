@@ -95,6 +95,7 @@ namespace Sandbox
 	void SandboxLayer::OnEvent(Hazel::Event &e)
 	{
 		cameraController.OnEvent(camera, e);
+		renderer->OnEvent(e);
 		e.Dispatch([this](Hazel::KeyPressEvent &e)
 		{
 			if (e.GetKey() == Hazel::Key::Backspace)

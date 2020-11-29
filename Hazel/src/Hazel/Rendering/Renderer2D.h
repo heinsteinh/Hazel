@@ -4,6 +4,7 @@
 #include "RendererStatistics.h"
 #include "Hazel/Camera/OrthographicCamera.h"
 #include "Hazel/BatchRendering/BatchRenderer.h"
+#include "Hazel/Events/WindowResizeEvent.h"
 
 namespace Hazel
 {
@@ -18,6 +19,7 @@ namespace Hazel
 	public:
 		Renderer2D(const RendererInfo &info);
 
+		void OnEvent(Event &e);
 		void BeginScene(const OrthographicCamera &camera);
 		void Render(const DrawData &drawData);
 		void EndScene();

@@ -9,7 +9,7 @@ namespace Hazel
 	class KeyModifierName
 	{
 	public:
-		static inline const std::string None = "None";
+		static inline const std::string None = "NoModifiers";
 		static inline const std::string Shift = "Shift";
 		static inline const std::string Ctrl = "Ctrl";
 		static inline const std::string Alt = "Alt";

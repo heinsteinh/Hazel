@@ -11,10 +11,10 @@ namespace Hazel
 		{
 			auto deltaTime = context.GetDeltaTime();
 			Log::Trace("New frame (update time: {}ms ({}FPS)).", 1000.0f * deltaTime, 1.0f / deltaTime);
-			ApplicationRenderer::BeginRender(context);
+			ApplicationRenderer::Clear(context);
 			context.PollEvents();
-			ApplicationRenderer::RenderNewFrame(context, deltaTime);
-			ApplicationRenderer::EndRender(context);
+			ApplicationRenderer::UpdateLayers(context, deltaTime);
+			ApplicationRenderer::SwapBuffers(context);
 		}
 	};
 }
