@@ -9,8 +9,7 @@
 namespace Hazel
 {
 	EditorLayer::EditorLayer()
-		: Layer("Hazel Editor"),
-		drawData({SquareMesh::CreateMesh()})
+		: Layer("Hazel Editor")
 	{
 	}
 
@@ -26,15 +25,20 @@ namespace Hazel
 
 		framebuffer = graphicsContext.CreateFramebuffer({GetWindow().GetSize()});
 
+		squareMesh = SquareMesh::CreateMesh();
+
 		spriteSheet = TextureBuilder::CreateTextureFromFile(
 			GetGraphicsContext(),
 			"assets\\textures\\SpriteSheet.png");
 
+		cameraController.OnAttach(camera, GetWindow().GetSize());
+
+		square = scene.CreateEntity();
+		auto &drawData = square.AddComponent<DrawData>();
+		drawData.Mesh = squareMesh;
 		drawData.Mesh->SetColor({1.0f, 1.0f, 1.0f, 1.0f});
 		drawData.Texture = spriteSheet;
-		drawData.Transform.SetScale({spriteSheet->GetAspectRatio(), 1.0f});
-
-		cameraController.OnAttach(camera, GetWindow().GetSize());
+		drawData.Transform.Scale = {spriteSheet.GetAspectRatio(), 1.0f, 1.0f};
 	}
 
 	void EditorLayer::OnDetach()
@@ -47,12 +51,15 @@ namespace Hazel
 
 		cameraController.OnUpdate(camera, GetInput(), deltaTime);
 
+		auto &drawData = square.GetComponent<DrawData>();
 		drawData.Texture.SetRegion(Rectangle::FromBottomLeftAndSize(bottomLeft, size));
 
 		GetGraphicsContext().SetFramebuffer(framebuffer);
 		GetGraphicsContext().Clear();
 		renderer->BeginScene(camera);
-		renderer->Render(drawData);
+		HZ_ASSERT(square.HasComponent<DrawData>(), "test");
+		auto &test = square.GetComponent<DrawData>();
+		renderer->Render(test);
 		renderer->EndScene();
 		GetGraphicsContext().SetFramebuffer(nullptr);
 	}
@@ -105,6 +112,7 @@ namespace Hazel
 		ImGui::Text("Camera Rotation: %fdeg", glm::degrees(camera.GetRotation()));
 		ImGui::End();
 
+		auto &drawData = square.GetComponent<DrawData>();
 		ImGui::Begin("Transform");
 		ImGui::SliderFloat2("Translation", glm::value_ptr(drawData.Transform.Position), -10.0f, 10.0f);
 		ImGui::SliderFloat("Rotation", &drawData.Transform.Angle, 0.0f, glm::radians(360.0f));

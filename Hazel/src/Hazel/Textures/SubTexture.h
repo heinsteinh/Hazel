@@ -10,7 +10,7 @@ namespace Hazel
 	private:
 		std::shared_ptr<Texture> texture;
 		glm::vec2 translation{0.0f};
-		glm::vec2 scale{0.0f};
+		glm::vec2 scale{1.0f};
 		float aspectRatio = 0.0f;
 
 	public:
@@ -19,6 +19,10 @@ namespace Hazel
 		SubTexture(const std::shared_ptr<Texture> &texture)
 			: texture(texture)
 		{
+			if (texture)
+			{
+				aspectRatio = texture->GetAspectRatio();
+			}
 		}
 
 		SubTexture(const std::shared_ptr<Texture> &texture, const Rectangle &region)

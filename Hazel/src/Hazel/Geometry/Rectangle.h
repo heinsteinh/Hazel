@@ -44,6 +44,11 @@ namespace Hazel
 			return {GetWidth(), GetHeight()};
 		}
 
+		constexpr glm::vec2 GetBottomLeft() const
+		{
+			return {Left, Bottom};
+		}
+
 		constexpr float GetArea() const
 		{
 			return GetWidth() * GetHeight();

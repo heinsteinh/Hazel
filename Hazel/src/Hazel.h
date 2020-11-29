@@ -11,3 +11,4 @@
 #include "Hazel/Camera/OrthographicCameraController.h"
 #include "Hazel/Rendering/Renderer2D.h"
 #include "Hazel/ParticleSystem/ParticleSystem.h"
+#include "Hazel/Scene/Scene.h"

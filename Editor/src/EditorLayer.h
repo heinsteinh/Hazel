@@ -17,12 +17,14 @@ namespace Hazel
 		bool blockMouse = false;
 
 		std::shared_ptr<Renderer2D> renderer;
+		std::shared_ptr<Framebuffer> framebuffer;
 		OrthographicCamera camera;
 		OrthographicCameraController cameraController;
-		DrawData drawData;
 		ImGuiDockSpace dockspace;
-		std::shared_ptr<Texture> spriteSheet;
-		std::shared_ptr<Framebuffer> framebuffer;
+		std::shared_ptr<Mesh> squareMesh;
+		SubTexture spriteSheet;
+		Scene scene;
+		Entity square;
 
 	public:
 		EditorLayer();
