@@ -64,12 +64,13 @@ namespace Hazel
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
 		ImGui::Begin("Viewport");
 
-		bool blockEvents = !ImGui::IsWindowFocused() || !ImGui::IsWindowHovered();
+		bool blockEvents = !ImGui::IsWindowFocused();
 		EnableImGuiEventFilter(blockEvents);
 		if (!this->blockEvents && blockEvents)
 		{
 			GetInput().Clear();
 		}
+		this->blockEvents = blockEvents;
 
 		auto viewportSize = ImGui::GetContentRegionAvail();
 		glm::vec2 newSize = {viewportSize.x, viewportSize.y};
