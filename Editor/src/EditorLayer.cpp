@@ -57,9 +57,12 @@ namespace Hazel
 		GetGraphicsContext().SetFramebuffer(framebuffer);
 		GetGraphicsContext().Clear();
 		renderer->BeginScene(camera);
-		HZ_ASSERT(square.HasComponent<DrawData>(), "test");
-		auto &test = square.GetComponent<DrawData>();
-		renderer->Render(test);
+		for (auto entity : scene.GetAllEntitiesWith<DrawData>())
+		{
+			HZ_ASSERT(entity.HasComponent<DrawData>(), "test");
+			auto &test = entity.GetComponent<DrawData>();
+			renderer->Render(test);
+		}
 		renderer->EndScene();
 		GetGraphicsContext().SetFramebuffer(nullptr);
 	}
@@ -144,10 +147,11 @@ namespace Hazel
 
 	void EditorLayer::OnEvent(Event &e)
 	{
-		e.Dispatch([&](WindowResizeEvent &e)
+		if (e.GetType() == EventType::WindowResize)
 		{
 			e.Discard();
-		});
+			return;
+		}
 		cameraController.OnEvent(camera, e);
 		renderer->OnEvent(e);
 		e.Dispatch([this](KeyPressEvent &e)

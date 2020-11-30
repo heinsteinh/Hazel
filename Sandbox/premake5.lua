@@ -22,7 +22,7 @@ project "Sandbox"
         "../Hazel/vendor/spdlog/include",
         "../Hazel/vendor/imgui",
         "../Hazel/vendor/glm",
-        "../Hazel/vendor/entt/single_include"
+        "../Hazel/vendor/entt/src"
     }
 
     links {

@@ -28,7 +28,7 @@ project "Hazel"
         "vendor/imgui",
         "vendor/stb_image",
         "vendor/glm",
-        "vendor/entt/single_include"
+        "vendor/entt/src"
     }
 
     links {
