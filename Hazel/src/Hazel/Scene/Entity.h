@@ -31,19 +31,19 @@ namespace Hazel
 		template<typename ComponentType>
 		ComponentType &GetComponent()
 		{
-			return registry->get_or_emplace<ComponentType>(entity);
+			return registry->get<ComponentType>(entity);
 		}
 
 		template<typename ComponentType, typename...Args>
 		ComponentType &AddComponent(Args &&...args)
 		{
-			return registry->emplace_or_replace<ComponentType>(entity, std::forward<Args>(args)...);
+			return registry->emplace<ComponentType>(entity, std::forward<Args>(args)...);
 		}
 
 		template<typename ComponentType>
 		void RemoveComponent()
 		{
-			registry->remove_if_exists<ComponentType>(entity);
+			registry->remove<ComponentType>(entity);
 		}
 
 		constexpr operator entt::entity() const

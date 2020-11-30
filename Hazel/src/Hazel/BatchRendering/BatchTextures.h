@@ -20,15 +20,7 @@ namespace Hazel
 			textures(maxTextureSlotCount),
 			whiteTexture(TextureBuilder::CreateFlatTexture(graphicsContext, glm::vec4(1.0f)))
 		{
-			textures.Add(whiteTexture);
-		}
-
-		void Bind() const
-		{
-			for (size_t i = 0; i < textures.GetTextureCount(); i++)
-			{
-				graphicsContext->SetTexture(textures.GetTexture(i), static_cast<uint32_t>(i));
-			}
+			Add(whiteTexture);
 		}
 
 		const BatchTextureArray &GetTextures() const
@@ -41,14 +33,18 @@ namespace Hazel
 			textures.SetTextureCount(1);
 		}
 
-		std::optional<uint32_t> Add(const std::shared_ptr<Texture> &texture)
+		std::optional<size_t> Add(const std::shared_ptr<Texture> &texture)
 		{
 			if (!texture)
 			{
 				return 0;
 			}
 			auto slot = textures.Add(texture);
-			return slot ? static_cast<uint32_t>(slot.value()) : std::optional<uint32_t>();
+			if (slot)
+			{
+				graphicsContext->SetTexture(texture, slot.value());
+			}
+			return slot;
 		}
 	};
 }

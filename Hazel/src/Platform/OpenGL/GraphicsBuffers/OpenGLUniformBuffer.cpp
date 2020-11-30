@@ -20,9 +20,9 @@ namespace Hazel
 		Log::Debug("OpenGL uniform buffer with id {} destroyed.", id);
 	}
 
-	void OpenGLUniformBuffer::SetBinding(uint32_t binding)
+	void OpenGLUniformBuffer::SetBinding(size_t binding)
 	{
-		glBindBufferBase(GL_UNIFORM_BUFFER, binding, id);
+		glBindBufferBase(GL_UNIFORM_BUFFER, static_cast<uint32_t>(binding), id);
 	}
 
 	void OpenGLUniformBuffer::Bind() const

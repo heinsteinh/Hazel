@@ -38,16 +38,6 @@ namespace Hazel
 		buffers.BufferConstants(constants);
 	}
 
-	void Batch::BindBuffers() const
-	{
-		buffers.Bind();
-	}
-
-	void Batch::BindTextures() const
-	{
-		textures.Bind();
-	}
-
 	bool Batch::CanContain(const DrawData &drawData) const
 	{
 		return indices.CanContain(drawData.Mesh->Indices.size())

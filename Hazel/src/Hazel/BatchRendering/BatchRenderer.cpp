@@ -30,7 +30,6 @@ namespace Hazel
 
 	void BatchRenderer::EndScene()
 	{
-		batch.BindTextures();
 		batch.BufferData();
 		graphicsContext->DrawIndexed(batch.GetIndexCount());
 		statistics.DrawCallCount++;

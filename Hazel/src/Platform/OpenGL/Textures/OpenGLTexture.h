@@ -13,7 +13,7 @@ namespace Hazel
 		OpenGLTexture(const TextureInfo &info);
 		virtual ~OpenGLTexture();
 
-		void Bind(uint32_t slot = 0) const;
+		void Bind(size_t slot = 0) const;
 
 		virtual void BufferData(const void *data) override;
 		virtual void *GetHandle() const override;

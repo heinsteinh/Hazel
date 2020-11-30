@@ -119,7 +119,7 @@ namespace Hazel
 		return buffers.GetMaxUniformBufferBindingCount();
 	}
 
-	void OpenGLGraphicsContext::SetConstantBuffer(const std::shared_ptr<ConstantBuffer> &constantBuffer, uint32_t binding)
+	void OpenGLGraphicsContext::SetConstantBuffer(const std::shared_ptr<ConstantBuffer> &constantBuffer, size_t binding)
 	{
 		MakeCurrent();
 		this->buffers.SetConstantBuffer(constantBuffer, binding);
@@ -136,7 +136,7 @@ namespace Hazel
 		return textures.GetMaxTextureSlotCount();
 	}
 
-	void OpenGLGraphicsContext::SetTexture(const std::shared_ptr<Texture> &texture, uint32_t slot)
+	void OpenGLGraphicsContext::SetTexture(const std::shared_ptr<Texture> &texture, size_t slot)
 	{
 		MakeCurrent();
 		this->textures.SetTexture(texture, slot);

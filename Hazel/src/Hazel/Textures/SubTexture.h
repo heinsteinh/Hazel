@@ -11,7 +11,7 @@ namespace Hazel
 		std::shared_ptr<Texture> texture;
 		glm::vec2 translation{0.0f};
 		glm::vec2 scale{1.0f};
-		float aspectRatio = 0.0f;
+		float aspectRatio = 1.0f;
 
 	public:
 		SubTexture() = default;
@@ -44,7 +44,7 @@ namespace Hazel
 
 		glm::vec2 GetSourceCoordinates(const glm::vec2 &coordinates) const
 		{
-			return texture ? translation + scale * coordinates : glm::vec2(0.0f);
+			return translation + scale * coordinates;
 		}
 
 		constexpr float GetAspectRatio() const

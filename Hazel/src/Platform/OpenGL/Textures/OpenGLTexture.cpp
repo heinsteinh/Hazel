@@ -31,9 +31,9 @@ namespace Hazel
 		Log::Info("Texture {} destroyed.", id);
 	}
 
-	void OpenGLTexture::Bind(uint32_t slot) const
+	void OpenGLTexture::Bind(size_t slot) const
 	{
-		glBindTextureUnit(slot, id);
+		glBindTextureUnit(static_cast<uint32_t>(slot), id);
 	}
 
 	void OpenGLTexture::BufferData(const void *data)

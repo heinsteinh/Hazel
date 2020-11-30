@@ -17,11 +17,11 @@ namespace Hazel
 	{
 		auto &graphicsContext = GetGraphicsContext();
 
-		RendererInfo rendererInfo;
-		rendererInfo.GraphicsContext = &graphicsContext;
+		BatchInfo rendererInfo;
 		rendererInfo.MaxIndexCount = maxIndices;
 		rendererInfo.MaxVertexCount = maxVertices;
-		renderer = std::make_shared<Renderer2D>(rendererInfo);
+		rendererInfo.MaxTextureSlotCount = graphicsContext.GetMaxTextureSlotCount();
+		renderer = std::make_shared<Renderer2D>(graphicsContext, rendererInfo);
 
 		framebuffer = graphicsContext.CreateFramebuffer({GetWindow().GetSize()});
 
@@ -56,7 +56,7 @@ namespace Hazel
 
 		GetGraphicsContext().SetFramebuffer(framebuffer);
 		GetGraphicsContext().Clear();
-		renderer->BeginScene(camera);
+		renderer->BeginScene(camera.GetViewProjectionMatrix());
 		for (auto entity : scene.GetAllEntitiesWith<DrawData>())
 		{
 			HZ_ASSERT(entity.HasComponent<DrawData>(), "test");

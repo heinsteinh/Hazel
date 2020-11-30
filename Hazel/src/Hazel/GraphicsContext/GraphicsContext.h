@@ -32,10 +32,10 @@ namespace Hazel
 		virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer> &indexBuffer) = 0;
 		virtual void SetVertexBuffer(const std::shared_ptr<VertexBuffer> &vertexBuffer) = 0;
 		virtual size_t GetMaxConstantBufferBindingCount() = 0;
-		virtual void SetConstantBuffer(const std::shared_ptr<ConstantBuffer> &constantBuffer, uint32_t binding = 0) = 0;
+		virtual void SetConstantBuffer(const std::shared_ptr<ConstantBuffer> &constantBuffer, size_t binding = 0) = 0;
 		virtual void SetInputLayout(const std::shared_ptr<InputLayout> &inputLayout) = 0;
 		virtual size_t GetMaxTextureSlotCount() = 0;
-		virtual void SetTexture(const std::shared_ptr<Texture> &texture, uint32_t slot = 0) = 0;
+		virtual void SetTexture(const std::shared_ptr<Texture> &texture, size_t slot = 0) = 0;
 		virtual void SetViewport(const Rectangle &viewport) = 0;
 		virtual void SetClearColor(const glm::vec4 &color) = 0;
 		virtual void Clear() = 0;

@@ -20,13 +20,13 @@ namespace Hazel
 			textures.resize(maxTextureSlotCount, nullptr);
 		}
 
-		OpenGLTexture *GetTexture(uint32_t slot) const
+		OpenGLTexture *GetTexture(size_t slot) const
 		{
 			HZ_ASSERT(slot < textures.size(), "Not enough texture slots.");
 			return textures[slot];
 		}
 
-		void SetTexture(const std::shared_ptr<Texture> &texture, uint32_t slot)
+		void SetTexture(const std::shared_ptr<Texture> &texture, size_t slot)
 		{
 			HZ_ASSERT(slot < textures.size(), "Not enough texture slots.");
 			auto &currentTexture = textures[slot];

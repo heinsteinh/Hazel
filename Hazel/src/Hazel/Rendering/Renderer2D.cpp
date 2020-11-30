@@ -4,19 +4,9 @@
 
 namespace Hazel
 {
-	BatchInfo Renderer2D::GetBatchInfo(const RendererInfo &rendererInfo)
-	{
-		BatchInfo batchInfo;
-		batchInfo.MaxIndexCount = rendererInfo.MaxIndexCount;
-		batchInfo.MaxVertexCount = rendererInfo.MaxVertexCount;
-		batchInfo.MaxTextureSlotCount = rendererInfo.GraphicsContext->GetMaxTextureSlotCount();
-		batchInfo.IndexFormat = rendererInfo.IndexFormat;
-		return batchInfo;
-	}
-
-	Renderer2D::Renderer2D(const RendererInfo &info)
+	Renderer2D::Renderer2D(GraphicsContext &graphicsContext, const BatchInfo &info)
 		: info(info),
-		batchRenderer(*info.GraphicsContext, GetBatchInfo(info))
+		batchRenderer(graphicsContext, info)
 	{
 	}
 
@@ -24,13 +14,13 @@ namespace Hazel
 	{
 		e.Dispatch([&](WindowResizeEvent &e)
 		{
-			info.GraphicsContext->SetViewport({0.0f, e.GetWidth(), 0.0f, e.GetHeight()});
+			batchRenderer.SetViewport({0.0f, e.GetWidth(), 0.0f, e.GetHeight()});
 		});
 	}
 
-	void Renderer2D::BeginScene(const OrthographicCamera &camera)
+	void Renderer2D::BeginScene(const glm::mat4 &viewProjection)
 	{
-		batchRenderer.BeginScene(camera.GetViewProjectionMatrix());
+		batchRenderer.BeginScene(viewProjection);
 	}
 
 	void Renderer2D::Render(const DrawData &drawData)

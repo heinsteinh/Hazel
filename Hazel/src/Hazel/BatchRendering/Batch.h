@@ -27,8 +27,6 @@ namespace Hazel
 		void Clear();
 		bool Add(const DrawData &drawData);
 		void BufferData();
-		void BindBuffers() const;
-		void BindTextures() const;
 
 		size_t GetIndexCount() const
 		{

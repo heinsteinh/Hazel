@@ -51,13 +51,13 @@ namespace Hazel
 			uniformBuffers.resize(maxUniformBufferBindingCount);
 		}
 
-		OpenGLUniformBuffer *GetUniformBuffer(uint32_t binding) const
+		OpenGLUniformBuffer *GetUniformBuffer(size_t binding) const
 		{
 			HZ_ASSERT(binding < uniformBuffers.size(), "Binding out of range");
 			return uniformBuffers[binding];
 		}
 
-		void SetConstantBuffer(const std::shared_ptr<ConstantBuffer> &constantBuffer, uint32_t binding)
+		void SetConstantBuffer(const std::shared_ptr<ConstantBuffer> &constantBuffer, size_t binding)
 		{
 			HZ_ASSERT(binding < uniformBuffers.size(), "Binding out of range");
 			auto &uniformBuffer = uniformBuffers[binding];

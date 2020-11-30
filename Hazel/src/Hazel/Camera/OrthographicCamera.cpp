@@ -37,12 +37,13 @@ namespace Hazel
 
 	void OrthographicCamera::RecomputeProjectionMatrix()
 	{
-		projectionMatrix = MvpMatrix::GetProjectionMatrix(Viewport::FromAspectRatio(GetAspectRatio(), GetZoomLevel()));
+		projectionMatrix = MvpMatrix::GetOrthographicProjectionMatrix(
+			Viewport::FromAspectRatio(GetAspectRatio(), GetZoomLevel()));
 		RecomputeViewProjectionMatrix();
 	}
 
 	void OrthographicCamera::RecomputeViewProjectionMatrix()
 	{
-		viewProjectionMatrix = projectionMatrix * viewMatrix;
+		viewProjectionMatrix = MvpMatrix::GetViewProjectionMatrix(viewMatrix, projectionMatrix);
 	}
 }

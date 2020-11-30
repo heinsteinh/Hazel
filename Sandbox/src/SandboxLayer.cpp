@@ -17,11 +17,11 @@ namespace Sandbox
 	{
 		auto &graphicsContext = GetGraphicsContext();
 
-		Hazel::RendererInfo rendererInfo;
-		rendererInfo.GraphicsContext = &graphicsContext;
+		Hazel::BatchInfo rendererInfo;
 		rendererInfo.MaxIndexCount = maxIndices;
 		rendererInfo.MaxVertexCount = maxVertices;
-		renderer = std::make_shared<Hazel::Renderer2D>(rendererInfo);
+		rendererInfo.MaxTextureSlotCount = graphicsContext.GetMaxTextureSlotCount();
+		renderer = std::make_shared<Hazel::Renderer2D>(graphicsContext, rendererInfo);
 
 		spriteSheet = Hazel::TextureBuilder::CreateTextureFromFile(
 			GetGraphicsContext(),
@@ -48,7 +48,7 @@ namespace Sandbox
 
 		drawData.Texture.SetRegion(Hazel::Rectangle::FromBottomLeftAndSize(bottomLeft, size));
 
-		renderer->BeginScene(camera);
+		renderer->BeginScene(camera.GetViewProjectionMatrix());
 		particles->OnUpdate(deltaTime);
 		renderer->Render(drawData);
 		renderer->EndScene();

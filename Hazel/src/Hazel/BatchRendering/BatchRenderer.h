@@ -20,6 +20,11 @@ namespace Hazel
 		void Render(const DrawData &drawData);
 		void EndScene();
 
+		void SetViewport(const Rectangle &viewport)
+		{
+			graphicsContext->SetViewport(viewport);
+		}
+
 		const RendererStatistics &GetStatistics() const
 		{
 			return statistics;
