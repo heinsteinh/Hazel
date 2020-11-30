@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ApplicationRenderer.h"
-#include "Hazel/Geometry/Viewport.h"
 
 namespace Hazel
 {

@@ -1,7 +1,6 @@
 #include "OrthographicCamera.h"
 
 #include "Hazel/Geometry/MvpMatrix.h"
-#include "Hazel/Geometry/Viewport.h"
 
 namespace Hazel
 {
@@ -37,8 +36,7 @@ namespace Hazel
 
 	void OrthographicCamera::RecomputeProjectionMatrix()
 	{
-		projectionMatrix = MvpMatrix::GetOrthographicProjectionMatrix(
-			Viewport::FromAspectRatio(GetAspectRatio(), GetZoomLevel()));
+		projectionMatrix = MvpMatrix::GetOrthographicProjectionMatrix(GetAspectRatio(), GetZoomLevel());
 		RecomputeViewProjectionMatrix();
 	}
 

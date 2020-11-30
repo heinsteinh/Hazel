@@ -30,12 +30,16 @@ namespace Hazel
 				cameraTransform.Axis);
 		}
 
-		static glm::mat4 GetOrthographicProjectionMatrix(const Rectangle &viewport)
+		static glm::mat4 GetOrthographicProjectionMatrix(float aspectRatio, float size = 1.0f)
 		{
-			return glm::ortho(viewport.Left, viewport.Right, viewport.Bottom, viewport.Top);
+			return glm::ortho(
+				-aspectRatio * size,
+				aspectRatio * size,
+				-size,
+				size);
 		}
 
-		static glm::mat4 GetPerspectiveProjectionMatrix(float fov, float aspectRatio, float nearClip, float farClip)
+		static glm::mat4 GetPerspectiveProjectionMatrix(float aspectRatio, float fov, float nearClip, float farClip)
 		{
 			return glm::perspective(fov, aspectRatio, nearClip, farClip);
 		}
