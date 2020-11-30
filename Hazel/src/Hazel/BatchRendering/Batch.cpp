@@ -66,7 +66,7 @@ namespace Hazel
 
 	void Batch::AddVertices(const DrawData &drawData, size_t textureSlot)
 	{
-		auto matrix = MvpMatrix::GetModelMatrix(drawData.Transform);
+		auto matrix = MvpMatrix::GetModel(drawData.Transform);
 		for (const auto &vertexInfo : drawData.Mesh->Vertices)
 		{
 			auto &vertex = vertices.Emplace();

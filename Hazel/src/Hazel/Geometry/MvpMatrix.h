@@ -1,14 +1,14 @@
 #pragma once
 
 #include "Transform.h"
-#include "Rectangle.h"
+#include "OrthographicViewport.h"
 
 namespace Hazel
 {
 	class MvpMatrix
 	{
 	public:
-		static glm::mat4 GetModelMatrix(const Transform &objectTransform)
+		static glm::mat4 GetModel(const Transform &objectTransform)
 		{
 			return glm::scale(
 				glm::rotate(
@@ -20,7 +20,7 @@ namespace Hazel
 				objectTransform.Scale);
 		}
 
-		static glm::mat4 GetViewMatrix(const Transform &cameraTransform)
+		static glm::mat4 GetView(const Transform &cameraTransform)
 		{
 			return glm::rotate(
 				glm::translate(
@@ -30,21 +30,18 @@ namespace Hazel
 				cameraTransform.Axis);
 		}
 
-		static glm::mat4 GetOrthographicProjectionMatrix(float aspectRatio, float size = 1.0f)
+		static glm::mat4 GetOrthographicProjection(const OrthographicViewport &viewport)
 		{
 			return glm::ortho(
-				-aspectRatio * size,
-				aspectRatio * size,
-				-size,
-				size);
+				-viewport.AspectRatio * viewport.Size,
+				viewport.AspectRatio * viewport.Size,
+				-viewport.Size,
+				viewport.Size,
+				viewport.NearClip,
+				viewport.FarClip);
 		}
 
-		static glm::mat4 GetPerspectiveProjectionMatrix(float aspectRatio, float fov, float nearClip, float farClip)
-		{
-			return glm::perspective(fov, aspectRatio, nearClip, farClip);
-		}
-
-		static glm::mat4 GetViewProjectionMatrix(const glm::mat4 &view, const glm::mat4 &projection)
+		static glm::mat4 GetViewProjection(const glm::mat4 &view, const glm::mat4 &projection)
 		{
 			return projection * view;
 		}
