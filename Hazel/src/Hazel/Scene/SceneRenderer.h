@@ -18,7 +18,7 @@ namespace Hazel
 		DrawData drawData = {SquareMesh::CreateMesh()};
 
 	public:
-		void Render(const Scene &scene, Renderer2D &renderer)
+		void Render(Scene &scene, Renderer2D &renderer)
 		{
 			if (!BeginScene(scene, renderer))
 			{
@@ -29,7 +29,7 @@ namespace Hazel
 		}
 
 	private:
-		bool BeginScene(const Scene &scene, Renderer2D &renderer)
+		bool BeginScene(Scene &scene, Renderer2D &renderer)
 		{
 			auto view = scene.GetAllEntitiesWith<CameraComponent>();
 			if (view.IsEmpty())
@@ -40,7 +40,7 @@ namespace Hazel
 			return true;
 		}
 
-		void RenderSprites(const Scene &scene, Renderer2D &renderer)
+		void RenderSprites(Scene &scene, Renderer2D &renderer)
 		{
 			auto view = scene.GetAllEntitiesWith<SpriteComponent>();
 			for (auto entity : view)

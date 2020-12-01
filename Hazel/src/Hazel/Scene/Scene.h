@@ -26,12 +26,5 @@ namespace Hazel
 			auto view = registry.view<ComponentTypes...>();
 			return SceneView<decltype(view), decltype(view.begin())>(view, registry);
 		}
-
-		template<typename ...ComponentTypes>
-		decltype(auto) GetAllEntitiesWith() const
-		{
-			auto view = registry.view<ComponentTypes...>();
-			return SceneView<decltype(view), decltype(view.begin())>(view, registry);
-		}
 	};
 }

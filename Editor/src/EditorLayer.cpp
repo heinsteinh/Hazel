@@ -34,11 +34,13 @@ namespace Hazel
 		cameraController.OnAttach(camera, GetWindow().GetSize());
 
 		square = scene.CreateEntity();
-		auto &drawData = square.AddComponent<DrawData>();
-		drawData.Mesh = squareMesh;
-		drawData.Mesh->SetColor({1.0f, 1.0f, 1.0f, 1.0f});
-		drawData.Texture = spriteSheet;
-		drawData.Transform.Scale = {spriteSheet.GetAspectRatio(), 1.0f, 1.0f};
+		square.AddComponent<SpriteComponent>();
+		square.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet.GetAspectRatio();
+		square.AddComponent<TextureComponent>(spriteSheet);
+
+		cameraEntity = scene.CreateEntity();
+		cameraEntity.AddComponent<TransformComponent>();
+		cameraEntity.AddComponent<CameraComponent>().SetWindowSize(GetWindow().GetSize());
 	}
 
 	void EditorLayer::OnDetach()
@@ -51,19 +53,12 @@ namespace Hazel
 
 		cameraController.OnUpdate(camera, GetInput(), deltaTime);
 
-		auto &drawData = square.GetComponent<DrawData>();
-		drawData.Texture.SetRegion(Rectangle::FromBottomLeftAndSize(bottomLeft, size));
+		SubTexture &texture = square.GetComponent<TextureComponent>();
+		texture.SetRegion(Rectangle::FromBottomLeftAndSize(bottomLeft, size));
 
 		GetGraphicsContext().SetFramebuffer(framebuffer.get());
 		GetGraphicsContext().Clear();
-		renderer->BeginScene(camera.GetViewProjectionMatrix());
-		for (auto entity : scene.GetAllEntitiesWith<DrawData>())
-		{
-			HZ_ASSERT(entity.HasComponent<DrawData>(), "test");
-			auto &test = entity.GetComponent<DrawData>();
-			renderer->Render(test);
-		}
-		renderer->EndScene();
+		sceneRenderer.Render(scene, *renderer);
 		GetGraphicsContext().SetFramebuffer(nullptr);
 	}
 
@@ -94,10 +89,9 @@ namespace Hazel
 		if (newSize != framebuffer->GetSize())
 		{
 			Log::Debug("New viewport size: {} {}", newSize.x, newSize.y);
-			WindowResizeEvent e(newSize.x, newSize.y);
 			framebuffer = GetGraphicsContext().CreateFramebuffer({newSize});
-			cameraController.OnEvent(camera, e);
-			renderer->OnEvent(e);
+			//cameraController.OnEvent(camera, e);
+			cameraEntity.GetComponent<CameraComponent>().SetWindowSize(newSize);
 		}
 
 		ImGui::Image(
@@ -115,11 +109,11 @@ namespace Hazel
 		ImGui::Text("Camera Rotation: %fdeg", glm::degrees(camera.GetRotation()));
 		ImGui::End();
 
-		auto &drawData = square.GetComponent<DrawData>();
+		Transform &transform = square.GetComponent<TransformComponent>();
 		ImGui::Begin("Transform");
-		ImGui::SliderFloat2("Translation", glm::value_ptr(drawData.Transform.Position), -10.0f, 10.0f);
-		ImGui::SliderFloat("Rotation", &drawData.Transform.Angle, 0.0f, glm::radians(360.0f));
-		ImGui::SliderFloat2("Scale", glm::value_ptr(drawData.Transform.Scale), 0.0f, glm::radians(360.0f));
+		ImGui::SliderFloat2("Translation", glm::value_ptr(transform.Position), -10.0f, 10.0f);
+		ImGui::SliderFloat("Rotation", &transform.Angle, 0.0f, glm::radians(360.0f));
+		ImGui::SliderFloat2("Scale", glm::value_ptr(transform.Scale), 0.0f, glm::radians(360.0f));
 		ImGui::End();
 
 		ImGui::Begin("Texture Coordinates");
@@ -147,11 +141,6 @@ namespace Hazel
 
 	void EditorLayer::OnEvent(Event &e)
 	{
-		if (e.GetType() == EventType::WindowResize)
-		{
-			e.Discard();
-			return;
-		}
 		cameraController.OnEvent(camera, e);
 		renderer->OnEvent(e);
 		e.Dispatch([this](KeyPressEvent &e)

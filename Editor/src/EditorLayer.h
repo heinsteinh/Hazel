@@ -22,9 +22,11 @@ namespace Hazel
 		OrthographicCameraController cameraController;
 		ImGuiDockSpace dockspace;
 		std::shared_ptr<Mesh> squareMesh;
+		SceneRenderer sceneRenderer;
 		SubTexture spriteSheet;
 		Scene scene;
 		Entity square;
+		Entity cameraEntity;
 
 	public:
 		EditorLayer();

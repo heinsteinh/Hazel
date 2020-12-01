@@ -13,6 +13,16 @@ namespace Hazel
 			return Camera.GetProjection();
 		}
 
+		void SetWindowSize(const glm::vec2 &windowSize)
+		{
+			Camera.SetWindowSize(windowSize);
+		}
+		
+		void SetOrthographicSize(float size)
+		{
+			Camera.SetOrthographicSize(size);
+		}
+
 		operator Hazel::Camera &()
 		{
 			return Camera;

@@ -12,3 +12,4 @@
 #include "Hazel/Rendering/Renderer2D.h"
 #include "Hazel/ParticleSystem/ParticleSystem.h"
 #include "Hazel/Scene/Scene.h"
+#include "Hazel/Scene/SceneRenderer.h"

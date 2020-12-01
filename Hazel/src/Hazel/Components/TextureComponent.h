@@ -8,6 +8,13 @@ namespace Hazel
 	{
 		SubTexture Texture;
 
+		TextureComponent() = default;
+
+		TextureComponent(const SubTexture &texture)
+			: Texture(texture)
+		{
+		}
+
 		operator SubTexture &()
 		{
 			return Texture;
