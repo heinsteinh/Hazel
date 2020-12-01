@@ -29,7 +29,7 @@ namespace Sandbox
 
 		drawData.Mesh->SetColor({1.0f, 1.0f, 1.0f, 1.0f});
 		drawData.Texture = spriteSheet;
-		drawData.Transform.SetScale({spriteSheet->GetAspectRatio(), 1.0f});
+		drawData.Transform.SetScale({spriteSheet.GetAspectRatio(), 1.0f});
 
 		cameraController.OnAttach(camera, GetWindow().GetSize());
 

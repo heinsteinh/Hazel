@@ -47,9 +47,19 @@ namespace Hazel
 			return translation + scale * coordinates;
 		}
 
-		constexpr float GetAspectRatio() const
+		float GetAspectRatio() const
 		{
 			return aspectRatio;
+		}
+
+		Texture *GetSource() const
+		{
+			return texture.get();
+		}
+
+		const std::shared_ptr<Texture> &GetSourceForSharing() const
+		{
+			return texture;
 		}
 
 		operator bool() const
@@ -57,9 +67,9 @@ namespace Hazel
 			return static_cast<bool>(texture);
 		}
 
-		constexpr operator const std::shared_ptr<Texture> &() const
+		operator Texture *() const
 		{
-			return texture;
+			return texture.get();
 		}
 	};
 }

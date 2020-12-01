@@ -27,5 +27,15 @@ namespace Hazel
 		{
 			return {view.end(), *registry};
 		}
+
+		bool IsEmpty() const
+		{
+			return view.begin() == view.end();
+		}
+
+		Entity GetFirstEntity() const
+		{
+			return {*view.begin(), *registry};
+		}
 	};
 }

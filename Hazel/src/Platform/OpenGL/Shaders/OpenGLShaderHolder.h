@@ -16,7 +16,7 @@ namespace Hazel
 			return program;
 		}
 
-		void SetShader(const std::shared_ptr<Shader> &shader)
+		void SetShader(Shader *shader)
 		{
 			OpenGLBinder::Bind(program, shader);
 		}

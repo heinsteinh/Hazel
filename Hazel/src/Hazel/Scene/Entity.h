@@ -34,6 +34,12 @@ namespace Hazel
 			return registry->get<ComponentType>(entity);
 		}
 
+		template<typename ComponentType>
+		ComponentType *TryGetComponent()
+		{
+			return registry->try_get<ComponentType>(entity);
+		}
+
 		template<typename ComponentType, typename...Args>
 		ComponentType &AddComponent(Args &&...args)
 		{

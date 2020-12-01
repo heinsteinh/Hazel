@@ -17,9 +17,9 @@ namespace Hazel
 		{
 		}
 
-		constexpr operator const std::shared_ptr<Shader> &() const
+		operator Shader *() const
 		{
-			return shader;
+			return shader.get();
 		}
 	};
 }

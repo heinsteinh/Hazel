@@ -25,10 +25,10 @@ namespace Hazel
 			constantBuffer(graphicsContext.CreateConstantBuffer(sizeof(BatchConstants))),
 			inputLayout(graphicsContext.CreateInputLayout(BatchVertex::Attributes))
 		{
-			graphicsContext.SetIndexBuffer(indexBuffer);
-			graphicsContext.SetVertexBuffer(vertexBuffer);
-			graphicsContext.SetConstantBuffer(constantBuffer, 0);
-			graphicsContext.SetInputLayout(inputLayout);
+			graphicsContext.SetIndexBuffer(indexBuffer.get());
+			graphicsContext.SetVertexBuffer(vertexBuffer.get());
+			graphicsContext.SetConstantBuffer(constantBuffer.get(), 0);
+			graphicsContext.SetInputLayout(inputLayout.get());
 		}
 
 		void BufferIndices(const BatchIndices &indices)

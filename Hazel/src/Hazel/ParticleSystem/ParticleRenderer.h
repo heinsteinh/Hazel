@@ -9,14 +9,9 @@ namespace Hazel
 	class ParticleRenderer
 	{
 	private:
-		DrawData drawData;
+		DrawData drawData = {SquareMesh::CreateMesh()};
 
 	public:
-		ParticleRenderer()
-			: drawData({SquareMesh::CreateMesh()})
-		{
-		}
-
 		void RenderParticle(Renderer2D &renderer, const Particle &particle)
 		{
 			if (particle.Active)

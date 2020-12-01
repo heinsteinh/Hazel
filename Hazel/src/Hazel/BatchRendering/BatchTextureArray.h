@@ -8,7 +8,7 @@ namespace Hazel
 	{
 	private:
 		size_t textureCount = 0;
-		std::vector<std::shared_ptr<Texture>> textures;
+		std::vector<Texture *> textures;
 
 	public:
 		BatchTextureArray(size_t maxTextureCount = 0)
@@ -45,12 +45,12 @@ namespace Hazel
 			}
 		}
 
-		const std::shared_ptr<Texture> &GetTexture(size_t slot) const
+		Texture *GetTexture(size_t slot) const
 		{
 			return textures[slot];
 		}
 
-		std::optional<size_t> Add(const std::shared_ptr<Texture> &texture)
+		std::optional<size_t> Add(Texture *texture)
 		{
 			auto last = textures.begin() + textureCount;
 			auto i = std::find(textures.begin(), last, texture);
@@ -62,7 +62,7 @@ namespace Hazel
 		}
 
 	private:
-		std::optional<size_t> TryAdd(const std::shared_ptr<Texture> &texture)
+		std::optional<size_t> TryAdd(Texture *texture)
 		{
 			if (textureCount == GetMaxTextureCount())
 			{

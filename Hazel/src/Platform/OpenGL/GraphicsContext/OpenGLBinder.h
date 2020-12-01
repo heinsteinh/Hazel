@@ -5,17 +5,17 @@ namespace Hazel
 	class OpenGLBinder
 	{
 	public:
-		template<typename ObjectType, typename OpenGLType>
-		static void Bind(OpenGLType *&target, const std::shared_ptr<ObjectType> &source)
+		template<typename BaseType, typename OpenGLType>
+		static void Bind(OpenGLType *&target, BaseType *source)
 		{
-			if (target == source.get())
+			if (target == source)
 			{
 				return;
 			}
 			if (source)
 			{
 				HZ_ASSERT(typeid(*source) == typeid(OpenGLType), "Not an OpenGL type.");
-				target = static_cast<OpenGLType *>(source.get());
+				target = static_cast<OpenGLType *>(source);
 				target->Bind();
 			}
 			else

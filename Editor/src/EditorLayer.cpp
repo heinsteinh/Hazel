@@ -54,7 +54,7 @@ namespace Hazel
 		auto &drawData = square.GetComponent<DrawData>();
 		drawData.Texture.SetRegion(Rectangle::FromBottomLeftAndSize(bottomLeft, size));
 
-		GetGraphicsContext().SetFramebuffer(framebuffer);
+		GetGraphicsContext().SetFramebuffer(framebuffer.get());
 		GetGraphicsContext().Clear();
 		renderer->BeginScene(camera.GetViewProjectionMatrix());
 		for (auto entity : scene.GetAllEntitiesWith<DrawData>())

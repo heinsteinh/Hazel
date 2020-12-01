@@ -18,7 +18,7 @@ namespace Sandbox
 		Hazel::OrthographicCamera camera;
 		Hazel::OrthographicCameraController cameraController;
 		Hazel::DrawData drawData;
-		std::shared_ptr<Hazel::Texture> spriteSheet;
+		Hazel::SubTexture spriteSheet;
 		std::shared_ptr<Hazel::TestParticle> particles;
 
 	public:

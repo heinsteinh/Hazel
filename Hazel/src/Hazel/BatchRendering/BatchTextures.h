@@ -20,7 +20,7 @@ namespace Hazel
 			textures(maxTextureSlotCount),
 			whiteTexture(TextureBuilder::CreateFlatTexture(graphicsContext, glm::vec4(1.0f)))
 		{
-			Add(whiteTexture);
+			Add(whiteTexture.get());
 		}
 
 		const BatchTextureArray &GetTextures() const
@@ -33,7 +33,7 @@ namespace Hazel
 			textures.SetTextureCount(1);
 		}
 
-		std::optional<size_t> Add(const std::shared_ptr<Texture> &texture)
+		std::optional<size_t> Add(Texture *texture)
 		{
 			if (!texture)
 			{

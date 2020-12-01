@@ -16,7 +16,7 @@ namespace Hazel
 			return framebuffer;
 		}
 
-		void SetFramebuffer(const std::shared_ptr<Framebuffer> &framebuffer)
+		void SetFramebuffer(Framebuffer *framebuffer)
 		{
 			OpenGLBinder::Bind(this->framebuffer, framebuffer);
 		}

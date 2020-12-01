@@ -22,7 +22,7 @@ namespace Hazel
 			return indexBuffer;
 		}
 
-		void SetIndexBuffer(const std::shared_ptr<IndexBuffer> &indexBuffer)
+		void SetIndexBuffer(IndexBuffer *indexBuffer)
 		{
 			OpenGLBinder::Bind(this->indexBuffer, indexBuffer);
 		}
@@ -32,7 +32,7 @@ namespace Hazel
 			return vertexBuffer;
 		}
 
-		void SetVertexBuffer(const std::shared_ptr<VertexBuffer> &vertexBuffer)
+		void SetVertexBuffer(VertexBuffer *vertexBuffer)
 		{
 			OpenGLBinder::Bind(this->vertexBuffer, vertexBuffer);
 			if (this->vertexBuffer && vertexArray)
@@ -57,7 +57,7 @@ namespace Hazel
 			return uniformBuffers[binding];
 		}
 
-		void SetConstantBuffer(const std::shared_ptr<ConstantBuffer> &constantBuffer, size_t binding)
+		void SetConstantBuffer(ConstantBuffer *constantBuffer, size_t binding)
 		{
 			HZ_ASSERT(binding < uniformBuffers.size(), "Binding out of range");
 			auto &uniformBuffer = uniformBuffers[binding];
@@ -73,14 +73,14 @@ namespace Hazel
 			return vertexArray;
 		}
 
-		void SetInputLayout(const std::shared_ptr<InputLayout> &inputLayout)
+		void SetInputLayout(InputLayout *inputLayout)
 		{
 			OpenGLBinder::Bind(this->vertexArray, inputLayout);
-			if (this->vertexArray && vertexBuffer)
+			if (vertexArray && vertexBuffer)
 			{
 				vertexArray->AddCurrentVertexBuffer();
 			}
-			if (this->vertexArray && indexBuffer)
+			if (vertexArray && indexBuffer)
 			{
 				indexBuffer->Bind();
 			}
