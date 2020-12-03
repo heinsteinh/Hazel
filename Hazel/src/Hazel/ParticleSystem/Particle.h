@@ -26,13 +26,5 @@ namespace Hazel
 		{
 			return LifeTime ? RemainingLifeTime / LifeTime : 0.0f;
 		}
-
-		glm::vec4 GetColor() const
-		{
-			auto life = GetLife();
-			auto color = glm::mix(ColorEnd, ColorBegin, life);
-			color.a *= life;
-			return color;
-		}
 	};
 }

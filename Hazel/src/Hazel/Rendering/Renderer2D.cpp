@@ -10,14 +10,6 @@ namespace Hazel
 	{
 	}
 
-	void Renderer2D::OnEvent(Event &e)
-	{
-		e.Dispatch([&](WindowResizeEvent &e)
-		{
-			batchRenderer.SetViewport({0.0f, e.GetWidth(), 0.0f, e.GetHeight()});
-		});
-	}
-
 	void Renderer2D::BeginScene(const glm::mat4 &viewProjection)
 	{
 		batchRenderer.BeginScene(viewProjection);

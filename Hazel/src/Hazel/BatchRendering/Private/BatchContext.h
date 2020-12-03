@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BatchInfo.h"
+#include "../BatchInfo.h"
 #include "BatchIndices.h"
 #include "BatchConstants.h"
 #include "BatchTextures.h"
@@ -10,7 +10,7 @@
 
 namespace Hazel
 {
-	class Batch
+	class BatchContext
 	{
 	private:
 		BatchIndices indices;
@@ -21,11 +21,12 @@ namespace Hazel
 		BatchShader shader;
 
 	public:
-		Batch(GraphicsContext &graphicsContext, const BatchInfo &info);
+		BatchContext(GraphicsContext &graphicsContext, const BatchInfo &info);
 
 		void SetViewProjectionMatrix(const glm::mat4 &viewProjection);
 		void Clear();
 		bool Add(const DrawData &drawData);
+		void BufferConstants();
 		void BufferData();
 
 		size_t GetIndexCount() const

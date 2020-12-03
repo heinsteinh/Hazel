@@ -23,7 +23,7 @@ namespace Hazel
 		rendererInfo.MaxTextureSlotCount = graphicsContext.GetMaxTextureSlotCount();
 		renderer = std::make_shared<Renderer2D>(graphicsContext, rendererInfo);
 
-		framebuffer = graphicsContext.CreateFramebuffer({GetWindow().GetSize()});
+		framebuffer = graphicsContext.CreateFramebuffer({{GetWindow().GetSize()}});
 
 		squareMesh = SquareMesh::CreateMesh();
 
@@ -31,16 +31,22 @@ namespace Hazel
 			GetGraphicsContext(),
 			"assets\\textures\\SpriteSheet.png");
 
-		cameraController.OnAttach(camera, GetWindow().GetSize());
+		scene.SetRenderer(*renderer);
 
 		square = scene.CreateEntity();
 		square.AddComponent<SpriteComponent>();
 		square.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet.GetAspectRatio();
 		square.AddComponent<TextureComponent>(spriteSheet);
 
-		cameraEntity = scene.CreateEntity();
-		cameraEntity.AddComponent<TransformComponent>();
-		cameraEntity.AddComponent<CameraComponent>().SetWindowSize(GetWindow().GetSize());
+		camera1 = scene.CreateEntity();
+		camera1.AddComponent<TransformComponent>();
+		camera1.AddComponent<CameraComponent>();
+
+		scene.SetMainCamera(camera1);
+
+		camera2 = scene.CreateEntity();
+		camera2.AddComponent<TransformComponent>();
+		camera2.AddComponent<CameraComponent>();
 	}
 
 	void EditorLayer::OnDetach()
@@ -51,14 +57,12 @@ namespace Hazel
 	{
 		renderTime = deltaTime;
 
-		cameraController.OnUpdate(camera, GetInput(), deltaTime);
-
-		SubTexture &texture = square.GetComponent<TextureComponent>();
+		SubTexture &texture = square.GetComponent<TextureComponent>().Texture;
 		texture.SetRegion(Rectangle::FromBottomLeftAndSize(bottomLeft, size));
 
 		GetGraphicsContext().SetFramebuffer(framebuffer.get());
 		GetGraphicsContext().Clear();
-		sceneRenderer.Render(scene, *renderer);
+		scene.OnUpdate(deltaTime);
 		GetGraphicsContext().SetFramebuffer(nullptr);
 	}
 
@@ -86,12 +90,12 @@ namespace Hazel
 
 		auto viewportSize = ImGui::GetContentRegionAvail();
 		glm::vec2 newSize = {viewportSize.x, viewportSize.y};
-		if (newSize != framebuffer->GetSize())
+		if (newSize != viewport)
 		{
-			Log::Debug("New viewport size: {} {}", newSize.x, newSize.y);
-			framebuffer = GetGraphicsContext().CreateFramebuffer({newSize});
-			//cameraController.OnEvent(camera, e);
-			cameraEntity.GetComponent<CameraComponent>().SetWindowSize(newSize);
+			viewport = newSize;
+			Log::Debug("New viewport size: {} {}", viewport.x, viewport.y);
+			framebuffer = GetGraphicsContext().CreateFramebuffer({viewport});
+			scene.OnViewportResize(viewport);
 		}
 
 		ImGui::Image(
@@ -103,18 +107,20 @@ namespace Hazel
 		ImGui::End();
 		ImGui::PopStyleVar();
 
+		auto &camera = camera1.GetComponent<TransformComponent>().Transform;
 		ImGui::Begin("Info");
 		ImGui::Text("Update Time: %fms (%fFPS)", 1000 * renderTime, 1.0f / renderTime);
-		ImGui::Text("Camera Position: %f %f %f", camera.GetPosition().x, camera.GetPosition().y, camera.GetZoomLevel());
-		ImGui::Text("Camera Rotation: %fdeg", glm::degrees(camera.GetRotation()));
+		ImGui::Text("Camera Position: %f %f %f", camera.Translation.x, camera.Translation.y, camera.Translation.z);
+		ImGui::Text("Camera Rotation: %fdeg", glm::degrees(glm::eulerAngles(camera.Rotation).y));
 		ImGui::End();
 
-		Transform &transform = square.GetComponent<TransformComponent>();
+		auto &transform = square.GetComponent<TransformComponent>().Transform;
 		ImGui::Begin("Transform");
-		ImGui::SliderFloat2("Translation", glm::value_ptr(transform.Position), -10.0f, 10.0f);
-		ImGui::SliderFloat("Rotation", &transform.Angle, 0.0f, glm::radians(360.0f));
+		ImGui::SliderFloat3("Translation", glm::value_ptr(transform.Translation), -10.0f, 10.0f);
+		ImGui::SliderFloat("Rotation", &angle, 0.0f, glm::radians(360.0f));
 		ImGui::SliderFloat2("Scale", glm::value_ptr(transform.Scale), 0.0f, glm::radians(360.0f));
 		ImGui::End();
+		transform.Rotation = glm::angleAxis(angle, glm::vec3(0.0f, 0.0f, 1.0f));
 
 		ImGui::Begin("Texture Coordinates");
 		ImGui::SliderFloat("Left", &bottomLeft.x, 0.0f, 2560.0f);
@@ -141,14 +147,11 @@ namespace Hazel
 
 	void EditorLayer::OnEvent(Event &e)
 	{
-		cameraController.OnEvent(camera, e);
-		renderer->OnEvent(e);
 		e.Dispatch([this](KeyPressEvent &e)
 		{
 			if (e.GetKey() == Key::Backspace)
 			{
-				camera = {};
-				cameraController.OnAttach(camera, framebuffer->GetSize());
+				angle = 0.0f;
 			}
 		});
 	}

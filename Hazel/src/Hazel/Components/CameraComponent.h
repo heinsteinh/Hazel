@@ -1,36 +1,29 @@
 #pragma once
 
-#include "Hazel/Camera/Camera.h"
+#include "Hazel/Geometry/MvpMatrix.h"
+#include "Hazel/Geometry/Size.h"
+#include "Hazel/Scene/Entity.h"
 
 namespace Hazel
 {
 	struct CameraComponent
 	{
-		Camera Camera;
+		ProjectionInfo ProjectionInfo;
 
-		const glm::mat4 &GetProjection() const
+		glm::mat4 GetProjection()
 		{
-			return Camera.GetProjection();
-		}
-
-		void SetWindowSize(const glm::vec2 &windowSize)
-		{
-			Camera.SetWindowSize(windowSize);
-		}
-		
-		void SetOrthographicSize(float size)
-		{
-			Camera.SetOrthographicSize(size);
+			return MvpMatrix::GetOrthographicProjection(ProjectionInfo);
 		}
 
-		operator Hazel::Camera &()
+		void OnViewportResize(const glm::vec2 &viewport)
 		{
-			return Camera;
+			ProjectionInfo.AspectRatio = Size::GetAspectRatio(viewport);
 		}
+	};
 
-		operator const Hazel::Camera &() const
-		{
-			return Camera;
-		}
+	template<>
+	inline void OnAddComponent<CameraComponent>(SceneContext &context, Entity entity)
+	{
+		entity.GetComponent<CameraComponent>().OnViewportResize(context.Viewport);
 	};
 }

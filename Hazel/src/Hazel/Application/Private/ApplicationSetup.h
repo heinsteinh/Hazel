@@ -11,10 +11,7 @@ namespace Hazel
 		static void Setup(ApplicationContext &context)
 		{
 			Log::Debug("Application setup.");
-			if (!context.GetGraphicsApi())
-			{
-				context.SetGraphicsApi(GraphicsApiFactory::CreateOpenGLInstance());
-			}
+			context.LoadGraphicsApi();
 			context.CreateApplicationWindow();
 			if (context.GetSettings().ImGuiEnabled)
 			{

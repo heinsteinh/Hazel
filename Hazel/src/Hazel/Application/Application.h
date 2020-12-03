@@ -15,9 +15,9 @@ namespace Hazel
 
 		void Run();
 
-		void SetGraphicsApi(const std::shared_ptr<GraphicsApi> &graphicsApi)
+		void SetGraphicsApi(AvailableGraphicsApi api)
 		{
-			context.SetGraphicsApi(graphicsApi);
+			context.SetGraphicsApi(api);
 		}
 
 		void SetWindowTitle(const std::string &title)

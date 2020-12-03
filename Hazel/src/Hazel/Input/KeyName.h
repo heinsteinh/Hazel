@@ -8,14 +8,9 @@ namespace Hazel
 {
 	class KeyName
 	{
-	private:
-		static inline std::mutex mutex;
-		static inline std::unordered_map<Key, std::string> keyNames;
-		static inline std::unordered_map<int, std::string> scancodeNames;
-
 	public:
-		static const std::string &GetKeyName(Key key);
-		static const std::string &GetScancodeName(int scancode);
+		static const char *GetKeyName(Key key);
+		static const char *GetScancodeName(int scancode);
 	};
 }
 

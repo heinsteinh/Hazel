@@ -15,6 +15,7 @@ namespace Hazel
 	public:
 		void PushImGuiLayer();
 		void AttachLayers(LayerContext &context);
+		void DetachLayers();
 		void DispatchEvent(Event &e);
 		void UpdateLayers(float deltaTime);
 		void RenderImGui();

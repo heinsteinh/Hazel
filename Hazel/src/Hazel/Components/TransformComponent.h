@@ -8,24 +8,14 @@ namespace Hazel
 	{
 		Transform Transform;
 
-		glm::mat4 GetModel() const
+		glm::mat4 GetModel()
 		{
 			return MvpMatrix::GetModel(Transform);
 		}
 
-		glm::mat4 GetView() const
+		glm::mat4 GetView()
 		{
 			return MvpMatrix::GetView(Transform);
-		}
-
-		operator Hazel::Transform &()
-		{
-			return Transform;
-		}
-
-		operator const Hazel::Transform &() const
-		{
-			return Transform;
 		}
 	};
 }

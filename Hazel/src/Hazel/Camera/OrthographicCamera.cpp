@@ -18,13 +18,13 @@ namespace Hazel
 
 	void OrthographicCamera::SetPosition(const glm::vec2 &position)
 	{
-		transform.SetPosition(position);
+		transform.Translation = glm::vec3(position, 0.0f);
 		RecomputeViewMatrix();
 	}
 
 	void OrthographicCamera::SetRotation(float rotation)
 	{
-		transform.Angle = rotation;
+		transform.Rotation = glm::angleAxis(rotation, glm::vec3(0.0f, 0.0f, 1.0f));
 		RecomputeViewMatrix();
 	}
 

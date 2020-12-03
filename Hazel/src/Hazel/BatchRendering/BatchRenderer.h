@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Batch.h"
-#include "BatchException.h"
 #include "Hazel/Rendering/RendererStatistics.h"
+#include "Private/BatchContext.h"
+#include "BatchException.h"
 
 namespace Hazel
 {
@@ -10,7 +10,7 @@ namespace Hazel
 	{
 	private:
 		GraphicsContext *graphicsContext = nullptr;
-		Batch batch;
+		BatchContext batch;
 		RendererStatistics statistics;
 
 	public:
@@ -19,11 +19,6 @@ namespace Hazel
 		void BeginScene(const glm::mat4 &viewProjectionMatrix);
 		void Render(const DrawData &drawData);
 		void EndScene();
-
-		void SetViewport(const Rectangle &viewport)
-		{
-			graphicsContext->SetViewport(viewport);
-		}
 
 		const RendererStatistics &GetStatistics() const
 		{

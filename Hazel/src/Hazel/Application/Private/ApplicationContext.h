@@ -10,6 +10,7 @@ namespace Hazel
 	class ApplicationContext
 	{
 	private:
+		AvailableGraphicsApi api = AvailableGraphicsApi::OpenGL;
 		std::shared_ptr<GraphicsApi> graphicsApi;
 		WindowInfo windowInfo;
 		LayerContext layerContext;
@@ -17,14 +18,19 @@ namespace Hazel
 		Chrono chrono;
 
 	public:
-		const std::shared_ptr<GraphicsApi> &GetGraphicsApi() const
+		const GraphicsApi &GetGraphicsApi() const
 		{
-			return graphicsApi;
+			return *graphicsApi;
 		}
 
-		void SetGraphicsApi(const std::shared_ptr<GraphicsApi> &graphicsApi)
+		void SetGraphicsApi(AvailableGraphicsApi api)
 		{
-			this->graphicsApi = graphicsApi;
+			this->api = api;
+		}
+
+		void LoadGraphicsApi()
+		{
+			graphicsApi = GraphicsApiFactory::Create(api);
 			windowInfo.GraphicsApi = graphicsApi.get();
 		}
 

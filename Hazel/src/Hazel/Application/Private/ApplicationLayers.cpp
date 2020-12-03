@@ -14,8 +14,16 @@ namespace Hazel
 	{
 		for (const auto &layer : layers)
 		{
-			layer->SetContext(context);
+			layer->SetContext(&context);
 			layer->OnAttach();
+		}
+	}
+
+	void ApplicationLayers::DetachLayers()
+	{
+		for (const auto &layer : layers)
+		{
+			layer->OnDetach();
 		}
 	}
 

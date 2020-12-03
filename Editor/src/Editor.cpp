@@ -11,7 +11,7 @@ namespace Hazel
 	public:
 		Editor()
 		{
-			Log::Info("Sandbox application creation");
+			Log::Info("Editor creation");
 			SetWindowTitle("Hazel Editor");
 			PushLayer(std::make_shared<EditorLayer>());
 		};

@@ -9,17 +9,12 @@ namespace Hazel
 	class ParticleRenderer
 	{
 	private:
-		DrawData drawData = {SquareMesh::CreateMesh()};
+		std::shared_ptr<Mesh> squareMesh = SquareMesh::CreateMesh();
 
 	public:
-		void RenderParticle(Renderer2D &renderer, const Particle &particle)
-		{
-			if (particle.Active)
-			{
-				drawData.Mesh->SetColor(particle.GetColor());
-				drawData.Transform = particle.Transform;
-				renderer.Render(drawData);
-			}
-		}
+		void RenderParticle(Renderer2D &renderer, const Particle &particle);
+
+	private:
+		glm::vec4 GetColor(const Particle &particle);
 	};
 }

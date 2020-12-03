@@ -14,7 +14,6 @@ namespace Hazel
 	public:
 		Renderer2D(GraphicsContext &graphicsContext, const BatchInfo &info);
 
-		void OnEvent(Event &e);
 		void BeginScene(const glm::mat4 &viewProjection);
 		void Render(const DrawData &drawData);
 		void EndScene();

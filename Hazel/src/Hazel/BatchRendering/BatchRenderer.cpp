@@ -12,8 +12,9 @@ namespace Hazel
 
 	void BatchRenderer::BeginScene(const glm::mat4 &viewProjectionMatrix)
 	{
-		batch.SetViewProjectionMatrix(viewProjectionMatrix);
 		statistics.Reset();
+		batch.SetViewProjectionMatrix(viewProjectionMatrix);
+		batch.BufferConstants();
 	}
 
 	void BatchRenderer::Render(const DrawData &drawData)

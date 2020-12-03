@@ -1,10 +1,10 @@
-#include "Batch.h"
+#include "BatchContext.h"
 
 #include "Hazel/Geometry/MvpMatrix.h"
 
 namespace Hazel
 {
-	Batch::Batch(GraphicsContext &graphicsContext, const BatchInfo &info)
+	BatchContext::BatchContext(GraphicsContext &graphicsContext, const BatchInfo &info)
 		: indices(info.MaxIndexCount, info.IndexFormat),
 		vertices(info.MaxVertexCount),
 		textures(graphicsContext, info.MaxTextureSlotCount),
@@ -14,39 +14,47 @@ namespace Hazel
 		graphicsContext.SetShader(shader);
 	}
 
-	void Batch::SetViewProjectionMatrix(const glm::mat4 &viewProjection)
+	void BatchContext::SetViewProjectionMatrix(const glm::mat4 &viewProjection)
 	{
 		constants.ViewProjection = viewProjection;
 	}
 
-	void Batch::Clear()
+	void BatchContext::Clear()
 	{
 		indices.Clear();
 		vertices.Clear();
 		textures.Clear();
 	}
 
-	bool Batch::Add(const DrawData &drawData)
+	bool BatchContext::Add(const DrawData &drawData)
 	{
+		if (!drawData.Mesh)
+		{
+			return true;
+		}
 		return CanContain(drawData) && TryAdd(drawData);
 	}
 
-	void Batch::BufferData()
+	void BatchContext::BufferConstants()
 	{
-		buffers.BufferIndices(indices);
-		buffers.BufferVertices(vertices);
 		buffers.BufferConstants(constants);
 	}
 
-	bool Batch::CanContain(const DrawData &drawData) const
+	void BatchContext::BufferData()
+	{
+		buffers.BufferIndices(indices);
+		buffers.BufferVertices(vertices);
+	}
+
+	bool BatchContext::CanContain(const DrawData &drawData) const
 	{
 		return indices.CanContain(drawData.Mesh->Indices.size())
 			&& vertices.CanContain(drawData.Mesh->Vertices.size());
 	}
 
-	bool Batch::TryAdd(const DrawData &drawData)
+	bool BatchContext::TryAdd(const DrawData &drawData)
 	{
-		auto textureSlot = textures.Add(drawData.Texture);
+		auto textureSlot = textures.Add(drawData.GetTexture());
 		if (!textureSlot)
 		{
 			return false;
@@ -56,7 +64,7 @@ namespace Hazel
 		return true;
 	}
 
-	void Batch::AddIndices(const DrawData &drawData)
+	void BatchContext::AddIndices(const DrawData &drawData)
 	{
 		for (auto index : drawData.Mesh->Indices)
 		{
@@ -64,15 +72,14 @@ namespace Hazel
 		}
 	}
 
-	void Batch::AddVertices(const DrawData &drawData, size_t textureSlot)
+	void BatchContext::AddVertices(const DrawData &drawData, size_t textureSlot)
 	{
-		auto matrix = MvpMatrix::GetModel(drawData.Transform);
 		for (const auto &vertexInfo : drawData.Mesh->Vertices)
 		{
 			auto &vertex = vertices.Emplace();
-			vertex.Position = matrix * vertexInfo.Position;
+			vertex.Position = drawData.ApplyTransform(vertexInfo.Position);
 			vertex.Color = vertexInfo.Color;
-			vertex.TextureCoordinate = drawData.Texture.GetSourceCoordinates(vertexInfo.TextureCoordinate);
+			vertex.TextureCoordinate = drawData.GetTextureCoordinates(vertexInfo.TextureCoordinate);
 			vertex.TextureIndex = static_cast<float>(textureSlot);
 		};
 	}

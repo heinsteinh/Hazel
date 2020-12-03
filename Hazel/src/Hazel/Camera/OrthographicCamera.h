@@ -21,42 +21,42 @@ namespace Hazel
 		void SetPosition(const glm::vec2 &position);
 		void SetRotation(float rotation);
 
-		constexpr const glm::vec2 &GetWindowSize() const
+		const glm::vec2 &GetWindowSize() const
 		{
 			return windowSize;
 		}
 
-		constexpr float GetAspectRatio() const
+		float GetAspectRatio() const
 		{
 			return Size::GetAspectRatio(windowSize);
 		}
 
-		constexpr float GetZoomLevel() const
+		float GetZoomLevel() const
 		{
 			return zoomLevel;
 		}
 
-		constexpr glm::vec2 GetPosition() const
+		glm::vec2 GetPosition() const
 		{
-			return transform.Position;
+			return transform.Translation;
 		}
 
-		constexpr float GetRotation() const
+		float GetRotation() const
 		{
-			return transform.Angle;
+			return glm::eulerAngles(transform.Rotation).y;
 		}
 
-		constexpr const glm::mat4 &GetViewMatrix() const
+		const glm::mat4 &GetViewMatrix() const
 		{
 			return viewMatrix;
 		}
 
-		constexpr const glm::mat4 &GetProjectionMatrix() const
+		const glm::mat4 &GetProjectionMatrix() const
 		{
 			return projectionMatrix;
 		}
 
-		constexpr const glm::mat4 &GetViewProjectionMatrix() const
+		const glm::mat4 &GetViewProjectionMatrix() const
 		{
 			return viewProjectionMatrix;
 		}

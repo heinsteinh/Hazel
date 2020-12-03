@@ -19,6 +19,11 @@ namespace Hazel
 			return static_cast<float>(distribution(engine)) / static_cast<float>(std::numeric_limits<uint32_t>::max());
 		}
 
+		float GetAngle()
+		{
+			return GetFloat() * 2 * glm::pi<float>();
+		}
+
 		glm::vec2 GetVector2D()
 		{
 			return {GetFloat() - 0.5f, GetFloat() - 0.5f};

@@ -12,44 +12,13 @@ namespace Hazel
 		Random random;
 
 	public:
-		void BuildParticle(Particle &particle, const ParticleInfo &info)
-		{
-			particle.Active = true;
-			BuildPosition(particle, info);
-			BuildVelocity(particle, info);
-			BuildColor(particle, info);
-			BuildLifeTime(particle, info);
-			BuildSize(particle, info);
-		}
+		void BuildParticle(Particle &particle, const ParticleInfo &info);
 
 	private:
-		void BuildPosition(Particle &particle, const ParticleInfo &info)
-		{
-			particle.Transform.SetPosition(info.Position);
-			particle.Transform.Angle = random.GetFloat() * 2 * glm::pi<float>();
-		}
-
-		void BuildVelocity(Particle &particle, const ParticleInfo &info)
-		{
-			particle.LinearVelocity = info.LinearVelocity + info.LinearVelocityVariation * random.GetVector2D();
-		}
-
-		void BuildColor(Particle &particle, const ParticleInfo &info)
-		{
-			particle.ColorBegin = info.ColorBegin;
-			particle.ColorEnd = info.ColorEnd;
-		}
-
-		void BuildLifeTime(Particle &particle, const ParticleInfo &info)
-		{
-			particle.LifeTime = info.LifeTime;
-			particle.RemainingLifeTime = info.LifeTime;
-		}
-
-		void BuildSize(Particle &particle, const ParticleInfo &info)
-		{
-			particle.SizeBegin = info.SizeBegin + info.SizeVariation * (random.GetFloat() - 0.5f);
-			particle.SizeEnd = info.SizeEnd;
-		}
+		void BuildPosition(Particle &particle, const ParticleInfo &info);
+		void BuildVelocity(Particle &particle, const ParticleInfo &info);
+		void BuildColor(Particle &particle, const ParticleInfo &info);
+		void BuildLifeTime(Particle &particle, const ParticleInfo &info);
+		void BuildSize(Particle &particle, const ParticleInfo &info);
 	};
 }

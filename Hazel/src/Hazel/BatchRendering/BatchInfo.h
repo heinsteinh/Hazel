@@ -2,7 +2,7 @@
 
 #include "Hazel/GraphicsContext/IndexFormatHelper.h"
 #include "Hazel/GraphicsContext/PrimitiveTopology.h"
-#include "BatchVertex.h"
+#include "Private/BatchVertex.h"
 
 namespace Hazel
 {

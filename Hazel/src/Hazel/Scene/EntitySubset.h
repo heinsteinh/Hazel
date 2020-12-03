@@ -5,27 +5,27 @@
 namespace Hazel
 {
 	template<typename ViewType, typename IteratorType>
-	class SceneView
+	class EntitySubset
 	{
 	private:
 		ViewType view;
-		entt::registry *registry;
+		SceneContext *context = nullptr;
 
 	public:
-		SceneView(ViewType view, entt::registry &registry)
+		EntitySubset(ViewType view, SceneContext &context)
 			: view(view),
-			registry(&registry)
+			context(&context)
 		{
 		}
 
 		EntityIterator<IteratorType> begin() const
 		{
-			return {view.begin(), *registry};
+			return {view.begin(), *context};
 		}
 
 		EntityIterator<IteratorType> end() const
 		{
-			return {view.end(), *registry};
+			return {view.end(), *context};
 		}
 
 		bool IsEmpty() const
@@ -35,7 +35,12 @@ namespace Hazel
 
 		Entity GetFirstEntity() const
 		{
-			return {*view.begin(), *registry};
+			return {*view.begin(), *context};
+		}
+
+		Entity TryGetFirstEntity() const
+		{
+			return IsEmpty() ? Entity() : GetFirstEntity();
 		}
 	};
 }

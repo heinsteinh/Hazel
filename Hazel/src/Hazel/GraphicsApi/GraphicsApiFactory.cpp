@@ -4,8 +4,13 @@
 
 namespace Hazel
 {
-	std::shared_ptr<GraphicsApi> GraphicsApiFactory::CreateOpenGLInstance()
+	std::shared_ptr<GraphicsApi> GraphicsApiFactory::Create(AvailableGraphicsApi api)
 	{
-		return std::make_shared<OpenGL>();
+		switch (api)
+		{
+		case AvailableGraphicsApi::OpenGL:
+			return std::make_shared<OpenGL>();
+		}
+		HZ_ASSERT(false, "Invalid API");
 	}
 }

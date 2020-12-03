@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entity.h"
+#include "SceneContext.h"
 
 namespace Hazel
 {
@@ -9,23 +10,23 @@ namespace Hazel
 	{
 	private:
 		IteratorType iterator;
-		entt::registry *registry;
+		SceneContext *context = nullptr;
 
 	public:
-		EntityIterator(IteratorType iterator, entt::registry &registry)
+		EntityIterator(IteratorType iterator, SceneContext &context)
 			: iterator(iterator),
-			registry(&registry)
+			context(&context)
 		{
 		}
 
 		Entity operator*()
 		{
-			return {*iterator, *registry};
+			return {*iterator, *context};
 		}
 
 		EntityIterator operator++()
 		{
-			return {++iterator, *registry};
+			return {++iterator, *context};
 		}
 
 		bool operator==(const EntityIterator &other) const

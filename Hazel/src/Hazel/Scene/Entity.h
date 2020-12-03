@@ -1,60 +1,75 @@
 #pragma once
 
+#include "SceneContext.h"
+
 namespace Hazel
 {
 	class Entity
 	{
 	private:
 		entt::entity entity = entt::null;
-		entt::registry *registry = nullptr;
+		SceneContext *context = nullptr;
 
 	public:
 		Entity() = default;
 
-		Entity(entt::entity entity, entt::registry &registry)
+		Entity(entt::entity entity, SceneContext &context)
 			: entity(entity),
-			registry(&registry)
+			context(&context)
 		{
 		}
 
 		bool IsValid() const
 		{
-			return registry && registry->valid(entity);
+			return context && context->Registry.valid(entity);
 		}
 
 		template<typename ComponentType>
 		bool HasComponent() const
 		{
-			return registry->has<ComponentType>(entity);
+			return context->Registry.has<ComponentType>(entity);
 		}
 
 		template<typename ComponentType>
 		ComponentType &GetComponent()
 		{
-			return registry->get<ComponentType>(entity);
+			return context->Registry.get<ComponentType>(entity);
 		}
 
 		template<typename ComponentType>
 		ComponentType *TryGetComponent()
 		{
-			return registry->try_get<ComponentType>(entity);
+			return context->Registry.try_get<ComponentType>(entity);
 		}
 
 		template<typename ComponentType, typename...Args>
 		ComponentType &AddComponent(Args &&...args)
 		{
-			return registry->emplace<ComponentType>(entity, std::forward<Args>(args)...);
+			auto &component = context->Registry.emplace<ComponentType>(entity, std::forward<Args>(args)...);
+			OnAddComponent<ComponentType>(*context, *this);
+			return component;
 		}
 
 		template<typename ComponentType>
 		void RemoveComponent()
 		{
-			registry->remove<ComponentType>(entity);
+			OnRemoveComponent<ComponentType>::OnRemoveComponent(*context, *this);
+			context->Registry.remove<ComponentType>(entity);
 		}
 
-		constexpr operator entt::entity() const
+		operator entt::entity() const
 		{
 			return entity;
 		}
 	};
+
+	template<typename ComponentType>
+	void OnAddComponent(SceneContext &context, Entity entity)
+	{
+	}
+
+	template<typename ComponentType>
+	void OnRemoveComponent(SceneContext &context, Entity entity)
+	{
+	}
 }

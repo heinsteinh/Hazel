@@ -15,18 +15,18 @@ namespace Hazel
 		glm::vec2 size{2560.0f, 1664.0f};
 		bool blockKeyboard = false;
 		bool blockMouse = false;
+		float angle = 0.0f;
+		glm::vec2 viewport{0.0f};
 
 		std::shared_ptr<Renderer2D> renderer;
 		std::shared_ptr<Framebuffer> framebuffer;
-		OrthographicCamera camera;
-		OrthographicCameraController cameraController;
 		ImGuiDockSpace dockspace;
 		std::shared_ptr<Mesh> squareMesh;
-		SceneRenderer sceneRenderer;
 		SubTexture spriteSheet;
 		Scene scene;
 		Entity square;
-		Entity cameraEntity;
+		Entity camera1;
+		Entity camera2;
 
 	public:
 		EditorLayer();

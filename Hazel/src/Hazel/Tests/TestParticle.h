@@ -4,6 +4,7 @@
 #include "Hazel/Rendering/Renderer2D.h"
 #include "Hazel/ParticleSystem/ParticleSystem.h"
 #include "Hazel/Camera/OrthographicCamera.h"
+#include "Hazel/Geometry/CameraProjection.h"
 #include "Hazel/Input/Input.h"
 
 namespace Hazel
@@ -21,6 +22,8 @@ namespace Hazel
 		ParticleInfo particleInfo;
 		ParticleInfo defaultInfo;
 		ParticleSystem particleSystem;
+
+		CameraProjection projection;
 
 	public:
 		TestParticle(Renderer2D &renderer, const OrthographicCamera &camera, const Input &input);

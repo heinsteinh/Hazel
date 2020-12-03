@@ -1,5 +1,7 @@
 #include "EventSystem.h"
 
+#include "GLFW/glfw3.h"
+
 #include "Private/GlfwEventCallback.h"
 
 namespace Hazel

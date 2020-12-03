@@ -95,9 +95,9 @@ namespace Hazel
 			return input;
 		}
 
-		void SetContext(LayerContext &context)
+		void SetContext(LayerContext *context)
 		{
-			this->context = &context;
+			this->context = context;
 		}
 
 		void UpdateInput(Event &e)

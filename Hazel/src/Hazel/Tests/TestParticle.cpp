@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 
-#include "Hazel/Geometry/ScreenTransform.h"
+#include "Hazel/Geometry/CameraProjection.h"
 
 namespace Hazel
 {
@@ -27,9 +27,12 @@ namespace Hazel
 
 	void TestParticle::OnUpdate(float deltaTime)
 	{
+		projection.SetProjection(camera->GetProjectionMatrix());
+		projection.SetView(camera->GetViewMatrix());
+		projection.SetWindowSize(camera->GetWindowSize());
 		if (input->IsMouseButtonPressed(Hazel::MouseButton::B1))
 		{
-			particleInfo.Position = Hazel::ScreenTransform::GetWorldPosition(*camera, input->GetMousePosition());
+			particleInfo.Position = projection.GetWorldPosition(input->GetMousePosition());
 			for (int i = 0; i < nParticles; i++)
 			{
 				particleSystem.EmitParticle(particleInfo);
