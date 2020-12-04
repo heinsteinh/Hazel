@@ -2,13 +2,20 @@
 
 #include "entt/entt.hpp"
 
+#include "SpriteRenderer.h"
 #include "EntitySubset.h"
+#include "Hazel/Components/CameraComponent.h"
+#include "Hazel/Components/TransformComponent.h"
+#include "Hazel/Components/TextureComponent.h"
+#include "Hazel/Components/SpriteComponent.h"
+#include "Hazel/UI/TransformComponentUI.h"
 
 namespace Hazel
 {
 	class Scene
 	{
 	private:
+		SpriteRenderer renderer;
 		SceneContext context;
 
 	public:

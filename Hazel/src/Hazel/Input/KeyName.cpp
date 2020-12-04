@@ -6,11 +6,13 @@ namespace Hazel
 {
 	const char *KeyName::GetKeyName(Key key)
 	{
-		return glfwGetKeyName(static_cast<int>(key), 0);
+		auto name = glfwGetKeyName(static_cast<int>(key), 0);
+		return name ? name : "";
 	}
 
 	const char *KeyName::GetScancodeName(int scancode)
 	{
-		return glfwGetKeyName(GLFW_KEY_UNKNOWN, scancode);
+		auto name = glfwGetKeyName(GLFW_KEY_UNKNOWN, scancode);
+		return name ? name : "";
 	}
 }

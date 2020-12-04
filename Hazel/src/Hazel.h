@@ -12,7 +12,3 @@
 #include "Hazel/Rendering/Renderer2D.h"
 #include "Hazel/ParticleSystem/ParticleSystem.h"
 #include "Hazel/Scene/Scene.h"
-#include "Hazel/Components/CameraComponent.h"
-#include "Hazel/Components/TransformComponent.h"
-#include "Hazel/Components/TextureComponent.h"
-#include "Hazel/Components/SpriteComponent.h"

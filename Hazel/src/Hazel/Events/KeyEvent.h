@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Event.h"
-#include "Hazel/Input/KeyName.h"
+#include "Hazel/Input/Key.h"
 #include "Hazel/Input/KeyModifierName.h"
 
 namespace Hazel
@@ -46,8 +46,8 @@ namespace Hazel
 		{
 			return (std::ostringstream()
 				<< GetName() << ": "
-				<< KeyName::GetKeyName(key) << ", "
-				<< KeyName::GetScancodeName(scancode) << " (" << scancode << "), "
+				<< static_cast<int>(key) << " "
+				<< scancode << " "
 				<< KeyModifierName::GetKeyModifierName(modifiers)).str();
 		}
 	};

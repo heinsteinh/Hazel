@@ -17,6 +17,7 @@ namespace Hazel
 		bool blockMouse = false;
 		float angle = 0.0f;
 		glm::vec2 viewport{0.0f};
+		Hazel::TransformComponentUI transform;
 
 		std::shared_ptr<Renderer2D> renderer;
 		std::shared_ptr<Framebuffer> framebuffer;

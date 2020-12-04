@@ -1,18 +1,18 @@
 #include "Scene.h"
 
-#include "Hazel/Systems/CameraSystem.h"
-#include "Hazel/Systems/SpriteRenderSystem.h"
+#include "SceneCamera.h"
+#include "SpriteRenderer.h"
 #include "Hazel/Components/CameraComponent.h"
 
 namespace Hazel
 {
 	void Scene::OnUpdate(float timestamp)
 	{
-		auto camera = CameraSystem::GetSceneCamera(*this);
+		auto camera = SceneCamera::GetSceneCamera(*this);
 		if (camera.IsValid())
 		{
-			context.Renderer->BeginScene(CameraSystem::GetViewProjection(camera));
-			SpriteRenderSystem::RenderSprites(*this);
+			context.Renderer->BeginScene(SceneCamera::GetViewProjection(camera));
+			renderer.RenderSprites(*this);
 			context.Renderer->EndScene();
 		}
 	}

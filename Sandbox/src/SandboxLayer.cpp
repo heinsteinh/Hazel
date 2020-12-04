@@ -31,9 +31,18 @@ namespace Sandbox
 		drawData.Texture = &spriteSheet;
 		transform.Scale = glm::vec3(spriteSheet.GetAspectRatio(), 1.0f, 1.0f);
 
-		cameraController.OnAttach(camera, GetWindow().GetSize());
-
 		particles = std::make_shared<Hazel::TestParticle>(*renderer, camera, GetInput());
+
+		scene.SetRenderer(*renderer);
+
+		camera = scene.CreateEntity();
+		camera.AddComponent<Hazel::TransformComponent>();
+		camera.AddComponent<Hazel::CameraComponent>();
+
+		square = scene.CreateEntity();
+		square.AddComponent<Hazel::TransformComponent>().Transform.Scale.x = spriteSheet.GetAspectRatio();
+		square.AddComponent<Hazel::SpriteComponent>();
+		square.AddComponent<Hazel::TextureComponent>(spriteSheet);
 	}
 
 	void SandboxLayer::OnDetach()
@@ -43,30 +52,19 @@ namespace Sandbox
 	void SandboxLayer::OnUpdate(float deltaTime)
 	{
 		renderTime = deltaTime;
-
-		cameraController.OnUpdate(camera, GetInput(), deltaTime);
-
 		spriteSheet.SetRegion(Hazel::Rectangle::FromBottomLeftAndSize(bottomLeft, size));
-
-		renderer->BeginScene(camera.GetViewProjectionMatrix());
+		scene.OnUpdate(deltaTime);
 		particles->OnUpdate(deltaTime);
-		renderer->Render(drawData);
-		renderer->EndScene();
 	}
 
 	void SandboxLayer::OnImGuiRender()
 	{
 		ImGui::Begin("Info");
-		ImGui::Text("Update Time: %fms (%fFPS)", 1000 * renderTime, 1.0f / renderTime);
-		ImGui::Text("Camera Position: %f %f %f", camera.GetPosition().x, camera.GetPosition().y, camera.GetZoomLevel());
-		ImGui::Text("Camera Rotation: %fdeg", glm::degrees(camera.GetRotation()));
+		ImGui::Text("Update Time: %.2fms (%.2fFPS)", 1000 * renderTime, 1.0f / renderTime);
 		ImGui::End();
 
-		ImGui::Begin("Transform");
-		ImGui::SliderFloat2("Translation", glm::value_ptr(transform.Position), -10.0f, 10.0f);
-		ImGui::SliderFloat("Rotation", &transform.Angle, 0.0f, glm::radians(360.0f));
-		ImGui::SliderFloat2("Scale", glm::value_ptr(transform.Scale), 0.0f, glm::radians(360.0f));
-		ImGui::End();
+		transformUI.Draw("Camera", camera.GetComponent<Hazel::TransformComponent>().Transform);
+		transformUI.Draw("Transform", square.GetComponent<Hazel::TransformComponent>().Transform);
 
 		ImGui::Begin("Texture Coordinates");
 		ImGui::SliderFloat("Left", &bottomLeft.x, 0.0f, 2560.0f);
@@ -93,15 +91,9 @@ namespace Sandbox
 
 	void SandboxLayer::OnEvent(Hazel::Event &e)
 	{
-		cameraController.OnEvent(camera, e);
-		renderer->OnEvent(e);
-		e.Dispatch([this](Hazel::KeyPressEvent &e)
+		e.Dispatch([this](Hazel::WindowResizeEvent &e)
 		{
-			if (e.GetKey() == Hazel::Key::Backspace)
-			{
-				camera = {};
-				cameraController.OnAttach(camera, GetWindow().GetSize());
-			}
+			scene.OnViewportResize(e.GetSize());
 		});
 	}
 }

@@ -1,14 +1,14 @@
-#include "SpriteRenderSystem.h"
+#include "SpriteRenderer.h"
 
-#include "Hazel/Systems/CameraSystem.h"
-#include "Hazel/Components/CameraComponent.h"
+#include "Scene.h"
+#include "SceneCamera.h"
 #include "Hazel/Components/SpriteComponent.h"
 #include "Hazel/Components/TransformComponent.h"
 #include "Hazel/Components/TextureComponent.h"
 
 namespace Hazel
 {
-	void SpriteRenderSystem::RenderSprites(Scene &scene)
+	void SpriteRenderer::RenderSprites(Scene &scene)
 	{
 		auto entities = scene.GetAllEntitiesWith<SpriteComponent>();
 		for (auto entity : entities)
@@ -17,7 +17,7 @@ namespace Hazel
 		}
 	}
 
-	void SpriteRenderSystem::RenderSprite(Entity sprite, Renderer2D &renderer)
+	void SpriteRenderer::RenderSprite(Entity sprite, Renderer2D &renderer)
 	{
 		DrawData drawData;
 		AddMesh(drawData, sprite);
@@ -26,20 +26,20 @@ namespace Hazel
 		renderer.Render(drawData);
 	}
 
-	void SpriteRenderSystem::AddMesh(DrawData &drawData, Entity sprite)
+	void SpriteRenderer::AddMesh(DrawData &drawData, Entity sprite)
 	{
 		drawData.Mesh = squareMesh.get();
 		auto &spriteComponent = sprite.GetComponent<SpriteComponent>();
 		squareMesh->SetColor(spriteComponent.Color);
 	}
 
-	void SpriteRenderSystem::AddTransform(DrawData &drawData, Entity sprite)
+	void SpriteRenderer::AddTransform(DrawData &drawData, Entity sprite)
 	{
 		auto transform = sprite.TryGetComponent<TransformComponent>();
 		drawData.Transform = transform ? &transform->Transform : nullptr;
 	}
 
-	void SpriteRenderSystem::AddTexture(DrawData &drawData, Entity sprite)
+	void SpriteRenderer::AddTexture(DrawData &drawData, Entity sprite)
 	{
 		auto texture = sprite.TryGetComponent<TextureComponent>();
 		drawData.Texture = texture ? &texture->Texture : nullptr;

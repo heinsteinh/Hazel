@@ -4,7 +4,7 @@
 
 namespace Hazel
 {
-	class CameraSystem
+	class SceneCamera
 	{
 	public:
 		static Entity GetSceneCamera(Scene &scene);

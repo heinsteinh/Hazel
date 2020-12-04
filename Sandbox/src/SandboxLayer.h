@@ -15,13 +15,15 @@ namespace Sandbox
 		glm::vec2 size{2560.0f, 1664.0f};
 
 		std::shared_ptr<Hazel::Renderer2D> renderer;
-		Hazel::OrthographicCamera camera;
-		Hazel::OrthographicCameraController cameraController;
+		Hazel::Scene scene;
 		std::shared_ptr<Hazel::Mesh> squareMesh;
 		Hazel::Transform transform;
 		Hazel::DrawData drawData;
+		Hazel::Entity square;
+		Hazel::Entity camera;
 		Hazel::SubTexture spriteSheet;
 		std::shared_ptr<Hazel::TestParticle> particles;
+		Hazel::TransformComponentUI transformUI;
 
 	public:
 		SandboxLayer();
