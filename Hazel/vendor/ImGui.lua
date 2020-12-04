@@ -6,16 +6,16 @@ project "ImGui"
 	objdir ("obj/" .. outputdir .. "/%{prj.name}")
 
 	files {
-		"ImGui/imconfig.h",
-		"ImGui/imgui.h",
-		"ImGui/imgui.cpp",
-		"ImGui/imgui_draw.cpp",
-		"ImGui/imgui_internal.h",
-		"ImGui/imgui_widgets.cpp",
-		"ImGui/imstb_rectpack.h",
-		"ImGui/imstb_textedit.h",
-		"ImGui/imstb_truetype.h",
-		"ImGui/imgui_demo.cpp"
+		"imgui/imconfig.h",
+		"imgui/imgui.h",
+		"imgui/imgui.cpp",
+		"imgui/imgui_draw.cpp",
+		"imgui/imgui_internal.h",
+		"imgui/imgui_widgets.cpp",
+		"imgui/imstb_rectpack.h",
+		"imgui/imstb_textedit.h",
+		"imgui/imstb_truetype.h",
+		"imgui/imgui_demo.cpp"
 	}
 
 	filter "system:windows"

@@ -6,15 +6,15 @@ project "GLFW"
 	objdir ("obj/" .. outputdir .. "/%{prj.name}")
 
 	files {
-		"GLFW/include/GLFW/glfw3.h",
-		"GLFW/include/GLFW/glfw3native.h",
-		"GLFW/src/glfw_config.h",
-		"GLFW/src/context.c",
-		"GLFW/src/init.c",
-		"GLFW/src/input.c",
-		"GLFW/src/monitor.c",
-		"GLFW/src/vulkan.c",
-		"GLFW/src/window.c"
+		"glfw/include/GLFW/glfw3.h",
+		"glfw/include/GLFW/glfw3native.h",
+		"glfw/src/glfw_config.h",
+		"glfw/src/context.c",
+		"glfw/src/init.c",
+		"glfw/src/input.c",
+		"glfw/src/monitor.c",
+		"glfw/src/vulkan.c",
+		"glfw/src/window.c"
 	}
 
 	filter "system:linux"
@@ -23,16 +23,16 @@ project "GLFW"
 		staticruntime "On"
 
 		files {
-			"GLFW/src/x11_init.c",
-			"GLFW/src/x11_monitor.c",
-			"GLFW/src/x11_window.c",
-			"GLFW/src/xkb_unicode.c",
-			"GLFW/src/posix_time.c",
-			"GLFW/src/posix_thread.c",
-			"GLFW/src/glx_context.c",
-			"GLFW/src/egl_context.c",
-			"GLFW/src/osmesa_context.c",
-			"GLFW/src/linux_joystick.c"
+			"glfw/src/x11_init.c",
+			"glfw/src/x11_monitor.c",
+			"glfw/src/x11_window.c",
+			"glfw/src/xkb_unicode.c",
+			"glfw/src/posix_time.c",
+			"glfw/src/posix_thread.c",
+			"glfw/src/glx_context.c",
+			"glfw/src/egl_context.c",
+			"glfw/src/osmesa_context.c",
+			"glfw/src/linux_joystick.c"
 		}
 
 		defines {
@@ -44,15 +44,15 @@ project "GLFW"
 		staticruntime "On"
 
 		files {
-			"GLFW/src/win32_init.c",
-			"GLFW/src/win32_joystick.c",
-			"GLFW/src/win32_monitor.c",
-			"GLFW/src/win32_time.c",
-			"GLFW/src/win32_thread.c",
-			"GLFW/src/win32_window.c",
-			"GLFW/src/wgl_context.c",
-			"GLFW/src/egl_context.c",
-			"GLFW/src/osmesa_context.c"
+			"glfw/src/win32_init.c",
+			"glfw/src/win32_joystick.c",
+			"glfw/src/win32_monitor.c",
+			"glfw/src/win32_time.c",
+			"glfw/src/win32_thread.c",
+			"glfw/src/win32_window.c",
+			"glfw/src/wgl_context.c",
+			"glfw/src/egl_context.c",
+			"glfw/src/osmesa_context.c"
 		}
 
 		defines { 

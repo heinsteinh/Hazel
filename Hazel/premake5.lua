@@ -23,7 +23,7 @@ project "Hazel"
     includedirs {
         "src",
         "vendor/spdlog/include",
-        "vendor/GLFW/include",
+        "vendor/glfw/include",
         "vendor/glad/include",
         "vendor/imgui",
         "vendor/stb_image",
@@ -33,7 +33,7 @@ project "Hazel"
 
     links {
         "GLFW",
-        "glad",
+        "Glad",
         "ImGui",
         "opengl32.lib"
     }

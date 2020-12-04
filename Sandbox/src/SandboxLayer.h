@@ -17,6 +17,8 @@ namespace Sandbox
 		std::shared_ptr<Hazel::Renderer2D> renderer;
 		Hazel::OrthographicCamera camera;
 		Hazel::OrthographicCameraController cameraController;
+		std::shared_ptr<Hazel::Mesh> squareMesh;
+		Hazel::Transform transform;
 		Hazel::DrawData drawData;
 		Hazel::SubTexture spriteSheet;
 		std::shared_ptr<Hazel::TestParticle> particles;

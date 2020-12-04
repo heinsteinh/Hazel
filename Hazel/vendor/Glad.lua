@@ -7,13 +7,13 @@ project "Glad"
     objdir ("obj/" .. outputdir .. "/%{prj.name}")
 
     files {
-        "Glad/include/glad/glad.h",
-        "Glad/include/KHR/khrplatform.h",
-        "Glad/src/glad.c"
+        "glad/include/glad/glad.h",
+        "glad/include/KHR/khrplatform.h",
+        "glad/src/glad.c"
     }
 
     includedirs {
-        "Glad/include"
+        "glad/include"
     }
 
     filter "system:windows"

@@ -9,7 +9,8 @@ namespace Sandbox
 {
 	SandboxLayer::SandboxLayer()
 		: Layer("Sandbox"),
-		drawData({Hazel::SquareMesh::CreateMesh()})
+		squareMesh(Hazel::SquareMesh::CreateMesh()),
+		drawData{squareMesh.get(), &transform}
 	{
 	}
 
@@ -27,9 +28,8 @@ namespace Sandbox
 			GetGraphicsContext(),
 			"assets\\textures\\SpriteSheet.png");
 
-		drawData.Mesh->SetColor({1.0f, 1.0f, 1.0f, 1.0f});
-		drawData.Texture = spriteSheet;
-		drawData.Transform.SetScale({spriteSheet.GetAspectRatio(), 1.0f});
+		drawData.Texture = &spriteSheet;
+		transform.Scale = glm::vec3(spriteSheet.GetAspectRatio(), 1.0f, 1.0f);
 
 		cameraController.OnAttach(camera, GetWindow().GetSize());
 
@@ -46,7 +46,7 @@ namespace Sandbox
 
 		cameraController.OnUpdate(camera, GetInput(), deltaTime);
 
-		drawData.Texture.SetRegion(Hazel::Rectangle::FromBottomLeftAndSize(bottomLeft, size));
+		spriteSheet.SetRegion(Hazel::Rectangle::FromBottomLeftAndSize(bottomLeft, size));
 
 		renderer->BeginScene(camera.GetViewProjectionMatrix());
 		particles->OnUpdate(deltaTime);
@@ -63,9 +63,9 @@ namespace Sandbox
 		ImGui::End();
 
 		ImGui::Begin("Transform");
-		ImGui::SliderFloat2("Translation", glm::value_ptr(drawData.Transform.Position), -10.0f, 10.0f);
-		ImGui::SliderFloat("Rotation", &drawData.Transform.Angle, 0.0f, glm::radians(360.0f));
-		ImGui::SliderFloat2("Scale", glm::value_ptr(drawData.Transform.Scale), 0.0f, glm::radians(360.0f));
+		ImGui::SliderFloat2("Translation", glm::value_ptr(transform.Position), -10.0f, 10.0f);
+		ImGui::SliderFloat("Rotation", &transform.Angle, 0.0f, glm::radians(360.0f));
+		ImGui::SliderFloat2("Scale", glm::value_ptr(transform.Scale), 0.0f, glm::radians(360.0f));
 		ImGui::End();
 
 		ImGui::Begin("Texture Coordinates");
