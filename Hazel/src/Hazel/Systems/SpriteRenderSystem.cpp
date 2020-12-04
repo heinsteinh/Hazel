@@ -1,6 +1,6 @@
 #include "SpriteRenderSystem.h"
 
-#include "Hazel/Systems/SceneCameraSystem.h"
+#include "Hazel/Systems/CameraSystem.h"
 #include "Hazel/Components/CameraComponent.h"
 #include "Hazel/Components/SpriteComponent.h"
 #include "Hazel/Components/TransformComponent.h"
@@ -35,12 +35,8 @@ namespace Hazel
 
 	void SpriteRenderSystem::AddTransform(DrawData &drawData, Entity sprite)
 	{
-		auto transformComponent = sprite.TryGetComponent<TransformComponent>();
-		if (transformComponent)
-		{
-			transform = transformComponent->GetModel();
-			drawData.Transform = &transform;
-		}
+		auto transform = sprite.TryGetComponent<TransformComponent>();
+		drawData.Transform = transform ? &transform->Transform : nullptr;
 	}
 
 	void SpriteRenderSystem::AddTexture(DrawData &drawData, Entity sprite)

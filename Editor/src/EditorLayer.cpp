@@ -109,18 +109,18 @@ namespace Hazel
 
 		auto &camera = camera1.GetComponent<TransformComponent>().Transform;
 		ImGui::Begin("Info");
-		ImGui::Text("Update Time: %fms (%fFPS)", 1000 * renderTime, 1.0f / renderTime);
-		ImGui::Text("Camera Position: %f %f %f", camera.Translation.x, camera.Translation.y, camera.Translation.z);
-		ImGui::Text("Camera Rotation: %fdeg", glm::degrees(glm::eulerAngles(camera.Rotation).y));
+		ImGui::Text("Update Time: %.2fms (%.2fFPS)", 1000 * renderTime, 1.0f / renderTime);
+		ImGui::Text("Camera Position: %.2f %.2f %.2f", camera.Translation.x, camera.Translation.y, camera.Translation.z);
+		ImGui::Text("Camera Rotation: %.2fdeg", glm::degrees(glm::eulerAngles(camera.Rotation).y));
 		ImGui::End();
 
 		auto &transform = square.GetComponent<TransformComponent>().Transform;
 		ImGui::Begin("Transform");
 		ImGui::SliderFloat3("Translation", glm::value_ptr(transform.Translation), -10.0f, 10.0f);
-		ImGui::SliderFloat("Rotation", &angle, 0.0f, glm::radians(360.0f));
-		ImGui::SliderFloat2("Scale", glm::value_ptr(transform.Scale), 0.0f, glm::radians(360.0f));
+		ImGui::SliderFloat("Rotation", &angle, 0.0f, 360.0f);
+		ImGui::SliderFloat2("Scale", glm::value_ptr(transform.Scale), 0.0f, 10.0f);
 		ImGui::End();
-		transform.Rotation = glm::angleAxis(angle, glm::vec3(0.0f, 0.0f, 1.0f));
+		transform.Rotation = glm::quat(glm::vec3(0.0f, 0.0f, glm::radians(angle)));
 
 		ImGui::Begin("Texture Coordinates");
 		ImGui::SliderFloat("Left", &bottomLeft.x, 0.0f, 2560.0f);

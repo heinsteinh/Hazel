@@ -9,7 +9,6 @@ namespace Hazel
 	{
 	private:
 		static inline std::shared_ptr<Mesh> squareMesh = SquareMesh::CreateMesh();
-		static inline glm::mat4 transform{1.0f};
 
 	public:
 		static void RenderSprites(Scene &scene);

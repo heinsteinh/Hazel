@@ -11,8 +11,7 @@ namespace Hazel
 			DrawData drawData;
 			squareMesh->SetColor(GetColor(particle));
 			drawData.Mesh = squareMesh.get();
-			auto matrix = MvpMatrix::GetModel(particle.Transform);
-			drawData.Transform = &matrix;
+			drawData.Transform = &particle.Transform;
 			renderer.Render(drawData);
 		}
 	}
