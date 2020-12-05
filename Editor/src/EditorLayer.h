@@ -33,8 +33,8 @@ namespace Hazel
 
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
-		virtual void OnEvent(Event &e) override;
 		virtual void OnUpdate() override;
 		virtual void OnImGuiRender() override;
+		virtual void OnEvent(Event &e) override;
 	};
 }

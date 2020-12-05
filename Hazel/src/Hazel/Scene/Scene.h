@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SceneManager.h"
+#include "Private/SceneManager.h"
 #include "SceneContext.h"
 #include "Hazel/Components/CameraComponent.h"
 #include "Hazel/Components/TransformComponent.h"
@@ -32,6 +32,11 @@ namespace Hazel
 			return context.Viewport;
 		}
 
+		void SetLayer(Layer &layer)
+		{
+			context.Layer = &layer;
+		}
+
 		void SetRenderer(Renderer2D &renderer)
 		{
 			context.Renderer = &renderer;
@@ -47,14 +52,19 @@ namespace Hazel
 			context.Registry.destroy(entity);
 		}
 
-		void OnUpdate(float deltaTime)
+		void OnUpdate()
 		{
-			manager.OnUpdate(context, deltaTime);
+			manager.OnUpdate(context);
 		}
 
 		void OnViewportResize(const glm::vec2 &viewport)
 		{
 			manager.OnViewportResize(context, viewport);
+		}
+
+		void OnEvent(Event &e)
+		{
+			manager.OnEvent(context, e);
 		}
 	};
 }

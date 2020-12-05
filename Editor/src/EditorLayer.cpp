@@ -32,6 +32,7 @@ namespace Hazel
 			"assets\\textures\\SpriteSheet.png");
 
 		scene.SetRenderer(*renderer);
+		scene.SetLayer(*this);
 
 		square = scene.CreateEntity();
 		square.AddComponent<SpriteComponent>();
@@ -45,7 +46,7 @@ namespace Hazel
 		scene.SetMainCamera(camera1);
 
 		camera2 = scene.CreateEntity();
-		camera2.AddComponent<TransformComponent>();
+		camera2.AddComponent<TransformComponent>().Transform.Translation.x = 1.0f;
 		camera2.AddComponent<CameraComponent>();
 	}
 
@@ -60,7 +61,7 @@ namespace Hazel
 
 		GetGraphicsContext().SetFramebuffer(framebuffer.get());
 		GetGraphicsContext().Clear();
-		scene.OnUpdate(GetDeltaTime());
+		scene.OnUpdate();
 		GetGraphicsContext().SetFramebuffer(nullptr);
 	}
 
@@ -137,12 +138,6 @@ namespace Hazel
 
 	void EditorLayer::OnEvent(Event &e)
 	{
-		e.Dispatch([this](KeyPressEvent &e)
-		{
-			if (e.GetKey() == Key::Backspace)
-			{
-				angle = 0.0f;
-			}
-		});
+		scene.OnEvent(e);
 	}
 }

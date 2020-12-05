@@ -10,7 +10,8 @@ namespace Hazel
 		SceneRenderer renderer;
 
 	public:
-		void OnUpdate(SceneContext &context, float deltaTime);
+		void OnUpdate(SceneContext &context);
 		void OnViewportResize(SceneContext &context, const glm::vec2 &viewport);
+		void OnEvent(SceneContext &context, Event &e);
 	};
 }

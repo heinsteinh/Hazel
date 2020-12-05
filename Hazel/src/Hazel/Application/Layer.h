@@ -37,6 +37,31 @@ namespace Hazel
 			return name;
 		}
 
+		void Attach(LayerContext *context)
+		{
+			this->context = context;
+		}
+
+		void Detach()
+		{
+			context = nullptr;
+		}
+
+		const Input &GetInput() const
+		{
+			return input;
+		}
+
+		Input &GetInput()
+		{
+			return input;
+		}
+
+		void UpdateInput(Event &e)
+		{
+			InputUpdater::UpdateInput(input, e);
+		}
+
 		float GetDeltaTime() const
 		{
 			HZ_ASSERT_ATTACHED();
@@ -89,26 +114,6 @@ namespace Hazel
 		{
 			HZ_ASSERT_ATTACHED();
 			return context->GetWindow().GetGraphicsContext();
-		}
-
-		const Input &GetInput() const
-		{
-			return input;
-		}
-
-		Input &GetInput()
-		{
-			return input;
-		}
-
-		void SetContext(LayerContext *context)
-		{
-			this->context = context;
-		}
-
-		void UpdateInput(Event &e)
-		{
-			InputUpdater::UpdateInput(input, e);
 		}
 
 		virtual void OnAttach()

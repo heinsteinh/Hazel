@@ -14,7 +14,7 @@ namespace Hazel
 	{
 		for (const auto &layer : layers)
 		{
-			layer->SetContext(&context);
+			layer->Attach(&context);
 			layer->OnAttach();
 		}
 	}
@@ -24,6 +24,7 @@ namespace Hazel
 		for (const auto &layer : layers)
 		{
 			layer->OnDetach();
+			layer->Detach();
 		}
 	}
 

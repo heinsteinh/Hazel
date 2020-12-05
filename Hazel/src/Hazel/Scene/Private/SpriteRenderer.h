@@ -1,23 +1,22 @@
 #pragma once
 
+#include "../SceneContext.h"
 #include "Hazel/Rendering/SquareMesh.h"
-#include "SceneContext.h"
 #include "Hazel/Components/SpriteComponent.h"
 #include "Hazel/Components/TransformComponent.h"
 #include "Hazel/Components/TextureComponent.h"
 
 namespace Hazel
 {
-	class SceneRenderer
+	class SpriteRenderer
 	{
 	private:
 		std::shared_ptr<Mesh> squareMesh = SquareMesh::CreateMesh();
 
 	public:
-		void RenderSprites(SceneContext &context);
+		void RenderSprite(SceneContext &context, entt::entity entity, const SpriteComponent &sprite);
 
 	private:
-		void RenderSprite(SceneContext &context, entt::entity entity, const SpriteComponent &sprite);
 		void AddMesh(DrawData &drawData);
 		void AddTransform(DrawData &drawData, const TransformComponent *transform);
 		void AddTexture(DrawData &drawData, const TextureComponent *component);

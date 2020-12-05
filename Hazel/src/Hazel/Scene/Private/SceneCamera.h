@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Entity.h"
+#include "../Entity.h"
 #include "Hazel/Camera/Camera.h"
 
 namespace Hazel
