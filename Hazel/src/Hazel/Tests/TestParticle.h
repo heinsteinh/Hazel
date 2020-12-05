@@ -1,19 +1,16 @@
 #pragma once
 
-#include "Test.h"
-#include "Hazel/Rendering/Renderer2D.h"
+/*#include "Hazel/Rendering/Renderer2D.h"
 #include "Hazel/ParticleSystem/ParticleSystem.h"
-#include "Hazel/Camera/OrthographicCamera.h"
 #include "Hazel/Geometry/CameraProjection.h"
 #include "Hazel/Input/Input.h"
 
 namespace Hazel
 {
-	class TestParticle : public Test
+	class TestParticle
 	{
 	private:
 		Renderer2D *renderer = nullptr;
-		const OrthographicCamera *camera = nullptr;
 		const Input *input = nullptr;
 
 		int nParticles = 5;
@@ -26,9 +23,9 @@ namespace Hazel
 		CameraProjection projection;
 
 	public:
-		TestParticle(Renderer2D &renderer, const OrthographicCamera &camera, const Input &input);
+		TestParticle();
 
-		virtual void OnUpdate(float deltaTime) override;
-		virtual void OnImGuiRender() override;
+		void OnUpdate(float deltaTime);
+		void OnImGuiRender();
 	};
-}
+}*/

@@ -29,6 +29,11 @@ namespace Hazel
 			RecomputeProjection();
 		}
 
+		float GetZoomLevel() const
+		{
+			return projectionInfo.OrthographicsSize;
+		}
+
 		void SetZoomLevel(float zoomLevel)
 		{
 			projectionInfo.OrthographicsSize = zoomLevel;

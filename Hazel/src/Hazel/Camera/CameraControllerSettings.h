@@ -5,7 +5,7 @@
 
 namespace Hazel
 {
-	struct OrthographicCameraControllerSettings
+	struct CameraControllerSettings
 	{
 		Key Up = Key::W;
 		Key Down = Key::S;

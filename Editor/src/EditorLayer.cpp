@@ -41,6 +41,7 @@ namespace Hazel
 
 		camera1 = scene.CreateEntity();
 		camera1.AddComponent<TransformComponent>();
+		camera1.AddComponent<ScriptComponent>(std::make_shared<CameraControllerScript>());
 		camera1.AddComponent<CameraComponent>();
 
 		scene.SetMainCamera(camera1);

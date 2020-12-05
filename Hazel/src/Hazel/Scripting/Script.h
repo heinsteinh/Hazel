@@ -31,6 +31,12 @@ namespace Hazel
 			return entity.GetComponent<ComponentType>();
 		}
 
+		template<typename ComponentType>
+		ComponentType *TryGetComponent()
+		{
+			return entity.TryGetComponent<ComponentType>();
+		}
+
 		float GetDeltaTime() const
 		{
 			return layer->GetDeltaTime();

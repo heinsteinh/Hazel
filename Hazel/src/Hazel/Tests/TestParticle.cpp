@@ -1,4 +1,4 @@
-#include "TestParticle.h"
+/*#include "TestParticle.h"
 
 #include "imgui.h"
 
@@ -65,4 +65,4 @@ namespace Hazel
 		ImGui::SliderInt("MaxParticle", &maxParticles, 1, 100000);
 		ImGui::End();
 	}
-}
+}*/
