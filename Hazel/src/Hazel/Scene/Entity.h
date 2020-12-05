@@ -24,6 +24,11 @@ namespace Hazel
 			return context && context->Registry.valid(entity);
 		}
 
+		SceneContext &GetSceneContext() const
+		{
+			return *context;
+		}
+
 		template<typename ComponentType>
 		bool HasComponent() const
 		{
@@ -46,14 +51,14 @@ namespace Hazel
 		ComponentType &AddComponent(Args &&...args)
 		{
 			auto &component = context->Registry.emplace<ComponentType>(entity, std::forward<Args>(args)...);
-			EntityEvents::OnAddComponent<ComponentType>(*context, *this);
+			EntityEvents::OnAddComponent<ComponentType>(*this, component);
 			return component;
 		}
 
 		template<typename ComponentType>
 		void RemoveComponent()
 		{
-			EntityEvents::OnRemoveComponent<ComponentType>(*context, *this);
+			EntityEvents::OnRemoveComponent<ComponentType>(*this);
 			context->Registry.remove<ComponentType>(entity);
 		}
 
@@ -67,12 +72,12 @@ namespace Hazel
 	{
 	public:
 		template<typename ComponentType>
-		static void OnAddComponent(SceneContext &context, Entity entity)
+		static void OnAddComponent(Entity entity, ComponentType &component)
 		{
 		}
 
 		template<typename ComponentType>
-		static void OnRemoveComponent(SceneContext &context, Entity entity)
+		static void OnRemoveComponent(Entity entity)
 		{
 		}
 	};

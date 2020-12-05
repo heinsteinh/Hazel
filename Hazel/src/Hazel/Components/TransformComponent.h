@@ -8,12 +8,12 @@ namespace Hazel
 	{
 		Transform Transform;
 
-		glm::mat4 GetModel()
+		glm::mat4 GetModel() const
 		{
 			return MvpMatrix::GetModel(Transform);
 		}
 
-		glm::mat4 GetView()
+		glm::mat4 GetView() const
 		{
 			return MvpMatrix::GetView(Transform);
 		}

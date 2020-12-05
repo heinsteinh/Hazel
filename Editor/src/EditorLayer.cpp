@@ -53,16 +53,14 @@ namespace Hazel
 	{
 	}
 
-	void EditorLayer::OnUpdate(float deltaTime)
+	void EditorLayer::OnUpdate()
 	{
-		renderTime = deltaTime;
-
 		SubTexture &texture = square.GetComponent<TextureComponent>().Texture;
 		texture.SetRegion(Rectangle::FromBottomLeftAndSize(bottomLeft, size));
 
 		GetGraphicsContext().SetFramebuffer(framebuffer.get());
 		GetGraphicsContext().Clear();
-		scene.OnUpdate(deltaTime);
+		scene.OnUpdate(GetDeltaTime());
 		GetGraphicsContext().SetFramebuffer(nullptr);
 	}
 
@@ -108,7 +106,7 @@ namespace Hazel
 		ImGui::PopStyleVar();
 
 		ImGui::Begin("Info");
-		ImGui::Text("Update Time: %.2fms (%.2fFPS)", 1000 * renderTime, 1.0f / renderTime);
+		ImGui::Text("Update Time: %.2fms (%.2fFPS)", 1000 * GetDeltaTime(), 1.0f / GetDeltaTime());
 		ImGui::End();
 
 		transform.Draw("Camera", camera1.GetComponent<TransformComponent>().Transform);

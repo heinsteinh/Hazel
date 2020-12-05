@@ -12,14 +12,14 @@ namespace Hazel
 		scaleUI.SetResetValue(1.0f);
 	}
 
-	void TransformUI::Draw(const std::string &label, Transform &transform)
+	void TransformUI::Draw(const char *label, Transform &transform)
 	{
-		ImGui::Begin(label.c_str());
-		translationUI.Draw(translationTitle, transform.Translation);
+		ImGui::Begin(label);
+		translationUI.Draw("Translation", transform.Translation);
 		auto euler = glm::degrees(glm::eulerAngles(transform.Rotation));
-		rotationUI.Draw(rotationTitle, euler);
+		rotationUI.Draw("Rotation", euler);
 		transform.Rotation = glm::quat(glm::radians(euler));
-		scaleUI.Draw(scaleTitle, transform.Scale);
+		scaleUI.Draw("Scale", transform.Scale);
 		ImGui::End();
 	}
 }

@@ -9,9 +9,10 @@ namespace Hazel
 		if (particle.Active)
 		{
 			DrawData drawData;
-			squareMesh->SetColor(GetColor(particle));
 			drawData.Mesh = squareMesh.get();
 			drawData.Transform = &particle.Transform;
+			auto color = GetColor(particle);
+			drawData.Color = &color;
 			renderer.Render(drawData);
 		}
 	}

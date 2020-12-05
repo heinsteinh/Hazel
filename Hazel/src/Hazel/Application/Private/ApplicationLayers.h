@@ -17,7 +17,7 @@ namespace Hazel
 		void AttachLayers(LayerContext &context);
 		void DetachLayers();
 		void DispatchEvent(Event &e);
-		void UpdateLayers(float deltaTime);
+		void UpdateLayers();
 		void RenderImGui();
 
 		void PushLayer(const std::shared_ptr<Layer> &layer)

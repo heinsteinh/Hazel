@@ -37,6 +37,12 @@ namespace Hazel
 			return name;
 		}
 
+		float GetDeltaTime() const
+		{
+			HZ_ASSERT_ATTACHED();
+			return context->GetDeltaTime();
+		}
+
 		void Quit()
 		{
 			HZ_ASSERT_ATTACHED();
@@ -117,7 +123,7 @@ namespace Hazel
 		{
 		}
 
-		virtual void OnUpdate(float deltaTime)
+		virtual void OnUpdate()
 		{
 		}
 

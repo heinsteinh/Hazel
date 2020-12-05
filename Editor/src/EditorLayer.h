@@ -8,7 +8,6 @@ namespace Hazel
 	class EditorLayer : public Layer
 	{
 	private:
-		float renderTime = 0.0f;
 		int maxVertices = 40000;
 		int maxIndices = 60000;
 		glm::vec2 bottomLeft{0.0f};
@@ -35,7 +34,7 @@ namespace Hazel
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
 		virtual void OnEvent(Event &e) override;
-		virtual void OnUpdate(float deltaTime) override;
+		virtual void OnUpdate() override;
 		virtual void OnImGuiRender() override;
 	};
 }

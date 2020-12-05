@@ -5,26 +5,24 @@
 
 namespace Hazel
 {
-	Entity SceneCamera::GetSceneCamera(Scene &scene)
+	std::pair<entt::entity, const Camera *> SceneCamera::GetSceneCamera(SceneContext &context)
 	{
-		auto entity = scene.GetMainCamera();
-		if (entity.IsValid())
+		if (context.Registry.valid(context.MainCamera))
 		{
-			return entity;
+			return {context.MainCamera, &context.Registry.get<CameraComponent>(context.MainCamera).Camera};
 		}
-		return scene.GetAllEntitiesWith<CameraComponent>().TryGetFirstEntity();
+		auto view = context.Registry.view<CameraComponent>();
+		if (view.empty())
+		{
+			return {entt::null, nullptr};
+		}
+		auto entity = view.front();
+		return {entity, &view.get<CameraComponent>(entity).Camera};
 	}
 
-	glm::mat4 SceneCamera::GetViewProjection(Scene &scene)
+	glm::mat4 SceneCamera::GetViewProjection(SceneContext &context, entt::entity entity, const Camera &camera)
 	{
-		auto entity = GetSceneCamera(scene);
-		return entity.IsValid() ? GetViewProjection(entity) : glm::mat4(1.0f);
-	}
-
-	glm::mat4 SceneCamera::GetViewProjection(Entity entity)
-	{
-		auto &camera = entity.GetComponent<CameraComponent>();
-		auto transform = entity.TryGetComponent<TransformComponent>();
+		auto transform = context.Registry.try_get<TransformComponent>(entity);
 		if (!transform)
 		{
 			return camera.GetProjection();

@@ -1,9 +1,7 @@
 #pragma once
 
-#include "entt/entt.hpp"
-
-#include "SpriteRenderer.h"
-#include "EntitySubset.h"
+#include "SceneManager.h"
+#include "SceneContext.h"
 #include "Hazel/Components/CameraComponent.h"
 #include "Hazel/Components/TransformComponent.h"
 #include "Hazel/Components/TextureComponent.h"
@@ -15,23 +13,10 @@ namespace Hazel
 	class Scene
 	{
 	private:
-		SpriteRenderer renderer;
+		SceneManager manager;
 		SceneContext context;
 
 	public:
-		void OnUpdate(float timestamp);
-		void OnViewportResize(const glm::vec2 &viewport);
-
-		Entity CreateEntity()
-		{
-			return {context.Registry.create(), context};
-		}
-
-		void RemoveEntity(Entity entity)
-		{
-			context.Registry.destroy(entity);
-		}
-
 		Entity GetMainCamera()
 		{
 			return {context.MainCamera, context};
@@ -47,21 +32,29 @@ namespace Hazel
 			return context.Viewport;
 		}
 
-		Renderer2D &GetRenderer() const
-		{
-			return *context.Renderer;
-		}
-
 		void SetRenderer(Renderer2D &renderer)
 		{
 			context.Renderer = &renderer;
 		}
 
-		template<typename ...ComponentTypes>
-		decltype(auto) GetAllEntitiesWith()
+		Entity CreateEntity()
 		{
-			auto entities = context.Registry.view<ComponentTypes...>();
-			return EntitySubset<decltype(entities), decltype(entities.begin())>(entities, context);
+			return {context.Registry.create(), context};
+		}
+
+		void RemoveEntity(Entity entity)
+		{
+			context.Registry.destroy(entity);
+		}
+
+		void OnUpdate(float deltaTime)
+		{
+			manager.OnUpdate(context, deltaTime);
+		}
+
+		void OnViewportResize(const glm::vec2 &viewport)
+		{
+			manager.OnViewportResize(context, viewport);
 		}
 	};
 }

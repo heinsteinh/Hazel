@@ -40,11 +40,11 @@ namespace Hazel
 		}
 	}
 
-	void ApplicationLayers::UpdateLayers(float deltaTime)
+	void ApplicationLayers::UpdateLayers()
 	{
 		for (const auto &layer : layers)
 		{
-			layer->OnUpdate(deltaTime);
+			layer->OnUpdate();
 		}
 	}
 

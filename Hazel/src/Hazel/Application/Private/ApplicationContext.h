@@ -28,6 +28,16 @@ namespace Hazel
 			this->api = api;
 		}
 
+		const glm::vec4 &GetClearColor() const
+		{
+			return layerContext.GetClearColor();
+		}
+
+		void SetClearColor(const glm::vec4 &clearColor)
+		{
+			layerContext.SetClearColor(clearColor);
+		}
+
 		void LoadGraphicsApi()
 		{
 			graphicsApi = GraphicsApiFactory::Create(api);
@@ -94,9 +104,14 @@ namespace Hazel
 			return layers;
 		}
 
-		float GetDeltaTime()
+		void ComputeDeltaTime()
 		{
-			return chrono.Reset();
+			layerContext.SetDeltaTime(chrono.Reset());
+		}
+
+		float GetDeltaTime() const
+		{
+			return layerContext.GetDeltaTime();
 		}
 	};
 }

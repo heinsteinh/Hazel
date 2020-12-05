@@ -8,10 +8,6 @@ namespace Hazel
 	class TransformUI
 	{
 	private:
-		static inline const std::string translationTitle = "Translation";
-		static inline const std::string rotationTitle = "Rotation";
-		static inline const std::string scaleTitle = "Scale";
-
 		VectorUI translationUI;
 		VectorUI rotationUI;
 		VectorUI scaleUI;
@@ -19,6 +15,6 @@ namespace Hazel
 	public:
 		TransformUI();
 
-		void Draw(const std::string &label, Transform &transform);
+		void Draw(const char *label, Transform &transform);
 	};
 }

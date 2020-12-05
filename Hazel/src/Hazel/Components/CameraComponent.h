@@ -9,7 +9,7 @@ namespace Hazel
 	{
 		Camera Camera;
 
-		glm::mat4 GetProjection()
+		const glm::mat4 &GetProjection()
 		{
 			return Camera.GetProjection();
 		}
@@ -21,8 +21,8 @@ namespace Hazel
 	};
 
 	template<>
-	inline void EntityEvents::OnAddComponent<CameraComponent>(SceneContext &context, Entity entity)
+	inline void EntityEvents::OnAddComponent<CameraComponent>(Entity entity, CameraComponent &component)
 	{
-		entity.GetComponent<CameraComponent>().OnViewportResize(context.Viewport);
+		component.OnViewportResize(entity.GetSceneContext().Viewport);
 	};
 }

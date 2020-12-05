@@ -13,6 +13,7 @@ namespace Hazel
 		{
 			Log::Info("Editor creation");
 			SetWindowTitle("Hazel Editor");
+			SetClearColor({0.30f, 0.30f, 0.30f, 1.00f});
 			PushLayer(std::make_shared<EditorLayer>());
 		};
 	};

@@ -9,7 +9,7 @@ namespace Hazel
 	class ImGuiLayer : public Layer
 	{
 	private:
-		std::unique_ptr<ImGuiContextHolder> imGuiContext;
+		std::unique_ptr<ImGuiContextHolder> context;
 		std::shared_ptr<ImGuiRenderer> renderer;
 
 	public:

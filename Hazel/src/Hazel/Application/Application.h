@@ -54,6 +54,11 @@ namespace Hazel
 		{
 			context.GetLayers().PushOverlay(overlay);
 		}
+
+		void SetClearColor(const glm::vec4 &clearColor)
+		{
+			context.SetClearColor(clearColor);
+		}
 	};
 
 	std::unique_ptr<Application> CreateApplication(int argc, char *argv[]);
