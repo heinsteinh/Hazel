@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel.h"
-#include "ImGuiDockSpace.h"
+#include "EditorWindow.h"
 
 namespace Hazel
 {
@@ -20,7 +20,7 @@ namespace Hazel
 
 		std::shared_ptr<Renderer2D> renderer;
 		std::shared_ptr<Framebuffer> framebuffer;
-		ImGuiDockSpace dockspace;
+		EditorWindow editorWindow;
 		std::shared_ptr<Mesh> squareMesh;
 		SubTexture spriteSheet;
 		Scene scene;
