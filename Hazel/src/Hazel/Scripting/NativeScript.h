@@ -1,57 +1,12 @@
 #pragma once
 
-#include "Hazel/Scene/Entity.h"
+#include "BaseNativeScript.h"
 
 namespace Hazel
 {
-	class NativeScript
+	class NativeScript : public BaseNativeScript
 	{
-	private:
-		Entity entity;
-		Layer *layer = nullptr;
-
 	public:
-		virtual ~NativeScript() = default;
-
-		void Attach(Entity entity)
-		{
-			this->entity = entity;
-			layer = entity.GetSceneContext().Layer;
-		}
-
-		void Detach()
-		{
-			entity = {};
-			layer = nullptr;
-		}
-
-		template<typename ComponentType>
-		ComponentType &GetComponent()
-		{
-			return entity.GetComponent<ComponentType>();
-		}
-
-		template<typename ComponentType>
-		ComponentType *TryGetComponent()
-		{
-			return entity.TryGetComponent<ComponentType>();
-		}
-
-		float GetDeltaTime() const
-		{
-			return layer->GetDeltaTime();
-		}
-
-		const Window &GetWindow() const
-		{
-			return layer->GetWindow();
-		}
-
-		const Input &GetInput() const
-		{
-			return layer->GetInput();
-		}
-
 		virtual void OnCreate()
 		{
 		}

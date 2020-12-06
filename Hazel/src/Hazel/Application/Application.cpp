@@ -13,13 +13,18 @@ namespace Hazel
 	Application::~Application()
 	{
 		Log::Info("Application destroyed.");
-		context.GetSettings().Running = false;
 	}
 
 	void Application::Run()
 	{
 		Log::Info("Application started.");
-		ApplicationMainLoop::Run(context);
+		ApplicationMainLoop::Run(GetContext());
 		Log::Info("Application stopped.");
+	}
+
+	void Application::Quit()
+	{
+		Log::Info("Exiting application");
+		GetContext().GetSettings().Running = false;
 	}
 }
