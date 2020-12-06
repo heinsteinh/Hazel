@@ -1,6 +1,7 @@
 #include "ApplicationLayers.h"
 
 #include "Hazel/Utils/Reversed.h"
+#include "Hazel/Input/InputUpdater.h"
 
 namespace Hazel
 {
@@ -36,7 +37,7 @@ namespace Hazel
 			{
 				return;
 			}
-			layer->UpdateInput(e);
+			InputUpdater::UpdateInput(layer->GetInput(), e);
 			layer->OnEvent(e);
 		}
 	}
@@ -59,6 +60,14 @@ namespace Hazel
 				layer->OnImGuiRender();
 			}
 			imGuiLayer->EndRender();
+		}
+	}
+
+	void ApplicationLayers::ResetMouseScrollOffset()
+	{
+		for (const auto &layer : layers)
+		{
+			layer->GetInput().ResetMouseScrollOffset();
 		}
 	}
 }

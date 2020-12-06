@@ -11,12 +11,9 @@ namespace Hazel
 	{
 	}
 
-	void CameraController::UpdateCameraProjection(Camera &camera, Event &e)
+	void CameraController::UpdateCameraProjection(Camera &camera, const Input &input, float deltaTime)
 	{
-		e.Dispatch([&](MouseScrollEvent &e)
-		{
-			camera.SetZoomLevel(settings.Bounds.ClampZ(ComputeZoomLevel(camera, e)));
-		});
+		camera.SetZoomLevel(settings.Bounds.ClampZ(ComputeZoomLevel(camera, input, deltaTime)));
 	}
 
 	void CameraController::UpdateCameraTransform(Transform &transform, const Input &input, float deltaTime)
@@ -25,9 +22,9 @@ namespace Hazel
 		UpdateCameraRotation(transform, input, deltaTime);
 	}
 
-	float CameraController::ComputeZoomLevel(Camera &camera, MouseScrollEvent &e)
+	float CameraController::ComputeZoomLevel(Camera &camera, const Input &input, float deltaTime)
 	{
-		return camera.GetZoomLevel() - settings.ZoomSpeed * e.GetOffset().y;
+		return camera.GetZoomLevel() - settings.ZoomSpeed * input.GetMouseScrollOffset().y;
 	}
 
 	void CameraController::UpdateCameraPosition(Transform &transform, const Input &input, float deltaTime)

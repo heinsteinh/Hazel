@@ -4,14 +4,14 @@
 
 namespace Hazel
 {
-	class Script
+	class NativeScript
 	{
 	private:
 		Entity entity;
 		Layer *layer = nullptr;
 
 	public:
-		virtual ~Script() = default;
+		virtual ~NativeScript() = default;
 
 		void Attach(Entity entity)
 		{

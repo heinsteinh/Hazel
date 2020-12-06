@@ -5,7 +5,7 @@
 
 namespace Hazel
 {
-	class ScriptManager
+	class NativeScriptManager
 	{
 	public:
 		static void OnUpdate(SceneContext &context);

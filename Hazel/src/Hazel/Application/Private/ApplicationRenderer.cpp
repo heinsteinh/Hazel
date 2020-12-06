@@ -25,6 +25,7 @@ namespace Hazel
 		{
 			layers.RenderImGui();
 		}
+		layers.ResetMouseScrollOffset();
 	}
 
 	void ApplicationRenderer::SwapBuffers(ApplicationContext &context)

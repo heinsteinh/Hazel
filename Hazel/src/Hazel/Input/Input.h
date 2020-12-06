@@ -11,6 +11,7 @@ namespace Hazel
 		std::bitset<static_cast<size_t>(Key::Count)> keys;
 		std::bitset<static_cast<size_t>(MouseButton::Count)> mouseButtons;
 		glm::vec2 mousePosition{0.0f};
+		glm::vec2 mouseScrollOffset{0.0f};
 
 	public:
 		constexpr bool IsKeyPressed(Key key) const
@@ -23,6 +24,11 @@ namespace Hazel
 			keys[static_cast<size_t>(key)] = pressed;
 		}
 
+		void ClearKeys()
+		{
+			keys.reset();
+		}
+
 		constexpr bool IsMouseButtonPressed(MouseButton mouseButton) const
 		{
 			return mouseButtons[static_cast<size_t>(mouseButton)];
@@ -33,7 +39,12 @@ namespace Hazel
 			mouseButtons[static_cast<size_t>(mouseButton)] = pressed;
 		}
 
-		constexpr glm::vec2 GetMousePosition() const
+		void ClearMouseButtons()
+		{
+			mouseButtons.reset();
+		}
+
+		constexpr const glm::vec2 &GetMousePosition() const
 		{
 			return mousePosition;
 		}
@@ -43,20 +54,26 @@ namespace Hazel
 			this->mousePosition = mousePosition;
 		}
 
-		void ClearKeys()
+		constexpr const glm::vec2 &GetMouseScrollOffset() const
 		{
-			keys.reset();
+			return mouseScrollOffset;
 		}
 
-		void ClearMouseButtons()
+		constexpr void SetMouseScrollOffset(const glm::vec2 &mouseScrollOffset)
 		{
-			mouseButtons.reset();
+			this->mouseScrollOffset = mouseScrollOffset;
+		}
+
+		constexpr void ResetMouseScrollOffset()
+		{
+			mouseScrollOffset = glm::vec2(0.0f);
 		}
 
 		void Clear()
 		{
 			ClearKeys();
 			ClearMouseButtons();
+			ResetMouseScrollOffset();
 		}
 	};
 }

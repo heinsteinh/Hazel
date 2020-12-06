@@ -57,11 +57,6 @@ namespace Hazel
 			return input;
 		}
 
-		void UpdateInput(Event &e)
-		{
-			InputUpdater::UpdateInput(input, e);
-		}
-
 		float GetDeltaTime() const
 		{
 			HZ_ASSERT_ATTACHED();

@@ -5,6 +5,7 @@
 #include "Hazel/Events/MouseButtonPressEvent.h"
 #include "Hazel/Events/MouseButtonReleaseEvent.h"
 #include "Hazel/Events/MouseMoveEvent.h"
+#include "Hazel/Events/MouseScrollEvent.h"
 
 namespace Hazel
 {
@@ -29,6 +30,10 @@ namespace Hazel
 		e.Dispatch([&](MouseMoveEvent &e)
 		{
 			input.SetMousePosition(e.GetPosition());
+		});
+		e.Dispatch([&](MouseScrollEvent &e)
+		{
+			input.SetMouseScrollOffset(e.GetOffset());
 		});
 	}
 }

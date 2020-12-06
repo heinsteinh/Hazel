@@ -6,7 +6,7 @@
 #include "Hazel/Components/TransformComponent.h"
 #include "Hazel/Components/TextureComponent.h"
 #include "Hazel/Components/SpriteComponent.h"
-#include "Hazel/Components/ScriptComponent.h"
+#include "Hazel/Components/NativeScriptComponent.h"
 #include "Hazel/Scripting/CameraControllerScript.h"
 #include "Hazel/UI/TransformUI.h"
 

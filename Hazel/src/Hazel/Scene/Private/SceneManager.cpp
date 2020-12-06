@@ -2,14 +2,14 @@
 
 #include "SceneCamera.h"
 #include "CameraManager.h"
-#include "ScriptManager.h"
+#include "NativeScriptManager.h"
 #include "Hazel/Components/CameraComponent.h"
 
 namespace Hazel
 {
 	void SceneManager::OnUpdate(SceneContext &context)
 	{
-		ScriptManager::OnUpdate(context);
+		NativeScriptManager::OnUpdate(context);
 		renderer.OnUpdate(context);
 	}
 
@@ -20,6 +20,6 @@ namespace Hazel
 
 	void SceneManager::OnEvent(SceneContext &context, Event &e)
 	{
-		ScriptManager::OnEvent(context, e);
+		NativeScriptManager::OnEvent(context, e);
 	}
 }

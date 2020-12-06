@@ -5,6 +5,16 @@
 
 namespace Hazel
 {
+	std::optional<glm::mat4> SceneCamera::GetViewProjection(SceneContext &context)
+	{
+		auto [entity, camera] = SceneCamera::GetSceneCamera(context);
+		if (camera)
+		{
+			return GetViewProjection(context, entity, *camera);
+		}
+		return {};
+	}
+
 	std::pair<entt::entity, const Camera *> SceneCamera::GetSceneCamera(SceneContext &context)
 	{
 		if (context.Registry.valid(context.MainCamera))

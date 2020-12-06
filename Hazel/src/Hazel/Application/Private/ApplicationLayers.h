@@ -19,6 +19,7 @@ namespace Hazel
 		void DispatchEvent(Event &e);
 		void UpdateLayers();
 		void RenderImGui();
+		void ResetMouseScrollOffset();
 
 		void PushLayer(const std::shared_ptr<Layer> &layer)
 		{

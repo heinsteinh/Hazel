@@ -16,7 +16,7 @@ namespace Hazel
 	public:
 		CameraController(const CameraControllerSettings &settings = {});
 
-		void UpdateCameraProjection(Camera &camera, Event &e);
+		void UpdateCameraProjection(Camera &camera, const Input &input, float deltaTime);
 		void UpdateCameraTransform(Transform &transform, const Input &input, float deltaTime);
 
 		CameraControllerSettings &GetSettings()
@@ -30,7 +30,7 @@ namespace Hazel
 		}
 
 	private:
-		float ComputeZoomLevel(Camera &camera, MouseScrollEvent &e);
+		float ComputeZoomLevel(Camera &camera, const Input &input, float deltaTime);
 		void UpdateCameraPosition(Transform &transform, const Input &input, float deltaTime);
 		void UpdateCameraRotation(Transform &transform, const Input &input, float deltaTime);
 	};
