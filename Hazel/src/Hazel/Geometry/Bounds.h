@@ -1,31 +1,27 @@
 #pragma once
 
-#include "Clamper.h"
+#include "Comparator.h"
 
 namespace Hazel
 {
 	struct Bounds
 	{
-		std::optional<float> MinX;
-		std::optional<float> MaxX;
-		std::optional<float> MinY;
-		std::optional<float> MaxY;
-		std::optional<float> MinZ;
-		std::optional<float> MaxZ;
+		glm::vec3 Min{0.0f};
+		glm::vec3 Max{0.0f};
 
 		constexpr bool ContainsX(float position) const
 		{
-			return (!MinX || position >= MinX) && (!MaxX || position <= MaxX);
+			return Comparator::Contains(position, Min.x, Max.x);
 		}
 
 		constexpr bool ContainsY(float position) const
 		{
-			return (!MinY || position >= MinY) && (!MaxY || position <= MaxY);
+			return Comparator::Contains(position, Min.y, Max.y);
 		}
 
 		constexpr bool ContainsZ(float position) const
 		{
-			return (!MinZ || position >= MinZ) && (!MaxZ || position <= MaxZ);
+			return Comparator::Contains(position, Min.z, Max.z);
 		}
 
 		constexpr bool Contains(const glm::vec2 &position) const
@@ -40,17 +36,17 @@ namespace Hazel
 
 		constexpr float ClampX(float position) const
 		{
-			return Clamper::Clamp(position, MinX, MaxX);
+			return Comparator::Clamp(position, Min.x, Max.x);
 		}
 
 		constexpr float ClampY(float position) const
 		{
-			return Clamper::Clamp(position, MinY, MaxY);
+			return Comparator::Clamp(position, Min.y, Max.y);
 		}
 
 		constexpr float ClampZ(float position) const
 		{
-			return Clamper::Clamp(position, MinZ, MaxZ);
+			return Comparator::Clamp(position, Min.z, Max.z);
 		}
 
 		constexpr glm::vec2 Clamp(const glm::vec2 &position) const

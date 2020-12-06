@@ -16,6 +16,6 @@ namespace Hazel
 		float TranslationSpeed = 1.0f;
 		float RotationSpeed = 1.0f;
 		float ZoomSpeed = 0.2f;
-		Bounds Bounds = {-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 10.0f};
+		Bounds Bounds = {{-1.0f, -1.0f, 0.1f}, {1.0f, 1.0f, 10.0f}};
 	};
 }
