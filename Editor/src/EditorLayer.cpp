@@ -17,9 +17,8 @@ namespace Hazel
 	{
 		auto &graphicsContext = GetGraphicsContext();
 
-		BatchInfo rendererInfo;
-		rendererInfo.MaxIndexCount = maxIndices;
-		rendererInfo.MaxVertexCount = maxVertices;
+		rendererInfo.MaxIndexCount = 10000;
+		rendererInfo.MaxVertexCount = 40000;
 		rendererInfo.MaxTextureSlotCount = graphicsContext.GetMaxTextureSlotCount();
 		renderer = std::make_shared<Renderer2D>(graphicsContext, rendererInfo);
 
@@ -30,13 +29,14 @@ namespace Hazel
 		spriteSheet = TextureBuilder::CreateTextureFromFile(
 			GetGraphicsContext(),
 			"assets\\textures\\SpriteSheet.png");
+		region = spriteSheet.GetRegion();
 
 		scene.SetRenderer(*renderer);
 		scene.SetLayer(*this);
 
 		square = scene.CreateEntity();
 		square.AddComponent<SpriteComponent>();
-		square.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet.GetAspectRatio();
+		square.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet.GetRegion().GetAspectRatio();
 		square.AddComponent<TextureComponent>(spriteSheet);
 
 		camera1 = scene.CreateEntity();
@@ -58,7 +58,7 @@ namespace Hazel
 	void EditorLayer::OnUpdate()
 	{
 		SubTexture &texture = square.GetComponent<TextureComponent>().Texture;
-		texture.SetRegion(Rectangle::FromBottomLeftAndSize(bottomLeft, size));
+		texture.SetRegion(region);
 
 		GetGraphicsContext().SetFramebuffer(framebuffer.get());
 		GetGraphicsContext().Clear();
@@ -107,32 +107,18 @@ namespace Hazel
 		ImGui::End();
 		ImGui::PopStyleVar();
 
-		ImGui::Begin("Info");
-		ImGui::Text("Update Time: %.2fms (%.2fFPS)", 1000 * GetDeltaTime(), 1.0f / GetDeltaTime());
-		ImGui::End();
+		infoPanel.Draw("Info", *this);
+		transformPanel.Draw("Camera", camera1.GetComponent<TransformComponent>().Transform);
+		transformPanel.Draw("Transform", square.GetComponent<TransformComponent>().Transform);
 
-		transform.Draw("Camera", camera1.GetComponent<TransformComponent>().Transform);
-		transform.Draw("Transform", square.GetComponent<TransformComponent>().Transform);
+		textureRegionPanel.Draw("Texture Coordinates", region, spriteSheet.GetSource()->GetSize());
 
-		ImGui::Begin("Texture Coordinates");
-		ImGui::SliderFloat("Left", &bottomLeft.x, 0.0f, 2560.0f);
-		ImGui::SliderFloat("Bottom", &bottomLeft.y, 0.0f, 1664.0f);
-		ImGui::SliderFloat("Width", &size.x, 0.0f, 2560.0f);
-		ImGui::SliderFloat("Height", &size.y, 0.0f, 1664.0f);
-		ImGui::End();
-
-		ImGui::Begin("Renderer");
-		ImGui::SliderInt("MaxVertices", &maxVertices, 0, 100000);
-		ImGui::SliderInt("MaxIndices", &maxIndices, 0, 100000);
-		ImGui::Text("DrawCall: %zu", renderer->GetStatistics().DrawCallCount);
-		ImGui::Text("VertexCount: %zu", renderer->GetStatistics().VertexCount);
-		ImGui::Text("IndexCount: %zu", renderer->GetStatistics().IndexCount);
-		ImGui::Text("TextureCount: %zu", renderer->GetStatistics().TextureCount);
-		if (ImGui::Button("Reset"))
+		rendererInfoPanel.Draw("Renderer Info", rendererInfo, renderer->GetStatistics());
+		if (rendererInfoPanel.WantReset())
 		{
-			OnAttach();
+			renderer = std::make_shared<Renderer2D>(GetGraphicsContext(), rendererInfo);
+			scene.SetRenderer(*renderer);
 		}
-		ImGui::End();
 
 		editorWindow.End();
 

@@ -8,20 +8,21 @@ namespace Hazel
 	class EditorLayer : public Layer
 	{
 	private:
-		int maxVertices = 40000;
-		int maxIndices = 60000;
-		glm::vec2 bottomLeft{0.0f};
-		glm::vec2 size{2560.0f, 1664.0f};
 		bool blockKeyboard = false;
 		bool blockMouse = false;
 		float angle = 0.0f;
 		glm::vec2 viewport{0.0f};
-		Hazel::TransformUI transform;
+		InfoPanel infoPanel;
+		TransformPanel transformPanel;
+		TextureRegionPanel textureRegionPanel;
+		RendererInfoPanel rendererInfoPanel;
 
+		BatchInfo rendererInfo;
 		std::shared_ptr<Renderer2D> renderer;
 		std::shared_ptr<Framebuffer> framebuffer;
 		EditorWindow editorWindow;
 		std::shared_ptr<Mesh> squareMesh;
+		Rectangle region;
 		SubTexture spriteSheet;
 		Scene scene;
 		Entity square;

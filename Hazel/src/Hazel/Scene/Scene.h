@@ -8,7 +8,10 @@
 #include "Hazel/Components/SpriteComponent.h"
 #include "Hazel/Components/NativeScriptComponent.h"
 #include "Hazel/Scripting/CameraControllerScript.h"
-#include "Hazel/UI/TransformUI.h"
+#include "Hazel/Panels/InfoPanel.h"
+#include "Hazel/Panels/TextureRegionPanel.h"
+#include "Hazel/Panels/RendererInfoPanel.h"
+#include "Hazel/Panels/TransformPanel.h"
 
 namespace Hazel
 {

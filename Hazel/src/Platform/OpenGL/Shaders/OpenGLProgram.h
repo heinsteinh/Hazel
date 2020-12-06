@@ -8,7 +8,6 @@ namespace Hazel
 	class OpenGLProgram : public Shader
 	{
 	private:
-		std::string name;
 		uint32_t id = 0;
 
 	public:
