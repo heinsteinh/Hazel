@@ -1,17 +1,14 @@
 #pragma once
 
-#include "../Entity.h"
-#include "Hazel/Camera/Camera.h"
+#include "../SceneContext.h"
 
 namespace Hazel
 {
 	class SceneCamera
 	{
 	public:
-		static std::optional<glm::mat4> GetViewProjection(SceneContext &context);
-
-	private:
-		static std::pair<entt::entity, const Camera *> GetSceneCamera(SceneContext &context);
-		static glm::mat4 GetViewProjection(SceneContext &context, entt::entity entity, const Camera &camera);
+		static entt::entity GetSceneCamera(SceneContext &context);
+		static glm::mat4 GetView(SceneContext &context, entt::entity camera);
+		static glm::mat4 GetProjection(SceneContext &context, entt::entity camera);
 	};
 }

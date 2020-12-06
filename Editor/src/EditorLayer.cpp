@@ -49,6 +49,10 @@ namespace Hazel
 		camera2 = scene.CreateEntity();
 		camera2.AddComponent<TransformComponent>().Transform.Translation.x = 1.0f;
 		camera2.AddComponent<CameraComponent>();
+
+		auto particleEmitter = scene.CreateEntity();
+		particleEmitter.AddComponent<ParticleSystemComponent>();
+		particleEmitter.AddComponent<NativeScriptComponent>(std::make_shared<ParticleScript>());
 	}
 
 	void EditorLayer::OnDetach()
@@ -69,6 +73,8 @@ namespace Hazel
 	void EditorLayer::OnImGuiRender()
 	{
 		editorWindow.Begin();
+
+		scene.OnImGuiRender();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
 		ImGui::Begin("Viewport");

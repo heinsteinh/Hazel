@@ -6,8 +6,10 @@
 #include "Hazel/Components/TransformComponent.h"
 #include "Hazel/Components/TextureComponent.h"
 #include "Hazel/Components/SpriteComponent.h"
+#include "Hazel/Components/ParticleSystemComponent.h"
 #include "Hazel/Components/NativeScriptComponent.h"
 #include "Hazel/Scripting/CameraControllerScript.h"
+#include "Hazel/Scripting/ParticleScript.h"
 #include "Hazel/Panels/InfoPanel.h"
 #include "Hazel/Panels/TextureRegionPanel.h"
 #include "Hazel/Panels/RendererInfoPanel.h"
@@ -34,7 +36,7 @@ namespace Hazel
 
 		const glm::vec2 &GetViewport() const
 		{
-			return context.Viewport;
+			return context.CameraProjection.GetViewport();
 		}
 
 		void SetLayer(Layer &layer)
@@ -70,6 +72,11 @@ namespace Hazel
 		void OnEvent(Event &e)
 		{
 			manager.OnEvent(context, e);
+		}
+
+		void OnImGuiRender()
+		{
+			manager.OnImGuiRender(context);
 		}
 	};
 }

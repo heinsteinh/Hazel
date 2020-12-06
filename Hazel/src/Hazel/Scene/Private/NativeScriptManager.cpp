@@ -19,4 +19,12 @@ namespace Hazel
 			component.Script->OnEvent(e);
 		});
 	}
+
+	void NativeScriptManager::OnImGuiRender(SceneContext &context)
+	{
+		context.Registry.view<NativeScriptComponent>().each([&](auto entity, auto &component)
+		{
+			component.Script->OnImGuiRender();
+		});
+	}
 }

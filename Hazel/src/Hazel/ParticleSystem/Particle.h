@@ -22,7 +22,7 @@ namespace Hazel
 			return glm::mix(SizeEnd, SizeBegin, GetLife());
 		}
 
-		constexpr float GetLife() const
+		float GetLife() const
 		{
 			return LifeTime ? RemainingLifeTime / LifeTime : 0.0f;
 		}

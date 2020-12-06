@@ -4,10 +4,9 @@
 
 namespace Hazel
 {
-	class CameraManager
+	class ParticleManager
 	{
 	public:
 		static void OnUpdate(SceneContext &context);
-		static void OnViewportResize(SceneContext &context, const glm::vec2 &viewport);
 	};
 }

@@ -17,7 +17,7 @@ namespace Hazel
 		}
 	}
 
-	void ParticleSystem::RenderParticles(Renderer2D &renderer)
+	void ParticleSystem::RenderActiveParticles(Renderer2D &renderer)
 	{
 		for (const auto &particle : pool)
 		{
@@ -31,14 +31,14 @@ namespace Hazel
 		index = (index + 1) % pool.size();
 	}
 
-	size_t ParticleSystem::GetMaxParticles() const
+	size_t ParticleSystem::GetMaxParticleCount() const
 	{
 		return pool.size();
 	}
 
-	void ParticleSystem::SetMaxParticles(size_t size)
+	void ParticleSystem::SetMaxParticleCount(size_t maxParticleCount)
 	{
-		pool.resize(size > 0 ? size : 1);
+		pool.resize(maxParticleCount > 0 ? maxParticleCount : 1);
 		index %= pool.size();
 	}
 }

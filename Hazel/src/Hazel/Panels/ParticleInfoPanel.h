@@ -9,7 +9,7 @@ namespace Hazel
 	class ParticleInfoPanel
 	{
 	private:
-		int particleCount = 5;
+		int emissionCount = 5;
 		int maxParticleCount = 1000;
 
 	public:
@@ -26,14 +26,14 @@ namespace Hazel
 			ImGui::SliderFloat("SizeEnd", &particleInfo.SizeEnd, 0.0f, 1.0f);
 			ImGui::SliderFloat("SizeVariation", &particleInfo.SizeVariation, 0.0f, 1.0f);
 			ImGui::SliderFloat("LifeTime", &particleInfo.LifeTime, 0.0f, 10.0f);
-			ImGui::SliderInt("ParticleCount", &particleCount, 0, 100);
+			ImGui::SliderInt("EmissionCount", &emissionCount, 0, 100);
 			ImGui::SliderInt("MaxParticleCount", &maxParticleCount, 1, 100000);
 			ImGui::End();
 		}
 
-		int GetParticleCount() const
+		int GetEmissionCount() const
 		{
-			return particleCount;
+			return emissionCount;
 		}
 
 		int GetMaxParticleCount() const

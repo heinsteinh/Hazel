@@ -22,5 +22,9 @@ namespace Hazel
 		virtual void OnEvent(Event &e)
 		{
 		}
+
+		virtual void OnImGuiRender()
+		{
+		}
 	};
 }

@@ -10,7 +10,6 @@ namespace Hazel
 	private:
 		bool blockKeyboard = false;
 		bool blockMouse = false;
-		float angle = 0.0f;
 		glm::vec2 viewport{0.0f};
 		InfoPanel infoPanel;
 		TransformPanel transformPanel;

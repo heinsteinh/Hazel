@@ -58,6 +58,12 @@ namespace Hazel
 			HZ_ASSERT_ATTACHED();
 			return layer->GetInput();
 		}
+
+		const CameraProjection &GetCameraProjection() const
+		{
+			HZ_ASSERT_ATTACHED();
+			return entity.GetSceneContext().CameraProjection;
+		}
 	};
 }
 

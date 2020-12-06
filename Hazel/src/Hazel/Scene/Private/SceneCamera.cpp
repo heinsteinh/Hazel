@@ -5,38 +5,37 @@
 
 namespace Hazel
 {
-	std::optional<glm::mat4> SceneCamera::GetViewProjection(SceneContext &context)
-	{
-		auto [entity, camera] = SceneCamera::GetSceneCamera(context);
-		if (camera)
-		{
-			return GetViewProjection(context, entity, *camera);
-		}
-		return {};
-	}
-
-	std::pair<entt::entity, const Camera *> SceneCamera::GetSceneCamera(SceneContext &context)
+	entt::entity SceneCamera::GetSceneCamera(SceneContext &context)
 	{
 		if (context.Registry.valid(context.MainCamera))
 		{
-			return {context.MainCamera, &context.Registry.get<CameraComponent>(context.MainCamera).Camera};
+			return context.MainCamera;
 		}
 		auto view = context.Registry.view<CameraComponent>();
 		if (view.empty())
 		{
-			return {entt::null, nullptr};
+			return entt::null;
 		}
-		auto entity = view.front();
-		return {entity, &view.get<CameraComponent>(entity).Camera};
+		return view.front();
 	}
 
-	glm::mat4 SceneCamera::GetViewProjection(SceneContext &context, entt::entity entity, const Camera &camera)
+	glm::mat4 SceneCamera::GetView(SceneContext &context, entt::entity camera)
 	{
-		auto transform = context.Registry.try_get<TransformComponent>(entity);
-		if (!transform)
+		if (camera == entt::null)
 		{
-			return camera.GetProjection();
+			return glm::mat4(1.0f);
 		}
-		return MvpMatrix::GetViewProjection(transform->GetView(), camera.GetProjection());
+		auto component = context.Registry.try_get<CameraComponent>(camera);
+		return component ? component->GetProjection() : glm::mat4(1.0f);
+	}
+
+	glm::mat4 SceneCamera::GetProjection(SceneContext &context, entt::entity camera)
+	{
+		if (camera == entt::null)
+		{
+			return glm::mat4(1.0f);
+		}
+		auto transform = context.Registry.try_get<TransformComponent>(camera);
+		return transform ? transform->GetView() : glm::mat4(1.0f);
 	}
 }

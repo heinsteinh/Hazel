@@ -13,8 +13,6 @@ namespace Hazel
 
 	public:
 		void RenderParticle(Renderer2D &renderer, const Particle &particle);
-
-	private:
 		glm::vec4 GetColor(const Particle &particle);
 	};
 }

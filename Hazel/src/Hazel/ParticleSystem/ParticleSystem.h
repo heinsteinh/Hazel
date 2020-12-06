@@ -17,10 +17,10 @@ namespace Hazel
 	public:
 		ParticleSystem(size_t maxParticles = 1000);
 
-		void UpdateParticles(float deltaTime);
-		void RenderParticles(Renderer2D &renderer);
 		void EmitParticle(const ParticleInfo &info);
-		size_t GetMaxParticles() const;
-		void SetMaxParticles(size_t maxParticles);
+		void UpdateParticles(float deltaTime);
+		void RenderActiveParticles(Renderer2D &renderer);
+		size_t GetMaxParticleCount() const;
+		void SetMaxParticleCount(size_t maxParticleCount);
 	};
 }
