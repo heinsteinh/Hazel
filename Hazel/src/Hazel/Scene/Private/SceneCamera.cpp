@@ -25,8 +25,8 @@ namespace Hazel
 		{
 			return glm::mat4(1.0f);
 		}
-		auto component = context.Registry.try_get<CameraComponent>(camera);
-		return component ? component->GetProjection() : glm::mat4(1.0f);
+		auto transform = context.Registry.try_get<TransformComponent>(camera);
+		return transform ? transform->GetView() : glm::mat4(1.0f);
 	}
 
 	glm::mat4 SceneCamera::GetProjection(SceneContext &context, entt::entity camera)
@@ -35,7 +35,7 @@ namespace Hazel
 		{
 			return glm::mat4(1.0f);
 		}
-		auto transform = context.Registry.try_get<TransformComponent>(camera);
-		return transform ? transform->GetView() : glm::mat4(1.0f);
+		auto component = context.Registry.try_get<CameraComponent>(camera);
+		return component ? component->GetProjection() : glm::mat4(1.0f);
 	}
 }
