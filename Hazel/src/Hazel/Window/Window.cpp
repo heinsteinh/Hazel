@@ -60,6 +60,18 @@ namespace Hazel
 		glfwSetWindowSize(window, static_cast<int>(size.x), static_cast<int>(size.y));
 	}
 
+	glm::vec2 Window::GetPosition() const
+	{
+		int x, y;
+		glfwGetWindowPos(window, &x, &y);
+		return {static_cast<float>(x), static_cast<float>(y)};
+	}
+
+	void Window::SetPosition(const glm::vec2 &position)
+	{
+		glfwSetWindowPos(window, static_cast<int>(position.x), static_cast<int>(position.y));
+	}
+
 	bool Window::HasVerticalSynchonization() const
 	{
 		return verticalSynchronization;

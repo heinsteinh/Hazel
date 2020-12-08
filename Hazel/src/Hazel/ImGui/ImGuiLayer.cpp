@@ -2,6 +2,8 @@
 
 #include "imgui.h"
 
+#include "Private/ImGuiEventFilter.h"
+
 namespace Hazel
 {
 	ImGuiLayer::ImGuiLayer()
@@ -23,18 +25,18 @@ namespace Hazel
 
 	bool ImGuiLayer::WantCaptureKeyboard() const
 	{
-		return ImGui::GetIO().WantCaptureKeyboard;
+		return IsImGuiKeyboardFilterEnabled() && ImGui::GetIO().WantCaptureKeyboard;
 	}
 
 	bool ImGuiLayer::WantCaptureMouse() const
 	{
-		return ImGui::GetIO().WantCaptureMouse;
+		return IsImGuiMouseFilterEnabled() && ImGui::GetIO().WantCaptureMouse;
 	}
 
 	bool ImGuiLayer::WantBlockEvent(Event &e) const
 	{
-		return e.IsInCategory(EventCategory::Keyboard) && WantCaptureKeyboard() && IsImGuiKeyboardFilterEnabled()
-			|| e.IsInCategory(EventCategory::Mouse) && WantCaptureMouse() && IsImGuiMouseFilterEnabled();
+		return WantCaptureKeyboard() && e.IsInCategory(EventCategory::Keyboard)
+			|| WantCaptureMouse() && e.IsInCategory(EventCategory::Mouse);
 	}
 
 	void ImGuiLayer::OnAttach()
@@ -51,7 +53,7 @@ namespace Hazel
 
 	void ImGuiLayer::OnEvent(Event &e)
 	{
-		if (WantBlockEvent(e))
+		if (ImGuiEventFilter::CanBlockEvent(e) && WantBlockEvent(e))
 		{
 			e.Discard();
 		}

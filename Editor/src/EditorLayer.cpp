@@ -85,16 +85,6 @@ namespace Hazel
 		bool blockMouse = !ImGui::IsWindowHovered();
 		EnableImGuiKeyboardFilter(blockKeyboard);
 		EnableImGuiMouseFilter(blockMouse);
-		if (!this->blockKeyboard && blockKeyboard)
-		{
-			GetInput().ClearKeys();
-		}
-		if (!this->blockMouse && blockMouse)
-		{
-			GetInput().ClearMouseButtons();
-		}
-		this->blockKeyboard = blockKeyboard;
-		this->blockMouse = blockMouse;
 
 		auto viewportSize = ImGui::GetContentRegionAvail();
 		auto windowPosition = ImGui::GetWindowPos();
@@ -104,10 +94,14 @@ namespace Hazel
 		{
 			viewport = newSize;
 			position = newPosition;
+			auto ratio = GetWindow().GetSize() / viewport;
+			auto newViewport = Rectangle::FromBottomLeftAndSize(
+				(position - GetWindow().GetPosition()) / glm::vec2(ratio.x, 1.0f),
+				viewport);
 			Log::Warn("New viewport size: {} {}", viewport.x, viewport.y);
 			Log::Warn("New window position: {} {}", position.x, position.y);
 			framebuffer = GetGraphicsContext().CreateFramebuffer({viewport});
-			scene->OnViewportResize(Rectangle::FromBottomLeftAndSize(position, viewport));
+			scene->OnViewportResize(newViewport);
 		}
 
 		ImGui::Image(

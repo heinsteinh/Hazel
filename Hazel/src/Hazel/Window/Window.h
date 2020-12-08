@@ -27,6 +27,8 @@ namespace Hazel
 		void SetTitle(const std::string &title);
 		glm::vec2 GetSize() const;
 		void Resize(const glm::vec2 &size);
+		glm::vec2 GetPosition() const;
+		void SetPosition(const glm::vec2 &position);
 		bool HasVerticalSynchonization() const;
 		void SetVerticalSynchronization(bool verticalSynchronization);
 
