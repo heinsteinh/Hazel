@@ -21,6 +21,16 @@ namespace Hazel
 			};
 		}
 
+		static constexpr Rectangle FromPositionAndSize(const glm::vec2 &position, const glm::vec2 &size)
+		{
+			return {
+				position.x - size.x / 2.0f,
+				position.x + size.x / 2.0f,
+				position.y - size.y / 2.0f,
+				position.y + size.y / 2.0f
+			};
+		}
+
 		constexpr glm::vec2 GetPosition() const
 		{
 			return {

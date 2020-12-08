@@ -1,20 +1,23 @@
 #include "SpriteRenderer.h"
 
+#include "Hazel/Rendering/SquareMesh.h"
+
 namespace Hazel
 {
 	void SpriteRenderer::RenderSprite(SceneContext &context, entt::entity entity, const SpriteComponent &sprite)
 	{
+		auto &registry = context.GetRegistry();
 		DrawData drawData;
 		AddMesh(drawData);
-		AddTransform(drawData, context.Registry.try_get<TransformComponent>(entity));
-		AddTexture(drawData, context.Registry.try_get<TextureComponent>(entity));
+		AddTransform(drawData, registry.try_get<TransformComponent>(entity));
+		AddTexture(drawData, registry.try_get<TextureComponent>(entity));
 		AddColor(drawData, sprite);
-		context.Renderer->Render(drawData);
+		context.GetRenderer().Render(drawData);
 	}
 
 	void SpriteRenderer::AddMesh(DrawData &drawData)
 	{
-		drawData.Mesh = squareMesh.get();
+		drawData.Mesh = &SquareMesh::GetMesh();
 	}
 
 	void SpriteRenderer::AddTransform(DrawData &drawData, const TransformComponent *transform)

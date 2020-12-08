@@ -15,13 +15,13 @@ namespace Hazel
 			* glm::translate(glm::mat4(1.0f), -cameraTransform.Translation);
 	}
 
-	glm::mat4 MvpMatrix::GetOrthographicProjection(const ProjectionInfo &info)
+	glm::mat4 MvpMatrix::GetOrthographicProjection(const OrthographicProjectionInfo &info)
 	{
 		return glm::ortho(
-			-info.AspectRatio * info.OrthographicsSize,
-			info.AspectRatio * info.OrthographicsSize,
-			-info.OrthographicsSize,
-			info.OrthographicsSize,
+			-info.AspectRatio * info.Size,
+			info.AspectRatio * info.Size,
+			-info.Size,
+			info.Size,
 			info.NearClip,
 			info.FarClip);
 	}

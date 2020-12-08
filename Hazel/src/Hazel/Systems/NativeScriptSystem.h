@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../SceneContext.h"
+#include "Hazel/Scene/SceneContext.h"
 #include "Hazel/Events/Event.h"
 
 namespace Hazel
 {
-	class NativeScriptManager
+	class NativeScriptSystem
 	{
 	public:
 		static void OnUpdate(SceneContext &context);

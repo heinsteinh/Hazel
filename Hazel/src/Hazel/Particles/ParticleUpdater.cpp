@@ -4,14 +4,11 @@ namespace Hazel
 {
 	void ParticleUpdater::UpdateParticle(Particle &particle, float deltaTime)
 	{
+		UpdateLifeTime(particle, deltaTime);
 		if (particle.Active)
 		{
-			UpdateLifeTime(particle, deltaTime);
-			if (particle.Active)
-			{
-				UpdatePosition(particle, deltaTime);
-				UpdateSize(particle);
-			}
+			UpdatePosition(particle, deltaTime);
+			UpdateSize(particle);
 		}
 	}
 

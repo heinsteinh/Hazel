@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NativeScript.h"
+#include "Hazel/Scripting/NativeScript.h"
 #include "Hazel/Camera/CameraController.h"
 #include "Hazel/Components/CameraComponent.h"
 #include "Hazel/Components/TransformComponent.h"

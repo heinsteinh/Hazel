@@ -11,6 +11,7 @@ namespace Hazel
 		bool blockKeyboard = false;
 		bool blockMouse = false;
 		glm::vec2 viewport{0.0f};
+		glm::vec2 position{0.0f};
 		InfoPanel infoPanel;
 		TransformPanel transformPanel;
 		TextureRegionPanel textureRegionPanel;
@@ -20,10 +21,9 @@ namespace Hazel
 		std::shared_ptr<Renderer2D> renderer;
 		std::shared_ptr<Framebuffer> framebuffer;
 		EditorWindow editorWindow;
-		std::shared_ptr<Mesh> squareMesh;
 		Rectangle region;
 		SubTexture spriteSheet;
-		Scene scene;
+		std::shared_ptr<Scene> scene;
 		Entity square;
 		Entity camera1;
 		Entity camera2;

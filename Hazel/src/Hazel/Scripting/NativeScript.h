@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseNativeScript.h"
+#include "Private/BaseNativeScript.h"
 
 namespace Hazel
 {

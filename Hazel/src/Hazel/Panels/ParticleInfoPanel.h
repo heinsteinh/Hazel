@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 
-#include "Hazel/ParticleSystem/ParticleInfo.h"
+#include "Hazel/Particles/ParticleInfo.h"
 
 namespace Hazel
 {

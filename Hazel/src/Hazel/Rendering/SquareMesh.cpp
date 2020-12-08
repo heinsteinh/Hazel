@@ -2,6 +2,8 @@
 
 namespace Hazel
 {
+	const std::shared_ptr<const Mesh> SquareMesh::mesh = CreateMesh();
+
 	std::shared_ptr<Mesh> SquareMesh::CreateMesh()
 	{
 		auto result = std::make_shared<Mesh>();

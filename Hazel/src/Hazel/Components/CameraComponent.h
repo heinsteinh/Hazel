@@ -14,7 +14,7 @@ namespace Hazel
 			return Camera.GetProjection();
 		}
 
-		void SetViewport(const glm::vec2 &viewport)
+		void SetViewport(const Rectangle &viewport)
 		{
 			Camera.SetViewport(viewport);
 		}
@@ -23,6 +23,6 @@ namespace Hazel
 	template<>
 	inline void EntityEvents::OnAddComponent<CameraComponent>(Entity entity, CameraComponent &component)
 	{
-		component.SetViewport(entity.GetSceneContext().CameraProjection.GetViewport());
+		component.SetViewport(entity.GetSceneContext().GetSceneCamera().GetViewport());
 	};
 }

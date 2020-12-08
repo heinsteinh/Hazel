@@ -1,82 +1,58 @@
 #pragma once
 
-#include "Private/SceneManager.h"
 #include "SceneContext.h"
 #include "Hazel/Components/CameraComponent.h"
 #include "Hazel/Components/TransformComponent.h"
 #include "Hazel/Components/TextureComponent.h"
 #include "Hazel/Components/SpriteComponent.h"
-#include "Hazel/Components/ParticleSystemComponent.h"
+#include "Hazel/Components/ParticleSourceComponent.h"
 #include "Hazel/Components/NativeScriptComponent.h"
-#include "Hazel/Scripting/CameraControllerScript.h"
-#include "Hazel/Scripting/ParticleScript.h"
 #include "Hazel/Panels/InfoPanel.h"
 #include "Hazel/Panels/TextureRegionPanel.h"
 #include "Hazel/Panels/RendererInfoPanel.h"
 #include "Hazel/Panels/TransformPanel.h"
+#include "Hazel/Tests/CameraControllerScript.h"
+#include "Hazel/Tests/ParticleScript.h"
 
 namespace Hazel
 {
 	class Scene
 	{
 	private:
-		SceneManager manager;
 		SceneContext context;
 
 	public:
+		Scene(const SceneInfo &info);
+
+		void OnUpdate();
+		void OnRender();
+		void OnViewportResize(const Rectangle &viewport);
+		void OnEvent(Event &e);
+		void OnImGuiRender();
+
 		Entity GetMainCamera()
 		{
-			return {context.MainCamera, context};
+			return {context.GetSceneCamera().GetEntity(), context};
 		}
 
 		void SetMainCamera(Entity mainCamera)
 		{
-			context.MainCamera = mainCamera;
+			context.GetSceneCamera().SetEntity(mainCamera);
 		}
 
-		const glm::vec2 &GetViewport() const
+		const Rectangle &GetViewport() const
 		{
-			return context.CameraProjection.GetViewport();
-		}
-
-		void SetLayer(Layer &layer)
-		{
-			context.Layer = &layer;
-		}
-
-		void SetRenderer(Renderer2D &renderer)
-		{
-			context.Renderer = &renderer;
+			return context.GetSceneCamera().GetViewport();
 		}
 
 		Entity CreateEntity()
 		{
-			return {context.Registry.create(), context};
+			return {context.GetRegistry().create(), context};
 		}
 
 		void RemoveEntity(Entity entity)
 		{
-			context.Registry.destroy(entity);
-		}
-
-		void OnUpdate()
-		{
-			manager.OnUpdate(context);
-		}
-
-		void OnViewportResize(const glm::vec2 &viewport)
-		{
-			manager.OnViewportResize(context, viewport);
-		}
-
-		void OnEvent(Event &e)
-		{
-			manager.OnEvent(context, e);
-		}
-
-		void OnImGuiRender()
-		{
-			manager.OnImGuiRender(context);
+			context.GetRegistry().destroy(entity);
 		}
 	};
 }

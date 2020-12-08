@@ -1,25 +1,22 @@
 #include "SceneRenderer.h"
 
 #include "Hazel/Components/SpriteComponent.h"
-#include "Hazel/Components/ParticleSystemComponent.h"
+#include "Hazel/Components/ParticleSourceComponent.h"
+#include "Hazel/Systems/ParticleSystem.h"
+#include "Hazel/Systems/SpriteRenderingSystem.h"
 
 namespace Hazel
 {
-	void SceneRenderer::OnUpdate(SceneContext &context)
+	void SceneRenderer::RenderScene(SceneContext &context)
 	{
-		if (context.MainCamera == entt::null)
+		auto &camera = context.GetSceneCamera();
+		if (camera.IsValid())
 		{
-			return;
+			auto &renderer = context.GetRenderer();
+			renderer.BeginScene(camera.GetViewProjection());
+			SpriteRenderingSystem::OnRender(context);
+			ParticleSystem::OnRender(context);
+			renderer.EndScene();
 		}
-		context.Renderer->BeginScene(context.CameraProjection.GetViewProjection());
-		context.Registry.view<SpriteComponent>().each([&](auto entity, auto &component)
-		{
-			spriteRenderer.RenderSprite(context, entity, component);
-		});
-		context.Registry.view<ParticleSystemComponent>().each([&](auto entity, auto &component)
-		{
-			component.ParticleSystem.RenderActiveParticles(*context.Renderer);
-		});
-		context.Renderer->EndScene();
 	}
 }

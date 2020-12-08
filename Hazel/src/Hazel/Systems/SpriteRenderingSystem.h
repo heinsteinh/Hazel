@@ -4,9 +4,9 @@
 
 namespace Hazel
 {
-	class SceneRenderer
+	class SpriteRenderingSystem
 	{
 	public:
-		static void RenderScene(SceneContext &context);
+		static void OnRender(SceneContext &context);
 	};
 }

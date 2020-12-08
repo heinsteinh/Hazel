@@ -1,11 +1,11 @@
 #pragma once
 
-#include "NativeScript.h"
+#include "Hazel/Scripting/NativeScript.h"
 #include "Hazel/Panels/ParticleInfoPanel.h"
 #include "Hazel/Camera/CameraProjection.h"
 #include "Hazel/Components/CameraComponent.h"
 #include "Hazel/Components/TransformComponent.h"
-#include "Hazel/Components/ParticleSystemComponent.h"
+#include "Hazel/Components/ParticleSourceComponent.h"
 
 namespace Hazel
 {
@@ -34,7 +34,7 @@ namespace Hazel
 
 		virtual void OnUpdate() override
 		{
-			auto particleSystem = TryGetComponent<ParticleSystemComponent>();
+			auto particleSystem = TryGetComponent<ParticleSourceComponent>();
 			if (!particleSystem)
 			{
 				return;
@@ -42,16 +42,16 @@ namespace Hazel
 			auto &input = GetInput();
 			if (input.IsMouseButtonPressed(Hazel::MouseButton::B1))
 			{
-				particleInfo.Position = GetCameraProjection().GetWorldPosition(input.GetMousePosition());
+				particleInfo.Position = GetCamera().GetWorldPosition(input.GetMousePosition());
 				for (int i = 0; i < panel.GetEmissionCount(); i++)
 				{
-					particleSystem->ParticleSystem.EmitParticle(particleInfo);
+					particleSystem->ParticleSource.EmitParticle(particleInfo);
 				}
 			}
 			auto maxParticleCount = panel.GetMaxParticleCount();
-			if (panel.GetMaxParticleCount() != particleSystem->ParticleSystem.GetMaxParticleCount())
+			if (panel.GetMaxParticleCount() != particleSystem->ParticleSource.GetMaxParticleCount())
 			{
-				particleSystem->ParticleSystem.SetMaxParticleCount(maxParticleCount);
+				particleSystem->ParticleSource.SetMaxParticleCount(maxParticleCount);
 			}
 		}
 

@@ -4,28 +4,26 @@
 
 namespace Hazel
 {
-	glm::vec3 CameraProjection::GetWorldPosition(const glm::vec2 &screenPosition) const
+	glm::vec3 CameraProjection::GetWorldPosition(const CameraInfo &camera, const glm::vec2 &screenPosition)
 	{
 		return glm::unProject(
 			glm::vec3(screenPosition, 0.0f),
-			view,
-			projection,
-			glm::vec4(0.0f, viewport.y, viewport.x, -viewport.y));
+			camera.View,
+			camera.Projection,
+			GetViewport(camera.Viewport));
 	}
 
-	glm::vec2 CameraProjection::GetScreenPosition(const glm::vec3 &worldPosition) const
+	glm::vec2 CameraProjection::GetScreenPosition(const CameraInfo &camera, const glm::vec3 &worldPosition)
 	{
 		return glm::project(
 			worldPosition,
-			view,
-			projection,
-			glm::vec4(0.0f, viewport.y, viewport.x, -viewport.y));
+			camera.View,
+			camera.Projection,
+			GetViewport(camera.Viewport));
 	}
 
-	void CameraProjection::UpdateViewProjection(const glm::mat4 &view, const glm::mat4 &projection)
+	glm::vec4 CameraProjection::GetViewport(const Rectangle &viewport)
 	{
-		this->view = view;
-		this->projection = projection;
-		viewProjection = MvpMatrix::GetViewProjection(view, projection);
+		return glm::vec4(viewport.Left, viewport.Bottom + viewport.Top, viewport.Right, viewport.Bottom - viewport.Top);
 	}
 }

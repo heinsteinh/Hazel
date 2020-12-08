@@ -24,34 +24,34 @@ namespace Hazel
 
 		framebuffer = graphicsContext.CreateFramebuffer({{GetWindow().GetSize()}});
 
-		squareMesh = SquareMesh::CreateMesh();
-
 		spriteSheet = TextureBuilder::CreateTextureFromFile(
 			GetGraphicsContext(),
 			"assets\\textures\\SpriteSheet.png");
 		region = spriteSheet.GetRegion();
 
-		scene.SetRenderer(*renderer);
-		scene.SetLayer(*this);
+		SceneInfo sceneInfo;
+		sceneInfo.Layer = this;
+		sceneInfo.Renderer = renderer.get();
+		scene = std::make_shared<Scene>(sceneInfo);
 
-		square = scene.CreateEntity();
+		square = scene->CreateEntity();
 		square.AddComponent<SpriteComponent>();
 		square.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet.GetRegion().GetAspectRatio();
 		square.AddComponent<TextureComponent>(spriteSheet);
 
-		camera1 = scene.CreateEntity();
+		camera1 = scene->CreateEntity();
 		camera1.AddComponent<TransformComponent>();
 		camera1.AddComponent<NativeScriptComponent>(std::make_shared<CameraControllerScript>());
 		camera1.AddComponent<CameraComponent>();
 
-		scene.SetMainCamera(camera1);
+		scene->SetMainCamera(camera1);
 
-		camera2 = scene.CreateEntity();
+		camera2 = scene->CreateEntity();
 		camera2.AddComponent<TransformComponent>().Transform.Translation.x = 1.0f;
 		camera2.AddComponent<CameraComponent>();
 
-		auto particleEmitter = scene.CreateEntity();
-		particleEmitter.AddComponent<ParticleSystemComponent>();
+		auto particleEmitter = scene->CreateEntity();
+		particleEmitter.AddComponent<ParticleSourceComponent>();
 		particleEmitter.AddComponent<NativeScriptComponent>(std::make_shared<ParticleScript>());
 	}
 
@@ -64,9 +64,11 @@ namespace Hazel
 		SubTexture &texture = square.GetComponent<TextureComponent>().Texture;
 		texture.SetRegion(region);
 
+		scene->OnUpdate();
+
 		GetGraphicsContext().SetFramebuffer(framebuffer.get());
 		GetGraphicsContext().Clear();
-		scene.OnUpdate();
+		scene->OnRender();
 		GetGraphicsContext().SetFramebuffer(nullptr);
 	}
 
@@ -74,7 +76,7 @@ namespace Hazel
 	{
 		editorWindow.Begin();
 
-		scene.OnImGuiRender();
+		scene->OnImGuiRender();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
 		ImGui::Begin("Viewport");
@@ -95,13 +97,17 @@ namespace Hazel
 		this->blockMouse = blockMouse;
 
 		auto viewportSize = ImGui::GetContentRegionAvail();
+		auto windowPosition = ImGui::GetWindowPos();
 		glm::vec2 newSize = {viewportSize.x, viewportSize.y};
-		if (newSize != viewport)
+		glm::vec2 newPosition = {windowPosition.x, windowPosition.y};
+		if (newSize != viewport || newPosition != position)
 		{
 			viewport = newSize;
-			Log::Debug("New viewport size: {} {}", viewport.x, viewport.y);
+			position = newPosition;
+			Log::Warn("New viewport size: {} {}", viewport.x, viewport.y);
+			Log::Warn("New window position: {} {}", position.x, position.y);
 			framebuffer = GetGraphicsContext().CreateFramebuffer({viewport});
-			scene.OnViewportResize(viewport);
+			scene->OnViewportResize(Rectangle::FromBottomLeftAndSize(position, viewport));
 		}
 
 		ImGui::Image(
@@ -120,11 +126,10 @@ namespace Hazel
 		textureRegionPanel.Draw("Texture Coordinates", region, spriteSheet.GetSource()->GetSize());
 
 		rendererInfoPanel.Draw("Renderer Info", rendererInfo, renderer->GetStatistics());
-		if (rendererInfoPanel.WantReset())
+		/*if (rendererInfoPanel.WantReset())
 		{
 			renderer = std::make_shared<Renderer2D>(GetGraphicsContext(), rendererInfo);
-			scene.SetRenderer(*renderer);
-		}
+		}*/
 
 		editorWindow.End();
 
@@ -136,6 +141,10 @@ namespace Hazel
 
 	void EditorLayer::OnEvent(Event &e)
 	{
-		scene.OnEvent(e);
+		/*e.Dispatch([&](WindowResizeEvent &e)
+		{
+			scene->OnViewportResize(Rectangle::FromBottomLeftAndSize({0.0f, 0.0f}, e.GetSize()));
+		});*/
+		scene->OnEvent(e);
 	}
 }
