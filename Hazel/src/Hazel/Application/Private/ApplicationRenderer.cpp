@@ -2,33 +2,29 @@
 
 namespace Hazel
 {
-	void ApplicationRenderer::RenderNewFrame(ApplicationContext &context)
+	void ApplicationRenderer::BeginFrame(ApplicationContext &context)
 	{
-		Clear(context);
-		UpdateLayers(context);
-		SwapBuffers(context);
-	}
-
-	void ApplicationRenderer::Clear(ApplicationContext &context)
-	{
+		context.ComputeDeltaTime();
 		context.GetGraphicsContext().Clear();
 	}
 
-	void ApplicationRenderer::UpdateLayers(ApplicationContext &context)
+	void ApplicationRenderer::RenderFrame(ApplicationContext &context)
 	{
-		auto &layers = context.GetLayers();
 		if (!context.GetWindow().IsMinimized())
 		{
-			layers.UpdateLayers();
+			context.GetLayers().Update();
 		}
-		if (context.GetSettings().ImGuiRenderEnabled)
-		{
-			layers.RenderImGui();
-		}
-		layers.ResetMouseScrollOffset();
 	}
 
-	void ApplicationRenderer::SwapBuffers(ApplicationContext &context)
+	void ApplicationRenderer::RenderImGui(ApplicationContext &context)
+	{
+		if (context.GetSettings().ImGuiRenderEnabled)
+		{
+			context.GetLayers().RenderImGui();
+		}
+	}
+
+	void ApplicationRenderer::EndFrame(ApplicationContext &context)
 	{
 		context.GetGraphicsContext().SwapBuffers();
 	}

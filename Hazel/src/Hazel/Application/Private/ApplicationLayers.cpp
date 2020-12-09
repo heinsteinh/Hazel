@@ -11,7 +11,7 @@ namespace Hazel
 		layers.PushOverlay(imGuiLayer);
 	}
 
-	void ApplicationLayers::AttachLayers(LayerContext &context)
+	void ApplicationLayers::Attach(LayerContext &context)
 	{
 		for (const auto &layer : layers)
 		{
@@ -20,7 +20,7 @@ namespace Hazel
 		}
 	}
 
-	void ApplicationLayers::DetachLayers()
+	void ApplicationLayers::Detach()
 	{
 		for (const auto &layer : layers)
 		{
@@ -42,7 +42,7 @@ namespace Hazel
 		}
 	}
 
-	void ApplicationLayers::UpdateLayers()
+	void ApplicationLayers::Update()
 	{
 		for (const auto &layer : layers)
 		{
@@ -63,11 +63,11 @@ namespace Hazel
 		}
 	}
 
-	void ApplicationLayers::ResetMouseScrollOffset()
+	void ApplicationLayers::ClearMouseScrollOffset()
 	{
 		for (const auto &layer : layers)
 		{
-			layer->GetInput().ResetMouseScrollOffset();
+			layer->GetInput().ClearMouseScrollOffset();
 		}
 	}
 }

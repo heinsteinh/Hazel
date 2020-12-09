@@ -64,7 +64,7 @@ namespace Hazel
 			this->mouseScrollOffset = mouseScrollOffset;
 		}
 
-		constexpr void ResetMouseScrollOffset()
+		constexpr void ClearMouseScrollOffset()
 		{
 			mouseScrollOffset = glm::vec2(0.0f);
 		}
@@ -73,7 +73,7 @@ namespace Hazel
 		{
 			ClearKeys();
 			ClearMouseButtons();
-			ResetMouseScrollOffset();
+			ClearMouseScrollOffset();
 		}
 	};
 }

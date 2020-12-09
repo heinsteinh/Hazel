@@ -13,6 +13,7 @@ namespace Hazel
 		AvailableGraphicsApi api = AvailableGraphicsApi::OpenGL;
 		std::shared_ptr<GraphicsApi> graphicsApi;
 		WindowInfo windowInfo;
+		glm::vec4 clearColor{0.0f};
 		LayerContext layerContext;
 		ApplicationLayers layers;
 		Chrono chrono;
@@ -30,12 +31,12 @@ namespace Hazel
 
 		const glm::vec4 &GetClearColor() const
 		{
-			return layerContext.GetClearColor();
+			return clearColor;
 		}
 
 		void SetClearColor(const glm::vec4 &clearColor)
 		{
-			layerContext.SetClearColor(clearColor);
+			this->clearColor = clearColor;
 		}
 
 		void LoadGraphicsApi()
@@ -67,6 +68,7 @@ namespace Hazel
 		void CreateApplicationWindow()
 		{
 			layerContext.CreateApplicationWindow(windowInfo);
+			GetGraphicsContext().SetClearColor(clearColor);
 		}
 
 		Window &GetWindow() const
@@ -91,7 +93,7 @@ namespace Hazel
 
 		void AttachLayers()
 		{
-			layers.AttachLayers(layerContext);
+			layers.Attach(layerContext);
 		}
 
 		ApplicationLayers &GetLayers()

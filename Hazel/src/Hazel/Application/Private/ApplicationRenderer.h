@@ -7,9 +7,9 @@ namespace Hazel
 	class ApplicationRenderer
 	{
 	public:
-		static void RenderNewFrame(ApplicationContext &context);
-		static void Clear(ApplicationContext &context);
-		static void UpdateLayers(ApplicationContext &context);
-		static void SwapBuffers(ApplicationContext &context);
+		static void BeginFrame(ApplicationContext &context);
+		static void RenderFrame(ApplicationContext &context);
+		static void RenderImGui(ApplicationContext &context);
+		static void EndFrame(ApplicationContext &context);
 	};
 }

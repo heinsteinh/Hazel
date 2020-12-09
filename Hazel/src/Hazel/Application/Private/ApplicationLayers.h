@@ -14,12 +14,12 @@ namespace Hazel
 
 	public:
 		void PushImGuiLayer();
-		void AttachLayers(LayerContext &context);
-		void DetachLayers();
+		void Attach(LayerContext &context);
+		void Detach();
 		void DispatchEvent(Event &e);
-		void UpdateLayers();
+		void Update();
 		void RenderImGui();
-		void ResetMouseScrollOffset();
+		void ClearMouseScrollOffset();
 
 		void PushLayer(const std::shared_ptr<Layer> &layer)
 		{

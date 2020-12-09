@@ -1,7 +1,8 @@
 #include "ApplicationMainLoop.h"
 
 #include "ApplicationSetup.h"
-#include "ApplicationUpdater.h"
+#include "ApplicationUpdate.h"
+#include "ApplicationEvents.h"
 
 namespace Hazel
 {
@@ -12,7 +13,7 @@ namespace Hazel
 		settings.Running = true;
 		while (settings.Running)
 		{
-			ApplicationUpdater::Update(context);
+			ApplicationUpdate::MainLoopUpdate(context);
 		}
 	}
 }

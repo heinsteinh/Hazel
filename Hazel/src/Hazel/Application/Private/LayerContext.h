@@ -13,7 +13,6 @@ namespace Hazel
 		ApplicationSettings settings;
 		std::unique_ptr<Window> window;
 		EventSystem eventSystem;
-		glm::vec4 clearColor{0.0f};
 
 	public:
 		float GetDeltaTime() const
@@ -39,7 +38,6 @@ namespace Hazel
 		Window &CreateApplicationWindow(const WindowInfo &info)
 		{
 			window = std::make_unique<Window>(info);
-			window->GetGraphicsContext().SetClearColor(clearColor);
 			eventSystem.SetWindow(*window);
 			return *window;
 		}
@@ -62,20 +60,6 @@ namespace Hazel
 		void PollEvents()
 		{
 			eventSystem.PollEvents();
-		}
-
-		const glm::vec4 GetClearColor() const
-		{
-			return clearColor;
-		}
-
-		void SetClearColor(const glm::vec4 &clearColor)
-		{
-			this->clearColor = clearColor;
-			if (window)
-			{
-				window->GetGraphicsContext().SetClearColor(clearColor);
-			}
 		}
 	};
 }
