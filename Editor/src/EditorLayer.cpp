@@ -61,6 +61,11 @@ namespace Hazel
 
 	void EditorLayer::OnUpdate()
 	{
+		if (Size::IsEmpty(viewport))
+		{
+			return;
+		}
+
 		SubTexture &texture = square.GetComponent<TextureComponent>().Texture;
 		texture.SetRegion(region);
 
@@ -90,18 +95,22 @@ namespace Hazel
 		auto windowPosition = ImGui::GetWindowPos();
 		glm::vec2 newSize = {viewportSize.x, viewportSize.y};
 		glm::vec2 newPosition = {windowPosition.x, windowPosition.y};
-		if (newSize != viewport || newPosition != position)
+		if (!Size::IsEmpty(newSize) && (newSize != viewport || newPosition != position))
 		{
 			viewport = newSize;
 			position = newPosition;
-			auto ratio = GetWindow().GetSize() / viewport;
+			auto windowPosition = GetWindow().GetPosition();
+			auto windowSize = GetWindow().GetSize();
+			auto computed = position - windowPosition;
+			auto ratio = windowSize / newSize;
 			auto newViewport = Rectangle::FromBottomLeftAndSize(
-				(position - GetWindow().GetPosition()) / glm::vec2(ratio.x, 1.0f),
+				computed,
 				viewport);
 			Log::Warn("New viewport size: {} {}", viewport.x, viewport.y);
 			Log::Warn("New window position: {} {}", position.x, position.y);
 			framebuffer = GetGraphicsContext().CreateFramebuffer({viewport});
 			scene->OnViewportResize(newViewport);
+			OnUpdate();
 		}
 
 		ImGui::Image(
