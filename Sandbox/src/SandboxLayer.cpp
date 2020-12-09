@@ -8,9 +8,7 @@
 namespace Sandbox
 {
 	SandboxLayer::SandboxLayer()
-		: Layer("Sandbox"),
-		squareMesh(Hazel::SquareMesh::CreateMesh()),
-		drawData{squareMesh.get(), &transform}
+		: Layer("Sandbox")
 	{
 	}
 
@@ -18,82 +16,80 @@ namespace Sandbox
 	{
 		auto &graphicsContext = GetGraphicsContext();
 
-		Hazel::BatchInfo rendererInfo;
-		rendererInfo.MaxIndexCount = maxIndices;
-		rendererInfo.MaxVertexCount = maxVertices;
+		rendererInfo.MaxIndexCount = 10000;
+		rendererInfo.MaxVertexCount = 40000;
 		rendererInfo.MaxTextureSlotCount = graphicsContext.GetMaxTextureSlotCount();
 		renderer = std::make_shared<Hazel::Renderer2D>(graphicsContext, rendererInfo);
 
 		spriteSheet = Hazel::TextureBuilder::CreateTextureFromFile(
 			GetGraphicsContext(),
 			"assets\\textures\\SpriteSheet.png");
+		region = spriteSheet.GetRegion();
 
-		drawData.Texture = &spriteSheet;
-		transform.Scale = glm::vec3(spriteSheet.GetAspectRatio(), 1.0f, 1.0f);
+		Hazel::SceneInfo sceneInfo;
+		sceneInfo.Layer = this;
+		sceneInfo.Renderer = renderer.get();
+		scene = std::make_shared<Hazel::Scene>(sceneInfo);
 
-		particles = std::make_shared<Hazel::TestParticle>(*renderer, camera, GetInput());
-
-		scene.SetRenderer(*renderer);
-
-		camera = scene.CreateEntity();
-		camera.AddComponent<Hazel::TransformComponent>();
-		camera.AddComponent<Hazel::CameraComponent>();
-
-		square = scene.CreateEntity();
-		square.AddComponent<Hazel::TransformComponent>().Transform.Scale.x = spriteSheet.GetAspectRatio();
+		square = scene->CreateEntity();
 		square.AddComponent<Hazel::SpriteComponent>();
+		square.AddComponent<Hazel::TransformComponent>().Transform.Scale.x = spriteSheet.GetRegion().GetAspectRatio();
 		square.AddComponent<Hazel::TextureComponent>(spriteSheet);
+
+		camera1 = scene->CreateEntity();
+		camera1.AddComponent<Hazel::TransformComponent>();
+		camera1.AddComponent<Hazel::NativeScriptComponent>(std::make_shared<Hazel::CameraControllerScript>());
+		camera1.AddComponent<Hazel::CameraComponent>();
+
+		scene->SetMainCamera(camera1);
+
+		camera2 = scene->CreateEntity();
+		camera2.AddComponent<Hazel::TransformComponent>().Transform.Translation.x = 1.0f;
+		camera2.AddComponent<Hazel::CameraComponent>();
+
+		auto particleEmitter = scene->CreateEntity();
+		particleEmitter.AddComponent<Hazel::ParticleSourceComponent>();
+		particleEmitter.AddComponent<Hazel::NativeScriptComponent>(std::make_shared<Hazel::ParticleScript>());
+
+		scene->OnViewportResize(Hazel::Rectangle::FromBottomLeftAndSize({0.0f, 0.0f}, GetWindow().GetSize()));
 	}
 
 	void SandboxLayer::OnDetach()
 	{
 	}
 
-	void SandboxLayer::OnUpdate(float deltaTime)
+	void SandboxLayer::OnUpdate()
 	{
-		renderTime = deltaTime;
-		spriteSheet.SetRegion(Hazel::Rectangle::FromBottomLeftAndSize(bottomLeft, size));
-		scene.OnUpdate(deltaTime);
-		particles->OnUpdate(deltaTime);
+		Hazel::SubTexture &texture = square.GetComponent<Hazel::TextureComponent>().Texture;
+		texture.SetRegion(region);
+
+		scene->OnUpdate();
+		scene->OnRender();
 	}
 
 	void SandboxLayer::OnImGuiRender()
 	{
-		ImGui::Begin("Info");
-		ImGui::Text("Update Time: %.2fms (%.2fFPS)", 1000 * renderTime, 1.0f / renderTime);
-		ImGui::End();
+		scene->OnImGuiRender();
 
-		transformUI.Draw("Camera", camera.GetComponent<Hazel::TransformComponent>().Transform);
-		transformUI.Draw("Transform", square.GetComponent<Hazel::TransformComponent>().Transform);
+		infoPanel.Draw("Info", *this);
+		transformPanel.Draw("Camera", camera1.GetComponent<Hazel::TransformComponent>().Transform);
+		transformPanel.Draw("Transform", square.GetComponent<Hazel::TransformComponent>().Transform);
 
-		ImGui::Begin("Texture Coordinates");
-		ImGui::SliderFloat("Left", &bottomLeft.x, 0.0f, 2560.0f);
-		ImGui::SliderFloat("Bottom", &bottomLeft.y, 0.0f, 1664.0f);
-		ImGui::SliderFloat("Width", &size.x, 0.0f, 2560.0f);
-		ImGui::SliderFloat("Height", &size.y, 0.0f, 1664.0f);
-		ImGui::End();
+		textureRegionPanel.Draw("Texture Coordinates", region, spriteSheet.GetSource()->GetSize());
 
-		ImGui::Begin("Renderer");
-		ImGui::SliderInt("MaxVertices", &maxVertices, 0, 100000);
-		ImGui::SliderInt("MaxIndices", &maxIndices, 0, 100000);
-		ImGui::Text("DrawCall: %zu", renderer->GetStatistics().DrawCallCount);
-		ImGui::Text("VertexCount: %zu", renderer->GetStatistics().VertexCount);
-		ImGui::Text("IndexCount: %zu", renderer->GetStatistics().IndexCount);
-		ImGui::Text("TextureCount: %zu", renderer->GetStatistics().TextureCount);
-		if (ImGui::Button("Reset"))
+		rendererInfoPanel.Draw("Renderer Info", rendererInfo, renderer->GetStatistics());
+		if (rendererInfoPanel.WantReset())
 		{
-			OnAttach();
+			renderer = std::make_shared<Hazel::Renderer2D>(GetGraphicsContext(), rendererInfo);
 		}
-		ImGui::End();
-
-		particles->OnImGuiRender();
 	}
 
 	void SandboxLayer::OnEvent(Hazel::Event &e)
 	{
 		e.Dispatch([this](Hazel::WindowResizeEvent &e)
 		{
-			scene.OnViewportResize(e.GetSize());
+			scene->OnViewportResize(Hazel::Rectangle::FromBottomLeftAndSize({0.0f, 0.0f}, e.GetSize()));
 		});
+		scene->OnEvent(e);
 	}
 }

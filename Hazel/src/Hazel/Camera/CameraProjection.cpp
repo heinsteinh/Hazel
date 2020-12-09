@@ -24,6 +24,10 @@ namespace Hazel
 
 	glm::vec4 CameraProjection::GetViewport(const Rectangle &viewport)
 	{
-		return glm::vec4(viewport.Left, viewport.Bottom + viewport.Top, viewport.Right, viewport.Bottom - viewport.Top);
+		return glm::vec4(
+			viewport.Left,
+			viewport.Bottom + viewport.Top,
+			viewport.Right,
+			viewport.Bottom - viewport.Top);
 	}
 }
