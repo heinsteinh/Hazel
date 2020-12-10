@@ -23,6 +23,7 @@ namespace Hazel
 	void ParticleEmitter::InitVelocity(Particle &particle, const ParticleInfo &info)
 	{
 		particle.LinearVelocity = info.LinearVelocity + info.LinearVelocityVariation * random.GetVector2D();
+		particle.AngularVelocity = info.AngularVelocity + info.AngularVelocityVariation * random.GetFloat();
 	}
 
 	void ParticleEmitter::InitColor(Particle &particle, const ParticleInfo &info)

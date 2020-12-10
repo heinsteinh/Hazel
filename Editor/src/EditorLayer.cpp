@@ -99,13 +99,20 @@ namespace Hazel
 		{
 			viewport = newSize;
 			position = newPosition;
+
 			auto windowPosition = GetWindow().GetPosition();
 			auto windowSize = GetWindow().GetSize();
+
 			auto computed = position - windowPosition;
 			auto ratio = windowSize / newSize;
+
+			auto windowAspectRatio = Size::GetAspectRatio(windowSize);
+			auto aspectRatio = Size::GetAspectRatio(viewport);
+
 			auto newViewport = Rectangle::FromBottomLeftAndSize(
 				computed,
 				viewport);
+
 			Log::Warn("New viewport size: {} {}", viewport.x, viewport.y);
 			Log::Warn("New window position: {} {}", position.x, position.y);
 			framebuffer = GetGraphicsContext().CreateFramebuffer({viewport});
@@ -144,10 +151,6 @@ namespace Hazel
 
 	void EditorLayer::OnEvent(Event &e)
 	{
-		/*e.Dispatch([&](WindowResizeEvent &e)
-		{
-			scene->OnViewportResize(Rectangle::FromBottomLeftAndSize({0.0f, 0.0f}, e.GetSize()));
-		});*/
 		scene->OnEvent(e);
 	}
 }

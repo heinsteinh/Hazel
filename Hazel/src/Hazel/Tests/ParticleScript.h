@@ -34,8 +34,8 @@ namespace Hazel
 
 		virtual void OnUpdate() override
 		{
-			auto particleSystem = TryGetComponent<ParticleSourceComponent>();
-			if (!particleSystem)
+			auto particleSource = TryGetComponent<ParticleSourceComponent>();
+			if (!particleSource)
 			{
 				return;
 			}
@@ -45,13 +45,13 @@ namespace Hazel
 				particleInfo.Position = GetCamera().GetWorldPosition(input.GetMousePosition());
 				for (int i = 0; i < panel.GetEmissionCount(); i++)
 				{
-					particleSystem->ParticleSource.EmitParticle(particleInfo);
+					particleSource->ParticleSource.EmitParticle(particleInfo);
 				}
 			}
 			auto maxParticleCount = panel.GetMaxParticleCount();
-			if (panel.GetMaxParticleCount() != particleSystem->ParticleSource.GetMaxParticleCount())
+			if (panel.GetMaxParticleCount() != particleSource->ParticleSource.GetMaxParticleCount())
 			{
-				particleSystem->ParticleSource.SetMaxParticleCount(maxParticleCount);
+				particleSource->ParticleSource.SetMaxParticleCount(maxParticleCount);
 			}
 		}
 

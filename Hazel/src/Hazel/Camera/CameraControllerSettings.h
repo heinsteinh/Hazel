@@ -11,8 +11,8 @@ namespace Hazel
 		Key Down = Key::S;
 		Key Right = Key::D;
 		Key Left = Key::A;
-		Key ClockwiseRotation = Key::E;
-		Key CounterClockwiseRotation = Key::Q;
+		Key ClockwiseRotation = Key::Q;
+		Key CounterClockwiseRotation = Key::E;
 		float TranslationSpeed = 1.0f;
 		float RotationSpeed = 1.0f;
 		float ZoomSpeed = 0.2f;

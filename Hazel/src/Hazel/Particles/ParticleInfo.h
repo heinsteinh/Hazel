@@ -8,6 +8,7 @@ namespace Hazel
 		glm::vec2 LinearVelocity{0.0f};
 		glm::vec2 LinearVelocityVariation{0.0f};
 		float AngularVelocity = 0.0f;
+		float AngularVelocityVariation = 0.0f;
 		glm::vec4 ColorBegin{0.0f};
 		glm::vec4 ColorEnd{0.0f};
 		float SizeBegin = 0.1f;

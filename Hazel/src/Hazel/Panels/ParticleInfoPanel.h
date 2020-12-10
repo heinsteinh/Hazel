@@ -20,6 +20,7 @@ namespace Hazel
 			ImGui::SliderFloat2("LinearVelocity", glm::value_ptr(particleInfo.LinearVelocity), -1.0f, 1.0f);
 			ImGui::SliderFloat2("LinearVelocityVariation", glm::value_ptr(particleInfo.LinearVelocityVariation), -1.0f, 1.0f);
 			ImGui::SliderFloat("AngularVelocity", &particleInfo.AngularVelocity, -3.0f, 3.0f);
+			ImGui::SliderFloat("AngularVelocityVariation", &particleInfo.AngularVelocityVariation, -3.0f, 3.0f);
 			ImGui::ColorPicker4("ColorBegin", glm::value_ptr(particleInfo.ColorBegin));
 			ImGui::ColorPicker4("ColorEnd", glm::value_ptr(particleInfo.ColorEnd));
 			ImGui::SliderFloat("SizeBegin", &particleInfo.SizeBegin, 0.0f, 1.0f);
