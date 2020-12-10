@@ -16,7 +16,6 @@ namespace Hazel
 			case EventType::KeyPress:
 			case EventType::KeyType:
 			case EventType::MouseButtonPress:
-			case EventType::MouseMove:
 			case EventType::MouseScroll:
 				return true;
 			}
