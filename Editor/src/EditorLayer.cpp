@@ -100,17 +100,8 @@ namespace Hazel
 			viewport = newSize;
 			position = newPosition;
 
-			auto windowPosition = GetWindow().GetPosition();
-			auto windowSize = GetWindow().GetSize();
-
-			auto computed = position - windowPosition;
-			auto ratio = windowSize / newSize;
-
-			auto windowAspectRatio = Size::GetAspectRatio(windowSize);
-			auto aspectRatio = Size::GetAspectRatio(viewport);
-
 			auto newViewport = Rectangle::FromBottomLeftAndSize(
-				computed,
+				position - GetWindow().GetPosition(),
 				viewport);
 
 			Log::Warn("New viewport size: {} {}", viewport.x, viewport.y);

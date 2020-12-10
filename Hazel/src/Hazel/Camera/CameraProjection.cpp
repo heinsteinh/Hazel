@@ -26,8 +26,8 @@ namespace Hazel
 	{
 		return glm::vec4(
 			viewport.Left,
-			viewport.Bottom + viewport.Top,
-			viewport.Right,
-			viewport.Bottom - viewport.Top);
+			viewport.Top,
+			viewport.GetWidth(),
+			-viewport.GetHeight());
 	}
 }
