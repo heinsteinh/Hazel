@@ -124,6 +124,11 @@ namespace Hazel
 		transformPanel.Draw("Camera", camera1.GetComponent<TransformComponent>().Transform);
 		transformPanel.Draw("Transform", square.GetComponent<TransformComponent>().Transform);
 
+		auto &color = square.GetComponent<SpriteComponent>().Color;
+		ImGui::Begin("Color");
+		ImGui::ColorEdit4("TextureColor", glm::value_ptr(color));
+		ImGui::End();
+
 		textureRegionPanel.Draw("Texture Coordinates", region, spriteSheet.GetSource()->GetSize());
 
 		rendererInfoPanel.Draw("Renderer Info", rendererInfo, renderer->GetStatistics());
