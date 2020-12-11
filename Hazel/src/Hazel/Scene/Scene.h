@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneContext.h"
+#include "Hazel/Components/TagComponent.h"
 #include "Hazel/Components/CameraComponent.h"
 #include "Hazel/Components/TransformComponent.h"
 #include "Hazel/Components/TextureComponent.h"
@@ -8,11 +9,12 @@
 #include "Hazel/Components/ParticleSourceComponent.h"
 #include "Hazel/Components/NativeScriptComponent.h"
 #include "Hazel/Panels/InfoPanel.h"
-#include "Hazel/Panels/TextureRegionPanel.h"
+#include "Hazel/Panels/RectanglePanel.h"
 #include "Hazel/Panels/RendererInfoPanel.h"
 #include "Hazel/Panels/TransformPanel.h"
 #include "Hazel/Tests/CameraControllerScript.h"
 #include "Hazel/Tests/ParticleScript.h"
+#include "Hazel/Utils/FunctorTraits.h"
 
 namespace Hazel
 {
@@ -53,6 +55,15 @@ namespace Hazel
 		void RemoveEntity(Entity entity)
 		{
 			context.GetRegistry().destroy(entity);
+		}
+
+		template<typename FunctorType>
+		void ForEach(FunctorType functor)
+		{
+			context.GetRegistry().each([&](auto entity)
+			{
+				functor(Entity(entity, context));
+			});
 		}
 	};
 }

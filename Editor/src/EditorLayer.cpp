@@ -35,11 +35,13 @@ namespace Hazel
 		scene = std::make_shared<Scene>(sceneInfo);
 
 		square = scene->CreateEntity();
+		square.AddComponent<TagComponent>("Square");
 		square.AddComponent<SpriteComponent>();
 		square.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet.GetRegion().GetAspectRatio();
 		square.AddComponent<TextureComponent>(spriteSheet);
 
 		camera1 = scene->CreateEntity();
+		camera1.AddComponent<TagComponent>("Camera1");
 		camera1.AddComponent<TransformComponent>();
 		camera1.AddComponent<NativeScriptComponent>(std::make_shared<CameraControllerScript>());
 		camera1.AddComponent<CameraComponent>();
@@ -47,10 +49,12 @@ namespace Hazel
 		scene->SetMainCamera(camera1);
 
 		camera2 = scene->CreateEntity();
+		camera2.AddComponent<TagComponent>("Camera2");
 		camera2.AddComponent<TransformComponent>().Transform.Translation.x = 1.0f;
 		camera2.AddComponent<CameraComponent>();
 
 		auto particleEmitter = scene->CreateEntity();
+		particleEmitter.AddComponent<TagComponent>("Particle Emitter");
 		particleEmitter.AddComponent<ParticleSourceComponent>();
 		particleEmitter.AddComponent<NativeScriptComponent>(std::make_shared<ParticleScript>());
 	}
@@ -120,7 +124,14 @@ namespace Hazel
 		ImGui::End();
 		ImGui::PopStyleVar();
 
-		infoPanel.Draw("Info", *this);
+		ImGui::Begin("Test");
+		if (ImGui::Checkbox("Camera 1", &useCamera1))
+		{
+			scene->SetMainCamera(useCamera1 ? camera1 : camera2);
+		}
+		ImGui::End();
+
+		/*infoPanel.Draw("Info", *this);
 		transformPanel.Draw("Camera", camera1.GetComponent<TransformComponent>().Transform);
 		transformPanel.Draw("Transform", square.GetComponent<TransformComponent>().Transform);
 
@@ -131,11 +142,13 @@ namespace Hazel
 
 		textureRegionPanel.Draw("Texture Coordinates", region, spriteSheet.GetSource()->GetSize());
 
-		rendererInfoPanel.Draw("Renderer Info", rendererInfo, renderer->GetStatistics());
+		rendererInfoPanel.Draw("Renderer Info", rendererInfo, renderer->GetStatistics());*/
 		/*if (rendererInfoPanel.WantReset())
 		{
 			renderer = std::make_shared<Renderer2D>(GetGraphicsContext(), rendererInfo);
 		}*/
+
+		scenePanel.Draw("Scene Hierarchy", *scene);
 
 		editorWindow.End();
 

@@ -12,11 +12,13 @@ namespace Hazel
 		bool blockMouse = false;
 		glm::vec2 viewport{0.0f};
 		glm::vec2 position{0.0f};
+		SceneHierarchyPanel scenePanel;
 		InfoPanel infoPanel;
 		TransformPanel transformPanel;
-		TextureRegionPanel textureRegionPanel;
+		RectanglePanel textureRegionPanel;
 		RendererInfoPanel rendererInfoPanel;
 
+		bool useCamera1 = true;
 		BatchInfo rendererInfo;
 		std::shared_ptr<Renderer2D> renderer;
 		std::shared_ptr<Framebuffer> framebuffer;

@@ -53,7 +53,7 @@ namespace Hazel
 		}
 
 		template<typename FunctorType>
-		void Dispatch(const FunctorType &functor)
+		void Dispatch(FunctorType functor)
 		{
 			using Traits = FunctorTraits<FunctorType>;
 			static_assert(Traits::ArgCount == 1, "Functor must take only one argument.");

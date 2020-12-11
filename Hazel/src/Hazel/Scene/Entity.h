@@ -24,6 +24,11 @@ namespace Hazel
 			return context && context->GetRegistry().valid(entity);
 		}
 
+		uint32_t GetId() const
+		{
+			return static_cast<uint32_t>(entity);
+		}
+
 		SceneContext &GetSceneContext() const
 		{
 			return *context;
@@ -60,6 +65,16 @@ namespace Hazel
 		{
 			EntityEvents::OnRemoveComponent<ComponentType>(*this);
 			context->GetRegistry().remove<ComponentType>(entity);
+		}
+
+		bool operator==(const Entity &other) const
+		{
+			return entity == other.entity && context == other.context;
+		}
+
+		bool operator!=(const Entity &other) const
+		{
+			return !(*this == other);
 		}
 
 		operator entt::entity() const
