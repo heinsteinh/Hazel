@@ -5,6 +5,7 @@ namespace Hazel
 	enum class ProjectionType
 	{
 		Orthographic,
-		Perspective
+		Perspective,
+		Count = Perspective + 1
 	};
 }

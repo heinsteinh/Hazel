@@ -19,7 +19,7 @@ namespace Hazel
 		case ProjectionType::Orthographic:
 			return orthographicProjection.Size;
 		case ProjectionType::Perspective:
-			return perspectiveProjection.Fov;
+			return perspectiveProjection.VerticalFov;
 		}
 		HZ_INVALID_PERSPECTIVE();
 	}
@@ -32,12 +32,36 @@ namespace Hazel
 			orthographicProjection.Size = zoomLevel;
 			break;
 		case ProjectionType::Perspective:
-			perspectiveProjection.Fov = zoomLevel;
+			perspectiveProjection.VerticalFov = zoomLevel;
 			break;
 		default:
 			HZ_INVALID_PERSPECTIVE();
 		}
 		RecomputeProjection();
+	}
+
+	void Camera::SetProjectionType(ProjectionType projectionType)
+	{
+		this->projectionType = projectionType;
+		RecomputeProjection();
+	}
+
+	void Camera::SetOrthographicProjection(const OrthographicProjection &orthographicProjection)
+	{
+		this->orthographicProjection = orthographicProjection;
+		if (projectionType == ProjectionType::Orthographic)
+		{
+			RecomputeProjection();
+		}
+	}
+
+	void Camera::SetPerspectiveProjection(const PerspectiveProjection &perspectiveProjection)
+	{
+		this->perspectiveProjection = perspectiveProjection;
+		if (projectionType == ProjectionType::Perspective)
+		{
+			RecomputeProjection();
+		}
 	}
 
 	void Camera::RecomputeProjection()

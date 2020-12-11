@@ -19,15 +19,13 @@ namespace Hazel
 		void SetViewport(const Rectangle &viewport);
 		float GetZoomLevel() const;
 		void SetZoomLevel(float zoomLevel);
+		void SetProjectionType(ProjectionType projectionType);
+		void SetOrthographicProjection(const OrthographicProjection &orthographicProjection);
+		void SetPerspectiveProjection(const PerspectiveProjection &perspectiveProjection);
 
 		ProjectionType GetProjectionType() const
 		{
 			return projectionType;
-		}
-
-		void SetProjectionType(ProjectionType projectionType)
-		{
-			this->projectionType = projectionType;
 		}
 
 		const OrthographicProjection &GetOrthographicProjection() const
@@ -35,19 +33,9 @@ namespace Hazel
 			return orthographicProjection;
 		}
 
-		void SetOrthographicProjectionInfo(const OrthographicProjection &orthographicProjection)
-		{
-			this->orthographicProjection = orthographicProjection;
-		}
-
 		const PerspectiveProjection &GetPerspectiveProjection() const
 		{
 			return perspectiveProjection;
-		}
-
-		void SetPerspectiveProjectionInfo(const PerspectiveProjection &perspectiveProjection)
-		{
-			this->perspectiveProjection = perspectiveProjection;
 		}
 
 		const glm::mat4 &GetProjection() const
