@@ -7,10 +7,10 @@
 
 namespace Hazel
 {
-	class EntityTreeNodeHelper
+	class EntityPanelHelper
 	{
 	public:
-		static void *GetId(Entity entity)
+		static void *GetEntityId(Entity entity)
 		{
 			return reinterpret_cast<void *>(static_cast<size_t>(entity.GetId()));
 		}

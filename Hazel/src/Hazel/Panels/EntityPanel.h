@@ -1,6 +1,6 @@
 #pragma once
 
-#include "EntityTreeNode.h"
+#include "Private/EntityTreeNode.h"
 
 namespace Hazel
 {

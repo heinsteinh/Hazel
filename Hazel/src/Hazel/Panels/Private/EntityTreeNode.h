@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Private/EntityTreeNodeHelper.h"
+#include "EntityPanelHelper.h"
 
 namespace Hazel
 {
@@ -10,9 +10,9 @@ namespace Hazel
 		bool Begin(Entity entity, Entity &selectedEntity)
 		{
 			bool open = ImGui::TreeNodeEx(
-				EntityTreeNodeHelper::GetId(entity),
-				EntityTreeNodeHelper::GetFlags(entity, selectedEntity),
-				EntityTreeNodeHelper::GetTag(entity));
+				EntityPanelHelper::GetEntityId(entity),
+				EntityPanelHelper::GetFlags(entity, selectedEntity),
+				EntityPanelHelper::GetTag(entity));
 			if (ImGui::IsItemClicked())
 			{
 				selectedEntity = entity;

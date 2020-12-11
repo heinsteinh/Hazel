@@ -1,17 +1,30 @@
 #pragma once
 
 #include "EntityPanel.h"
+#include "PropertiesPanel.h"
 
 namespace Hazel
 {
 	class SceneHierarchyPanel
 	{
 	private:
-		EntityPanel entityPanel;
 		Entity selectedEntity;
+		EntityPanel entityPanel;
+		PropertiesPanel propertiesPanel;
 
 	public:
 		void Draw(const char *label, Scene &scene)
+		{
+			DrawEntities(label, scene);
+			if (WantDeselectEntity())
+			{
+				selectedEntity = {};
+			}
+			propertiesPanel.Draw("Properties", selectedEntity);
+		}
+
+	private:
+		void DrawEntities(const char *label, Scene &scene)
 		{
 			ImGui::Begin(label);
 			scene.ForEach([this](auto entity)
@@ -19,6 +32,11 @@ namespace Hazel
 				entityPanel.Draw(entity, selectedEntity);
 			});
 			ImGui::End();
+		}
+
+		bool WantDeselectEntity() const
+		{
+			return ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsWindowHovered();
 		}
 	};
 }

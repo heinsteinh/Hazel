@@ -29,9 +29,9 @@ namespace Hazel
 			this->speed = speed;
 		}
 
-		void Draw(const char *label, glm::vec3 &value)
+		bool Draw(const char *label, glm::vec3 &value)
 		{
-			ImGui::DragFloat3(label, glm::value_ptr(value), speed, minValue, maxValue, "%.2f");
+			return ImGui::DragFloat3(label, glm::value_ptr(value), speed, minValue, maxValue, "%.2f");
 		}
 	};
 }
