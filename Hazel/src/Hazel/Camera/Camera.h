@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Hazel/Geometry/MvpMatrix.h"
+#include "Hazel/Geometry/ProjectionType.h"
+#include "Hazel/Geometry/OrthographicProjection.h"
+#include "Hazel/Geometry/PerspectiveProjection.h"
 #include "Hazel/Geometry/Rectangle.h"
 
 namespace Hazel
@@ -8,36 +10,44 @@ namespace Hazel
 	class Camera
 	{
 	private:
-		OrthographicProjectionInfo projectionInfo;
+		ProjectionType projectionType = ProjectionType::Orthographic;
+		OrthographicProjection orthographicProjection;
+		PerspectiveProjection perspectiveProjection;
 		glm::mat4 projection{1.0f};
 
 	public:
-		const OrthographicProjectionInfo &GetProjectionInfo() const
+		void SetViewport(const Rectangle &viewport);
+		float GetZoomLevel() const;
+		void SetZoomLevel(float zoomLevel);
+
+		ProjectionType GetProjectionType() const
 		{
-			return projectionInfo;
+			return projectionType;
 		}
 
-		void SetProjectionInfo(const OrthographicProjectionInfo &projectionInfo)
+		void SetProjectionType(ProjectionType projectionType)
 		{
-			this->projectionInfo = projectionInfo;
-			RecomputeProjection();
+			this->projectionType = projectionType;
 		}
 
-		void SetViewport(const Rectangle &viewport)
+		const OrthographicProjection &GetOrthographicProjection() const
 		{
-			projectionInfo.AspectRatio = viewport.GetAspectRatio();
-			RecomputeProjection();
+			return orthographicProjection;
 		}
 
-		float GetZoomLevel() const
+		void SetOrthographicProjectionInfo(const OrthographicProjection &orthographicProjection)
 		{
-			return projectionInfo.Size;
+			this->orthographicProjection = orthographicProjection;
 		}
 
-		void SetZoomLevel(float zoomLevel)
+		const PerspectiveProjection &GetPerspectiveProjection() const
 		{
-			projectionInfo.Size = zoomLevel;
-			RecomputeProjection();
+			return perspectiveProjection;
+		}
+
+		void SetPerspectiveProjectionInfo(const PerspectiveProjection &perspectiveProjection)
+		{
+			this->perspectiveProjection = perspectiveProjection;
 		}
 
 		const glm::mat4 &GetProjection() const
@@ -46,9 +56,6 @@ namespace Hazel
 		}
 
 	private:
-		void RecomputeProjection()
-		{
-			projection = MvpMatrix::GetOrthographicProjection(projectionInfo);
-		}
+		void RecomputeProjection();
 	};
 }

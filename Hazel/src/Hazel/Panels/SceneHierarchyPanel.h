@@ -16,10 +16,6 @@ namespace Hazel
 		void Draw(const char *label, Scene &scene)
 		{
 			DrawEntities(label, scene);
-			if (WantDeselectEntity())
-			{
-				selectedEntity = {};
-			}
 			propertiesPanel.Draw("Properties", selectedEntity);
 		}
 
@@ -31,6 +27,10 @@ namespace Hazel
 			{
 				entityPanel.Draw(entity, selectedEntity);
 			});
+			if (WantDeselectEntity())
+			{
+				selectedEntity = {};
+			}
 			ImGui::End();
 		}
 

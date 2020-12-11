@@ -2,7 +2,7 @@
 
 namespace Hazel
 {
-	class Comparator
+	class Range
 	{
 	public:
 		template<typename T>

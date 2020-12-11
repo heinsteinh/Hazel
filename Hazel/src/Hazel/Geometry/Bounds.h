@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Comparator.h"
+#include "Range.h"
 
 namespace Hazel
 {
@@ -11,17 +11,17 @@ namespace Hazel
 
 		constexpr bool ContainsX(float position) const
 		{
-			return Comparator::Contains(position, Min.x, Max.x);
+			return Range::Contains(position, Min.x, Max.x);
 		}
 
 		constexpr bool ContainsY(float position) const
 		{
-			return Comparator::Contains(position, Min.y, Max.y);
+			return Range::Contains(position, Min.y, Max.y);
 		}
 
 		constexpr bool ContainsZ(float position) const
 		{
-			return Comparator::Contains(position, Min.z, Max.z);
+			return Range::Contains(position, Min.z, Max.z);
 		}
 
 		constexpr bool Contains(const glm::vec2 &position) const
@@ -36,17 +36,17 @@ namespace Hazel
 
 		constexpr float ClampX(float position) const
 		{
-			return Comparator::Clamp(position, Min.x, Max.x);
+			return Range::Clamp(position, Min.x, Max.x);
 		}
 
 		constexpr float ClampY(float position) const
 		{
-			return Comparator::Clamp(position, Min.y, Max.y);
+			return Range::Clamp(position, Min.y, Max.y);
 		}
 
 		constexpr float ClampZ(float position) const
 		{
-			return Comparator::Clamp(position, Min.z, Max.z);
+			return Range::Clamp(position, Min.z, Max.z);
 		}
 
 		constexpr glm::vec2 Clamp(const glm::vec2 &position) const

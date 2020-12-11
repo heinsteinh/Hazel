@@ -17,5 +17,12 @@ namespace Hazel
 		{
 			return Rotation * (glm::vec4(Scale, 1.0f) * position) + glm::vec4(Translation, 0.0f);
 		}
+
+		glm::mat4 ToMatrix() const
+		{
+			return glm::translate(glm::mat4(1.0f), Translation)
+				* static_cast<glm::mat4>(Rotation)
+				* glm::scale(glm::mat4(1.0f), Scale);
+		}
 	};
 }

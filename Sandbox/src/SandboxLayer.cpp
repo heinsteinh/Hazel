@@ -72,8 +72,14 @@ namespace Sandbox
 		scene->OnImGuiRender();
 
 		infoPanel.Draw("Info", *this);
-		transformPanel.Draw("Camera", camera1.GetComponent<Hazel::TransformComponent>().Transform);
-		transformPanel.Draw("Transform", square.GetComponent<Hazel::TransformComponent>().Transform);
+
+		ImGui::Begin("Camera");
+		transformPanel.Draw(camera1.GetComponent<Hazel::TransformComponent>());
+		ImGui::End();
+
+		ImGui::Begin("Transform");
+		transformPanel.Draw(square.GetComponent<Hazel::TransformComponent>());
+		ImGui::End();
 
 		textureRegionPanel.Draw("Texture Coordinates", region, spriteSheet.GetSource()->GetSize());
 

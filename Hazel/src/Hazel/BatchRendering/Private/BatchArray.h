@@ -2,12 +2,12 @@
 
 namespace Hazel
 {
-	template<typename T>
+	template<typename ElementType>
 	class BatchArray
 	{
 	private:
 		size_t elementCount = 0;
-		std::vector<T> data;
+		std::vector<ElementType> data;
 
 	public:
 		BatchArray() = default;
@@ -47,12 +47,18 @@ namespace Hazel
 			return this->elementCount + elementCount <= GetMaxElementCount();
 		}
 
-		void Add(const T &element)
+		template<typename T>
+		void AddWithCast(const T &element)
+		{
+			Add(static_cast<ElementType>(element));
+		}
+
+		void Add(const ElementType &element)
 		{
 			data[elementCount++] = element;
 		}
 
-		T &Emplace()
+		ElementType &Emplace()
 		{
 			return data[elementCount++];
 		}
@@ -64,7 +70,7 @@ namespace Hazel
 
 		size_t GetSize() const
 		{
-			return elementCount * sizeof(T);
+			return elementCount * sizeof(ElementType);
 		}
 	};
 }

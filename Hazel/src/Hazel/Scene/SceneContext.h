@@ -35,6 +35,11 @@ namespace Hazel
 			return *renderer;
 		}
 
+		const Rectangle &GetViewport() const
+		{
+			return sceneCamera.GetViewport();
+		}
+
 		SceneCamera &GetSceneCamera()
 		{
 			return sceneCamera;

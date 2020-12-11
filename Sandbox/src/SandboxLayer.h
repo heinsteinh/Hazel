@@ -13,7 +13,7 @@ namespace Sandbox
 		glm::vec2 position{0.0f};
 		Hazel::InfoPanel infoPanel;
 		Hazel::TransformPanel transformPanel;
-		Hazel::TextureRegionPanel textureRegionPanel;
+		Hazel::RectanglePanel textureRegionPanel;
 		Hazel::RendererInfoPanel rendererInfoPanel;
 
 		Hazel::BatchInfo rendererInfo;

@@ -10,7 +10,7 @@ namespace Hazel
 
 		glm::mat4 GetModel() const
 		{
-			return MvpMatrix::GetModel(Transform);
+			return Transform.ToMatrix();
 		}
 
 		glm::mat4 GetView() const
