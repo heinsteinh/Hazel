@@ -69,9 +69,6 @@ namespace Hazel
 			return;
 		}
 
-		auto &texture = square.GetComponent<SpriteComponent>().Texture;
-		texture.SetRegion(region);
-
 		scene->OnUpdate();
 
 		GetGraphicsContext().SetFramebuffer(framebuffer.get());
@@ -128,7 +125,6 @@ namespace Hazel
 		{
 			scene->SetMainCamera(useCamera1 ? camera1 : camera2);
 		}
-		textureRegionPanel.Draw(region);
 		ImGui::End();
 
 		ImGui::Begin("Settings");

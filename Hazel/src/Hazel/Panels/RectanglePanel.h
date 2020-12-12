@@ -9,12 +9,14 @@ namespace Hazel
 	class RectanglePanel
 	{
 	public:
-		void Draw(Rectangle &rectangle)
+		bool Draw(Rectangle &rectangle)
 		{
-			ImGui::DragFloat("Left", &rectangle.Left);
-			ImGui::DragFloat("Right", &rectangle.Right);
-			ImGui::DragFloat("Bottom", &rectangle.Bottom);
-			ImGui::DragFloat("Top", &rectangle.Top);
+			bool changed = false;
+			changed |= ImGui::DragFloat("Left", &rectangle.Left);
+			changed |= ImGui::DragFloat("Right", &rectangle.Right);
+			changed |= ImGui::DragFloat("Bottom", &rectangle.Bottom);
+			changed |= ImGui::DragFloat("Top", &rectangle.Top);
+			return changed;
 		}
 	};
 }
