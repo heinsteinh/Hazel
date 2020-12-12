@@ -8,6 +8,9 @@ namespace Hazel
 	{
 		graphicsContext.SetIndexFormat(info.IndexFormat);
 		graphicsContext.SetPrimitiveTopology(info.PrimitiveTopology);
+		statistics.MaxVertexCount = info.MaxVertexCount;
+		statistics.MaxIndexCount = info.MaxIndexCount;
+		statistics.MaxTextureSlotCount = info.MaxTextureSlotCount;
 	}
 
 	void BatchRenderer::BeginScene(const glm::mat4 &viewProjectionMatrix)
@@ -36,7 +39,7 @@ namespace Hazel
 		statistics.DrawCallCount++;
 		statistics.IndexCount += batch.GetIndexCount();
 		statistics.VertexCount += batch.GetVertexCount();
-		statistics.TextureCount = batch.GetTextureCount();
+		statistics.UsedTextureSlotCount = batch.GetTextureCount();
 		batch.Clear();
 	}
 }

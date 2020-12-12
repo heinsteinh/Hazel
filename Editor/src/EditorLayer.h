@@ -14,9 +14,9 @@ namespace Hazel
 		glm::vec2 position{0.0f};
 		SceneHierarchyPanel scenePanel;
 		InfoPanel infoPanel;
-		TransformPanel transformPanel;
 		RectanglePanel textureRegionPanel;
-		RendererInfoPanel rendererInfoPanel;
+		RendererStatisticsPanel rendererStatisticsPanel;
+		BatchInfoPanel batchInfoPanel;
 
 		bool useCamera1 = true;
 		BatchInfo rendererInfo;

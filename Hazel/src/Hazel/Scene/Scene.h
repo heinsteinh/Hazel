@@ -10,7 +10,8 @@
 #include "Hazel/Components/NativeScriptComponent.h"
 #include "Hazel/Panels/InfoPanel.h"
 #include "Hazel/Panels/RectanglePanel.h"
-#include "Hazel/Panels/RendererInfoPanel.h"
+#include "Hazel/Panels/BatchInfoPanel.h"
+#include "Hazel/Panels/RendererStatisticsPanel.h"
 #include "Hazel/Panels/TransformPanel.h"
 #include "Hazel/Tests/CameraControllerScript.h"
 #include "Hazel/Tests/ParticleScript.h"
@@ -31,6 +32,11 @@ namespace Hazel
 		void OnViewportResize(const Rectangle &viewport);
 		void OnEvent(Event &e);
 		void OnImGuiRender();
+
+		void SetRenderer(Renderer2D &renderer)
+		{
+			context.SetRenderer(renderer);
+		}
 
 		Entity GetMainCamera()
 		{

@@ -3,7 +3,7 @@
 namespace Hazel
 {
 	BatchTextureArray::BatchTextureArray(size_t maxTextureCount)
-		: textures(maxTextureCount)
+		: textures(maxTextureCount > 0 ? maxTextureCount : 1)
 	{
 	}
 
