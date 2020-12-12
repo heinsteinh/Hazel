@@ -3,7 +3,6 @@
 #include "Hazel/Scene/SceneContext.h"
 #include "Hazel/Components/SpriteComponent.h"
 #include "Hazel/Components/TransformComponent.h"
-#include "Hazel/Components/TextureComponent.h"
 
 namespace Hazel
 {
@@ -14,8 +13,7 @@ namespace Hazel
 
 	private:
 		static void AddMesh(DrawData &drawData);
+		static void AddSprite(DrawData &drawData, const SpriteComponent &sprite);
 		static void AddTransform(DrawData &drawData, const TransformComponent *transform);
-		static void AddTexture(DrawData &drawData, const TextureComponent *component);
-		static void AddColor(DrawData &drawData, const SpriteComponent &sprite);
 	};
 }

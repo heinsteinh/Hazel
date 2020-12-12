@@ -36,9 +36,8 @@ namespace Hazel
 
 		square = scene->CreateEntity();
 		square.AddComponent<TagComponent>("Square");
-		square.AddComponent<SpriteComponent>();
+		square.AddComponent<SpriteComponent>(glm::vec4(1.0f), spriteSheet);
 		square.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet.GetRegion().GetAspectRatio();
-		square.AddComponent<TextureComponent>(spriteSheet);
 
 		camera1 = scene->CreateEntity();
 		camera1.AddComponent<TagComponent>("Camera1");
@@ -70,7 +69,7 @@ namespace Hazel
 			return;
 		}
 
-		SubTexture &texture = square.GetComponent<TextureComponent>().Texture;
+		auto &texture = square.GetComponent<SpriteComponent>().Texture;
 		texture.SetRegion(region);
 
 		scene->OnUpdate();
@@ -129,7 +128,7 @@ namespace Hazel
 		{
 			scene->SetMainCamera(useCamera1 ? camera1 : camera2);
 		}
-		textureRegionPanel.Draw("Texture Coordinates", region, spriteSheet.GetSource()->GetSize());
+		textureRegionPanel.Draw(region);
 		ImGui::End();
 
 		ImGui::Begin("Settings");

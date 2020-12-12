@@ -9,9 +9,8 @@ namespace Hazel
 		auto &registry = context.GetRegistry();
 		DrawData drawData;
 		AddMesh(drawData);
+		AddSprite(drawData, sprite);
 		AddTransform(drawData, registry.try_get<TransformComponent>(entity));
-		AddTexture(drawData, registry.try_get<TextureComponent>(entity));
-		AddColor(drawData, sprite);
 		context.GetRenderer().Render(drawData);
 	}
 
@@ -20,18 +19,14 @@ namespace Hazel
 		drawData.Mesh = &SquareMesh::GetMesh();
 	}
 
+	void SpriteRenderer::AddSprite(DrawData &drawData, const SpriteComponent &sprite)
+	{
+		drawData.Color = &sprite.Color;
+		drawData.Texture = &sprite.Texture;
+	}
+
 	void SpriteRenderer::AddTransform(DrawData &drawData, const TransformComponent *transform)
 	{
 		drawData.Transform = transform ? &transform->Transform : nullptr;
-	}
-
-	void SpriteRenderer::AddTexture(DrawData &drawData, const TextureComponent *texture)
-	{
-		drawData.Texture = texture ? &texture->Texture : nullptr;
-	}
-
-	void SpriteRenderer::AddColor(DrawData &drawData, const SpriteComponent &sprite)
-	{
-		drawData.Color = &sprite.Color;
 	}
 }

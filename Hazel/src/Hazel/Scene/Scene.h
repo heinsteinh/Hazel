@@ -4,7 +4,6 @@
 #include "Hazel/Components/TagComponent.h"
 #include "Hazel/Components/CameraComponent.h"
 #include "Hazel/Components/TransformComponent.h"
-#include "Hazel/Components/TextureComponent.h"
 #include "Hazel/Components/SpriteComponent.h"
 #include "Hazel/Components/ParticleSourceComponent.h"
 #include "Hazel/Components/NativeScriptComponent.h"

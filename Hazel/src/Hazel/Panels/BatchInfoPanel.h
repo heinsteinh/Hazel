@@ -12,9 +12,9 @@ namespace Hazel
 		bool Draw(BatchInfo &info)
 		{
 			bool changed = false;
-			int maxVertexCount = info.MaxVertexCount;
-			int maxIndexCount = info.MaxIndexCount;
-			int maxTextureSlotCount = info.MaxTextureSlotCount;
+			int maxVertexCount = static_cast<int>(info.MaxVertexCount);
+			int maxIndexCount = static_cast<int>(info.MaxIndexCount);
+			int maxTextureSlotCount = static_cast<int>(info.MaxTextureSlotCount);
 			if (ImGui::DragInt("Max Vertex", &maxVertexCount, 1.0f, 0, 100000))
 			{
 				info.MaxVertexCount = maxVertexCount;

@@ -9,14 +9,12 @@ namespace Hazel
 	class RectanglePanel
 	{
 	public:
-		void Draw(const char *label, Rectangle &rectangle, const glm::vec2 &maxSize)
+		void Draw(Rectangle &rectangle)
 		{
-			ImGui::Begin(label);
-			ImGui::SliderFloat("Left", &rectangle.Left, 0.0f, maxSize.x);
-			ImGui::SliderFloat("Right", &rectangle.Right, 0.0f, maxSize.x);
-			ImGui::SliderFloat("Bottom", &rectangle.Bottom, 0.0f, maxSize.y);
-			ImGui::SliderFloat("Top", &rectangle.Top, 0.0f, maxSize.y);
-			ImGui::End();
+			ImGui::DragFloat("Left", &rectangle.Left);
+			ImGui::DragFloat("Right", &rectangle.Right);
+			ImGui::DragFloat("Bottom", &rectangle.Bottom);
+			ImGui::DragFloat("Top", &rectangle.Top);
 		}
 	};
 }
