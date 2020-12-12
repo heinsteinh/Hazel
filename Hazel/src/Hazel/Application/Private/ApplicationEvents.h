@@ -1,14 +1,29 @@
 #pragma once
 
 #include "ApplicationContext.h"
-#include "Hazel/Events/Event.h"
+#include "ApplicationUpdate.h"
 
 namespace Hazel
 {
 	class ApplicationEvents
 	{
 	public:
-		static void PollEvents(ApplicationContext &context);
-		static void ProcessEvent(ApplicationContext &context, Event &e);
+		static void ProcessEvent(ApplicationContext &context, Event &e)
+		{
+			Log::Debug("{}.", e);
+			e.Dispatch([&](WindowCloseEvent &e)
+			{
+				context.GetSettings().Running = false;
+			});
+			e.Dispatch([&](WindowResizeEvent &e)
+			{
+				context.GetGraphicsContext().SetViewport({0.0f, e.GetWidth(), 0.0f, e.GetHeight()});
+			});
+			context.GetLayers().DispatchEvent(e);
+			e.Dispatch([&](WindowResizeEvent &e)
+			{
+				ApplicationUpdate::WindowResizeUpdate(context);
+			});
+		}
 	};
 }

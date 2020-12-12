@@ -1,7 +1,7 @@
 #include "ApplicationLayers.h"
 
 #include "Hazel/Utils/Reversed.h"
-#include "Hazel/Input/InputUpdater.h"
+#include "Hazel/Input/InputEventDispatcher.h"
 
 namespace Hazel
 {
@@ -37,7 +37,7 @@ namespace Hazel
 			{
 				return;
 			}
-			InputUpdater::UpdateInput(layer->GetInput(), e);
+			InputEventDispatcher::Dispatch(layer->GetInput(), e);
 			layer->OnEvent(e);
 		}
 	}

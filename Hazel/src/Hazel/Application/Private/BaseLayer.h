@@ -9,7 +9,7 @@
 #include "Hazel/Events/MouseButtonReleaseEvent.h"
 #include "Hazel/Events/MouseMoveEvent.h"
 #include "Hazel/Events/MouseScrollEvent.h"
-#include "Hazel/Input/InputUpdater.h"
+#include "Hazel/Input/InputEventDispatcher.h"
 #include "Hazel/Exceptions/AssertionException.h"
 #include "LayerContext.h"
 
@@ -44,7 +44,7 @@ namespace Hazel
 
 		void Detach()
 		{
-			context = nullptr;
+			Attach(nullptr);
 		}
 
 		const Input &GetInput() const
