@@ -25,7 +25,6 @@ namespace Hazel
 		Rectangle region;
 		SubTexture spriteSheet;
 		std::shared_ptr<Scene> scene;
-		Entity square;
 		Entity camera1;
 		Entity camera2;
 

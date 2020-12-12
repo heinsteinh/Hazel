@@ -45,8 +45,10 @@ namespace Hazel
 		{
 			translationPanel.Draw("Translation", transform.Translation);
 			auto euler = glm::degrees(glm::eulerAngles(transform.Rotation));
-			rotationPanel.Draw("Rotation", euler);
-			transform.Rotation = glm::quat(glm::radians(euler));
+			if (rotationPanel.Draw("Rotation", euler))
+			{
+				transform.Rotation = glm::quat(glm::radians(euler));
+			}
 			scalePanel.Draw("Scale", transform.Scale);
 		}
 	};

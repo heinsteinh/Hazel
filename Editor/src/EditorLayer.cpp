@@ -34,10 +34,15 @@ namespace Hazel
 		sceneInfo.Renderer = renderer.get();
 		scene = std::make_shared<Scene>(sceneInfo);
 
-		square = scene->CreateEntity();
-		square.AddComponent<TagComponent>("Square");
-		square.AddComponent<SpriteComponent>(glm::vec4(1.0f), spriteSheet);
-		square.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet.GetRegion().GetAspectRatio();
+		auto square1 = scene->CreateEntity();
+		square1.AddComponent<TagComponent>("Square1");
+		square1.AddComponent<SpriteComponent>(glm::vec4(1.0f), spriteSheet);
+		square1.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet.GetRegion().GetAspectRatio();
+
+		auto square2 = scene->CreateEntity();
+		square2.AddComponent<TagComponent>("Square2");
+		square2.AddComponent<SpriteComponent>(glm::vec4(1.0f));
+		square2.AddComponent<TransformComponent>();
 
 		camera1 = scene->CreateEntity();
 		camera1.AddComponent<TagComponent>("Camera1");
