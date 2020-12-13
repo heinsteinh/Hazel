@@ -9,7 +9,7 @@
 #include "Hazel/Events/MouseButtonReleaseEvent.h"
 #include "Hazel/Events/MouseMoveEvent.h"
 #include "Hazel/Events/MouseScrollEvent.h"
-#include "Hazel/Input/InputEventDispatcher.h"
+#include "Hazel/Input/InputManager.h"
 #include "Hazel/Exceptions/AssertionException.h"
 #include "LayerContext.h"
 

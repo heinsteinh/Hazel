@@ -10,6 +10,7 @@ namespace Hazel
 		static void BeginFrame(ApplicationContext &context)
 		{
 			context.ComputeDeltaTime();
+			context.GetLayers().OnNewFrame();
 			context.GetGraphicsContext().Clear();
 		}
 
@@ -17,7 +18,7 @@ namespace Hazel
 		{
 			if (!context.GetWindow().IsMinimized())
 			{
-				context.GetLayers().Update();
+				context.GetLayers().OnUpdate();
 			}
 		}
 
@@ -25,13 +26,12 @@ namespace Hazel
 		{
 			if (context.GetSettings().ImGuiRenderEnabled)
 			{
-				context.GetLayers().RenderImGui();
+				context.GetLayers().OnImGuiRender();
 			}
 		}
 
 		static void EndFrame(ApplicationContext &context)
 		{
-			context.GetLayers().ClearMouseScrollOffset();
 			context.GetGraphicsContext().SwapBuffers();
 		}
 	};

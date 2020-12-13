@@ -93,7 +93,12 @@ namespace Hazel
 
 		void AttachLayers()
 		{
-			layers.Attach(layerContext);
+			layers.OnAttach(layerContext);
+		}
+
+		void DetachLayers()
+		{
+			layers.OnDetach();
 		}
 
 		ApplicationLayers &GetLayers()

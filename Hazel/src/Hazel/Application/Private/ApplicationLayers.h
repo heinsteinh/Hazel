@@ -13,22 +13,14 @@ namespace Hazel
 		std::shared_ptr<ImGuiLayer> imGuiLayer;
 
 	public:
+		void PushLayer(const std::shared_ptr<Layer> &layer);
+		void PushOverlay(const std::shared_ptr<Layer> &overlay);
 		void PushImGuiLayer();
-		void Attach(LayerContext &context);
-		void Detach();
-		void DispatchEvent(Event &e);
-		void Update();
-		void RenderImGui();
-		void ClearMouseScrollOffset();
-
-		void PushLayer(const std::shared_ptr<Layer> &layer)
-		{
-			layers.PushLayer(layer);
-		}
-
-		void PushOverlay(const std::shared_ptr<Layer> &overlay)
-		{
-			layers.PushOverlay(overlay);
-		}
+		void OnAttach(LayerContext &context);
+		void OnDetach();
+		void OnNewFrame();
+		void OnEvent(Event &e);
+		void OnUpdate();
+		void OnImGuiRender();
 	};
 }

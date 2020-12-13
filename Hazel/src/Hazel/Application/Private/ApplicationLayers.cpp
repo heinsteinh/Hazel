@@ -1,17 +1,27 @@
 #include "ApplicationLayers.h"
 
 #include "Hazel/Utils/Reversed.h"
-#include "Hazel/Input/InputEventDispatcher.h"
+#include "Hazel/Input/InputManager.h"
 
 namespace Hazel
 {
+	void ApplicationLayers::PushLayer(const std::shared_ptr<Layer> &layer)
+	{
+		layers.PushLayer(layer);
+	}
+
+	void ApplicationLayers::PushOverlay(const std::shared_ptr<Layer> &overlay)
+	{
+		layers.PushOverlay(overlay);
+	}
+
 	void ApplicationLayers::PushImGuiLayer()
 	{
 		imGuiLayer = std::make_shared<ImGuiLayer>();
 		layers.PushOverlay(imGuiLayer);
 	}
 
-	void ApplicationLayers::Attach(LayerContext &context)
+	void ApplicationLayers::OnAttach(LayerContext &context)
 	{
 		for (const auto &layer : layers)
 		{
@@ -20,7 +30,7 @@ namespace Hazel
 		}
 	}
 
-	void ApplicationLayers::Detach()
+	void ApplicationLayers::OnDetach()
 	{
 		for (const auto &layer : layers)
 		{
@@ -29,7 +39,15 @@ namespace Hazel
 		}
 	}
 
-	void ApplicationLayers::DispatchEvent(Event &e)
+	void ApplicationLayers::OnNewFrame()
+	{
+		for (const auto &layer : layers)
+		{
+			InputManager::OnNewFrame(layer->GetInput());
+		}
+	}
+
+	void ApplicationLayers::OnEvent(Event &e)
 	{
 		for (const auto &layer : Reversed(layers))
 		{
@@ -37,12 +55,12 @@ namespace Hazel
 			{
 				return;
 			}
-			InputEventDispatcher::Dispatch(layer->GetInput(), e);
+			InputManager::OnEvent(layer->GetInput(), e);
 			layer->OnEvent(e);
 		}
 	}
 
-	void ApplicationLayers::Update()
+	void ApplicationLayers::OnUpdate()
 	{
 		for (const auto &layer : layers)
 		{
@@ -50,7 +68,7 @@ namespace Hazel
 		}
 	}
 
-	void ApplicationLayers::RenderImGui()
+	void ApplicationLayers::OnImGuiRender()
 	{
 		if (imGuiLayer)
 		{
@@ -60,14 +78,6 @@ namespace Hazel
 				layer->OnImGuiRender();
 			}
 			imGuiLayer->EndRender();
-		}
-	}
-
-	void ApplicationLayers::ClearMouseScrollOffset()
-	{
-		for (const auto &layer : layers)
-		{
-			layer->GetInput().ClearMouseScrollOffset();
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace Hazel
 			{
 				context.GetGraphicsContext().SetViewport({0.0f, e.GetWidth(), 0.0f, e.GetHeight()});
 			});
-			context.GetLayers().DispatchEvent(e);
+			context.GetLayers().OnEvent(e);
 			e.Dispatch([&](WindowResizeEvent &e)
 			{
 				ApplicationUpdate::WindowResizeUpdate(context);

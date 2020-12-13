@@ -10,10 +10,15 @@
 
 namespace Hazel
 {
-	class InputEventDispatcher
+	class InputManager
 	{
 	public:
-		static void Dispatch(Input &input, Event &e)
+		static void OnNewFrame(Input &input)
+		{
+			input.ClearMouseScrollOffset();
+		}
+
+		static void OnEvent(Input &input, Event &e)
 		{
 			e.Dispatch([&](KeyPressEvent &e)
 			{
