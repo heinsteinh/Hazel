@@ -1,6 +1,6 @@
 #pragma once
 
-#include "VectorPanel.h"
+#include "Hazel/Gui/GuiInputFloat.h"
 #include "Hazel/Components/TransformComponent.h"
 
 namespace Hazel
@@ -8,9 +8,9 @@ namespace Hazel
 	class TransformPanel
 	{
 	private:
-		VectorPanel translationPanel;
-		VectorPanel rotationPanel;
-		VectorPanel scalePanel;
+		GuiInputFloat translationPanel;
+		GuiInputFloat rotationPanel;
+		GuiInputFloat scalePanel;
 
 	public:
 		TransformPanel()
