@@ -61,14 +61,14 @@ namespace Hazel
 		ComponentType &AddComponent(Args &&...args)
 		{
 			auto &component = context->GetRegistry().emplace<ComponentType>(entity, std::forward<Args>(args)...);
-			EntityEvents::OnAddComponent<ComponentType>(*this, component);
+			EntityEvents::OnComponentAdded<ComponentType>(*this, component);
 			return component;
 		}
 
 		template<typename ComponentType>
 		void RemoveComponent()
 		{
-			EntityEvents::OnRemoveComponent<ComponentType>(*this);
+			EntityEvents::OnComponentRemoved<ComponentType>(*this);
 			context->GetRegistry().remove<ComponentType>(entity);
 		}
 
@@ -92,12 +92,12 @@ namespace Hazel
 	{
 	public:
 		template<typename ComponentType>
-		static void OnAddComponent(Entity entity, ComponentType &component)
+		static void OnComponentAdded(Entity entity, ComponentType &component)
 		{
 		}
 
 		template<typename ComponentType>
-		static void OnRemoveComponent(Entity entity)
+		static void OnComponentRemoved(Entity entity)
 		{
 		}
 	};
