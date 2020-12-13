@@ -97,14 +97,6 @@ namespace Hazel
 		EnableImGuiKeyboardFilter(blockKeyboard);
 		EnableImGuiMouseFilter(blockMouse);
 
-		/*auto viewportSize = ImGui::GetContentRegionAvail();
-		auto windowPosition = ImGui::GetWindowPos();
-		auto cursorPosition = ImGui::GetCursorPos();
-		glm::vec2 scroll = {ImGui::GetScrollX(), ImGui::GetScrollY()};
-		glm::vec2 newSize = {viewportSize.x, viewportSize.y};
-		glm::vec2 newPosition = {windowPosition.x, windowPosition.y};
-		glm::vec2 newCursorPosition = {cursorPosition.x, cursorPosition.y};
-		newPosition += newCursorPosition - scroll - GetWindow().GetPosition();*/
 		auto newViewport = EditorViewport::GetViewport(GetWindow());
 		auto viewportSize = newViewport.GetSize();
 		if (newViewport != viewport)

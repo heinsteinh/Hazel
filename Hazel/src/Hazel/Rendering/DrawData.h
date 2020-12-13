@@ -28,9 +28,9 @@ namespace Hazel
 			return Texture ? Texture->GetSourceCoordinates(coordinates) : coordinates;
 		}
 
-		const glm::vec4 &GetColor(const VertexInfo &info) const
+		glm::vec4 GetColor(const VertexInfo &info) const
 		{
-			return Color ? *Color : info.Color;
+			return Color ? *Color * info.Color : info.Color;
 		}
 	};
 }
