@@ -16,7 +16,11 @@ namespace Hazel
 		void Draw(SpriteComponent &sprite)
 		{
 			ImGui::ColorEdit4("Color", glm::value_ptr(sprite.Color));
-			texturePanel.Draw(sprite.Texture);
+			if (sprite.Texture && ImGui::TreeNodeEx("Texture", ImGuiTreeNodeFlags_DefaultOpen))
+			{
+				texturePanel.Draw(sprite.Texture);
+				ImGui::TreePop();
+			}
 		}
 	};
 }

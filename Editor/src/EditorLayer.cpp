@@ -5,6 +5,7 @@
 #include "Hazel/Textures/TextureBuilder.h"
 #include "Hazel/Rendering/SquareMesh.h"
 #include "Hazel/Logging/Log.h"
+#include "EditorViewport.h"
 
 namespace Hazel
 {
@@ -47,7 +48,7 @@ namespace Hazel
 		camera1 = scene->CreateEntity();
 		camera1.AddComponent<TagComponent>("Camera1");
 		camera1.AddComponent<TransformComponent>();
-		camera1.AddComponent<NativeScriptComponent>(std::make_shared<CameraControllerScript>());
+		camera1.AddComponent<NativeScriptComponent>(std::make_shared<TestCameraController>());
 		camera1.AddComponent<CameraComponent>();
 
 		scene->SetMainCamera(camera1);
@@ -60,7 +61,7 @@ namespace Hazel
 		auto particleEmitter = scene->CreateEntity();
 		particleEmitter.AddComponent<TagComponent>("Particle Emitter");
 		particleEmitter.AddComponent<ParticleSourceComponent>();
-		particleEmitter.AddComponent<NativeScriptComponent>(std::make_shared<ParticleScript>());
+		particleEmitter.AddComponent<NativeScriptComponent>(std::make_shared<TestParticles>());
 	}
 
 	void EditorLayer::OnDetach()
@@ -69,7 +70,7 @@ namespace Hazel
 
 	void EditorLayer::OnUpdate()
 	{
-		if (Size::IsEmpty(viewport))
+		if (viewport.IsEmpty())
 		{
 			return;
 		}
@@ -96,29 +97,32 @@ namespace Hazel
 		EnableImGuiKeyboardFilter(blockKeyboard);
 		EnableImGuiMouseFilter(blockMouse);
 
-		auto viewportSize = ImGui::GetContentRegionAvail();
+		/*auto viewportSize = ImGui::GetContentRegionAvail();
 		auto windowPosition = ImGui::GetWindowPos();
+		auto cursorPosition = ImGui::GetCursorPos();
+		glm::vec2 scroll = {ImGui::GetScrollX(), ImGui::GetScrollY()};
 		glm::vec2 newSize = {viewportSize.x, viewportSize.y};
 		glm::vec2 newPosition = {windowPosition.x, windowPosition.y};
-		if (!Size::IsEmpty(newSize) && (newSize != viewport || newPosition != position))
+		glm::vec2 newCursorPosition = {cursorPosition.x, cursorPosition.y};
+		newPosition += newCursorPosition - scroll - GetWindow().GetPosition();*/
+		auto newViewport = EditorViewport::GetViewport(GetWindow());
+		auto viewportSize = newViewport.GetSize();
+		if (newViewport != viewport)
 		{
-			viewport = newSize;
-			position = newPosition;
+			viewport = newViewport;
 
-			auto newViewport = Rectangle::FromBottomLeftAndSize(
-				position - GetWindow().GetPosition(),
-				viewport);
-
-			Log::Warn("New viewport size: {} {}", viewport.x, viewport.y);
-			Log::Warn("New window position: {} {}", position.x, position.y);
-			framebuffer = GetGraphicsContext().CreateFramebuffer({viewport});
+			Log::Warn("New viewport size: {} {}", viewportSize.x, viewportSize.y);
+			if (!viewport.IsEmpty())
+			{
+				framebuffer = GetGraphicsContext().CreateFramebuffer({viewportSize});
+			}
 			scene->OnViewportResize(newViewport);
 			OnUpdate();
 		}
 
 		ImGui::Image(
 			framebuffer->GetColorAttachment()->GetHandle(),
-			viewportSize,
+			{viewportSize.x, viewportSize.y},
 			{0.0f, 1.0f},
 			{1.0f, 0.0f});
 

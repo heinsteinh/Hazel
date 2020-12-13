@@ -9,7 +9,7 @@
 
 namespace Hazel
 {
-	class ParticleScript : public NativeScript
+	class TestParticles : public NativeScript
 	{
 	private:
 		ParticleInfo defaultParticleInfo;
@@ -19,7 +19,7 @@ namespace Hazel
 	public:
 		virtual void OnCreate() override
 		{
-			defaultParticleInfo.Position = {0.0f, 0.0f};
+			defaultParticleInfo.Position = glm::vec3(0.0f);
 			defaultParticleInfo.LinearVelocity = {0.0f, 0.0f};
 			defaultParticleInfo.LinearVelocityVariation = {0.2f, 0.2f};
 			defaultParticleInfo.AngularVelocity = {3.0f};

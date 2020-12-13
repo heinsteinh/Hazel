@@ -10,8 +10,7 @@ namespace Hazel
 	private:
 		bool blockKeyboard = false;
 		bool blockMouse = false;
-		glm::vec2 viewport{0.0f};
-		glm::vec2 position{0.0f};
+		Rectangle viewport;
 		SceneHierarchyPanel scenePanel;
 		InfoPanel infoPanel;
 		RendererStatisticsPanel rendererStatisticsPanel;

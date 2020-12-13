@@ -12,8 +12,8 @@
 #include "Hazel/Panels/BatchInfoPanel.h"
 #include "Hazel/Panels/RendererStatisticsPanel.h"
 #include "Hazel/Panels/TransformPanel.h"
-#include "Hazel/Tests/CameraControllerScript.h"
-#include "Hazel/Tests/ParticleScript.h"
+#include "Hazel/Tests/TestCameraController.h"
+#include "Hazel/Tests/TestParticles.h"
 #include "Hazel/Utils/FunctorTraits.h"
 
 namespace Hazel

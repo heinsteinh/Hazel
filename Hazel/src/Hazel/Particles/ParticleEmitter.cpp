@@ -14,7 +14,7 @@ namespace Hazel
 
 	void ParticleEmitter::InitPosition(Particle &particle, const ParticleInfo &info)
 	{
-		particle.Transform.Translation = glm::vec3(info.Position, 0.1f);
+		particle.Transform.Translation = info.Position;
 		particle.Transform.Rotation = glm::angleAxis(
 			random.GetAngle(),
 			glm::vec3(0.0f, 0.0f, 1.0f));

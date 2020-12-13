@@ -86,5 +86,15 @@ namespace Hazel
 			Bottom *= scaleY;
 			Top *= scaleY;
 		}
+
+		constexpr bool operator==(const Rectangle &other) const
+		{
+			return Left == other.Left && Right == other.Right && Bottom == other.Bottom && Top == other.Top;
+		}
+
+		constexpr bool operator!=(const Rectangle &other) const
+		{
+			return !(*this == other);
+		}
 	};
 }

@@ -4,7 +4,7 @@ namespace Hazel
 {
 	struct ParticleInfo
 	{
-		glm::vec2 Position{0.0f};
+		glm::vec3 Position{0.0f};
 		glm::vec2 LinearVelocity{0.0f};
 		glm::vec2 LinearVelocityVariation{0.0f};
 		float AngularVelocity = 0.0f;

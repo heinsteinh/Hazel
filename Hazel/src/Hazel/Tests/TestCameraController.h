@@ -7,7 +7,7 @@
 
 namespace Hazel
 {
-	class CameraControllerScript : public NativeScript
+	class TestCameraController : public NativeScript
 	{
 	private:
 		CameraController controller;
