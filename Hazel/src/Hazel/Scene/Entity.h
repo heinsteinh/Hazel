@@ -24,6 +24,11 @@ namespace Hazel
 			return context && context->GetRegistry().valid(entity);
 		}
 
+		bool IsNull() const
+		{
+			return entity == entt::null;
+		}
+
 		uint32_t GetId() const
 		{
 			return static_cast<uint32_t>(entity);

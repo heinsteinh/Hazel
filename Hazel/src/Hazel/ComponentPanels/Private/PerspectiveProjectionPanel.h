@@ -3,7 +3,7 @@
 #include "imgui.h"
 
 #include "Hazel/Geometry/PerspectiveProjection.h"
-#include "DragDegrees.h"
+#include "Hazel/Gui/DragDegrees.h"
 
 namespace Hazel
 {

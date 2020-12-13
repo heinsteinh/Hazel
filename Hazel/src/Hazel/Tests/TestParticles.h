@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel/Scripting/NativeScript.h"
-#include "Hazel/Panels/ParticleInfoPanel.h"
+#include "Hazel/ComponentPanels/ParticleInfoPanel.h"
 #include "Hazel/Camera/CameraProjection.h"
 #include "Hazel/Components/CameraComponent.h"
 #include "Hazel/Components/TransformComponent.h"

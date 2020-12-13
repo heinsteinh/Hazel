@@ -8,7 +8,7 @@
 namespace Hazel
 {
 	template<typename ComponentType, typename PanelType>
-	class ComponentTreeNode
+	class ComponentNode
 	{
 	private:
 		PanelType panel;
@@ -18,7 +18,7 @@ namespace Hazel
 		{
 			return ImGui::TreeNodeEx(
 				ComponentPanelHelper::GetComponentId<ComponentType>(),
-				ImGuiTreeNodeFlags_DefaultOpen,
+				ComponentPanelHelper::GetFlags(),
 				label);
 		}
 

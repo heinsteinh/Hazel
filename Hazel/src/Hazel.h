@@ -12,4 +12,4 @@
 #include "Hazel/Rendering/Renderer2D.h"
 #include "Hazel/Particles/ParticleSource.h"
 #include "Hazel/Scene/Scene.h"
-#include "Hazel/Panels/SceneHierarchyPanel.h"
+#include "Hazel/SceneHierarchyPanel/SceneHierarchyPanel.h"
