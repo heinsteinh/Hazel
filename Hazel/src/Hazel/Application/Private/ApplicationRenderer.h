@@ -10,8 +10,8 @@ namespace Hazel
 		static void BeginFrame(ApplicationContext &context)
 		{
 			context.ComputeDeltaTime();
-			context.GetLayers().OnNewFrame();
 			context.GetGraphicsContext().Clear();
+			context.GetLayers().OnNewFrame();
 		}
 
 		static void RenderFrame(ApplicationContext &context)

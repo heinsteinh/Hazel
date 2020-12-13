@@ -3,7 +3,7 @@
 #include "imgui.h"
 
 #include "Hazel/Scene/Entity.h"
-#include "ComponentPanelHelper.h"
+#include "ComponentSettingsMenu.h"
 
 namespace Hazel
 {
@@ -11,41 +11,49 @@ namespace Hazel
 	class ComponentNode
 	{
 	private:
+		static inline void *hashCode = reinterpret_cast<void *>(typeid(ComponentType).hash_code());
+
+		static constexpr ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen
+			| ImGuiTreeNodeFlags_AllowItemOverlap;
+
 		PanelType panel;
+		ComponentSettingsMenu settingsMenu;
 
 	public:
-		bool Begin(const char *label)
-		{
-			return ImGui::TreeNodeEx(
-				ComponentPanelHelper::GetComponentId<ComponentType>(),
-				ComponentPanelHelper::GetFlags(),
-				label);
-		}
-
 		void Draw(const char *label, Entity entity)
 		{
-			Draw(label, entity.TryGetComponent<ComponentType>());
-		}
-
-		void Draw(Entity entity)
-		{
-			Draw(entity.TryGetComponent<ComponentType>());
-		}
-
-		void Draw(const char *label, ComponentType *component)
-		{
+			auto component = entity.TryGetComponent<ComponentType>();
 			if (component && Begin(label))
 			{
-				panel.Draw(*component);
+				Draw(entity, *component);
 				End();
 			}
 		}
 
-		void Draw(ComponentType *component)
+		void Draw(Entity entity)
 		{
+			auto component = entity.TryGetComponent<ComponentType>();
 			if (component)
 			{
-				panel.Draw(*component);
+				Draw(entity, *component);
+			}
+		}
+
+	private:
+		bool Begin(const char *label)
+		{
+			bool open = ImGui::TreeNodeEx(hashCode, flags, label);
+			ImGui::SameLine();
+			settingsMenu.Draw();
+			return open;
+		}
+
+		void Draw(Entity entity, ComponentType &component)
+		{
+			panel.Draw(component);
+			if (settingsMenu.WantRemoveComponent())
+			{
+				entity.RemoveComponent<ComponentType>();
 			}
 		}
 

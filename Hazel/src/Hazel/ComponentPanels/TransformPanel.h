@@ -15,8 +15,10 @@ namespace Hazel
 	public:
 		TransformPanel()
 		{
+			translationPanel.SetSpeed(0.1f);
 			translationPanel.SetLimits(-10.0f, 10.0f);
 			rotationPanel.SetLimits(0.0f, 360.0f);
+			scalePanel.SetSpeed(0.1f);
 			scalePanel.SetLimits(0.0f, 10.0f);
 			scalePanel.SetResetValue(1.0f);
 		}

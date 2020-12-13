@@ -12,6 +12,7 @@
 #include "Hazel/Components/CameraComponent.h"
 #include "Hazel/Components/SpriteComponent.h"
 #include "Private/ComponentNode.h"
+#include "Private/AddComponentMenu.h"
 
 namespace Hazel
 {
@@ -22,6 +23,7 @@ namespace Hazel
 		ComponentNode<TransformComponent, TransformPanel> transformNode;
 		ComponentNode<CameraComponent, CameraPanel> cameraNode;
 		ComponentNode<SpriteComponent, SpritePanel> spriteNode;
+		AddComponentMenu addComponentMenu;
 
 	public:
 		void Draw(const char *label, Entity entity)
@@ -29,12 +31,19 @@ namespace Hazel
 			ImGui::Begin(label);
 			if (!entity.IsNull())
 			{
-				tagNode.Draw(entity.TryGetComponent<TagComponent>());
-				transformNode.Draw("Transform", entity.TryGetComponent<TransformComponent>());
-				cameraNode.Draw("Camera", entity.TryGetComponent<CameraComponent>());
-				spriteNode.Draw("Sprite", entity.TryGetComponent<SpriteComponent>());
+				DrawComponents(entity);
+				addComponentMenu.Draw("Add Component", entity);
 			}
 			ImGui::End();
+		}
+
+	private:
+		void DrawComponents(Entity entity)
+		{
+			tagNode.Draw(entity);
+			transformNode.Draw("Transform", entity);
+			cameraNode.Draw("Camera", entity);
+			spriteNode.Draw("Sprite", entity);
 		}
 	};
 }
