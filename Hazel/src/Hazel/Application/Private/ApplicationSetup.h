@@ -12,9 +12,9 @@ namespace Hazel
 			Log::Debug("Application setup.");
 			context.LoadGraphicsApi();
 			context.CreateApplicationWindow();
-			if (context.GetSettings().ImGuiEnabled)
+			if (context.GetSettings().GuiEnabled)
 			{
-				context.GetLayers().PushImGuiLayer();
+				context.GetLayers().PushGuiLayer();
 			}
 			context.AttachLayers();
 			context.SetEventCallback([&](Event &e)

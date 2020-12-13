@@ -2,10 +2,10 @@
 
 namespace Hazel
 {
-	class ImGuiRenderer
+	class GuiRenderer
 	{
 	public:
-		virtual ~ImGuiRenderer() = default;
+		virtual ~GuiRenderer() = default;
 
 		virtual void CreateNewFrame() = 0;
 		virtual void RenderDrawData() = 0;

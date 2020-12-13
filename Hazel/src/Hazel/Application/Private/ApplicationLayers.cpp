@@ -15,10 +15,10 @@ namespace Hazel
 		layers.PushOverlay(overlay);
 	}
 
-	void ApplicationLayers::PushImGuiLayer()
+	void ApplicationLayers::PushGuiLayer()
 	{
-		imGuiLayer = std::make_shared<ImGuiLayer>();
-		layers.PushOverlay(imGuiLayer);
+		guiLayer = std::make_shared<GuiLayer>();
+		layers.PushOverlay(guiLayer);
 	}
 
 	void ApplicationLayers::OnAttach(LayerContext &context)
@@ -68,16 +68,16 @@ namespace Hazel
 		}
 	}
 
-	void ApplicationLayers::OnImGuiRender()
+	void ApplicationLayers::OnGui()
 	{
-		if (imGuiLayer)
+		if (guiLayer)
 		{
-			imGuiLayer->BeginRender();
+			guiLayer->BeginRender();
 			for (const auto &layer : layers)
 			{
-				layer->OnImGuiRender();
+				layer->OnGui();
 			}
-			imGuiLayer->EndRender();
+			guiLayer->EndRender();
 		}
 	}
 }

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Hazel/ImGui/ImGuiRenderer.h"
+#include "Hazel/GuiLayer/GuiRenderer.h"
 
 struct GLFWwindow;
 
 namespace Hazel
 {
-	class OpenGLImGuiRenderer : public ImGuiRenderer
+	class OpenGLImGuiRenderer : public GuiRenderer
 	{
 	public:
 		OpenGLImGuiRenderer(GLFWwindow *window);

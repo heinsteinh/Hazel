@@ -32,14 +32,14 @@ namespace Hazel
 			context.GetWindowInfo().VerticalSynchronization = verticalSynchronization;
 		}
 
-		void EnableImGui(bool imGuiEnabled)
+		void EnableGui(bool guiEnabled)
 		{
-			context.GetSettings().ImGuiEnabled = imGuiEnabled;
+			context.GetSettings().GuiEnabled = guiEnabled;
 		}
 
-		void EnableImGuiRender(bool imGuiRenderEnabled)
+		void EnableGuiRender(bool guiRenderingEnabled)
 		{
-			context.GetSettings().ImGuiRenderEnabled = imGuiRenderEnabled;
+			context.GetSettings().GuiRenderingEnabled = guiRenderingEnabled;
 		}
 
 		void PushLayer(const std::shared_ptr<Layer> &layer)

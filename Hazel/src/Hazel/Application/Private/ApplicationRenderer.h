@@ -22,11 +22,11 @@ namespace Hazel
 			}
 		}
 
-		static void RenderImGui(ApplicationContext &context)
+		static void RenderGui(ApplicationContext &context)
 		{
-			if (context.GetSettings().ImGuiRenderEnabled)
+			if (context.GetSettings().GuiRenderingEnabled)
 			{
-				context.GetLayers().OnImGuiRender();
+				context.GetLayers().OnGui();
 			}
 		}
 

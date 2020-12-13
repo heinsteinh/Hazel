@@ -4,10 +4,10 @@ namespace Hazel
 {
 	struct ApplicationSettings
 	{
-		bool ImGuiEnabled = true;
 		bool Running = false;
-		bool ImGuiRenderEnabled = true;
-		bool ImGuiKeyboardFilterEnabled = true;
-		bool ImGuiMouseFilterEnabled = true;
+		bool GuiEnabled = true;
+		bool GuiRenderingEnabled = true;
+		bool GuiKeyboardFilterEnabled = true;
+		bool GuiMouseFilterEnabled = true;
 	};
 }

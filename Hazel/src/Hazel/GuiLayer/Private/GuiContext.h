@@ -4,14 +4,14 @@ struct ImGuiContext;
 
 namespace Hazel
 {
-	class ImGuiContextHolder
+	class GuiContext
 	{
 	private:
 		ImGuiContext *context;
 
 	public:
-		ImGuiContextHolder();
-		~ImGuiContextHolder();
+		GuiContext();
+		~GuiContext();
 
 		void MakeCurrent();
 

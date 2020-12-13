@@ -43,7 +43,7 @@ namespace Hazel
 		}
 	}
 
-	std::shared_ptr<ImGuiRenderer> OpenGLGraphicsContext::CreateImGuiRenderer()
+	std::shared_ptr<GuiRenderer> OpenGLGraphicsContext::CreateGuiRenderer()
 	{
 		MakeCurrent();
 		return std::make_shared<OpenGLImGuiRenderer>(window);

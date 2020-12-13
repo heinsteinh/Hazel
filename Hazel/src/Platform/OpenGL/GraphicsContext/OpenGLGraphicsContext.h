@@ -29,7 +29,7 @@ namespace Hazel
 		void MakeCurrent() const;
 		void Detach() const;
 
-		virtual std::shared_ptr<ImGuiRenderer> CreateImGuiRenderer() override;
+		virtual std::shared_ptr<GuiRenderer> CreateGuiRenderer() override;
 		virtual std::shared_ptr<Framebuffer> CreateFramebuffer(const FramebufferInfo &info) override;
 		virtual std::shared_ptr<Shader> CreateShader(const ShaderInfo &info) override;
 		virtual std::shared_ptr<IndexBuffer> CreateIndexBuffer(size_t size) override;

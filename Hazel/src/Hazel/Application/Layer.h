@@ -28,7 +28,7 @@ namespace Hazel
 		{
 		}
 
-		virtual void OnImGuiRender()
+		virtual void OnGui()
 		{
 		}
 	};

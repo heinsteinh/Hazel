@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/ImGui/ImGuiRenderer.h"
+#include "Hazel/GuiLayer/GuiRenderer.h"
 #include "Hazel/Framebuffers/Framebuffer.h"
 #include "Hazel/Shaders/Shader.h"
 #include "Hazel/GraphicsBuffers/IndexBuffer.h"
@@ -19,7 +19,7 @@ namespace Hazel
 	public:
 		virtual ~GraphicsContext() = default;
 
-		virtual std::shared_ptr<ImGuiRenderer> CreateImGuiRenderer() = 0;
+		virtual std::shared_ptr<GuiRenderer> CreateGuiRenderer() = 0;
 		virtual std::shared_ptr<Framebuffer> CreateFramebuffer(const FramebufferInfo &info) = 0;
 		virtual std::shared_ptr<Shader> CreateShader(const ShaderInfo &info) = 0;
 		virtual std::shared_ptr<IndexBuffer> CreateIndexBuffer(size_t size) = 0;

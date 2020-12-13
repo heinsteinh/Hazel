@@ -30,7 +30,7 @@ namespace Hazel
 		void OnRender();
 		void OnViewportResize(const Rectangle &viewport);
 		void OnEvent(Event &e);
-		void OnImGuiRender();
+		void OnGui();
 
 		void SetRenderer(Renderer2D &renderer)
 		{

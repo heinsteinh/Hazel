@@ -83,19 +83,19 @@ namespace Hazel
 		GetGraphicsContext().SetFramebuffer(nullptr);
 	}
 
-	void EditorLayer::OnImGuiRender()
+	void EditorLayer::OnGui()
 	{
 		editorWindow.Begin();
 
-		scene->OnImGuiRender();
+		scene->OnGui();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
 		ImGui::Begin("Viewport");
 
 		bool blockKeyboard = !ImGui::IsWindowFocused();
 		bool blockMouse = !ImGui::IsWindowHovered();
-		EnableImGuiKeyboardFilter(blockKeyboard);
-		EnableImGuiMouseFilter(blockMouse);
+		EnableGuiKeyboardFilter(blockKeyboard);
+		EnableGuiMouseFilter(blockMouse);
 
 		auto newViewport = EditorViewport::GetViewport(GetWindow());
 		auto viewportSize = newViewport.GetSize();

@@ -25,11 +25,11 @@ namespace Hazel
 			});
 		}
 
-		static void OnImGuiRender(SceneContext &context)
+		static void OnGui(SceneContext &context)
 		{
 			context.GetRegistry().view<NativeScriptComponent>().each([](auto entity, auto &component)
 			{
-				component.Script->OnImGuiRender();
+				component.Script->OnGui();
 			});
 		}
 	};

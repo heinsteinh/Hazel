@@ -1,19 +1,19 @@
 #pragma once
 
 #include "Hazel/Application/Layer.h"
-#include "Private/ImGuiContextHolder.h"
-#include "ImGuiRenderer.h"
+#include "Private/GuiContext.h"
+#include "GuiRenderer.h"
 
 namespace Hazel
 {
-	class ImGuiLayer : public Layer
+	class GuiLayer : public Layer
 	{
 	private:
-		std::unique_ptr<ImGuiContextHolder> context;
-		std::shared_ptr<ImGuiRenderer> renderer;
+		std::unique_ptr<GuiContext> context;
+		std::shared_ptr<GuiRenderer> renderer;
 
 	public:
-		ImGuiLayer();
+		GuiLayer();
 
 		void BeginRender();
 		void EndRender();

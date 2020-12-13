@@ -55,7 +55,7 @@ namespace Hazel
 			}
 		}
 
-		virtual void OnImGuiRender() override
+		virtual void OnGui() override
 		{
 			panel.Draw("Particles", particleInfo);
 		}

@@ -69,34 +69,34 @@ namespace Hazel
 			context->GetSettings().Running = false;
 		}
 
-		void EnableImGuiRender(bool imGuiRenderEnabled)
+		void EnableGuiRender(bool guiRenderingEnabled)
 		{
 			HZ_ASSERT_ATTACHED();
-			context->GetSettings().ImGuiRenderEnabled = imGuiRenderEnabled;
+			context->GetSettings().GuiRenderingEnabled = guiRenderingEnabled;
 		}
 
-		bool IsImGuiKeyboardFilterEnabled() const
+		bool IsGuiKeyboardFilterEnabled() const
 		{
 			HZ_ASSERT_ATTACHED();
-			return context->GetSettings().ImGuiKeyboardFilterEnabled;
+			return context->GetSettings().GuiKeyboardFilterEnabled;
 		}
 
-		void EnableImGuiKeyboardFilter(bool imGuiKeyboardFilterEnabled)
+		void EnableGuiKeyboardFilter(bool guiKeyboardFilterEnabled)
 		{
 			HZ_ASSERT_ATTACHED();
-			context->GetSettings().ImGuiKeyboardFilterEnabled = imGuiKeyboardFilterEnabled;
+			context->GetSettings().GuiKeyboardFilterEnabled = guiKeyboardFilterEnabled;
 		}
 
-		bool IsImGuiMouseFilterEnabled() const
+		bool IsGuiMouseFilterEnabled() const
 		{
 			HZ_ASSERT_ATTACHED();
-			return context->GetSettings().ImGuiMouseFilterEnabled;
+			return context->GetSettings().GuiMouseFilterEnabled;
 		}
 
-		void EnableImGuiMouseFilter(bool imGuiMouseFilterEnabled)
+		void EnableGuiMouseFilter(bool guiMouseFilterEnabled)
 		{
 			HZ_ASSERT_ATTACHED();
-			context->GetSettings().ImGuiMouseFilterEnabled = imGuiMouseFilterEnabled;
+			context->GetSettings().GuiMouseFilterEnabled = guiMouseFilterEnabled;
 		}
 
 		Window &GetWindow() const

@@ -6,10 +6,10 @@
 
 namespace Hazel
 {
-	class ImGuiEventFilter
+	class GuiEventFilter
 	{
 	public:
-		static constexpr bool CanBlockEvent(EventType eventType)
+		static constexpr bool CanBlockEventType(EventType eventType)
 		{
 			switch (eventType)
 			{
@@ -24,7 +24,7 @@ namespace Hazel
 
 		static constexpr bool CanBlockEvent(Event &e)
 		{
-			return CanBlockEvent(e.GetType());
+			return CanBlockEventType(e.GetType());
 		}
 	};
 }

@@ -12,7 +12,7 @@ namespace Hazel
 			ApplicationRenderer::BeginFrame(context);
 			context.PollEvents();
 			ApplicationRenderer::RenderFrame(context);
-			ApplicationRenderer::RenderImGui(context);
+			ApplicationRenderer::RenderGui(context);
 			ApplicationRenderer::EndFrame(context);
 		}
 
@@ -20,7 +20,7 @@ namespace Hazel
 		{
 			ApplicationRenderer::BeginFrame(context);
 			ApplicationRenderer::RenderFrame(context);
-			ApplicationRenderer::RenderImGui(context);
+			ApplicationRenderer::RenderGui(context);
 			ApplicationRenderer::EndFrame(context);
 		}
 	};
