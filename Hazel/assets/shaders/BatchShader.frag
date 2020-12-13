@@ -35,14 +35,14 @@ layout(binding = 31) uniform sampler2D u_Texture31;
 
 layout(location = 0) in vec4 v_Color;
 layout(location = 1) in vec2 v_TextureCoordinate;
-layout(location = 2) in float v_TextureIndex;
+layout(location = 2) in flat int v_TextureIndex;
 
 layout(location = 0) out vec4 o_Color;
 
 void main()
 {
 	o_Color = v_Color;
-	switch(int(v_TextureIndex))
+	switch (v_TextureIndex)
 	{
 		case 0:
 			o_Color *= texture(u_Texture0, v_TextureCoordinate);
