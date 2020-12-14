@@ -1,17 +1,15 @@
 #include "Hazel.h"
-#include "Hazel/Application/Application.h"
 
-#include "Log.h"
 #include "SandboxLayer.h"
 
 namespace Sandbox
 {
-	class Application : public Hazel::Application
+	class Sandbox : public Hazel::Application
 	{
 	public:
-		Application()
+		Sandbox()
 		{
-			Log::Info("Sandbox application creation");
+			Hazel::Log::Info("Sandbox application creation");
 			SetWindowTitle("Sandbox");
 			PushLayer(std::make_shared<SandboxLayer>());
 		};
@@ -20,5 +18,5 @@ namespace Sandbox
 
 std::unique_ptr<Hazel::Application> Hazel::CreateApplication(int argc, char *argv[])
 {
-	return std::make_unique<Sandbox::Application>();
+	return std::make_unique<Sandbox::Sandbox>();
 }

@@ -3,7 +3,6 @@
 #include "imgui.h"
 
 #include "Hazel/Textures/TextureBuilder.h"
-#include "Hazel/Rendering/SquareMesh.h"
 
 namespace Sandbox
 {
@@ -37,7 +36,6 @@ namespace Sandbox
 
 		camera1 = scene->CreateEntity();
 		camera1.AddComponent<Hazel::TransformComponent>();
-		camera1.AddComponent<Hazel::NativeScriptComponent>(std::make_shared<Hazel::TestCameraController>());
 		camera1.AddComponent<Hazel::CameraComponent>();
 
 		scene->SetMainCamera(camera1);
@@ -48,7 +46,6 @@ namespace Sandbox
 
 		auto particleEmitter = scene->CreateEntity();
 		particleEmitter.AddComponent<Hazel::ParticleSourceComponent>();
-		particleEmitter.AddComponent<Hazel::NativeScriptComponent>(std::make_shared<Hazel::TestParticles>());
 
 		scene->OnViewportResize(Hazel::Rectangle::FromBottomLeftAndSize({0.0f, 0.0f}, GetWindow().GetSize()));
 	}
