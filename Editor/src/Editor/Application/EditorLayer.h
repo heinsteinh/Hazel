@@ -1,26 +1,29 @@
 #pragma once
 
 #include "Hazel.h"
-#include "EditorWindow.h"
+
+#include "Editor/MainWindow/EditorWindow.h"
+#include "Editor/ScenePanels/SceneHierarchyPanel.h"
+#include "Editor/InfoPanels/FpsPanel.h"
+#include "Editor/InfoPanels/RendererStatisticsPanel.h"
+#include "Editor/InfoPanels/BatchPanel.h"
 
 namespace Hazel
 {
 	class EditorLayer : public Layer
 	{
 	private:
-		bool blockKeyboard = false;
-		bool blockMouse = false;
-		Rectangle viewport;
+		EditorWindow editorWindow;
 		SceneHierarchyPanel scenePanel;
-		InfoPanel infoPanel;
+		FpsPanel fpsPanel;
 		RendererStatisticsPanel rendererStatisticsPanel;
-		BatchInfoPanel batchInfoPanel;
+		BatchPanel batchPanel;
 
+		Rectangle viewport;
 		bool useCamera1 = true;
 		BatchInfo rendererInfo;
 		std::shared_ptr<Renderer2D> renderer;
 		std::shared_ptr<Framebuffer> framebuffer;
-		EditorWindow editorWindow;
 		Rectangle region;
 		SubTexture spriteSheet;
 		std::shared_ptr<Scene> scene;

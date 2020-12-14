@@ -2,9 +2,11 @@
 
 #include "imgui.h"
 
-#include "Hazel/Textures/TextureBuilder.h"
-#include "Hazel/Rendering/SquareMesh.h"
 #include "Hazel/Logging/Log.h"
+#include "Hazel/Textures/TextureBuilder.h"
+#include "Editor/Tests/TestCameraController.h"
+#include "Editor/Tests/TestParticles.h"
+
 #include "EditorViewport.h"
 
 namespace Hazel
@@ -85,17 +87,15 @@ namespace Hazel
 
 	void EditorLayer::OnGui()
 	{
-		editorWindow.Begin();
+		editorWindow.Begin("Hazel");
 
 		scene->OnGui();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
 		ImGui::Begin("Viewport");
 
-		bool blockKeyboard = !ImGui::IsWindowFocused();
-		bool blockMouse = !ImGui::IsWindowHovered();
-		EnableGuiKeyboardFilter(blockKeyboard);
-		EnableGuiMouseFilter(blockMouse);
+		EnableGuiKeyboardFilter(!ImGui::IsWindowFocused());
+		EnableGuiMouseFilter(!ImGui::IsWindowHovered());
 
 		auto newViewport = EditorViewport::GetViewport(GetWindow());
 		auto viewportSize = newViewport.GetSize();
@@ -129,9 +129,9 @@ namespace Hazel
 		ImGui::End();
 
 		ImGui::Begin("Settings");
-		infoPanel.Draw(*this);
+		fpsPanel.Draw(GetDeltaTime());
 		rendererStatisticsPanel.Draw(renderer->GetStatistics());
-		if (batchInfoPanel.Draw(rendererInfo))
+		if (batchPanel.Draw(rendererInfo))
 		{
 			renderer = std::make_shared<Renderer2D>(GetGraphicsContext(), rendererInfo);
 			scene->SetRenderer(*renderer);
@@ -142,7 +142,7 @@ namespace Hazel
 
 		editorWindow.End();
 
-		if (!editorWindow.IsOpen())
+		if (editorWindow.WantQuit())
 		{
 			Quit();
 		}

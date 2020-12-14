@@ -3,7 +3,8 @@
 #include "imgui.h"
 
 #include "Hazel/Components/SpriteComponent.h"
-#include "TexturePanel.h"
+
+#include "Private/TexturePanel.h"
 
 namespace Hazel
 {

@@ -7,13 +7,6 @@
 #include "Hazel/Components/SpriteComponent.h"
 #include "Hazel/Components/ParticleSourceComponent.h"
 #include "Hazel/Components/NativeScriptComponent.h"
-#include "Hazel/ComponentPanels/InfoPanel.h"
-#include "Hazel/ComponentPanels/RectanglePanel.h"
-#include "Hazel/ComponentPanels/BatchInfoPanel.h"
-#include "Hazel/ComponentPanels/RendererStatisticsPanel.h"
-#include "Hazel/ComponentPanels/TransformPanel.h"
-#include "Hazel/Tests/TestCameraController.h"
-#include "Hazel/Tests/TestParticles.h"
 
 namespace Hazel
 {

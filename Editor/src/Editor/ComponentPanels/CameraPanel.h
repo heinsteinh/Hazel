@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hazel/Components/CameraComponent.h"
+
 #include "Private/ProjectionTypePanel.h"
 #include "Private/OrthographicProjectionPanel.h"
 #include "Private/PerspectiveProjectionPanel.h"

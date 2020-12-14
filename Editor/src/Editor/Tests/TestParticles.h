@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Hazel/Scripting/NativeScript.h"
-#include "Hazel/ComponentPanels/ParticleInfoPanel.h"
 #include "Hazel/Camera/CameraProjection.h"
-#include "Hazel/Components/CameraComponent.h"
 #include "Hazel/Components/TransformComponent.h"
 #include "Hazel/Components/ParticleSourceComponent.h"
+
+#include "Editor/ComponentPanels/ParticlePanel.h"
 
 namespace Hazel
 {
@@ -14,7 +14,7 @@ namespace Hazel
 	private:
 		ParticleInfo defaultParticleInfo;
 		ParticleInfo particleInfo;
-		ParticleInfoPanel panel;
+		ParticlePanel panel;
 
 	public:
 		virtual void OnCreate() override

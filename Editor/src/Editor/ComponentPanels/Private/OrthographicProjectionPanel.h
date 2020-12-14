@@ -4,17 +4,22 @@
 
 #include "Hazel/Geometry/OrthographicProjection.h"
 
+#include "Editor/Widgets/FloatInput.h"
+
 namespace Hazel
 {
 	class OrthographicProjectionPanel
 	{
+	private:
+		FloatInput input;
+
 	public:
 		bool Draw(OrthographicProjection &projection)
 		{
 			bool changed = false;
-			changed |= ImGui::DragFloat("Size", &projection.Size);
-			changed |= ImGui::DragFloat("Near Clip", &projection.NearClip);
-			changed |= ImGui::DragFloat("Far Clip", &projection.FarClip);
+			changed |= input.Draw("Size", projection.Size);
+			changed |= input.Draw("Near Clip", projection.NearClip);
+			changed |= input.Draw("Far Clip", projection.FarClip);
 			return changed;
 		}
 	};

@@ -6,7 +6,7 @@
 
 namespace Hazel
 {
-	class BatchInfoPanel
+	class BatchPanel
 	{
 	public:
 		bool Draw(BatchInfo &info)
@@ -14,11 +14,11 @@ namespace Hazel
 			int maxVertexCount = static_cast<int>(info.MaxVertexCount);
 			int maxIndexCount = static_cast<int>(info.MaxIndexCount);
 			int maxTextureSlotCount = static_cast<int>(info.MaxTextureSlotCount);
-			if (ImGui::DragInt("Max Vertex", &maxVertexCount, 1.0f, 0, 100000))
+			if (ImGui::DragInt("Max Vertex Count", &maxVertexCount, 1.0f, 0, 100000))
 			{
 				info.MaxVertexCount = maxVertexCount;
 			}
-			if (ImGui::DragInt("Max Index", &maxIndexCount, 1.0f, 0, 100000))
+			if (ImGui::DragInt("Max Index Count", &maxIndexCount, 1.0f, 0, 100000))
 			{
 				info.MaxIndexCount = maxIndexCount;
 			}

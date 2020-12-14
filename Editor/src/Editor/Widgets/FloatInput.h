@@ -4,7 +4,7 @@
 
 namespace Hazel
 {
-	class GuiInputFloat
+	class FloatInput
 	{
 	private:
 		float minValue = 0.0f;

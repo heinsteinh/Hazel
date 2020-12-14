@@ -3,14 +3,15 @@
 #include "imgui.h"
 
 #include "Hazel/Scene/Entity.h"
-#include "Hazel/ComponentPanels/TagPanel.h"
-#include "Hazel/ComponentPanels/TransformPanel.h"
-#include "Hazel/ComponentPanels/CameraPanel.h"
-#include "Hazel/ComponentPanels/SpritePanel.h"
 #include "Hazel/Components/TagComponent.h"
 #include "Hazel/Components/TransformComponent.h"
 #include "Hazel/Components/CameraComponent.h"
 #include "Hazel/Components/SpriteComponent.h"
+
+#include "Editor/ComponentPanels/TagPanel.h"
+#include "Editor/ComponentPanels/TransformPanel.h"
+#include "Editor/ComponentPanels/CameraPanel.h"
+#include "Editor/ComponentPanels/SpritePanel.h"
 #include "Private/ComponentNode.h"
 #include "Private/AddComponentMenu.h"
 

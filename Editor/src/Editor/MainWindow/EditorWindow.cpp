@@ -4,11 +4,12 @@
 
 namespace Hazel
 {
-	void EditorWindow::Begin()
+	void EditorWindow::Begin(const char *label)
 	{
-		SetupFlags();
 		SetupViewport();
-		BeginWindow();
+		PushWindowStyle();
+		BeginWindow(label);
+		PopWindowStyle();
 		ActivateDockSpace();
 		menu.Draw();
 	}
@@ -16,11 +17,6 @@ namespace Hazel
 	void EditorWindow::End()
 	{
 		ImGui::End();
-	}
-
-	void EditorWindow::SetupFlags()
-	{
-		windowFlags = EditorDockSpaceFlags::GetWindowFlags(fullScreen, dockSpaceFlags);
 	}
 
 	void EditorWindow::SetupViewport()
@@ -34,7 +30,7 @@ namespace Hazel
 		}
 	}
 
-	void EditorWindow::BeginWindow()
+	void EditorWindow::PushWindowStyle()
 	{
 		if (fullScreen)
 		{
@@ -42,7 +38,15 @@ namespace Hazel
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 		}
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
-		ImGui::Begin("Hazel", nullptr, windowFlags);
+	}
+
+	void EditorWindow::BeginWindow(const char *label)
+	{
+		ImGui::Begin(label, nullptr, EditorDockSpaceFlags::GetWindowFlags(fullScreen, ImGuiDockNodeFlags_None));
+	}
+
+	void EditorWindow::PopWindowStyle()
+	{
 		ImGui::PopStyleVar();
 		if (fullScreen)
 		{
@@ -54,7 +58,7 @@ namespace Hazel
 	{
 		if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
-			ImGui::DockSpace(ImGui::GetID("HazelDockSpace"), {0.0f, 0.0f}, dockSpaceFlags);
+			ImGui::DockSpace(ImGui::GetID("HazelDockSpace"), {0.0f, 0.0f});
 		}
 	}
 }
