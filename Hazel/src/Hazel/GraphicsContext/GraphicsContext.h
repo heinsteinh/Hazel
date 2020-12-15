@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/GuiLayer/GuiRenderer.h"
+#include "Hazel/Gui/GuiRenderer.h"
 #include "Hazel/Framebuffers/Framebuffer.h"
 #include "Hazel/Shaders/Shader.h"
 #include "Hazel/GraphicsBuffers/IndexBuffer.h"

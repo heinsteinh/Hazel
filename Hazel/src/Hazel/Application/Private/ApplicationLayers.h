@@ -2,7 +2,7 @@
 
 #include "LayerStack.h"
 #include "LayerContext.h"
-#include "Hazel/GuiLayer/GuiLayer.h"
+#include "Hazel/Gui/GuiLayer.h"
 
 namespace Hazel
 {
