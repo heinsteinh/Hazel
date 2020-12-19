@@ -4,7 +4,6 @@
 #include "glm/gtc/type_ptr.hpp"
 
 #include "Hazel/Rendering/Particles/ParticleInfo.h"
-
 #include "Hazel/Editor/Widgets/FloatInput.h"
 
 namespace Hazel

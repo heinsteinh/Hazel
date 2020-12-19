@@ -2,9 +2,9 @@
 
 #include "Hazel/Scene/Components/CameraComponent.h"
 
-#include "Private/ProjectionTypePanel.h"
-#include "Private/OrthographicProjectionPanel.h"
-#include "Private/PerspectiveProjectionPanel.h"
+#include "Hazel/Editor/Widgets/ProjectionTypePanel.h"
+#include "Hazel/Editor/Widgets/OrthographicProjectionPanel.h"
+#include "Hazel/Editor/Widgets/PerspectiveProjectionPanel.h"
 
 namespace Hazel
 {

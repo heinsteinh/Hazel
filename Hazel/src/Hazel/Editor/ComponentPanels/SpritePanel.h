@@ -4,7 +4,7 @@
 
 #include "Hazel/Scene/Components/SpriteComponent.h"
 
-#include "Private/TexturePanel.h"
+#include "Hazel/Editor/Widgets/TexturePanel.h"
 
 namespace Hazel
 {
