@@ -12,8 +12,8 @@ namespace Hazel
 	public:
 		BatchShader(GraphicsContext &graphics)
 			: shader(graphics.CreateShader(ShaderInfo::FromFiles({
-			{ShaderType::Vertex, R"(C:\Users\christian\source\repos\Hazel\Hazel\assets\shaders\BatchShader.vert)"},
-			{ShaderType::Pixel, R"(C:\Users\christian\source\repos\Hazel\Hazel\assets\shaders\BatchShader.frag)"}})))
+			{ShaderType::Vertex, "C:\\Users\\christian\\source\\repos\\Hazel\\Hazel\\assets\\shaders\\BatchShader.vert"},
+			{ShaderType::Pixel, "C:\\Users\\christian\\source\\repos\\Hazel\\Hazel\\assets\\shaders\\BatchShader.frag"}})))
 		{
 		}
 

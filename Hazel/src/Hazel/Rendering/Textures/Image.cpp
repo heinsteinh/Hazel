@@ -12,7 +12,7 @@ namespace Hazel
 		data = stbi_load(filename.c_str(), &width, &height, &channelCount, 0);
 		if (!data)
 		{
-			throw OpenFileException(filename, 0);
+			throw OpenFileException(filename);
 		}
 		size = {static_cast<float>(width), static_cast<float>(height)};
 	}

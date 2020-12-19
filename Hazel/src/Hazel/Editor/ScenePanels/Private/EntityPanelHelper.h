@@ -17,7 +17,7 @@ namespace Hazel
 
 		static ImGuiTreeNodeFlags GetFlags(Entity entity, Entity selectedEntity)
 		{
-			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
+			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
 			if (entity == selectedEntity)
 			{
 				flags |= ImGuiTreeNodeFlags_Selected;

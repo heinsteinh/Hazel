@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "glm/glm.hpp"
+
 #include "Hazel/Core/FileSystem/OpenFileException.h"
 
 namespace Hazel

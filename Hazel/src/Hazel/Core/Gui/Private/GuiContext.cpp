@@ -2,6 +2,9 @@
 
 #include "imgui.h"
 
+#include "GuiConfiguration.h"
+#include "GuiStyle.h"
+
 namespace Hazel
 {
 	GuiContext::GuiContext()
@@ -9,8 +12,8 @@ namespace Hazel
 		IMGUI_CHECKVERSION();
 		context = ImGui::CreateContext();
 		ImGui::SetCurrentContext(context);
-		ImGui::GetIO().ConfigFlags = GetConfigurationFlags();
-		SetupAppearance();
+		GuiConfiguration::SetDefaultConfiguration();
+		GuiStyle::SetDefaultStyle();
 	}
 
 	GuiContext::~GuiContext()
@@ -21,19 +24,5 @@ namespace Hazel
 	void GuiContext::MakeCurrent()
 	{
 		ImGui::SetCurrentContext(context);
-	}
-
-	void GuiContext::SetupAppearance()
-	{
-		ImGui::StyleColorsDark();
-		ImGui::GetStyle().WindowRounding = 0.0f;
-		ImGui::GetStyle().Colors[ImGuiCol_WindowBg].w = 1.0f;
-	}
-
-	int GuiContext::GetConfigurationFlags()
-	{
-		return ImGuiConfigFlags_NavEnableKeyboard
-			| ImGuiConfigFlags_DockingEnable
-			| ImGuiConfigFlags_ViewportsEnable;
 	}
 }

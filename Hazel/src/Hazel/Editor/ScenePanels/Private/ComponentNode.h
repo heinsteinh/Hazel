@@ -14,6 +14,8 @@ namespace Hazel
 		static inline void *hashCode = reinterpret_cast<void *>(typeid(ComponentType).hash_code());
 
 		static constexpr ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen
+			| ImGuiTreeNodeFlags_Framed
+			| ImGuiTreeNodeFlags_SpanAvailWidth
 			| ImGuiTreeNodeFlags_AllowItemOverlap;
 
 		PanelType panel;
@@ -43,7 +45,7 @@ namespace Hazel
 		bool Begin(const char *label)
 		{
 			bool open = ImGui::TreeNodeEx(hashCode, flags, label);
-			ImGui::SameLine();
+			ImGui::SameLine(ImGui::GetWindowWidth() - 25.0f);
 			settingsMenu.Draw();
 			return open;
 		}

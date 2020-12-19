@@ -14,9 +14,5 @@ namespace Hazel
 		~GuiContext();
 
 		void MakeCurrent();
-
-	private:
-		void SetupAppearance();
-		int GetConfigurationFlags();
 	};
 }
