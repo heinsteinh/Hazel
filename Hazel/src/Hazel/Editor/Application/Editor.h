@@ -1,6 +1,5 @@
 #include "Hazel/Core/Application/Application.h"
 #include "Hazel/Core/Logging/Log.h"
-
 #include "EditorLayer.h"
 
 namespace Hazel

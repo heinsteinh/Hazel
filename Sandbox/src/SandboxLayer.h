@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel.h"
+#include "Hazel/Hazel.h"
 
 namespace Sandbox
 {

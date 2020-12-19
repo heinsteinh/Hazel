@@ -4,7 +4,6 @@
 #include "Hazel/Core/Camera/CameraProjection.h"
 #include "Hazel/Scene/Components/TransformComponent.h"
 #include "Hazel/Scene/Components/ParticleSourceComponent.h"
-
 #include "Hazel/Editor/ComponentPanels/ParticlePanel.h"
 
 namespace Hazel

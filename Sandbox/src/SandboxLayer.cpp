@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 
-#include "Hazel/Textures/TextureBuilder.h"
+#include "Hazel/Rendering/Textures/TextureFactory.h"
 
 namespace Sandbox
 {
@@ -16,12 +16,12 @@ namespace Sandbox
 		auto &graphicsContext = GetGraphicsContext();
 
 		Hazel::BatchInfo batchInfo;
-		batchInfo.MaxIndexCount = 10000;
+		batchInfo.MaxIndexCount = 60000;
 		batchInfo.MaxVertexCount = 40000;
 		batchInfo.MaxTextureSlotCount = graphicsContext.GetMaxTextureSlotCount();
 		renderer = std::make_shared<Hazel::Renderer2D>(graphicsContext, batchInfo);
 
-		spriteSheet = Hazel::TextureBuilder::CreateTextureFromFile(
+		spriteSheet = Hazel::TextureFactory::CreateTextureFromFile(
 			GetGraphicsContext(),
 			"assets\\textures\\SpriteSheet.png");
 

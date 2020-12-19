@@ -4,9 +4,8 @@
 
 #include "Hazel/Core/Logging/Log.h"
 #include "Hazel/Rendering/Textures/TextureFactory.h"
-#include "Hazel/Editor/Tests/TestCameraController.h"
-#include "Hazel/Editor/Tests/TestParticles.h"
-
+#include "Hazel/Tests/TestCameraController.h"
+#include "Hazel/Tests/TestParticles.h"
 #include "EditorViewport.h"
 
 namespace Hazel
@@ -20,7 +19,7 @@ namespace Hazel
 	{
 		auto &graphicsContext = GetGraphicsContext();
 
-		rendererInfo.MaxIndexCount = 10000;
+		rendererInfo.MaxIndexCount = 60000;
 		rendererInfo.MaxVertexCount = 40000;
 		rendererInfo.MaxTextureSlotCount = graphicsContext.GetMaxTextureSlotCount();
 		renderer = std::make_shared<Renderer2D>(graphicsContext, rendererInfo);
