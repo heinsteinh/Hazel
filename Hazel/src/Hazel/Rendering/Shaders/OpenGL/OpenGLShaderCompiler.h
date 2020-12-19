@@ -4,14 +4,13 @@
 #include <memory>
 
 #include "OpenGLProgram.h"
+#include "Private/OpenGLShaders.h"
 
 namespace Hazel
 {
 	class OpenGLShaderCompiler
 	{
 	public:
-		using CompiledShaders = std::array<OpenGLShader, static_cast<size_t>(ShaderType::Count)>;
-
 		static std::shared_ptr<OpenGLProgram> Compile(const ShaderInfo &info)
 		{
 			if (!info.Sources.IsValid())
@@ -22,51 +21,39 @@ namespace Hazel
 		}
 
 	private:
-		static CompiledShaders CompileShaders(const ShaderSourceMap &sources)
+		static OpenGLShaders CompileShaders(const ShaderSourceMap &sources)
 		{
-			CompiledShaders shaders;
-			for (const auto &[type, source] : sources)
+			OpenGLShaders shaders;
+			for (const auto &[shaderType, source] : sources)
 			{
 				if (!source.empty())
 				{
-					shaders[static_cast<size_t>(type)] = CompileShader(type, source);
+					shaders[shaderType] = CompileShader(shaderType, source);
 				}
 			}
 			return shaders;
 		}
 
-		static OpenGLShader CompileShader(ShaderType type, const std::string &source)
+		static OpenGLShader CompileShader(ShaderType shaderType, const std::string &source)
 		{
-			OpenGLShader shader(type, source);
+			OpenGLShader shader(shaderType, source);
 			if (!shader.IsCompiled())
 			{
-				throw ShaderCompilationException(fmt::format("Shader {} compilation failed: {}", type, shader.GetInfoLog()));
+				throw ShaderCompilationException(fmt::format("Shader {} compilation failed: {}", shaderType, shader.GetInfoLog()));
 			}
 			return shader;
 		}
 
-		static std::shared_ptr<OpenGLProgram> Link(const std::string &name, const CompiledShaders &shaders)
+		static std::shared_ptr<OpenGLProgram> Link(const std::string &name, const OpenGLShaders &shaders)
 		{
 			auto program = std::make_shared<OpenGLProgram>(name);
-			for (const auto &shader : shaders)
-			{
-				if (shader.IsValid())
-				{
-					program->Attach(shader);
-				}
-			}
+			shaders.Attach(*program);
 			program->Link();
 			if (!program->IsLinked())
 			{
 				throw ShaderCompilationException(fmt::format("Shader link failed: {}", program->GetInfoLog()));
 			}
-			for (const auto &shader : shaders)
-			{
-				if (shader.IsValid())
-				{
-					program->Detach(shader);
-				}
-			}
+			shaders.Detach(*program);
 			return program;
 		}
 	};
