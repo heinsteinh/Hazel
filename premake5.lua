@@ -12,11 +12,9 @@ workspace "Hazel"
     }
 
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+    bindir = "bin/" .. outputdir .. "/%{prj.name}"
+    objectdir = "obj/" .. outputdir .. "/%{prj.name}"
 
-    group "Dependencies"
-        include "Hazel/vendor"
-
-    group ""
-        include "Hazel"
-        include "Editor"
-        include "Sandbox"
+    include "Hazel"
+    include "Editor"
+    include "Sandbox"

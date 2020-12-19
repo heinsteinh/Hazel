@@ -4,12 +4,8 @@ project "Editor"
     cppdialect "C++17"
     staticruntime "On"
 
-    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("obj/" .. outputdir .. "/%{prj.name}")
-
-    pchheader "StdAfx.h"
-    pchsource "src/StdAfx.cpp"
-    forceincludes "StdAfx.h"
+    targetdir(bindir)
+    objdir(objectdir)
 
     files {
         "src/**.h",
@@ -18,11 +14,11 @@ project "Editor"
 
     includedirs {
         "src",
-        "../Hazel/src",
-        "../Hazel/vendor/spdlog/include",
-        "../Hazel/vendor/imgui",
-        "../Hazel/vendor/glm",
-        "../Hazel/vendor/entt/src"
+        "%{wks.location}/Hazel/src",
+        "%{wks.location}/Hazel/src/vendor/spdlog/include",
+        "%{wks.location}/Hazel/src/vendor/imgui",
+        "%{wks.location}/Hazel/src/vendor/glm",
+        "%{wks.location}/Hazel/src/vendor/entt/src"
     }
 
     links {
