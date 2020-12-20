@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 
-#include "Hazel/Scene/Scene/Entity.h"
+#include "Hazel/Scene/Entity/Entity.h"
 
 namespace Hazel
 {

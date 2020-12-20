@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-#include "Private/SceneRenderer.h"
+#include "Hazel/Scene/Context/SceneRenderer.h"
 #include "Hazel/Scene/Systems/CameraSystem.h"
 #include "Hazel/Scene/Systems/NativeScriptSystem.h"
 #include "Hazel/Scene/Systems/ParticleSystem.h"

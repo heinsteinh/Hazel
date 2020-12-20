@@ -16,7 +16,7 @@ namespace Hazel
 	public:
 		SceneCamera(entt::registry &registry);
 
-		void Update();
+		void OnUpdate();
 		glm::vec3 GetWorldPosition(const glm::vec2 &screenPosition) const;
 		glm::vec2 GetScreenPosition(const glm::vec3 &worldPosition) const;
 
@@ -33,7 +33,7 @@ namespace Hazel
 		void SetEntity(entt::entity entity)
 		{
 			this->entity = entity;
-			Update();
+			OnUpdate();
 		}
 
 		const Rectangle &GetViewport() const

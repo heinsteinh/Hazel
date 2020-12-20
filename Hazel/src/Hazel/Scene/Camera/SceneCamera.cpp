@@ -11,7 +11,7 @@ namespace Hazel
 	{
 	}
 
-	void SceneCamera::Update()
+	void SceneCamera::OnUpdate()
 	{
 		entity = SceneCameraHelper::GetMainCamera(*registry, entity);
 		info.View = SceneCameraHelper::GetView(*registry, entity);

@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 
-#include "Hazel/Scene/Scene/Entity.h"
+#include "Hazel/Scene/Entity/Entity.h"
 #include "Hazel/Scene/Components/TransformComponent.h"
 #include "Hazel/Scene/Components/CameraComponent.h"
 #include "Hazel/Scene/Components/SpriteComponent.h"

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Hazel/Scene/Scene/Entity.h"
+#include "Hazel/Scene/Entity/Entity.h"
+#include "Hazel/Core/Exceptions/AssertionException.h"
 
 #define HZ_ASSERT_ATTACHED() HZ_ASSERT(layer, "The script is not attached to a valid entity")
 

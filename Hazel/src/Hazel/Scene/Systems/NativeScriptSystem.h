@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Scene/Scene/SceneContext.h"
+#include "Hazel/Scene/Context/SceneContext.h"
 #include "Hazel/Scene/Components/NativeScriptComponent.h"
 #include "Hazel/Core/Events/Event.h"
 

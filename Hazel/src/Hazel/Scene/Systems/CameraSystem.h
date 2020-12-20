@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Scene/Scene/SceneContext.h"
+#include "Hazel/Scene/Context/SceneContext.h"
 #include "Hazel/Scene/Components/CameraComponent.h"
 
 namespace Hazel
@@ -10,7 +10,7 @@ namespace Hazel
 	public:
 		static void OnUpdate(SceneContext &context)
 		{
-			context.GetSceneCamera().Update();
+			context.GetSceneCamera().OnUpdate();
 		}
 
 		static void OnViewportResize(SceneContext &context, const Rectangle &viewport)

@@ -1,6 +1,8 @@
 #pragma once
 
-#include "SceneContext.h"
+#include "Hazel/Core/Exceptions/AssertionException.h"
+#include "Hazel/Scene/Context/SceneContext.h"
+#include "EntityListener.h"
 
 namespace Hazel
 {
@@ -36,39 +38,48 @@ namespace Hazel
 
 		SceneContext &GetSceneContext() const
 		{
+			HZ_ASSERT(context, "Invalid entity");
 			return *context;
 		}
 
 		template<typename ComponentType>
 		bool HasComponent() const
 		{
+			HZ_ASSERT(IsValid(), "Invalid entity");
 			return context->GetRegistry().has<ComponentType>(entity);
 		}
 
 		template<typename ComponentType>
 		ComponentType &GetComponent()
 		{
+			HZ_ASSERT(IsValid(), "Invalid entity");
+			HZ_ASSERT(HasComponent<ComponentType>(), "Cannot get non-existing component.");
 			return context->GetRegistry().get<ComponentType>(entity);
 		}
 
 		template<typename ComponentType>
 		ComponentType *TryGetComponent()
 		{
+			HZ_ASSERT(IsValid(), "Invalid entity");
 			return context->GetRegistry().try_get<ComponentType>(entity);
 		}
 
 		template<typename ComponentType, typename ...Args>
 		ComponentType &AddComponent(Args &&...args)
 		{
+			HZ_ASSERT(IsValid(), "Invalid entity");
+			HZ_ASSERT(!HasComponent<ComponentType>(), "Already has component.");
 			auto &component = context->GetRegistry().emplace<ComponentType>(entity, std::forward<Args>(args)...);
-			EntityEvents::OnComponentAdded<ComponentType>(*this, component);
+			EntityListener::OnComponentAdded<ComponentType>(*this, component);
 			return component;
 		}
 
 		template<typename ComponentType>
 		void RemoveComponent()
 		{
-			EntityEvents::OnComponentRemoved<ComponentType>(*this);
+			HZ_ASSERT(IsValid(), "Invalid entity");
+			HZ_ASSERT(HasComponent<ComponentType>(), "Cannot remove non-existing component.");
+			EntityListener::OnComponentRemoved<ComponentType>(*this);
 			context->GetRegistry().remove<ComponentType>(entity);
 		}
 
@@ -85,20 +96,6 @@ namespace Hazel
 		operator entt::entity() const
 		{
 			return entity;
-		}
-	};
-
-	class EntityEvents
-	{
-	public:
-		template<typename ComponentType>
-		static void OnComponentAdded(Entity entity, ComponentType &component)
-		{
-		}
-
-		template<typename ComponentType>
-		static void OnComponentRemoved(Entity entity)
-		{
 		}
 	};
 }

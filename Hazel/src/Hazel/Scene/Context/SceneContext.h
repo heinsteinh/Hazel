@@ -3,9 +3,10 @@
 #include "entt/entt.hpp"
 
 #include "SceneInfo.h"
-#include "SceneCamera.h"
 #include "Hazel/Rendering/Renderer2D/Renderer2D.h"
 #include "Hazel/Core/Application/Layer.h"
+#include "Hazel/Scene/Camera/SceneCamera.h"
+#include "Hazel/Core/Exceptions/AssertionException.h"
 
 namespace Hazel
 {
@@ -23,6 +24,7 @@ namespace Hazel
 			renderer(info.Renderer),
 			sceneCamera(registry)
 		{
+			HZ_ASSERT(info.Layer && info.Renderer, "A scene needs to be attached to an application and a renderer.")
 		}
 
 		Layer &GetLayer() const
@@ -45,16 +47,6 @@ namespace Hazel
 			return sceneCamera.GetViewport();
 		}
 
-		SceneCamera &GetSceneCamera()
-		{
-			return sceneCamera;
-		}
-
-		const SceneCamera &GetSceneCamera() const
-		{
-			return sceneCamera;
-		}
-
 		entt::registry &GetRegistry()
 		{
 			return registry;
@@ -63,6 +55,16 @@ namespace Hazel
 		const entt::registry &GetRegistry() const
 		{
 			return registry;
+		}
+
+		SceneCamera &GetSceneCamera()
+		{
+			return sceneCamera;
+		}
+
+		const SceneCamera &GetSceneCamera() const
+		{
+			return sceneCamera;
 		}
 	};
 }

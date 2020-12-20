@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Scene/Scene/Scene.h"
+#include "Hazel/Scene/Scene.h"
 #include "EntityPanel.h"
 #include "PropertiesPanel.h"
 

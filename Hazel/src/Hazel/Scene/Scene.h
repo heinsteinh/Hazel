@@ -1,7 +1,7 @@
 #pragma once
 
-#include "SceneContext.h"
-#include "Entity.h"
+#include "Hazel/Scene/Context/SceneContext.h"
+#include "Hazel/Scene/Entity/Entity.h"
 #include "Hazel/Scene/Components/TagComponent.h"
 #include "Hazel/Scene/Components/CameraComponent.h"
 #include "Hazel/Scene/Components/TransformComponent.h"

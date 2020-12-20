@@ -9,4 +9,4 @@
 #include "Hazel/Core/Application/Application.h"
 #include "Hazel/Core/Logging/Log.h"
 #include "Hazel/Rendering/Renderer2D/Renderer2D.h"
-#include "Hazel/Scene/Scene/Scene.h"
+#include "Hazel/Scene/Scene.h"

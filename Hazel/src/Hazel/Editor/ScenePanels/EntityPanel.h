@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 
-#include "Hazel/Scene/Scene/Scene.h"
+#include "Hazel/Scene/Scene.h"
 #include "Private/EntityPanelPopup.h"
 #include "Private/EntityNode.h"
 

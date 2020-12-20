@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Scene/Scene/SceneContext.h"
+#include "Hazel/Scene/Context/SceneContext.h"
 
 namespace Hazel
 {

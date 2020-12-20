@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel/Core/Camera/Camera.h"
-#include "Hazel/Scene/Scene/Entity.h"
+#include "Hazel/Scene/Entity/Entity.h"
 
 namespace Hazel
 {
@@ -21,7 +21,7 @@ namespace Hazel
 	};
 
 	template<>
-	inline void EntityEvents::OnComponentAdded<CameraComponent>(Entity entity, CameraComponent &component)
+	inline void EntityListener::OnComponentAdded<CameraComponent>(Entity entity, CameraComponent &component)
 	{
 		component.SetViewport(entity.GetSceneContext().GetViewport());
 	};
