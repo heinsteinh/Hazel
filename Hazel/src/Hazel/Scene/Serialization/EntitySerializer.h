@@ -7,7 +7,7 @@
 #include "TransformSerializer.h"
 #include "SpriteSerializer.h"
 #include "CameraSerializer.h"
-#include "ParticleSourceSerializer.h"
+#include "ParticleSerializer.h"
 #include "NativeScriptSerializer.h"
 
 namespace Hazel
@@ -23,7 +23,7 @@ namespace Hazel
 			SerializeComponent<TransformComponent>("Transform", entity, emitter);
 			SerializeComponent<SpriteComponent>("Sprite", entity, emitter);
 			SerializeComponent<CameraComponent>("Camera", entity, emitter);
-			SerializeComponent<ParticleSourceComponent>("ParticleSource", entity, emitter);
+			SerializeComponent<ParticleComponent>("Particle", entity, emitter);
 			SerializeComponent<NativeScriptComponent>("NativeScript", entity, emitter);
 			emitter << YAML::EndMap;
 		}

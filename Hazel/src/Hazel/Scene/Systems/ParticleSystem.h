@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel/Scene/Context/SceneContext.h"
-#include "Hazel/Scene/Components/ParticleSourceComponent.h"
+#include "Hazel/Scene/Components/ParticleComponent.h"
 
 namespace Hazel
 {
@@ -11,7 +11,7 @@ namespace Hazel
 		static void OnUpdate(SceneContext &context)
 		{
 			auto deltaTime = context.GetLayer().GetDeltaTime();
-			context.GetRegistry().view<ParticleSourceComponent>().each([=](auto entity, auto &component)
+			context.GetRegistry().view<ParticleComponent>().each([=](auto entity, auto &component)
 			{
 				component.UpdateParticles(deltaTime);
 			});
@@ -20,7 +20,7 @@ namespace Hazel
 		static void OnRender(SceneContext &context)
 		{
 			auto &renderer = context.GetRenderer();
-			context.GetRegistry().view<ParticleSourceComponent>().each([&](auto entity, auto &component)
+			context.GetRegistry().view<ParticleComponent>().each([&](auto entity, auto &component)
 			{
 				component.RenderParticles(renderer);
 			});

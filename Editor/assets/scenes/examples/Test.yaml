@@ -3,8 +3,21 @@ Entities:
   - Entity: 4
     Tag:
       Name: Particle Emitter
-    ParticleSource:
-      MaxParticleCount: 1000
+    Particle:
+      ParticleInfo:
+        Position: [0, 0, 0]
+        LinearVelocity: [0, 0]
+        LinearVelocityVariation: [0.200000003, 0.200000003]
+        AngularVelocity: 3.14159274
+        AngularVelocityVariation: 3.14159274
+        ColorBegin: [1, 0.300000012, 0, 1]
+        ColorEnd: [1, 0.600000024, 0, 1]
+        SizeBegin: 0.100000001
+        SizeEnd: 0
+        SizeVariation: 0.100000001
+        LifeTime: 2
+      ParticleSource:
+        MaxParticleCount: 1000
     NativeScript:
       Type: class Hazel::TestParticles
   - Entity: 3

@@ -63,7 +63,7 @@ namespace Hazel
 
 		auto particleEmitter = scene->CreateEntity();
 		particleEmitter.AddComponent<TagComponent>("Particle Emitter");
-		particleEmitter.AddComponent<ParticleSourceComponent>();
+		particleEmitter.AddComponent<ParticleComponent>();
 		particleEmitter.AddComponent<NativeScriptComponent>(std::make_shared<TestParticles>());
 
 		SceneSerializer::Serialize(*scene, "assets/scenes/examples/Test.yaml");
@@ -91,8 +91,6 @@ namespace Hazel
 	void EditorLayer::OnGui()
 	{
 		editorWindow.Begin("Hazel");
-
-		scene->OnGui();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
 		ImGui::Begin("Viewport");

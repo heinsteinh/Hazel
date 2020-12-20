@@ -1,7 +1,7 @@
 #include "SceneRenderer.h"
 
 #include "Hazel/Scene/Components/SpriteComponent.h"
-#include "Hazel/Scene/Components/ParticleSourceComponent.h"
+#include "Hazel/Scene/Components/ParticleComponent.h"
 #include "Hazel/Scene/Systems/ParticleSystem.h"
 #include "Hazel/Scene/Systems/SpriteRenderingSystem.h"
 

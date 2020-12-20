@@ -24,13 +24,5 @@ namespace Hazel
 				component.Script->OnEvent(e);
 			});
 		}
-
-		static void OnGui(SceneContext &context)
-		{
-			context.GetRegistry().view<NativeScriptComponent>().each([](auto entity, auto &component)
-			{
-				component.Script->OnGui();
-			});
-		}
 	};
 }

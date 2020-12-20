@@ -7,6 +7,11 @@ namespace Hazel
 	struct NativeScriptComponent
 	{
 		std::shared_ptr<NativeScript> Script;
+
+		const char *GetTypeName() const
+		{
+			return typeid(*Script).name();
+		}
 	};
 
 	template<>

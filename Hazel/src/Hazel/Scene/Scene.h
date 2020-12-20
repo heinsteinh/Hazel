@@ -6,7 +6,7 @@
 #include "Hazel/Scene/Components/CameraComponent.h"
 #include "Hazel/Scene/Components/TransformComponent.h"
 #include "Hazel/Scene/Components/SpriteComponent.h"
-#include "Hazel/Scene/Components/ParticleSourceComponent.h"
+#include "Hazel/Scene/Components/ParticleComponent.h"
 #include "Hazel/Scene/Components/NativeScriptComponent.h"
 
 namespace Hazel
@@ -23,7 +23,6 @@ namespace Hazel
 		void OnRender();
 		void OnViewportResize(const Rectangle &viewport);
 		void OnEvent(Event &e);
-		void OnGui();
 
 		const std::string &GetName() const
 		{

@@ -3,7 +3,7 @@
 #include "imgui.h"
 #include "glm/gtc/type_ptr.hpp"
 
-#include "Hazel/Rendering/Particles/ParticleInfo.h"
+#include "Hazel/Scene/Components/ParticleComponent.h"
 #include "Hazel/Editor/Widgets/FloatInput.h"
 
 namespace Hazel
@@ -12,13 +12,16 @@ namespace Hazel
 	{
 	private:
 		FloatInput input;
-		int emissionCount = 5;
-		int maxParticleCount = 1000;
 
 	public:
-		void Draw(const char *label, ParticleInfo &particleInfo)
+		void Draw(ParticleComponent &component)
 		{
-			ImGui::Begin(label);
+			Draw(component.ParticleInfo);
+			Draw(component.ParticleSource);
+		}
+
+		void Draw(ParticleInfo &particleInfo)
+		{
 			input.Draw("Position", particleInfo.Position);
 			input.Draw("Linear Velocity", particleInfo.LinearVelocity);
 			input.Draw("Linear VelocityVariation", particleInfo.LinearVelocityVariation);
@@ -30,19 +33,15 @@ namespace Hazel
 			input.Draw("SizeEnd", particleInfo.SizeEnd);
 			input.Draw("SizeVariation", particleInfo.SizeVariation);
 			input.Draw("LifeTime", particleInfo.LifeTime);
-			ImGui::SliderInt("EmissionCount", &emissionCount, 0, 100);
-			ImGui::SliderInt("MaxParticleCount", &maxParticleCount, 1, 100000);
-			ImGui::End();
 		}
 
-		int GetEmissionCount() const
+		void Draw(ParticleSource &particleSource)
 		{
-			return emissionCount;
-		}
-
-		int GetMaxParticleCount() const
-		{
-			return maxParticleCount;
+			auto maxParticleCount = static_cast<int>(particleSource.GetMaxParticleCount());
+			if (ImGui::DragInt("MaxParticleCount", &maxParticleCount))
+			{
+				particleSource.SetMaxParticleCount(maxParticleCount);
+			}
 		}
 	};
 }

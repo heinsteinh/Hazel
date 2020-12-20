@@ -3,15 +3,12 @@
 #include "imgui.h"
 
 #include "Hazel/Scene/Entity/Entity.h"
-#include "Hazel/Scene/Components/TagComponent.h"
-#include "Hazel/Scene/Components/TransformComponent.h"
-#include "Hazel/Scene/Components/CameraComponent.h"
-#include "Hazel/Scene/Components/SpriteComponent.h"
-
 #include "Hazel/Editor/ComponentPanels/TagPanel.h"
 #include "Hazel/Editor/ComponentPanels/TransformPanel.h"
 #include "Hazel/Editor/ComponentPanels/CameraPanel.h"
 #include "Hazel/Editor/ComponentPanels/SpritePanel.h"
+#include "Hazel/Editor/ComponentPanels/ParticlePanel.h"
+#include "Hazel/Editor/ComponentPanels/NativeScriptPanel.h"
 #include "Private/ComponentNode.h"
 #include "Private/AddComponentMenu.h"
 
@@ -24,6 +21,8 @@ namespace Hazel
 		ComponentNode<TransformComponent, TransformPanel> transformNode;
 		ComponentNode<CameraComponent, CameraPanel> cameraNode;
 		ComponentNode<SpriteComponent, SpritePanel> spriteNode;
+		ComponentNode<ParticleComponent, ParticlePanel> particleNode;
+		ComponentNode<NativeScriptComponent, NativeScriptPanel> nativeScriptNode;
 		AddComponentMenu addComponentMenu;
 
 	public:
@@ -48,6 +47,8 @@ namespace Hazel
 			transformNode.Draw("Transform", entity);
 			cameraNode.Draw("Camera", entity);
 			spriteNode.Draw("Sprite", entity);
+			particleNode.Draw("Particle", entity);
+			nativeScriptNode.Draw("Native Script", entity);
 		}
 	};
 }

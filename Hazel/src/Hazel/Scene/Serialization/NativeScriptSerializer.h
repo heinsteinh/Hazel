@@ -12,7 +12,7 @@ namespace Hazel
 		static void Serialize(const NativeScriptComponent &script, YAML::Emitter &emitter)
 		{
 			emitter << YAML::BeginMap;
-			emitter << YAML::Key << "Type" << YAML::Value << typeid(*script.Script).name();
+			emitter << YAML::Key << "Type" << YAML::Value << script.GetTypeName();
 			emitter << YAML::EndMap;
 		}
 	};

@@ -33,9 +33,4 @@ namespace Hazel
 	{
 		NativeScriptSystem::OnEvent(context, e);
 	}
-
-	void Scene::OnGui()
-	{
-		NativeScriptSystem::OnGui(context);
-	};
 }
