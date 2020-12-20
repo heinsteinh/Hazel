@@ -1,13 +1,24 @@
 #include "ParticleSource.h"
 
-#include "ParticleUpdater.h"
-#include "ParticleRenderer.h"
+#include "Private/ParticleUpdater.h"
+#include "Private/ParticleRenderer.h"
 
 namespace Hazel
 {
 	ParticleSource::ParticleSource(size_t maxParticleCount)
 		: pool(maxParticleCount > 0 ? maxParticleCount : 1)
 	{
+	}
+
+	size_t ParticleSource::GetMaxParticleCount() const
+	{
+		return pool.size();
+	}
+
+	void ParticleSource::SetMaxParticleCount(size_t maxParticleCount)
+	{
+		pool.resize(maxParticleCount > 0 ? maxParticleCount : 1);
+		index %= pool.size();
 	}
 
 	void ParticleSource::UpdateParticles(float deltaTime)
@@ -36,16 +47,5 @@ namespace Hazel
 	{
 		emitter.EmitParticle(pool[index], info);
 		index = (index + 1) % pool.size();
-	}
-
-	size_t ParticleSource::GetMaxParticleCount() const
-	{
-		return pool.size();
-	}
-
-	void ParticleSource::SetMaxParticleCount(size_t maxParticleCount)
-	{
-		pool.resize(maxParticleCount > 0 ? maxParticleCount : 1);
-		index %= pool.size();
 	}
 }

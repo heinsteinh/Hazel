@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ParticleInfo.h"
+#include "Hazel/Rendering/Particles/ParticleInfo.h"
 #include "Particle.h"
 #include "Hazel/Core/Random/Random.h"
 

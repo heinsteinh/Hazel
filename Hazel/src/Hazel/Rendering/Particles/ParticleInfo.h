@@ -1,5 +1,7 @@
 #pragma once
 
+#include "glm/glm.hpp"
+
 namespace Hazel
 {
 	struct ParticleInfo

@@ -3,6 +3,10 @@ Entities:
   - Entity: 4
     Tag:
       Name: Particle Emitter
+    ParticleSource:
+      MaxParticleCount: 1000
+    NativeScript:
+      Type: class Hazel::TestParticles
   - Entity: 3
     Tag:
       Name: Camera2
@@ -41,6 +45,8 @@ Entities:
         VerticalFov: 0.785398185
         NearClip: 0.00999999978
         FarClip: 1000
+    NativeScript:
+      Type: class Hazel::TestCameraController
   - Entity: 1
     Tag:
       Name: Square2
