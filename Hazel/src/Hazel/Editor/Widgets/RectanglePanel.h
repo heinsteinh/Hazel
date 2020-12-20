@@ -12,7 +12,7 @@ namespace Hazel
 		bool Draw(Rectangle &rectangle)
 		{
 			bool changed = false;
-			changed |= ImGui::DragFloat("", &rectangle.Left);
+			changed |= ImGui::DragFloat("Left", &rectangle.Left);
 			changed |= ImGui::DragFloat("Right", &rectangle.Right);
 			changed |= ImGui::DragFloat("Bottom", &rectangle.Bottom);
 			changed |= ImGui::DragFloat("Top", &rectangle.Top);

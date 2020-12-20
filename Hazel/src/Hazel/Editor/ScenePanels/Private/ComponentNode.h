@@ -4,6 +4,7 @@
 
 #include "Hazel/Scene/Entity/Entity.h"
 #include "ComponentSettingsMenu.h"
+#include "Hazel/Editor/Utils/TreeNodeFlags.h"
 
 namespace Hazel
 {
@@ -12,11 +13,6 @@ namespace Hazel
 	{
 	private:
 		static inline void *hashCode = reinterpret_cast<void *>(typeid(ComponentType).hash_code());
-
-		static constexpr ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen
-			| ImGuiTreeNodeFlags_Framed
-			| ImGuiTreeNodeFlags_SpanAvailWidth
-			| ImGuiTreeNodeFlags_AllowItemOverlap;
 
 		PanelType panel;
 		ComponentSettingsMenu settingsMenu;
@@ -44,7 +40,7 @@ namespace Hazel
 	private:
 		bool Begin(const char *label)
 		{
-			bool open = ImGui::TreeNodeEx(hashCode, flags, label);
+			bool open = ImGui::TreeNodeEx(hashCode, TreeNodeFlags::GetDefaultFlags(), label);
 			ImGui::SameLine(ImGui::GetWindowWidth() - 25.0f);
 			settingsMenu.Draw();
 			return open;

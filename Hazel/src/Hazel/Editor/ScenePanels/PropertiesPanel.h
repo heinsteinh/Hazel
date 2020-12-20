@@ -33,7 +33,6 @@ namespace Hazel
 			if (!entity.IsNull())
 			{
 				DrawComponents(entity);
-				addComponentMenu.Draw("Add Component", entity);
 			}
 			ImGui::End();
 		}
@@ -42,6 +41,10 @@ namespace Hazel
 		void DrawComponents(Entity entity)
 		{
 			tagNode.Draw(entity);
+			ImGui::SameLine();
+			ImGui::PushItemWidth(-1);
+			addComponentMenu.Draw("Add Component", entity);
+			ImGui::PopItemWidth();
 			transformNode.Draw("Transform", entity);
 			cameraNode.Draw("Camera", entity);
 			spriteNode.Draw("Sprite", entity);
