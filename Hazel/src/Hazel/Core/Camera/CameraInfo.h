@@ -1,5 +1,7 @@
 #pragma once
 
+#include "glm/glm.hpp"
+
 #include "Hazel/Core/Geometry/Rectangle.h"
 
 namespace Hazel

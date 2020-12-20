@@ -23,6 +23,6 @@ namespace Hazel
 	template<>
 	inline void EntityListener::OnComponentAdded<CameraComponent>(Entity entity, CameraComponent &component)
 	{
-		component.SetViewport(entity.GetSceneContext().GetViewport());
+		component.SetViewport(entity.GetSceneContext().Camera.GetViewport());
 	};
 }

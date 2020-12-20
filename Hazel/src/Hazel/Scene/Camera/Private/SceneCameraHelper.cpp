@@ -5,11 +5,11 @@
 
 namespace Hazel
 {
-	entt::entity SceneCameraHelper::GetMainCamera(entt::registry &registry, entt::entity mainCamera)
+	entt::entity SceneCameraHelper::GetCamera(entt::registry &registry, entt::entity camera)
 	{
-		if (registry.valid(mainCamera))
+		if (registry.valid(camera) && registry.has<CameraComponent>(camera))
 		{
-			return mainCamera;
+			return camera;
 		}
 		auto view = registry.view<CameraComponent>();
 		if (view.empty())

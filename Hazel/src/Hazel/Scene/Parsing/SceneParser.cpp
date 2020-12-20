@@ -21,9 +21,7 @@ namespace Hazel
 		{
 			throw SceneParsingException("Missing scene name");
 		}
-		SceneInfo info;
-		info.Name = name.as<std::string>();
-		auto scene = std::make_shared<Scene>(info);
+		auto scene = std::make_shared<Scene>(name.as<std::string>());
 		return scene;
 	}
 }

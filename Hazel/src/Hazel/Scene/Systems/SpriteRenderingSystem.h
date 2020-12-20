@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Hazel/Scene/Context/SceneContext.h"
-#include "Private/SpriteRenderer.h"
+#include "Hazel/Scene/Entity/SceneContext.h"
+#include "Hazel/Scene/Rendering/SpriteRenderer.h"
 
 namespace Hazel
 {
@@ -10,7 +10,7 @@ namespace Hazel
 	public:
 		static void OnRender(SceneContext &context)
 		{
-			context.GetRegistry().view<SpriteComponent>().each([&](auto entity, auto &component)
+			context.Registry.view<SpriteComponent>().each([&](auto entity, auto &component)
 			{
 				SpriteRenderer::RenderSprite(context, entity, component);
 			});

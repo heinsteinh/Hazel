@@ -4,19 +4,19 @@
 #include "Hazel/Scene/Components/ParticleComponent.h"
 #include "Hazel/Scene/Systems/ParticleSystem.h"
 #include "Hazel/Scene/Systems/SpriteRenderingSystem.h"
+#include "Hazel/Core/Exceptions/AssertionException.h"
 
 namespace Hazel
 {
 	void SceneRenderer::RenderScene(SceneContext &context)
 	{
-		auto &camera = context.GetSceneCamera();
-		if (camera.IsValid())
+		HZ_ASSERT(context.Renderer, "No renderer attached to the scene");
+		if (context.Camera.IsValid())
 		{
-			auto &renderer = context.GetRenderer();
-			renderer.BeginScene(camera.GetViewProjection());
+			context.Renderer->BeginScene(context.Camera.GetViewProjection());
 			SpriteRenderingSystem::OnRender(context);
 			ParticleSystem::OnRender(context);
-			renderer.EndScene();
+			context.Renderer->EndScene();
 		}
 	}
 }

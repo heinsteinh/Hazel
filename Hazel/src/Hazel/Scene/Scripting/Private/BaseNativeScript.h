@@ -19,7 +19,7 @@ namespace Hazel
 		void Attach(Entity entity)
 		{
 			this->entity = entity;
-			layer = &entity.GetSceneContext().GetLayer();
+			layer = entity.GetSceneContext().Layer;
 		}
 
 		void Detach()
@@ -63,7 +63,7 @@ namespace Hazel
 		const SceneCamera &GetCamera() const
 		{
 			HZ_ASSERT_ATTACHED();
-			return entity.GetSceneContext().GetSceneCamera();
+			return entity.GetSceneContext().Camera;
 		}
 	};
 }

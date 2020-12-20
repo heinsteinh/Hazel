@@ -10,13 +10,12 @@ namespace Hazel
 	{
 	private:
 		entt::entity entity = entt::null;
-		entt::registry *registry = nullptr;
 		CameraInfo info;
 
 	public:
-		SceneCamera(entt::registry &registry);
+		SceneCamera() = default;
 
-		void OnUpdate();
+		void Update(entt::registry &registry);
 		glm::vec3 GetWorldPosition(const glm::vec2 &screenPosition) const;
 		glm::vec2 GetScreenPosition(const glm::vec3 &worldPosition) const;
 
@@ -30,10 +29,10 @@ namespace Hazel
 			return entity;
 		}
 
-		void SetEntity(entt::entity entity)
+		void SetEntity(entt::entity entity, entt::registry &registry)
 		{
 			this->entity = entity;
-			OnUpdate();
+			Update(registry);
 		}
 
 		const Rectangle &GetViewport() const

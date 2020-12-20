@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Scene/Context/SceneContext.h"
+#include "Hazel/Scene/Entity/SceneContext.h"
 #include "Hazel/Scene/Components/NativeScriptComponent.h"
 #include "Hazel/Core/Events/Event.h"
 
@@ -11,7 +11,7 @@ namespace Hazel
 	public:
 		static void OnUpdate(SceneContext &context)
 		{
-			context.GetRegistry().view<NativeScriptComponent>().each([](auto entity, auto &component)
+			context.Registry.view<NativeScriptComponent>().each([](auto entity, auto &component)
 			{
 				component.Script->OnUpdate();
 			});
@@ -19,7 +19,7 @@ namespace Hazel
 
 		static void OnEvent(SceneContext &context, Event &e)
 		{
-			context.GetRegistry().view<NativeScriptComponent>().each([&](auto entity, auto &component)
+			context.Registry.view<NativeScriptComponent>().each([&](auto entity, auto &component)
 			{
 				component.Script->OnEvent(e);
 			});

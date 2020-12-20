@@ -32,11 +32,9 @@ namespace Hazel
 			"assets\\textures\\SpriteSheet.png");
 		region = spriteSheet.GetRegion();
 
-		SceneInfo sceneInfo;
-		sceneInfo.Name = "Test";
-		sceneInfo.Layer = this;
-		sceneInfo.Renderer = renderer.get();
-		scene = std::make_shared<Scene>(sceneInfo);
+		scene = std::make_shared<Scene>("Test");
+		scene->Attach(*this);
+		scene->SetRenderer(*renderer);
 
 		auto square1 = scene->CreateEntity();
 		square1.AddComponent<TagComponent>("Square1");

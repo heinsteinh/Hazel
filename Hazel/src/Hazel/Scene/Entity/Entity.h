@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Hazel/Core/Exceptions/AssertionException.h"
-#include "Hazel/Scene/Context/SceneContext.h"
+#include "SceneContext.h"
 #include "EntityListener.h"
+#include "Hazel/Core/Exceptions/AssertionException.h"
 
 namespace Hazel
 {
@@ -23,7 +23,7 @@ namespace Hazel
 
 		bool IsValid() const
 		{
-			return context && context->GetRegistry().valid(entity);
+			return context && context->Registry.valid(entity);
 		}
 
 		bool IsNull() const
@@ -46,7 +46,7 @@ namespace Hazel
 		bool HasComponent() const
 		{
 			HZ_ASSERT(IsValid(), "Invalid entity");
-			return context->GetRegistry().has<ComponentType>(entity);
+			return context->Registry.has<ComponentType>(entity);
 		}
 
 		template<typename ComponentType>
@@ -54,14 +54,14 @@ namespace Hazel
 		{
 			HZ_ASSERT(IsValid(), "Invalid entity");
 			HZ_ASSERT(HasComponent<ComponentType>(), "Cannot get non-existing component.");
-			return context->GetRegistry().get<ComponentType>(entity);
+			return context->Registry.get<ComponentType>(entity);
 		}
 
 		template<typename ComponentType>
 		ComponentType *TryGetComponent()
 		{
 			HZ_ASSERT(IsValid(), "Invalid entity");
-			return context->GetRegistry().try_get<ComponentType>(entity);
+			return context->Registry.try_get<ComponentType>(entity);
 		}
 
 		template<typename ComponentType, typename ...Args>
@@ -69,7 +69,7 @@ namespace Hazel
 		{
 			HZ_ASSERT(IsValid(), "Invalid entity");
 			HZ_ASSERT(!HasComponent<ComponentType>(), "Already has component.");
-			auto &component = context->GetRegistry().emplace<ComponentType>(entity, std::forward<Args>(args)...);
+			auto &component = context->Registry.emplace<ComponentType>(entity, std::forward<Args>(args)...);
 			EntityListener::OnComponentAdded<ComponentType>(*this, component);
 			return component;
 		}
@@ -80,7 +80,7 @@ namespace Hazel
 			HZ_ASSERT(IsValid(), "Invalid entity");
 			HZ_ASSERT(HasComponent<ComponentType>(), "Cannot remove non-existing component.");
 			EntityListener::OnComponentRemoved<ComponentType>(*this);
-			context->GetRegistry().remove<ComponentType>(entity);
+			context->Registry.remove<ComponentType>(entity);
 		}
 
 		bool operator==(const Entity &other) const

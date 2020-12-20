@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Hazel/Scene/Context/SceneContext.h"
 #include "Hazel/Scene/Entity/Entity.h"
 #include "Hazel/Scene/Components/TagComponent.h"
 #include "Hazel/Scene/Components/CameraComponent.h"
@@ -17,7 +16,7 @@ namespace Hazel
 		SceneContext context;
 
 	public:
-		Scene(const SceneInfo &info);
+		Scene(const std::string &name);
 
 		void OnUpdate();
 		void OnRender();
@@ -26,43 +25,48 @@ namespace Hazel
 
 		const std::string &GetName() const
 		{
-			return context.GetName();
+			return context.Name;
+		}
+
+		void Attach(Layer &layer)
+		{
+			context.Layer = &layer;
 		}
 
 		void SetRenderer(Renderer2D &renderer)
 		{
-			context.SetRenderer(renderer);
+			context.Renderer = &renderer;
 		}
 
 		Entity GetMainCamera()
 		{
-			return {context.GetSceneCamera().GetEntity(), context};
+			return {context.Camera.GetEntity(), context};
 		}
 
 		void SetMainCamera(Entity mainCamera)
 		{
-			context.GetSceneCamera().SetEntity(mainCamera);
+			context.Camera.SetEntity(mainCamera, context.Registry);
 		}
 
 		const Rectangle &GetViewport() const
 		{
-			return context.GetSceneCamera().GetViewport();
+			return context.Camera.GetViewport();
 		}
 
 		Entity CreateEntity()
 		{
-			return {context.GetRegistry().create(), context};
+			return {context.Registry.create(), context};
 		}
 
 		void DestroyEntity(Entity entity)
 		{
-			context.GetRegistry().destroy(entity);
+			context.Registry.destroy(entity);
 		}
 
 		template<typename FunctorType>
 		void ForEach(FunctorType functor)
 		{
-			context.GetRegistry().each([&](auto entity)
+			context.Registry.each([&](auto entity)
 			{
 				functor(Entity(entity, context));
 			});

@@ -6,16 +6,11 @@
 
 namespace Hazel
 {
-	SceneCamera::SceneCamera(entt::registry &registry)
-		: registry(&registry)
+	void SceneCamera::Update(entt::registry &registry)
 	{
-	}
-
-	void SceneCamera::OnUpdate()
-	{
-		entity = SceneCameraHelper::GetMainCamera(*registry, entity);
-		info.View = SceneCameraHelper::GetView(*registry, entity);
-		info.Projection = SceneCameraHelper::GetProjection(*registry, entity);
+		entity = SceneCameraHelper::GetCamera(registry, entity);
+		info.View = SceneCameraHelper::GetView(registry, entity);
+		info.Projection = SceneCameraHelper::GetProjection(registry, entity);
 		info.ViewProjection = MvpMatrix::GetViewProjection(info.View, info.Projection);
 	}
 

@@ -6,12 +6,12 @@ namespace Hazel
 {
 	void SpriteRenderer::RenderSprite(SceneContext &context, entt::entity entity, const SpriteComponent &sprite)
 	{
-		auto &registry = context.GetRegistry();
+		auto &registry = context.Registry;
 		DrawData drawData;
 		AddMesh(drawData);
 		AddSprite(drawData, sprite);
 		AddTransform(drawData, registry.try_get<TransformComponent>(entity));
-		context.GetRenderer().Render(drawData);
+		context.Renderer->Render(drawData);
 	}
 
 	void SpriteRenderer::AddMesh(DrawData &drawData)
