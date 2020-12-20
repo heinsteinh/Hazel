@@ -25,7 +25,7 @@ namespace Hazel
 		void Draw(const char *label, std::string &tag)
 		{
 			buffer = tag;
-			if (ImGui::InputText(label, buffer.data(), buffer.size() + 1))
+			if (ImGui::InputText(label, buffer.data(), buffer.capacity()))
 			{
 				tag = buffer;
 			}

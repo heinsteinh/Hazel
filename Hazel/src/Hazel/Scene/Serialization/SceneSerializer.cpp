@@ -5,6 +5,18 @@
 
 namespace Hazel
 {
+	void SceneSerializer::Serialize(Scene &scene, const std::string &filename)
+	{
+		FileWriter::Write(filename, Serialize(scene));
+	}
+
+	std::string SceneSerializer::Serialize(Scene &scene)
+	{
+		YAML::Emitter emitter;
+		Serialize(scene, emitter);
+		return emitter.c_str();
+	}
+
 	void SceneSerializer::Serialize(Scene &scene, YAML::Emitter &emitter)
 	{
 		emitter << YAML::BeginMap;
@@ -16,17 +28,5 @@ namespace Hazel
 		});
 		emitter << YAML::EndSeq;
 		emitter << YAML::EndMap;
-	}
-
-	std::string SceneSerializer::Serialize(Scene &scene)
-	{
-		YAML::Emitter emitter;
-		Serialize(scene, emitter);
-		return emitter.c_str();
-	}
-
-	void SceneSerializer::Serialize(Scene &scene, const std::string &filename)
-	{
-		FileWriter::Write(filename, Serialize(scene));
 	}
 }
