@@ -28,13 +28,15 @@ project "Hazel"
         "src/vendor/imgui",
         "src/vendor/stb_image",
         "src/vendor/glm",
-        "src/vendor/entt/src"
+        "src/vendor/entt/src",
+        "src/vendor/yaml-cpp/include"
     }
 
     links {
         "GLFW",
         "Glad",
         "ImGui",
+        "yaml-cpp",
         "opengl32.lib"
     }
 

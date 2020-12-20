@@ -7,6 +7,7 @@
 #include "Hazel/Tests/TestCameraController.h"
 #include "Hazel/Tests/TestParticles.h"
 #include "EditorViewport.h"
+#include "Hazel/Scene/Serialization/SceneSerializer.h"
 
 namespace Hazel
 {
@@ -32,6 +33,7 @@ namespace Hazel
 		region = spriteSheet.GetRegion();
 
 		SceneInfo sceneInfo;
+		sceneInfo.Name = "Test";
 		sceneInfo.Layer = this;
 		sceneInfo.Renderer = renderer.get();
 		scene = std::make_shared<Scene>(sceneInfo);
@@ -63,6 +65,8 @@ namespace Hazel
 		particleEmitter.AddComponent<TagComponent>("Particle Emitter");
 		particleEmitter.AddComponent<ParticleSourceComponent>();
 		particleEmitter.AddComponent<NativeScriptComponent>(std::make_shared<TestParticles>());
+
+		SceneSerializer::Serialize(*scene, "assets/scenes/examples/Test.yaml");
 	}
 
 	void EditorLayer::OnDetach()

@@ -7,6 +7,7 @@ namespace Hazel
 {
 	struct SceneInfo
 	{
+		std::string Name;
 		Layer *Layer = nullptr;
 		Renderer2D *Renderer = nullptr;
 	};

@@ -25,6 +25,11 @@ namespace Hazel
 		void OnEvent(Event &e);
 		void OnGui();
 
+		const std::string &GetName() const
+		{
+			return context.GetName();
+		}
+
 		void SetRenderer(Renderer2D &renderer)
 		{
 			context.SetRenderer(renderer);

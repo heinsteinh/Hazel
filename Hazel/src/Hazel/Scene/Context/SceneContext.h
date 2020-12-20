@@ -13,6 +13,7 @@ namespace Hazel
 	class SceneContext
 	{
 	private:
+		std::string name;
 		Layer *layer = nullptr;
 		Renderer2D *renderer = nullptr;
 		entt::registry registry;
@@ -20,11 +21,17 @@ namespace Hazel
 
 	public:
 		SceneContext(const SceneInfo &info)
-			: layer(info.Layer),
+			: name(info.Name),
+			layer(info.Layer),
 			renderer(info.Renderer),
 			sceneCamera(registry)
 		{
 			HZ_ASSERT(info.Layer && info.Renderer, "A scene needs to be attached to an application and a renderer.")
+		}
+
+		const std::string &GetName() const
+		{
+			return name;
 		}
 
 		Layer &GetLayer() const

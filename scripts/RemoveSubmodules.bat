@@ -22,6 +22,10 @@ git submodule deinit -f -- Hazel\vendor\entt
 rd /s /q .git\modules\Hazel\vendor\entt
 git rm -f Hazel\vendor\entt
 
+git submodule deinit -f -- Hazel\vendor\yaml-cpp
+rd /s /q .git\modules\Hazel\vendor\yaml-cpp
+git rm -f Hazel\vendor\yaml-cpp
+
 rd /s /q .git\modules
 
 popd

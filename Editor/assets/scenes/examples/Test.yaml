@@ -1,0 +1,61 @@
+Scene: Test
+Entities:
+  - Entity: 4
+    Tag:
+      Name: Particle Emitter
+  - Entity: 3
+    Tag:
+      Name: Camera2
+    Transform:
+      Translation: [1, 0, 0]
+      Rotation: [0, 0, 0, 1]
+      Scale: [1, 1, 1]
+    Camera:
+      ProjectionType: 0
+      OrthographicProjection:
+        AspectRatio: 0
+        Size: 1
+        NearClip: -1
+        FarClip: 1
+      PerspectiveProjection:
+        AspectRatio: 0
+        VerticalFov: 0.785398185
+        NearClip: 0.00999999978
+        FarClip: 1000
+  - Entity: 2
+    Tag:
+      Name: Camera1
+    Transform:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0, 1]
+      Scale: [1, 1, 1]
+    Camera:
+      ProjectionType: 0
+      OrthographicProjection:
+        AspectRatio: 0
+        Size: 1
+        NearClip: -1
+        FarClip: 1
+      PerspectiveProjection:
+        AspectRatio: 0
+        VerticalFov: 0.785398185
+        NearClip: 0.00999999978
+        FarClip: 1000
+  - Entity: 1
+    Tag:
+      Name: Square2
+    Transform:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0, 1]
+      Scale: [1, 1, 1]
+    Sprite:
+      Color: [1, 1, 1, 1]
+  - Entity: 0
+    Tag:
+      Name: Square1
+    Transform:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0, 1]
+      Scale: [1.53846157, 1, 1]
+    Sprite:
+      Color: [1, 1, 1, 1]
