@@ -36,6 +36,6 @@ namespace Hazel
 			return glm::mat4(1.0f);
 		}
 		auto component = registry.try_get<CameraComponent>(entity);
-		return component ? component->GetProjection() : glm::mat4(1.0f);
+		return component ? component->Projection : glm::mat4(1.0f);
 	}
 }

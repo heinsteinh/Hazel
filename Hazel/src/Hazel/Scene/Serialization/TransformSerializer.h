@@ -1,39 +1,37 @@
 #pragma once
 
-#include "yaml-cpp/yaml.h"
-
 #include "Hazel/Scene/Components/TransformComponent.h"
-#include "GeometrySerializer.h"
+#include "Hazel/Core/Yaml/YamlSerializer.h"
 
 namespace Hazel
 {
 	class TransformSerializer
 	{
 	public:
-		static void Serialize(const TransformComponent &transform, YAML::Emitter &emitter)
+		static void Serialize(YamlDocument &document, const TransformComponent &component)
 		{
-			Serialize(transform.Transform, emitter);
+			Serialize(document, component.Transform);
 		}
 
-		static void Serialize(const Transform &transform, YAML::Emitter &emitter)
+		static void Serialize(YamlDocument &document, const Transform &transform)
 		{
-			emitter << YAML::BeginMap;
-			emitter << YAML::Key << "Translation" << YAML::Value << transform.Translation;
-			emitter << YAML::Key << "Rotation" << YAML::Value << transform.Rotation;
-			emitter << YAML::Key << "Scale" << YAML::Value << transform.Scale;
-			emitter << YAML::EndMap;
+			document.BeginMap()
+				.Key().Write("Translation").Value().Write(transform.Translation)
+				.Key().Write("Rotation").Value().Write(transform.Rotation)
+				.Key().Write("Scale").Value().Write(transform.Scale)
+				.EndMap();
 		}
 	};
 
-	inline YAML::Emitter &operator<<(YAML::Emitter &emitter, const TransformComponent &transform)
+	template<>
+	inline void YamlSerializer::Serialize(YamlDocument &document, const TransformComponent &value)
 	{
-		TransformSerializer::Serialize(transform, emitter);
-		return emitter;
+		return TransformSerializer::Serialize(document, value);
 	}
 
-	inline YAML::Emitter &operator<<(YAML::Emitter &emitter, const Transform &transform)
+	template<>
+	inline void YamlSerializer::Serialize(YamlDocument &document, const Transform &value)
 	{
-		TransformSerializer::Serialize(transform, emitter);
-		return emitter;
+		return TransformSerializer::Serialize(document, value);
 	}
 }

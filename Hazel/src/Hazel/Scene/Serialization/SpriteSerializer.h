@@ -1,26 +1,24 @@
 #pragma once
 
-#include "yaml-cpp/yaml.h"
-
 #include "Hazel/Scene/Components/SpriteComponent.h"
-#include "GeometrySerializer.h"
+#include "Hazel/Core/Yaml/YamlSerializer.h"
 
 namespace Hazel
 {
 	class SpriteSerializer
 	{
 	public:
-		static void Serialize(const SpriteComponent &sprite, YAML::Emitter &emitter)
+		static void Serialize(YamlDocument &document, const SpriteComponent &component)
 		{
-			emitter << YAML::BeginMap;
-			emitter << YAML::Key << "Color" << YAML::Value << sprite.Color;
-			emitter << YAML::EndMap;
+			document.BeginMap()
+				.Key().Write("Color").Value().Write(component.Color)
+				.EndMap();
 		}
 	};
 
-	inline YAML::Emitter &operator<<(YAML::Emitter &emitter, const SpriteComponent &sprite)
+	template<>
+	inline void YamlSerializer::Serialize(YamlDocument &document, const SpriteComponent &value)
 	{
-		SpriteSerializer::Serialize(sprite, emitter);
-		return emitter;
+		return SpriteSerializer::Serialize(document, value);
 	}
 }

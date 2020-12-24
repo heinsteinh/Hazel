@@ -4,9 +4,8 @@ namespace Hazel
 {
 	class Entity;
 
-	class EntityListener
+	struct EntityListener
 	{
-	public:
 		template<typename ComponentType>
 		static void OnComponentAdded(Entity entity, ComponentType &component)
 		{

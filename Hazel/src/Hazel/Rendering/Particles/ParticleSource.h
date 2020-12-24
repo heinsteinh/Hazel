@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Private/ParticlePool.h"
 #include "Private/ParticleEmitter.h"
 #include "Hazel/Rendering/Renderer2D/Renderer2D.h"
 
@@ -8,8 +9,7 @@ namespace Hazel
 	class ParticleSource
 	{
 	private:
-		std::vector<Particle> pool;
-		size_t index = 0;
+		ParticlePool pool;
 		ParticleEmitter emitter;
 
 	public:

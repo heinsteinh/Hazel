@@ -15,7 +15,7 @@ namespace Hazel
 	};
 
 	template<>
-	inline void EntityListener::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent &component)
+	inline void EntityListener::OnComponentAdded(Entity entity, NativeScriptComponent &component)
 	{
 		component.Script->Attach(entity);
 		component.Script->OnCreate();

@@ -9,10 +9,13 @@ namespace Hazel
 	class NativeScriptPanel
 	{
 	public:
-		void Draw(NativeScriptComponent &script)
+		void Draw(NativeScriptComponent &component)
 		{
-			ImGui::Text("Type: %s", script.GetTypeName());
-			script.Script->OnGui();
+			if (component.Script)
+			{
+				ImGui::Text("Type: %s", component.GetTypeName());
+				component.Script->OnGui();
+			}
 		}
 	};
 }

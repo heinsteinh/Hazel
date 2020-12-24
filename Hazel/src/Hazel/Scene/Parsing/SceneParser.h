@@ -1,8 +1,7 @@
 #pragma once
 
-#include "yaml-cpp/yaml.h"
-
 #include "Hazel/Scene/Scene.h"
+#include "Hazel/Core/Yaml/YamlValue.h"
 #include "Hazel/Core/FileSystem/OpenFileException.h"
 #include "SceneParsingException.h"
 
@@ -12,7 +11,7 @@ namespace Hazel
 	{
 	public:
 		static std::shared_ptr<Scene> Load(const std::string &filename);
-		static std::shared_ptr<Scene> Parse(const std::string &content);
-		static std::shared_ptr<Scene> Parse(const YAML::Node &node);
+		static std::shared_ptr<Scene> Parse(const std::string &source);
+		static std::shared_ptr<Scene> Parse(const YamlValue &source);
 	};
 }

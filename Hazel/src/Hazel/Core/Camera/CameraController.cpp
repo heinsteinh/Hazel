@@ -13,7 +13,7 @@ namespace Hazel
 
 	void CameraController::UpdateCameraProjection(Camera &camera, const Input &input, float deltaTime)
 	{
-		camera.SetZoomLevel(settings.Bounds.ClampZ(ComputeZoomLevel(camera, input, deltaTime)));
+		SetZoomLevel(camera, settings.Bounds.ClampZ(ComputeZoomLevel(camera, input, deltaTime)));
 	}
 
 	void CameraController::UpdateCameraTransform(Transform &transform, const Input &input, float deltaTime)
@@ -22,9 +22,34 @@ namespace Hazel
 		UpdateCameraRotation(transform, input, deltaTime);
 	}
 
+	float CameraController::GetZoomLevel(Camera &camera)
+	{
+		switch (camera.ProjectionType)
+		{
+		case ProjectionType::Orthographic:
+			return camera.OrthographicProjection.Size;
+		case ProjectionType::Perspective:
+			return camera.PerspectiveProjection.VerticalFov;
+		}
+		return 0.0f;
+	}
+
 	float CameraController::ComputeZoomLevel(Camera &camera, const Input &input, float deltaTime)
 	{
-		return camera.GetZoomLevel() - settings.ZoomSpeed * input.GetMouseScrollOffset().y;
+		return GetZoomLevel(camera) - settings.ZoomSpeed * input.GetMouseScrollOffset().y;
+	}
+
+	void CameraController::SetZoomLevel(Camera &camera, float zoomLevel)
+	{
+		switch (camera.ProjectionType)
+		{
+		case ProjectionType::Orthographic:
+			camera.OrthographicProjection.Size = zoomLevel;
+			break;
+		case ProjectionType::Perspective:
+			camera.PerspectiveProjection.VerticalFov = zoomLevel;
+			break;
+		}
 	}
 
 	void CameraController::UpdateCameraPosition(Transform &transform, const Input &input, float deltaTime)

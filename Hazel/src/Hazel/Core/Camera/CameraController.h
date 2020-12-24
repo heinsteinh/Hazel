@@ -30,7 +30,9 @@ namespace Hazel
 		}
 
 	private:
+		float GetZoomLevel(Camera &camera);
 		float ComputeZoomLevel(Camera &camera, const Input &input, float deltaTime);
+		void SetZoomLevel(Camera &camera, float zoomLevel);
 		void UpdateCameraPosition(Transform &transform, const Input &input, float deltaTime);
 		void UpdateCameraRotation(Transform &transform, const Input &input, float deltaTime);
 	};

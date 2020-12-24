@@ -17,9 +17,9 @@ namespace Hazel
 		{
 		}
 
-		void Draw(TagComponent &tag)
+		void Draw(TagComponent &component)
 		{
-			Draw("##Tag", tag.Name);
+			Draw("##Tag", component.Name);
 		}
 
 		void Draw(const char *label, std::string &tag)

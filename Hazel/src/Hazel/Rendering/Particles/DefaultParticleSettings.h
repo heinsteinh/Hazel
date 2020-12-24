@@ -15,6 +15,11 @@ namespace Hazel
 			return 1000;
 		}
 
+		static size_t GetEmissionRate()
+		{
+			return 5;
+		}
+
 		static const ParticleInfo &GetParticleInfo()
 		{
 			return particleInfo;

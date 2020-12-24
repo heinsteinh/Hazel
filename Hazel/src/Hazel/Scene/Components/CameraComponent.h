@@ -8,21 +8,23 @@ namespace Hazel
 	struct CameraComponent
 	{
 		Camera Camera;
-
-		const glm::mat4 &GetProjection()
-		{
-			return Camera.GetProjection();
-		}
+		glm::mat4 Projection{1.0f};
 
 		void SetViewport(const Rectangle &viewport)
 		{
-			Camera.SetViewport(viewport);
+			Camera.SetAspectRatio(viewport.GetAspectRatio());
+		}
+
+		void RecomputeProjection()
+		{
+			Projection = Camera.GetProjection();
 		}
 	};
 
 	template<>
-	inline void EntityListener::OnComponentAdded<CameraComponent>(Entity entity, CameraComponent &component)
+	inline void EntityListener::OnComponentAdded(Entity entity, CameraComponent &component)
 	{
 		component.SetViewport(entity.GetSceneContext().Camera.GetViewport());
+		component.RecomputeProjection();
 	};
 }

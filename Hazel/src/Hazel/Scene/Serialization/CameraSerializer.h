@@ -1,74 +1,83 @@
 #pragma once
 
-#include "yaml-cpp/yaml.h"
-
 #include "Hazel/Scene/Components/CameraComponent.h"
-#include "GeometrySerializer.h"
+#include "Hazel/Core/Yaml/YamlSerializer.h"
 
 namespace Hazel
 {
-	YAML::Emitter &operator<<(YAML::Emitter &emitter, const OrthographicProjection &projection);
-	YAML::Emitter &operator<<(YAML::Emitter &emitter, const PerspectiveProjection &projection);
-
 	class CameraSerializer
 	{
 	public:
-		static void Serialize(const CameraComponent &camera, YAML::Emitter &emitter)
+		static void Serialize(YamlDocument &document, const CameraComponent &component)
 		{
-			Serialize(camera.Camera, emitter);
+			Serialize(document, component.Camera);
 		}
 
-		static void Serialize(const Camera &camera, YAML::Emitter &emitter)
+		static void Serialize(YamlDocument &document, const Camera &camera)
 		{
-			emitter << YAML::BeginMap;
-			emitter << YAML::Key << "ProjectionType" << YAML::Value << static_cast<int>(camera.GetProjectionType());
-			emitter << YAML::Key << "OrthographicProjection" << YAML::Value << camera.GetOrthographicProjection();
-			emitter << YAML::Key << "PerspectiveProjection" << YAML::Value << camera.GetPerspectiveProjection();
-			emitter << YAML::EndMap;
+			document.BeginMap();
+			document.Key().Write("ProjectionType").Value();
+			Serialize(document, camera.ProjectionType);
+			document.Key().Write("OrthographicProjection").Value();
+			Serialize(document, camera.OrthographicProjection);
+			document.Key().Write("PerspectiveProjection").Value();
+			Serialize(document, camera.PerspectiveProjection);
+			document.EndMap();
 		}
 
-		static void Serialize(const OrthographicProjection &projection, YAML::Emitter &emitter)
+		static void Serialize(YamlDocument &document, ProjectionType projectionType)
 		{
-			emitter << YAML::BeginMap;
-			emitter << YAML::Key << "AspectRatio" << YAML::Value << projection.AspectRatio;
-			emitter << YAML::Key << "Size" << YAML::Value << projection.Size;
-			emitter << YAML::Key << "NearClip" << YAML::Value << projection.NearClip;
-			emitter << YAML::Key << "FarClip" << YAML::Value << projection.FarClip;
-			emitter << YAML::EndMap;
+			document.Write(static_cast<int>(projectionType));
 		}
 
-		static void Serialize(const PerspectiveProjection &projection, YAML::Emitter &emitter)
+		static void Serialize(YamlDocument &document, const OrthographicProjection &projection)
 		{
-			emitter << YAML::BeginMap;
-			emitter << YAML::Key << "AspectRatio" << YAML::Value << projection.AspectRatio;
-			emitter << YAML::Key << "VerticalFov" << YAML::Value << projection.VerticalFov;
-			emitter << YAML::Key << "NearClip" << YAML::Value << projection.NearClip;
-			emitter << YAML::Key << "FarClip" << YAML::Value << projection.FarClip;
-			emitter << YAML::EndMap;
+			document.BeginMap()
+				.Key().Write("AspectRatio").Value().Write(projection.AspectRatio)
+				.Key().Write("Size").Value().Write(projection.Size)
+				.Key().Write("NearClip").Value().Write(projection.NearClip)
+				.Key().Write("FarClip").Value().Write(projection.FarClip)
+				.EndMap();
+		}
+
+		static void Serialize(YamlDocument &document, const PerspectiveProjection &projection)
+		{
+			document.BeginMap()
+				.Key().Write("AspectRatio").Value().Write(projection.AspectRatio)
+				.Key().Write("VerticalFov").Value().Write(projection.VerticalFov)
+				.Key().Write("NearClip").Value().Write(projection.NearClip)
+				.Key().Write("FarClip").Value().Write(projection.FarClip)
+				.EndMap();
 		}
 	};
 
-	inline YAML::Emitter &operator<<(YAML::Emitter &emitter, const CameraComponent &camera)
+	template<>
+	inline void YamlSerializer::Serialize(YamlDocument &document, const CameraComponent &value)
 	{
-		CameraSerializer::Serialize(camera, emitter);
-		return emitter;
+		CameraSerializer::Serialize(document, value);
 	}
 
-	inline YAML::Emitter &operator<<(YAML::Emitter &emitter, const Camera &camera)
+	template<>
+	inline void YamlSerializer::Serialize(YamlDocument &document, const Camera &value)
 	{
-		CameraSerializer::Serialize(camera, emitter);
-		return emitter;
+		CameraSerializer::Serialize(document, value);
 	}
 
-	inline YAML::Emitter &operator<<(YAML::Emitter &emitter, const OrthographicProjection &projection)
+	template<>
+	inline void YamlSerializer::Serialize(YamlDocument &document, const ProjectionType &value)
 	{
-		CameraSerializer::Serialize(projection, emitter);
-		return emitter;
+		CameraSerializer::Serialize(document, value);
 	}
 
-	inline YAML::Emitter &operator<<(YAML::Emitter &emitter, const PerspectiveProjection &projection)
+	template<>
+	inline void YamlSerializer::Serialize(YamlDocument &document, const OrthographicProjection &value)
 	{
-		CameraSerializer::Serialize(projection, emitter);
-		return emitter;
+		CameraSerializer::Serialize(document, value);
+	}
+
+	template<>
+	inline void YamlSerializer::Serialize(YamlDocument &document, const PerspectiveProjection &value)
+	{
+		CameraSerializer::Serialize(document, value);
 	}
 }

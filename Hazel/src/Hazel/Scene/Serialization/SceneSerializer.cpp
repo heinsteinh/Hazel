@@ -12,21 +12,20 @@ namespace Hazel
 
 	std::string SceneSerializer::Serialize(Scene &scene)
 	{
-		YAML::Emitter emitter;
-		Serialize(scene, emitter);
-		return emitter.c_str();
+		YamlDocument document;
+		Serialize(document, scene);
+		return document.GetData();
 	}
 
-	void SceneSerializer::Serialize(Scene &scene, YAML::Emitter &emitter)
+	void SceneSerializer::Serialize(YamlDocument &document, Scene &scene)
 	{
-		emitter << YAML::BeginMap;
-		emitter << YAML::Key << "Scene" << YAML::Value << scene.GetName();
-		emitter << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
+		document.BeginMap();
+		document.Key().Write("Scene").Value().Write(scene.GetName());
+		document.Key().Write("Entities").BeginSequence();
 		scene.ForEach([&](auto entity)
 		{
-			emitter << entity;
+			EntitySerializer::Serialize(document, entity);
 		});
-		emitter << YAML::EndSeq;
-		emitter << YAML::EndMap;
+		document.EndSequence().EndMap();
 	}
 }

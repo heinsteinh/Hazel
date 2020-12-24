@@ -19,6 +19,7 @@ namespace Hazel
 			context.Registry.view<CameraComponent>().each([&](auto entity, auto &component)
 			{
 				component.SetViewport(viewport);
+				component.RecomputeProjection();
 			});
 		}
 	};

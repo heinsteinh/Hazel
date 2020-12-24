@@ -1,8 +1,7 @@
 #pragma once
 
-#include "yaml-cpp/yaml.h"
-
 #include "Hazel/Scene/Scene.h"
+#include "Hazel/Core/Yaml/YamlSerializer.h"
 
 namespace Hazel
 {
@@ -11,6 +10,6 @@ namespace Hazel
 	public:
 		static void Serialize(Scene &scene, const std::string &filename);
 		static std::string Serialize(Scene &scene);
-		static void Serialize(Scene &scene, YAML::Emitter &emitter);
+		static void Serialize(YamlDocument &document, Scene &scene);
 	};
 }

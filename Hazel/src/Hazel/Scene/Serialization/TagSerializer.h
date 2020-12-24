@@ -1,25 +1,24 @@
 #pragma once
 
-#include "yaml-cpp/yaml.h"
-
 #include "Hazel/Scene/Components/TagComponent.h"
+#include "Hazel/Core/Yaml/YamlSerializer.h"
 
 namespace Hazel
 {
 	class TagSerializer
 	{
 	public:
-		static void Serialize(const TagComponent &tag, YAML::Emitter &emitter)
+		static void Serialize(YamlDocument &document, const TagComponent &component)
 		{
-			emitter << YAML::BeginMap;
-			emitter << YAML::Key << "Name" << YAML::Value << tag.Name;
-			emitter << YAML::EndMap;
+			document.BeginMap()
+				.Key().Write("Name").Value().Write(component.Name)
+				.EndMap();
 		}
 	};
 
-	inline YAML::Emitter &operator<<(YAML::Emitter &emitter, const TagComponent &tag)
+	template<>
+	inline void YamlSerializer::Serialize(YamlDocument &document, const TagComponent &value)
 	{
-		TagSerializer::Serialize(tag, emitter);
-		return emitter;
+		return TagSerializer::Serialize(document, value);
 	}
 }

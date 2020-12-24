@@ -10,5 +10,6 @@ namespace Hazel
 	{
 	public:
 		static void Write(const std::string &filename, const std::string &content);
+		static void Write(const std::string &filename, const char *content);
 	};
 }

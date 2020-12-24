@@ -1,25 +1,24 @@
 #pragma once
 
-#include "yaml-cpp/yaml.h"
-
 #include "Hazel/Scene/Components/NativeScriptComponent.h"
+#include "Hazel/Core/Yaml/YamlSerializer.h"
 
 namespace Hazel
 {
 	class NativeScriptSerializer
 	{
 	public:
-		static void Serialize(const NativeScriptComponent &script, YAML::Emitter &emitter)
+		static void Serialize(YamlDocument &document, const NativeScriptComponent &component)
 		{
-			emitter << YAML::BeginMap;
-			emitter << YAML::Key << "Type" << YAML::Value << script.GetTypeName();
-			emitter << YAML::EndMap;
+			document.BeginMap()
+				.Key().Write("Type").Value().Write(component.GetTypeName())
+				.EndMap();
 		}
 	};
 
-	inline YAML::Emitter &operator<<(YAML::Emitter &emitter, const NativeScriptComponent &script)
+	template<>
+	void YamlSerializer::Serialize(YamlDocument &document, const NativeScriptComponent &value)
 	{
-		NativeScriptSerializer::Serialize(script, emitter);
-		return emitter;
+		NativeScriptSerializer::Serialize(document, value);
 	}
 }

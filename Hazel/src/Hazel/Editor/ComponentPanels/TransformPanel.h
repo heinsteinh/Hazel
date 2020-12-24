@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Hazel/Scene/Components/TransformComponent.h"
-
 #include "Hazel/Editor/Widgets/FloatInput.h"
 
 namespace Hazel
@@ -36,9 +35,14 @@ namespace Hazel
 			scalePanel.SetLimits(minValue, maxValue);
 		}
 
-		void Draw(TransformComponent &transform)
+		void Draw(TransformComponent &component)
 		{
-			Draw(transform.Transform);
+			translationPanel.Draw("Translation", component.Transform.Translation);
+			if (rotationPanel.Draw("Rotation", component.EulerHint))
+			{
+				component.RecomputeRotation();
+			}
+			scalePanel.Draw("Scale", component.Transform.Scale);
 		}
 
 		void Draw(Transform &transform)

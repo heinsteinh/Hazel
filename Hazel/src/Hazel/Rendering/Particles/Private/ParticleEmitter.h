@@ -15,10 +15,10 @@ namespace Hazel
 		void EmitParticle(Particle &particle, const ParticleInfo &info);
 
 	private:
-		void InitPosition(Particle &particle, const ParticleInfo &info);
-		void InitVelocity(Particle &particle, const ParticleInfo &info);
-		void InitColor(Particle &particle, const ParticleInfo &info);
-		void InitLifeTime(Particle &particle, const ParticleInfo &info);
-		void InitSize(Particle &particle, const ParticleInfo &info);
+		void SetupPosition(Particle &particle, const ParticleInfo &info);
+		void SetupVelocity(Particle &particle, const ParticleInfo &info);
+		void SetupColor(Particle &particle, const ParticleInfo &info);
+		void SetupLifeTime(Particle &particle, const ParticleInfo &info);
+		void SetupSize(Particle &particle, const ParticleInfo &info);
 	};
 }

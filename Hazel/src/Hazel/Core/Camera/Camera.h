@@ -7,43 +7,28 @@
 
 namespace Hazel
 {
-	class Camera
+	struct Camera
 	{
-	private:
-		ProjectionType projectionType = ProjectionType::Orthographic;
-		OrthographicProjection orthographicProjection;
-		PerspectiveProjection perspectiveProjection;
-		glm::mat4 projection{1.0f};
+		ProjectionType ProjectionType = ProjectionType::Orthographic;
+		OrthographicProjection OrthographicProjection;
+		PerspectiveProjection PerspectiveProjection;
 
-	public:
-		void SetViewport(const Rectangle &viewport);
-		float GetZoomLevel() const;
-		void SetZoomLevel(float zoomLevel);
-		void SetProjectionType(ProjectionType projectionType);
-		void SetOrthographicProjection(const OrthographicProjection &orthographicProjection);
-		void SetPerspectiveProjection(const PerspectiveProjection &perspectiveProjection);
-
-		ProjectionType GetProjectionType() const
+		glm::mat4 GetProjection()
 		{
-			return projectionType;
+			switch (ProjectionType)
+			{
+			case ProjectionType::Orthographic:
+				return OrthographicProjection.ToMatrix();
+			case ProjectionType::Perspective:
+				return PerspectiveProjection.ToMatrix();
+			}
+			return glm::mat4(1.0f);
 		}
 
-		const OrthographicProjection &GetOrthographicProjection() const
+		void SetAspectRatio(float aspectRatio)
 		{
-			return orthographicProjection;
+			OrthographicProjection.AspectRatio = aspectRatio;
+			PerspectiveProjection.AspectRatio = aspectRatio;
 		}
-
-		const PerspectiveProjection &GetPerspectiveProjection() const
-		{
-			return perspectiveProjection;
-		}
-
-		const glm::mat4 &GetProjection() const
-		{
-			return projection;
-		}
-
-	private:
-		void RecomputeProjection();
 	};
 }

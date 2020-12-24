@@ -1,6 +1,6 @@
 Scene: Test
 Entities:
-  - Entity: 4
+  - EntityId: 4
     Tag:
       Name: Particle Emitter
     Particle:
@@ -20,7 +20,7 @@ Entities:
         MaxParticleCount: 1000
     NativeScript:
       Type: class Hazel::TestParticles
-  - Entity: 3
+  - EntityId: 3
     Tag:
       Name: Camera2
     Transform:
@@ -39,7 +39,7 @@ Entities:
         VerticalFov: 0.785398185
         NearClip: 0.00999999978
         FarClip: 1000
-  - Entity: 2
+  - EntityId: 2
     Tag:
       Name: Camera1
     Transform:
@@ -60,7 +60,7 @@ Entities:
         FarClip: 1000
     NativeScript:
       Type: class Hazel::TestCameraController
-  - Entity: 1
+  - EntityId: 1
     Tag:
       Name: Square2
     Transform:
@@ -69,7 +69,7 @@ Entities:
       Scale: [1, 1, 1]
     Sprite:
       Color: [1, 1, 1, 1]
-  - Entity: 0
+  - EntityId: 0
     Tag:
       Name: Square1
     Transform:

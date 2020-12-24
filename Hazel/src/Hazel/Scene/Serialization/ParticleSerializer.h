@@ -1,66 +1,63 @@
 #pragma once
 
-#include "yaml-cpp/yaml.h"
-
 #include "Hazel/Scene/Components/ParticleComponent.h"
-#include "GeometrySerializer.h"
+#include "Hazel/Core/Yaml/YamlSerializer.h"
 
 namespace Hazel
 {
-	YAML::Emitter &operator<<(YAML::Emitter &emitter, const ParticleInfo &particleInfo);
-	YAML::Emitter &operator<<(YAML::Emitter &emitter, const ParticleSource &particleSource);
-
 	class ParticleSerializer
 	{
 	public:
-		static void Serialize(const ParticleComponent &component, YAML::Emitter &emitter)
+		static void Serialize(YamlDocument &document, const ParticleComponent &component)
 		{
-			emitter << YAML::BeginMap;
-			emitter << YAML::Key << "ParticleInfo" << YAML::Value << component.ParticleInfo;
-			emitter << YAML::Key << "ParticleSource" << YAML::Value << component.ParticleSource;
-			emitter << YAML::EndMap;
+			document.BeginMap();
+			document.Key().Write("ParticleInfo").Value();
+			Serialize(document, component.ParticleInfo);
+			document.Key().Write("ParticleSource").Value();
+			Serialize(document, component.ParticleSource);
+			document.EndMap();
 		}
 
-		static void Serialize(const ParticleInfo &particleInfo, YAML::Emitter &emitter)
+		static void Serialize(YamlDocument &document, const ParticleInfo &particleInfo)
 		{
-			emitter << YAML::BeginMap;
-			emitter << YAML::Key << "Position" << YAML::Value << particleInfo.Position;
-			emitter << YAML::Key << "LinearVelocity" << YAML::Value << particleInfo.LinearVelocity;
-			emitter << YAML::Key << "LinearVelocityVariation" << YAML::Value << particleInfo.LinearVelocityVariation;
-			emitter << YAML::Key << "AngularVelocity" << YAML::Value << particleInfo.AngularVelocity;
-			emitter << YAML::Key << "AngularVelocityVariation" << YAML::Value << particleInfo.AngularVelocityVariation;
-			emitter << YAML::Key << "ColorBegin" << YAML::Value << particleInfo.ColorBegin;
-			emitter << YAML::Key << "ColorEnd" << YAML::Value << particleInfo.ColorEnd;
-			emitter << YAML::Key << "SizeBegin" << YAML::Value << particleInfo.SizeBegin;
-			emitter << YAML::Key << "SizeEnd" << YAML::Value << particleInfo.SizeEnd;
-			emitter << YAML::Key << "SizeVariation" << YAML::Value << particleInfo.SizeVariation;
-			emitter << YAML::Key << "LifeTime" << YAML::Value << particleInfo.LifeTime;
-			emitter << YAML::EndMap;
+			document.BeginMap()
+				.Key().Write("Position").Value().Write(particleInfo.Position)
+				.Key().Write("LinearVelocity").Value().Write(particleInfo.LinearVelocity)
+				.Key().Write("LinearVelocityVariation").Value().Write(particleInfo.LinearVelocityVariation)
+				.Key().Write("AngularVelocity").Value().Write(particleInfo.AngularVelocity)
+				.Key().Write("AngularVelocityVariation").Value().Write(particleInfo.AngularVelocityVariation)
+				.Key().Write("ColorBegin").Value().Write(particleInfo.ColorBegin)
+				.Key().Write("ColorEnd").Value().Write(particleInfo.ColorEnd)
+				.Key().Write("SizeBegin").Value().Write(particleInfo.SizeBegin)
+				.Key().Write("SizeEnd").Value().Write(particleInfo.SizeEnd)
+				.Key().Write("SizeVariation").Value().Write(particleInfo.SizeVariation)
+				.Key().Write("LifeTime").Value().Write(particleInfo.LifeTime)
+				.EndMap();
 		}
 
-		static void Serialize(const ParticleSource &particleSource, YAML::Emitter &emitter)
+		static void Serialize(YamlDocument &document, const ParticleSource &particleSource)
 		{
-			emitter << YAML::BeginMap;
-			emitter << YAML::Key << "MaxParticleCount" << YAML::Value << particleSource.GetMaxParticleCount();
-			emitter << YAML::EndMap;
+			document.BeginMap()
+				.Key().Write("MaxParticleCount").Value().Write(particleSource.GetMaxParticleCount())
+				.EndMap();
 		}
 	};
 
-	inline YAML::Emitter &operator<<(YAML::Emitter &emitter, const ParticleComponent &component)
+	template<>
+	void YamlSerializer::Serialize(YamlDocument &document, const ParticleComponent &value)
 	{
-		ParticleSerializer::Serialize(component, emitter);
-		return emitter;
+		return ParticleSerializer::Serialize(document, value);
 	}
 
-	inline YAML::Emitter &operator<<(YAML::Emitter &emitter, const ParticleInfo &particleInfo)
+	template<>
+	void YamlSerializer::Serialize(YamlDocument &document, const ParticleInfo &value)
 	{
-		ParticleSerializer::Serialize(particleInfo, emitter);
-		return emitter;
+		return ParticleSerializer::Serialize(document, value);
 	}
 
-	inline YAML::Emitter &operator<<(YAML::Emitter &emitter, const ParticleSource &particleSource)
+	template<>
+	void YamlSerializer::Serialize(YamlDocument &document, const ParticleSource &value)
 	{
-		ParticleSerializer::Serialize(particleSource, emitter);
-		return emitter;
+		return ParticleSerializer::Serialize(document, value);
 	}
 }

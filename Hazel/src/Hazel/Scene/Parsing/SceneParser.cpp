@@ -1,6 +1,7 @@
 #include "SceneParser.h"
 
 #include "Hazel/Core/FileSystem/FileReader.h"
+#include "EntityParser.h"
 
 namespace Hazel
 {
@@ -9,19 +10,24 @@ namespace Hazel
 		return Parse(FileReader::ReadAll(filename));
 	}
 
-	std::shared_ptr<Scene> SceneParser::Parse(const std::string &content)
+	std::shared_ptr<Scene> SceneParser::Parse(const std::string &source)
 	{
-		return Parse(YAML::Load(content));
+		return Parse(YamlValue::FromYaml(source));
 	}
 
-	std::shared_ptr<Scene> SceneParser::Parse(const YAML::Node &node)
+	std::shared_ptr<Scene> SceneParser::Parse(const YamlValue &source)
 	{
-		auto name = node["Scene"];
-		if (!name)
+		std::string name;
+		source["Scene"].Extract(name);
+		if (name.empty())
 		{
 			throw SceneParsingException("Missing scene name");
 		}
-		auto scene = std::make_shared<Scene>(name.as<std::string>());
+		auto scene = std::make_shared<Scene>(name);
+		for (const auto &entity : source["Entities"])
+		{
+			EntityParser::LoadEntity(entity, *scene);
+		}
 		return scene;
 	}
 }
