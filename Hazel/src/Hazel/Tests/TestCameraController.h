@@ -31,6 +31,7 @@ namespace Hazel
 			if (camera)
 			{
 				controller.UpdateCameraProjection(camera->Camera, input, deltaTime);
+				camera->RecomputeProjection();
 			}
 			auto transform = TryGetComponent<TransformComponent>();
 			if (transform)
