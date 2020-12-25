@@ -52,7 +52,7 @@ namespace Hazel
 		camera1.AddComponent<NativeScriptComponent>(std::make_shared<TestCameraController>());
 		camera1.AddComponent<CameraComponent>();
 
-		scene->SetMainCamera(camera1);
+		scene->SetPrimaryCamera(camera1);
 
 		camera2 = scene->CreateEntity();
 		camera2.AddComponent<TagComponent>("Camera2");
@@ -123,7 +123,7 @@ namespace Hazel
 		ImGui::Begin("Test");
 		if (ImGui::Checkbox("Camera 1", &useCamera1))
 		{
-			scene->SetMainCamera(useCamera1 ? camera1 : camera2);
+			scene->SetPrimaryCamera(useCamera1 ? camera1 : camera2);
 		}
 		ImGui::End();
 

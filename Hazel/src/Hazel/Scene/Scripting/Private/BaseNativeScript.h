@@ -60,7 +60,7 @@ namespace Hazel
 			return layer->GetInput();
 		}
 
-		const SceneCamera &GetCamera() const
+		const Camera &GetCamera() const
 		{
 			HZ_ASSERT_ATTACHED();
 			return entity.GetSceneContext().Camera;

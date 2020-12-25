@@ -2,62 +2,56 @@
 
 #include "entt/entt.hpp"
 
-#include "Hazel/Core/Camera/CameraInfo.h"
+#include "Hazel/Scene/Components/CameraComponent.h"
+#include "Hazel/Scene/Components/TransformComponent.h"
 
 namespace Hazel
 {
 	class SceneCamera
 	{
-	private:
-		entt::entity entity = entt::null;
-		CameraInfo info;
-
 	public:
-		SceneCamera() = default;
-
-		void Update(entt::registry &registry);
-		glm::vec3 GetWorldPosition(const glm::vec2 &screenPosition) const;
-		glm::vec2 GetScreenPosition(const glm::vec3 &worldPosition) const;
-
-		bool IsValid() const
+		static entt::entity GetCameraEntity(entt::registry &registry, entt::entity cameraEntity)
 		{
-			return entity != entt::null;
+			if (IsValidCamera(registry, cameraEntity))
+			{
+				return cameraEntity;
+			}
+			return GetFirstCamera(registry);
 		}
 
-		entt::entity GetEntity() const
+		static bool IsValidCamera(entt::registry &registry, entt::entity cameraEntity)
 		{
-			return entity;
+			return registry.valid(cameraEntity) && registry.has<CameraComponent>(cameraEntity);
 		}
 
-		void SetEntity(entt::entity entity, entt::registry &registry)
+		static entt::entity GetFirstCamera(entt::registry &registry)
 		{
-			this->entity = entity;
-			Update(registry);
+			auto view = registry.view<CameraComponent>();
+			if (view.empty())
+			{
+				return entt::null;
+			}
+			return view.front();
 		}
 
-		const Rectangle &GetViewport() const
+		static glm::mat4 GetViewMatrix(entt::registry &registry, entt::entity cameraEntity)
 		{
-			return info.Viewport;
+			if (cameraEntity == entt::null)
+			{
+				return glm::mat4(1.0f);
+			}
+			auto component = registry.try_get<TransformComponent>(cameraEntity);
+			return component ? component->Transform.ToMatrix() : glm::mat4(1.0f);
 		}
 
-		void SetViewport(const Rectangle &viewport)
+		static glm::mat4 GetProjectionMatrix(entt::registry &registry, entt::entity cameraEntity)
 		{
-			info.Viewport = viewport;
-		}
-
-		const glm::mat4 &GetView() const
-		{
-			return info.View;
-		}
-
-		const glm::mat4 &GetProjection() const
-		{
-			return info.Projection;
-		}
-
-		const glm::mat4 &GetViewProjection() const
-		{
-			return info.ViewProjection;
+			if (cameraEntity == entt::null)
+			{
+				return glm::mat4(1.0f);
+			}
+			auto component = registry.try_get<CameraComponent>(cameraEntity);
+			return component ? component->Projection.ToMatrix() : glm::mat4(1.0f);
 		}
 	};
 }

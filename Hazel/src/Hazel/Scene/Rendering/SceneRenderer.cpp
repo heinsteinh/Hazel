@@ -11,9 +11,9 @@ namespace Hazel
 	void SceneRenderer::RenderScene(SceneContext &context)
 	{
 		HZ_ASSERT(context.Renderer, "No renderer attached to the scene");
-		if (context.Camera.IsValid())
+		if (context.CameraEntity != entt::null)
 		{
-			context.Renderer->BeginScene(context.Camera.GetViewProjection());
+			context.Renderer->BeginScene(context.Camera.ViewProjection);
 			SpriteRenderingSystem::OnRender(context);
 			ParticleSystem::OnRender(context);
 			context.Renderer->EndScene();

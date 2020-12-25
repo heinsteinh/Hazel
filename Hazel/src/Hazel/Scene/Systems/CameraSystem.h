@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hazel/Scene/Entity/SceneContext.h"
+#include "Hazel/Scene/Camera/SceneCamera.h"
 #include "Hazel/Scene/Components/CameraComponent.h"
 
 namespace Hazel
@@ -10,16 +11,19 @@ namespace Hazel
 	public:
 		static void OnUpdate(SceneContext &context)
 		{
-			context.Camera.Update(context.Registry);
+			context.CameraEntity = SceneCamera::GetCameraEntity(context.Registry, context.CameraEntity);
+			context.Camera.View = SceneCamera::GetViewMatrix(context.Registry, context.CameraEntity);
+			context.Camera.Projection = SceneCamera::GetProjectionMatrix(context.Registry, context.CameraEntity);
+			context.Camera.RecomputeViewProjection();
 		}
 
 		static void OnViewportResize(SceneContext &context, const Rectangle &viewport)
 		{
-			context.Camera.SetViewport(viewport);
-			context.Registry.view<CameraComponent>().each([&](auto entity, auto &component)
+			context.Camera.Viewport = viewport;
+			float aspectRatio = viewport.GetAspectRatio();
+			context.Registry.view<CameraComponent>().each([=](auto entity, auto &component)
 			{
-				component.SetViewport(viewport);
-				component.RecomputeProjection();
+				component.Projection.SetAspectRatio(aspectRatio);
 			});
 		}
 	};

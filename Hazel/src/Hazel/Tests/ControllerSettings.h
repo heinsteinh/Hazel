@@ -5,7 +5,7 @@
 
 namespace Hazel
 {
-	struct CameraControllerSettings
+	struct ControllerSettings
 	{
 		Key Up = Key::W;
 		Key Down = Key::S;
@@ -15,7 +15,6 @@ namespace Hazel
 		Key CounterClockwiseRotation = Key::E;
 		float TranslationSpeed = 1.0f;
 		float RotationSpeed = 1.0f;
-		float ZoomSpeed = 0.2f;
 		Bounds Bounds = {{-1.0f, -1.0f, 0.1f}, {1.0f, 1.0f, 10.0f}};
 	};
 }

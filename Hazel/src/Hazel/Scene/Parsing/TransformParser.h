@@ -10,10 +10,7 @@ namespace Hazel
 	public:
 		static void Parse(const YamlValue &source, TransformComponent &component)
 		{
-			source["Translation"].Extract(component.Transform.Translation);
-			source["EulerHint"].Extract(component.EulerHint);
-			source["Scale"].Extract(component.Transform.Scale);
-			component.RecomputeRotation();
+			Parse(source, component.Transform);
 		}
 
 		static void Parse(const YamlValue &source, Transform &transform)

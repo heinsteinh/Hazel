@@ -38,19 +38,19 @@ namespace Hazel
 			context.Renderer = &renderer;
 		}
 
-		Entity GetMainCamera()
+		Entity GetPrimaryCamera()
 		{
-			return {context.Camera.GetEntity(), context};
+			return {context.CameraEntity, context};
 		}
 
-		void SetMainCamera(Entity mainCamera)
+		void SetPrimaryCamera(Entity mainCamera)
 		{
-			context.Camera.SetEntity(mainCamera, context.Registry);
+			context.CameraEntity = mainCamera;
 		}
 
 		const Rectangle &GetViewport() const
 		{
-			return context.Camera.GetViewport();
+			return context.Camera.Viewport;
 		}
 
 		Entity CreateEntity()

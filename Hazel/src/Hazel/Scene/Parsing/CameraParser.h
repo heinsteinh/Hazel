@@ -10,17 +10,16 @@ namespace Hazel
 	public:
 		static void Parse(const YamlValue &source, CameraComponent &component)
 		{
-			auto screenAspectRatio = component.Camera.OrthographicProjection.AspectRatio;
-			Parse(source, component.Camera);
-			component.Camera.SetAspectRatio(screenAspectRatio);
-			component.RecomputeProjection();
+			auto screenAspectRatio = component.Projection.OrthographicProjection.AspectRatio;
+			Parse(source, component.Projection);
+			component.Projection.SetAspectRatio(screenAspectRatio);
 		}
 
-		static void Parse(const YamlValue &source, Camera &camera)
+		static void Parse(const YamlValue &source, CameraProjection &projection)
 		{
-			Parse(source["ProjectionType"], camera.ProjectionType);
-			Parse(source["OrthographicProjection"], camera.OrthographicProjection);
-			Parse(source["PerspectiveProjection"], camera.PerspectiveProjection);
+			Parse(source["ProjectionType"], projection.ProjectionType);
+			Parse(source["OrthographicProjection"], projection.OrthographicProjection);
+			Parse(source["PerspectiveProjection"], projection.PerspectiveProjection);
 		}
 
 		static void Parse(const YamlValue &source, ProjectionType &projectionType)
@@ -57,7 +56,7 @@ namespace Hazel
 	}
 
 	template<>
-	void YamlParser::Parse(const YamlValue &source, Camera &value)
+	void YamlParser::Parse(const YamlValue &source, CameraProjection &value)
 	{
 		return CameraParser::Parse(source, value);
 	}

@@ -1,10 +1,12 @@
 #pragma once
 
+#include <string>
+
 #include "entt/entt.hpp"
 
 #include "Hazel/Core/Application/Layer.h"
+#include "Hazel/Core/Camera/Camera.h"
 #include "Hazel/Rendering/Renderer2D/Renderer2D.h"
-#include "Hazel/Scene/Camera/SceneCamera.h"
 
 namespace Hazel
 {
@@ -13,7 +15,8 @@ namespace Hazel
 		std::string Name;
 		Layer *Layer = nullptr;
 		Renderer2D *Renderer = nullptr;
-		SceneCamera Camera;
+		entt::entity CameraEntity = entt::null;
+		Camera Camera;
 		entt::registry Registry;
 	};
 }

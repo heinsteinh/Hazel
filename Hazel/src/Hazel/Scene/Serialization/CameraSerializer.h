@@ -10,18 +10,18 @@ namespace Hazel
 	public:
 		static void Serialize(YamlDocument &document, const CameraComponent &component)
 		{
-			Serialize(document, component.Camera);
+			Serialize(document, component.Projection);
 		}
 
-		static void Serialize(YamlDocument &document, const Camera &camera)
+		static void Serialize(YamlDocument &document, const CameraProjection &projection)
 		{
 			document.BeginMap();
 			document.Key().Write("ProjectionType").Value();
-			Serialize(document, camera.ProjectionType);
+			Serialize(document, projection.ProjectionType);
 			document.Key().Write("OrthographicProjection").Value();
-			Serialize(document, camera.OrthographicProjection);
+			Serialize(document, projection.OrthographicProjection);
 			document.Key().Write("PerspectiveProjection").Value();
-			Serialize(document, camera.PerspectiveProjection);
+			Serialize(document, projection.PerspectiveProjection);
 			document.EndMap();
 		}
 
@@ -58,7 +58,7 @@ namespace Hazel
 	}
 
 	template<>
-	inline void YamlSerializer::Serialize(YamlDocument &document, const Camera &value)
+	inline void YamlSerializer::Serialize(YamlDocument &document, const CameraProjection &value)
 	{
 		CameraSerializer::Serialize(document, value);
 	}

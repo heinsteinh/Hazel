@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Hazel/Scene/Scripting/NativeScript.h"
-#include "Hazel/Core/Camera/CameraController.h"
+#include "CameraController.h"
+#include "Controller.h"
 #include "Hazel/Scene/Components/CameraComponent.h"
 #include "Hazel/Scene/Components/TransformComponent.h"
 
@@ -10,19 +11,10 @@ namespace Hazel
 	class TestCameraController : public NativeScript
 	{
 	private:
-		CameraController controller;
+		Controller controller;
+		CameraController cameraController;
 
 	public:
-		CameraControllerSettings &GetSettings()
-		{
-			return controller.GetSettings();
-		}
-
-		const CameraControllerSettings &GetSettings() const
-		{
-			return controller.GetSettings();
-		}
-
 		virtual void OnUpdate() override
 		{
 			auto deltaTime = GetDeltaTime();
@@ -30,13 +22,12 @@ namespace Hazel
 			auto camera = TryGetComponent<CameraComponent>();
 			if (camera)
 			{
-				controller.UpdateCameraProjection(camera->Camera, input, deltaTime);
-				camera->RecomputeProjection();
+				cameraController.Update(camera->Projection, input, deltaTime);
 			}
 			auto transform = TryGetComponent<TransformComponent>();
 			if (transform)
 			{
-				controller.UpdateCameraTransform(transform->Transform, input, deltaTime);
+				controller.Update(transform->Transform, input, deltaTime);
 			}
 		}
 	};

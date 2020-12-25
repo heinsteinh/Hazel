@@ -10,11 +10,7 @@ namespace Hazel
 	public:
 		static void Serialize(YamlDocument &document, const TransformComponent &component)
 		{
-			document.BeginMap()
-				.Key().Write("Translation").Value().Write(component.Transform.Translation)
-				.Key().Write("EulerHint").Value().Write(component.EulerHint)
-				.Key().Write("Scale").Value().Write(component.Transform.Scale)
-				.EndMap();
+			Serialize(document, component.Transform);
 		}
 
 		static void Serialize(YamlDocument &document, const Transform &transform)

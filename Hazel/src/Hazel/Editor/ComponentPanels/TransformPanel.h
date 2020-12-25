@@ -37,12 +37,7 @@ namespace Hazel
 
 		void Draw(TransformComponent &component)
 		{
-			translationPanel.Draw("Translation", component.Transform.Translation);
-			if (rotationPanel.Draw("Rotation", component.EulerHint))
-			{
-				component.RecomputeRotation();
-			}
-			scalePanel.Draw("Scale", component.Transform.Scale);
+			Draw(component.Transform);
 		}
 
 		void Draw(Transform &transform)

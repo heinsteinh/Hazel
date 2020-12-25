@@ -1,34 +1,41 @@
 #pragma once
 
-#include "Hazel/Core/Geometry/ProjectionType.h"
-#include "Hazel/Core/Geometry/OrthographicProjection.h"
-#include "Hazel/Core/Geometry/PerspectiveProjection.h"
+#include "glm/gtc/matrix_transform.hpp"
+
+#include "CameraView.h"
+#include "CameraProjection.h"
 #include "Hazel/Core/Geometry/Rectangle.h"
 
 namespace Hazel
 {
 	struct Camera
 	{
-		ProjectionType ProjectionType = ProjectionType::Orthographic;
-		OrthographicProjection OrthographicProjection;
-		PerspectiveProjection PerspectiveProjection;
+		Rectangle Viewport;
+		glm::mat4 View{1.0f};
+		glm::mat4 Projection{1.0f};
+		glm::mat4 ViewProjection{1.0f};
 
-		glm::mat4 GetProjection()
+		void RecomputeViewProjection()
 		{
-			switch (ProjectionType)
-			{
-			case ProjectionType::Orthographic:
-				return OrthographicProjection.ToMatrix();
-			case ProjectionType::Perspective:
-				return PerspectiveProjection.ToMatrix();
-			}
-			return glm::mat4(1.0f);
+			ViewProjection = CameraView::GetViewProjectionMatrix(View, Projection);
 		}
 
-		void SetAspectRatio(float aspectRatio)
+		glm::vec3 GetWorldPosition(const glm::vec2 &screenPosition) const
 		{
-			OrthographicProjection.AspectRatio = aspectRatio;
-			PerspectiveProjection.AspectRatio = aspectRatio;
+			return glm::unProject(
+				glm::vec3(screenPosition, 0.0f),
+				View,
+				Projection,
+				CameraView::GetProjectionViewport(Viewport));
+		}
+
+		glm::vec2 GetScreenPosition(const glm::vec3 &worldPosition) const
+		{
+			return glm::project(
+				worldPosition,
+				View,
+				Projection,
+				CameraView::GetProjectionViewport(Viewport));
 		}
 	};
 }

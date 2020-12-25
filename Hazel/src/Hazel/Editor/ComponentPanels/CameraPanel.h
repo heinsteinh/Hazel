@@ -17,24 +17,19 @@ namespace Hazel
 	public:
 		bool Draw(CameraComponent &component)
 		{
-			if (Draw(component.Camera))
-			{
-				component.RecomputeProjection();
-				return true;
-			}
-			return false;
+			return Draw(component.Projection);
 		}
 
-		bool Draw(Camera &camera)
+		bool Draw(CameraProjection &projection)
 		{
-			auto result = projectionTypePanel.Draw(camera.ProjectionType);
-			switch (camera.ProjectionType)
+			auto result = projectionTypePanel.Draw(projection.ProjectionType);
+			switch (projection.ProjectionType)
 			{
 			case ProjectionType::Orthographic:
-				result |= orthographicProjectionPanel.Draw(camera.OrthographicProjection);
+				result |= orthographicProjectionPanel.Draw(projection.OrthographicProjection);
 				break;
 			case ProjectionType::Perspective:
-				result |= perspectiveProjectionPanel.Draw(camera.PerspectiveProjection);
+				result |= perspectiveProjectionPanel.Draw(projection.PerspectiveProjection);
 				break;
 			}
 			return result;

@@ -1,16 +1,33 @@
 #pragma once
 
-#include "CameraInfo.h"
+#include "Hazel/Core/Geometry/ProjectionType.h"
+#include "Hazel/Core/Geometry/OrthographicProjection.h"
+#include "Hazel/Core/Geometry/PerspectiveProjection.h"
 
 namespace Hazel
 {
-	class CameraProjection
+	struct CameraProjection
 	{
-	public:
-		static glm::vec3 GetWorldPosition(const CameraInfo &camera, const glm::vec2 &screenPosition);
-		static glm::vec2 GetScreenPosition(const CameraInfo &camera, const glm::vec3 &worldPosition);
+		ProjectionType ProjectionType = ProjectionType::Orthographic;
+		OrthographicProjection OrthographicProjection;
+		PerspectiveProjection PerspectiveProjection;
 
-	private:
-		static glm::vec4 GetViewport(const Rectangle &viewport);
+		glm::mat4 ToMatrix() const
+		{
+			switch (ProjectionType)
+			{
+			case ProjectionType::Orthographic:
+				return OrthographicProjection.ToMatrix();
+			case ProjectionType::Perspective:
+				return PerspectiveProjection.ToMatrix();
+			}
+			return glm::mat4(1.0f);
+		}
+
+		void SetAspectRatio(float aspectRatio)
+		{
+			OrthographicProjection.AspectRatio = aspectRatio;
+			PerspectiveProjection.AspectRatio = aspectRatio;
+		}
 	};
 }
