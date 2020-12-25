@@ -15,7 +15,7 @@ namespace Hazel
 		std::string Name;
 		Layer *Layer = nullptr;
 		Renderer2D *Renderer = nullptr;
-		entt::entity CameraEntity = entt::null;
+		entt::entity PrimaryCamera = entt::null;
 		Camera Camera;
 		entt::registry Registry;
 	};

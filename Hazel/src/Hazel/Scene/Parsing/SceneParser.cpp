@@ -5,17 +5,17 @@
 
 namespace Hazel
 {
-	std::shared_ptr<Scene> SceneParser::Load(const std::string &filename)
+	void SceneParser::ParseFile(const std::string &filename, Scene &scene)
 	{
-		return Parse(FileReader::ReadAll(filename));
+		Parse(FileReader::ReadAll(filename), scene);
 	}
 
-	std::shared_ptr<Scene> SceneParser::Parse(const std::string &source)
+	void SceneParser::Parse(const std::string &source, Scene &scene)
 	{
-		return Parse(YamlValue::FromYaml(source));
+		Parse(YamlValue::FromYaml(source), scene);
 	}
 
-	std::shared_ptr<Scene> SceneParser::Parse(const YamlValue &source)
+	void SceneParser::Parse(const YamlValue &source, Scene &scene)
 	{
 		std::string name;
 		source["Scene"].Extract(name);
@@ -23,11 +23,11 @@ namespace Hazel
 		{
 			throw SceneParsingException("Missing scene name");
 		}
-		auto scene = std::make_shared<Scene>(name);
+		scene.Clear();
+		scene.SetName(name);
 		for (const auto &entity : source["Entities"])
 		{
-			EntityParser::LoadEntity(entity, *scene);
+			EntityParser::Parse(entity, scene);
 		}
-		return scene;
 	}
 }

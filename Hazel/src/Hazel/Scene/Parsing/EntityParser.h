@@ -13,23 +13,23 @@ namespace Hazel
 	class EntityParser
 	{
 	public:
-		static void LoadEntity(const YamlValue &source, Scene &scene)
+		static void Parse(const YamlValue &source, Scene &scene)
 		{
 			if (source.IsValid())
 			{
 				auto entity = scene.CreateEntity();
-				LoadComponent<TagComponent>(source["Tag"], entity);
-				LoadComponent<TransformComponent>(source["Transform"], entity);
-				LoadComponent<SpriteComponent>(source["Sprite"], entity);
-				LoadComponent<CameraComponent>(source["Camera"], entity);
-				LoadComponent<ParticleComponent>(source["Particle"], entity);
-				LoadComponent<NativeScriptComponent>(source["NativeScript"], entity);
+				ParseComponent<TagComponent>(source["Tag"], entity);
+				ParseComponent<TransformComponent>(source["Transform"], entity);
+				ParseComponent<SpriteComponent>(source["Sprite"], entity);
+				ParseComponent<CameraComponent>(source["Camera"], entity);
+				ParseComponent<ParticleComponent>(source["Particle"], entity);
+				//ParseComponent<NativeScriptComponent>(source["NativeScript"], entity);
 			}
 		}
 
 	private:
 		template<typename ComponentType>
-		static void LoadComponent(const YamlValue &source, Entity entity)
+		static void ParseComponent(const YamlValue &source, Entity entity)
 		{
 			if (source.IsValid())
 			{

@@ -8,6 +8,7 @@
 #include "Hazel/Tests/TestParticles.h"
 #include "EditorViewport.h"
 #include "Hazel/Scene/Serialization/SceneSerializer.h"
+#include "Hazel/Scene/Parsing/SceneParser.h"
 
 namespace Hazel
 {
@@ -138,6 +139,13 @@ namespace Hazel
 		ImGui::End();
 
 		scenePanel.Draw("Scene Hierarchy", *scene);
+
+		ImGui::Begin("Test2");
+		if (ImGui::Button("Load"))
+		{
+			SceneParser::ParseFile("assets/scenes/examples/Test.yaml", *scene);
+		}
+		ImGui::End();
 
 		editorWindow.End();
 

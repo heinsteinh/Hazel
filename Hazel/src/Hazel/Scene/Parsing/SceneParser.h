@@ -10,8 +10,8 @@ namespace Hazel
 	class SceneParser
 	{
 	public:
-		static std::shared_ptr<Scene> Load(const std::string &filename);
-		static std::shared_ptr<Scene> Parse(const std::string &source);
-		static std::shared_ptr<Scene> Parse(const YamlValue &source);
+		static void ParseFile(const std::string &filename, Scene &scene);
+		static void Parse(const std::string &source, Scene &scene);
+		static void Parse(const YamlValue &source, Scene &scene);
 	};
 }

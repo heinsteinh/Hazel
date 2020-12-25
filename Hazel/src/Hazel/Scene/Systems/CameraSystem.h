@@ -11,9 +11,9 @@ namespace Hazel
 	public:
 		static void OnUpdate(SceneContext &context)
 		{
-			context.CameraEntity = SceneCamera::GetCameraEntity(context.Registry, context.CameraEntity);
-			context.Camera.View = SceneCamera::GetViewMatrix(context.Registry, context.CameraEntity);
-			context.Camera.Projection = SceneCamera::GetProjectionMatrix(context.Registry, context.CameraEntity);
+			context.PrimaryCamera = SceneCamera::GetCameraEntity(context.Registry, context.PrimaryCamera);
+			context.Camera.View = SceneCamera::GetViewMatrix(context.Registry, context.PrimaryCamera);
+			context.Camera.Projection = SceneCamera::GetProjectionMatrix(context.Registry, context.PrimaryCamera);
 			context.Camera.RecomputeViewProjection();
 		}
 

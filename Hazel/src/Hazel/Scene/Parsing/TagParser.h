@@ -10,7 +10,7 @@ namespace Hazel
 	public:
 		static void Parse(const YamlValue &source, TagComponent &tag)
 		{
-			source.Extract(tag.Name);
+			source["Name"].Extract(tag.Name);
 		}
 	};
 

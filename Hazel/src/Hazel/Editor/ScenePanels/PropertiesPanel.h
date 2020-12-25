@@ -29,7 +29,7 @@ namespace Hazel
 		void Draw(const char *label, Entity entity)
 		{
 			ImGui::Begin(label);
-			if (!entity.IsNull())
+			if (entity.IsValid())
 			{
 				DrawComponents(entity);
 			}

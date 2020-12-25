@@ -28,6 +28,11 @@ namespace Hazel
 			return context.Name;
 		}
 
+		void SetName(const std::string &name)
+		{
+			context.Name = name;
+		}
+
 		void Attach(Layer &layer)
 		{
 			context.Layer = &layer;
@@ -40,12 +45,12 @@ namespace Hazel
 
 		Entity GetPrimaryCamera()
 		{
-			return {context.CameraEntity, context};
+			return {context.PrimaryCamera, context};
 		}
 
-		void SetPrimaryCamera(Entity mainCamera)
+		void SetPrimaryCamera(Entity primaryCamera)
 		{
-			context.CameraEntity = mainCamera;
+			context.PrimaryCamera = primaryCamera;
 		}
 
 		const Rectangle &GetViewport() const
@@ -61,6 +66,12 @@ namespace Hazel
 		void DestroyEntity(Entity entity)
 		{
 			context.Registry.destroy(entity);
+		}
+
+		void Clear()
+		{
+			context.PrimaryCamera = entt::null;
+			context.Registry.clear();
 		}
 
 		template<typename FunctorType>
