@@ -3,9 +3,12 @@ Entities:
   - EntityId: 4
     Tag:
       Name: Particle Emitter
+    Transform:
+      Translation: [0, 0, 0.100000001]
+      Rotation: [0, 0, 0, 1]
+      Scale: [1, 1, 1]
     Particle:
       ParticleInfo:
-        Position: [0, 0, 0]
         LinearVelocity: [0, 0]
         LinearVelocityVariation: [0.200000003, 0.200000003]
         AngularVelocity: 3.14159274
@@ -18,6 +21,7 @@ Entities:
         LifeTime: 2
       ParticleSource:
         MaxParticleCount: 1000
+        EmissionRate: 5
     NativeScript:
       Type: class Hazel::TestParticles
   - EntityId: 3

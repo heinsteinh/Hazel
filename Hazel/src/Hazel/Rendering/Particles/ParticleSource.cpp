@@ -20,6 +20,29 @@ namespace Hazel
 		pool.Resize(maxParticleCount);
 	}
 
+	float ParticleSource::GetEmissionRate() const
+	{
+		return rate.GetRate();
+	}
+
+	void ParticleSource::SetEmissionRate(float rate)
+	{
+		this->rate.SetRate(rate);
+	}
+
+	void ParticleSource::EmitParticles(const glm::vec3 &position, const ParticleInfo &info, int count)
+	{
+		for (int i = 0; i < count; i++)
+		{
+			emitter.EmitParticle(pool.GetNextParticle(), position, info);
+		}
+	}
+
+	void ParticleSource::AutoEmitParticles(const glm::vec3 &position, const ParticleInfo &info, float deltaTime)
+	{
+		EmitParticles(position, info, rate.GetCount(deltaTime));
+	}
+
 	void ParticleSource::UpdateParticles(float deltaTime)
 	{
 		for (auto &particle : pool)
@@ -40,10 +63,5 @@ namespace Hazel
 				ParticleRenderer::RenderParticle(renderer, particle);
 			}
 		}
-	}
-
-	void ParticleSource::EmitParticle(const ParticleInfo &info)
-	{
-		emitter.EmitParticle(pool.GetNextParticle(), info);
 	}
 }

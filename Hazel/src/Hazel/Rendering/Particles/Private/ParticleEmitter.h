@@ -12,10 +12,10 @@ namespace Hazel
 		Random random;
 
 	public:
-		void EmitParticle(Particle &particle, const ParticleInfo &info);
+		void EmitParticle(Particle &particle, const glm::vec3 &position, const ParticleInfo &info);
 
 	private:
-		void SetupPosition(Particle &particle, const ParticleInfo &info);
+		void SetupPosition(Particle &particle, const glm::vec3 &position);
 		void SetupVelocity(Particle &particle, const ParticleInfo &info);
 		void SetupColor(Particle &particle, const ParticleInfo &info);
 		void SetupLifeTime(Particle &particle, const ParticleInfo &info);

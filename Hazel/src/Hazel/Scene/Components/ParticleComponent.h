@@ -1,22 +1,22 @@
 #pragma once
 
 #include "Hazel/Rendering/Particles/ParticleSource.h"
-#include "Hazel/Rendering/Particles/DefaultParticleSettings.h"
 
 namespace Hazel
 {
 	struct ParticleComponent
 	{
-		ParticleInfo ParticleInfo = DefaultParticleSettings::GetParticleInfo();
-		ParticleSource ParticleSource{DefaultParticleSettings::GetMaxParticleCount()};
+		ParticleInfo ParticleInfo;
+		ParticleSource ParticleSource;
 
-		void EmitParticle()
+		void EmitParticle(const glm::vec3 &position)
 		{
-			ParticleSource.EmitParticle(ParticleInfo);
+			ParticleSource.EmitParticles(position, ParticleInfo);
 		}
 
-		void UpdateParticles(float deltaTime)
+		void UpdateParticles(const glm::vec3 &position, float deltaTime)
 		{
+			ParticleSource.AutoEmitParticles(position, ParticleInfo, deltaTime);
 			ParticleSource.UpdateParticles(deltaTime);
 		}
 

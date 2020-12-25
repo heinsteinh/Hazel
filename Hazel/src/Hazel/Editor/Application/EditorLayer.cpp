@@ -62,6 +62,7 @@ namespace Hazel
 
 		auto particleEmitter = scene->CreateEntity();
 		particleEmitter.AddComponent<TagComponent>("Particle Emitter");
+		particleEmitter.AddComponent<TransformComponent>().Transform.Translation.z += 0.1f;
 		particleEmitter.AddComponent<ParticleComponent>();
 		particleEmitter.AddComponent<NativeScriptComponent>(std::make_shared<TestParticles>());
 

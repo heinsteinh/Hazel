@@ -21,7 +21,6 @@ namespace Hazel
 		static void Serialize(YamlDocument &document, const ParticleInfo &particleInfo)
 		{
 			document.BeginMap()
-				.Key().Write("Position").Value().Write(particleInfo.Position)
 				.Key().Write("LinearVelocity").Value().Write(particleInfo.LinearVelocity)
 				.Key().Write("LinearVelocityVariation").Value().Write(particleInfo.LinearVelocityVariation)
 				.Key().Write("AngularVelocity").Value().Write(particleInfo.AngularVelocity)
@@ -39,6 +38,7 @@ namespace Hazel
 		{
 			document.BeginMap()
 				.Key().Write("MaxParticleCount").Value().Write(particleSource.GetMaxParticleCount())
+				.Key().Write("EmissionRate").Value().Write(particleSource.GetEmissionRate())
 				.EndMap();
 		}
 	};

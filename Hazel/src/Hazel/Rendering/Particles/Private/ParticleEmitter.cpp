@@ -2,19 +2,19 @@
 
 namespace Hazel
 {
-	void ParticleEmitter::EmitParticle(Particle &particle, const ParticleInfo &info)
+	void ParticleEmitter::EmitParticle(Particle &particle, const glm::vec3 &position, const ParticleInfo &info)
 	{
 		particle.Active = true;
-		SetupPosition(particle, info);
+		SetupPosition(particle, position);
 		SetupVelocity(particle, info);
 		SetupColor(particle, info);
 		SetupLifeTime(particle, info);
 		SetupSize(particle, info);
 	}
 
-	void ParticleEmitter::SetupPosition(Particle &particle, const ParticleInfo &info)
+	void ParticleEmitter::SetupPosition(Particle &particle, const glm::vec3 &position)
 	{
-		particle.Transform.Translation = info.Position;
+		particle.Transform.Translation = position;
 		particle.Transform.Rotation = glm::angleAxis(
 			random.GetAngle(),
 			glm::vec3(0.0f, 0.0f, 1.0f));

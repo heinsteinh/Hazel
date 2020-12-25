@@ -22,7 +22,6 @@ namespace Hazel
 
 		void Draw(ParticleInfo &particleInfo)
 		{
-			input.Draw("Position", particleInfo.Position);
 			input.Draw("Linear Velocity", particleInfo.LinearVelocity);
 			input.Draw("Linear VelocityVariation", particleInfo.LinearVelocityVariation);
 			input.Draw("Angular Velocity", particleInfo.AngularVelocity);
@@ -41,6 +40,11 @@ namespace Hazel
 			if (ImGui::DragInt("MaxParticleCount", &maxParticleCount))
 			{
 				particleSource.SetMaxParticleCount(maxParticleCount);
+			}
+			auto emissionRate = particleSource.GetEmissionRate();
+			if (input.Draw("EmissionRate", emissionRate))
+			{
+				particleSource.SetEmissionRate(emissionRate);
 			}
 		}
 	};

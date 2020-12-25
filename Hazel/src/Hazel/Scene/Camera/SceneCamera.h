@@ -41,7 +41,7 @@ namespace Hazel
 				return glm::mat4(1.0f);
 			}
 			auto component = registry.try_get<TransformComponent>(cameraEntity);
-			return component ? component->Transform.ToMatrix() : glm::mat4(1.0f);
+			return component ? CameraView::GetViewMatrix(component->Transform) : glm::mat4(1.0f);
 		}
 
 		static glm::mat4 GetProjectionMatrix(entt::registry &registry, entt::entity cameraEntity)

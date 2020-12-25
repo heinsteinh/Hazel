@@ -16,7 +16,6 @@ namespace Hazel
 
 		static void Parse(const YamlValue &source, ParticleInfo &particleInfo)
 		{
-			source["Position"].Extract(particleInfo.Position);
 			source["LinearVelocity"].Extract(particleInfo.LinearVelocity);
 			source["LinearVelocityVariation"].Extract(particleInfo.LinearVelocityVariation);
 			source["AngularVelocity"].Extract(particleInfo.AngularVelocity);
@@ -34,6 +33,9 @@ namespace Hazel
 			auto maxParticleCount = particleSource.GetMaxParticleCount();
 			source["MaxParticleCount"].Extract(maxParticleCount);
 			particleSource.SetMaxParticleCount(maxParticleCount);
+			auto emissionRate = particleSource.GetEmissionRate();
+			source["EmissionRate"].Extract(emissionRate);
+			particleSource.SetEmissionRate(emissionRate);
 		}
 	};
 

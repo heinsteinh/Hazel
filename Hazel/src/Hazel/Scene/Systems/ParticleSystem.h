@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hazel/Scene/Entity/SceneContext.h"
+#include "Hazel/Scene/Components/TransformComponent.h"
 #include "Hazel/Scene/Components/ParticleComponent.h"
 
 namespace Hazel
@@ -11,9 +12,12 @@ namespace Hazel
 		static void OnUpdate(SceneContext &context)
 		{
 			auto deltaTime = context.Layer->GetDeltaTime();
-			context.Registry.view<ParticleComponent>().each([=](auto entity, auto &component)
+			context.Registry.view<ParticleComponent>().each([&](auto entity, auto &component)
 			{
-				component.UpdateParticles(deltaTime);
+				auto transform = context.Registry.try_get<TransformComponent>(entity);
+				component.UpdateParticles(
+					transform ? transform->Transform.Translation : glm::vec3(0.0f),
+					deltaTime);
 			});
 		}
 

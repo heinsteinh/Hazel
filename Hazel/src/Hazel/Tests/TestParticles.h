@@ -8,9 +8,6 @@ namespace Hazel
 {
 	class TestParticles : public NativeScript
 	{
-	private:
-		int emissionCount = 5;
-
 	public:
 		virtual void OnUpdate() override
 		{
@@ -19,20 +16,16 @@ namespace Hazel
 			{
 				return;
 			}
+			auto transform = TryGetComponent<TransformComponent>();
+			if (!transform)
+			{
+				return;
+			}
 			auto &input = GetInput();
 			if (input.IsMouseButtonPressed(Hazel::MouseButton::B1))
 			{
-				component->ParticleInfo.Position = GetCamera().GetWorldPosition(input.GetMousePosition());
-				for (int i = 0; i < emissionCount; i++)
-				{
-					component->EmitParticle();
-				}
+				transform->Transform.Translation = GetCamera().GetWorldPosition(input.GetMousePosition());
 			}
-		}
-
-		virtual void OnGui() override
-		{
-			ImGui::DragInt("EmissionCount", &emissionCount);
 		}
 	};
 }
