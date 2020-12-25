@@ -1,7 +1,6 @@
 #include "ParticleRenderer.h"
 
 #include "Hazel/Rendering/Renderer2D/SquareMesh.h"
-#include "Hazel/Core/Geometry/MvpMatrix.h"
 
 namespace Hazel
 {

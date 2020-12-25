@@ -1,7 +1,5 @@
 #include "BatchContext.h"
 
-#include "Hazel/Core/Geometry/MvpMatrix.h"
-
 namespace Hazel
 {
 	BatchContext::BatchContext(GraphicsContext &graphicsContext, const BatchInfo &info)
