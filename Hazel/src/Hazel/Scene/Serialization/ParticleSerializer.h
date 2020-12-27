@@ -11,11 +11,20 @@ namespace Hazel
 		static void Serialize(YamlDocument &document, const ParticleComponent &component)
 		{
 			document.BeginMap();
-			document.Key().Write("ParticleInfo").Value();
-			Serialize(document, component.ParticleInfo);
 			document.Key().Write("ParticleSource").Value();
 			Serialize(document, component.ParticleSource);
+			document.Key().Write("ParticleInfo").Value();
+			Serialize(document, component.ParticleInfo);
 			document.EndMap();
+		}
+
+		static void Serialize(YamlDocument &document, const ParticleSource &particleSource)
+		{
+			document.BeginMap()
+				.Key().Write("Enabled").Value().Write(particleSource.IsEnabled())
+				.Key().Write("MaxParticleCount").Value().Write(particleSource.GetMaxParticleCount())
+				.Key().Write("EmissionRate").Value().Write(particleSource.GetEmissionRate())
+				.EndMap();
 		}
 
 		static void Serialize(YamlDocument &document, const ParticleInfo &particleInfo)
@@ -31,14 +40,6 @@ namespace Hazel
 				.Key().Write("SizeEnd").Value().Write(particleInfo.SizeEnd)
 				.Key().Write("SizeVariation").Value().Write(particleInfo.SizeVariation)
 				.Key().Write("LifeTime").Value().Write(particleInfo.LifeTime)
-				.EndMap();
-		}
-
-		static void Serialize(YamlDocument &document, const ParticleSource &particleSource)
-		{
-			document.BeginMap()
-				.Key().Write("MaxParticleCount").Value().Write(particleSource.GetMaxParticleCount())
-				.Key().Write("EmissionRate").Value().Write(particleSource.GetEmissionRate())
 				.EndMap();
 		}
 	};

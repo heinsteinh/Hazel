@@ -8,9 +8,6 @@ namespace Hazel
 {
 	class YamlValue
 	{
-	private:
-		YAML::Node node;
-
 	public:
 		class Iterator
 		{
@@ -42,6 +39,10 @@ namespace Hazel
 			}
 		};
 
+	private:
+		YAML::Node node;
+
+	public:
 		static YamlValue FromYaml(const std::string &yaml)
 		{
 			return YAML::Load(yaml);

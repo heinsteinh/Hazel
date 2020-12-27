@@ -42,7 +42,10 @@ project "Hazel"
 
     filter "system:windows"
         systemversion "latest"
-        defines "GLFW_INCLUDE_NONE"
+        defines {
+            "GLFW_INCLUDE_NONE",
+            "HZ_WINDOWS"
+        }
 
     filter "configurations:Debug"
         defines "HZ_DEBUG"

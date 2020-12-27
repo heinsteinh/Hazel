@@ -10,8 +10,21 @@ namespace Hazel
 	public:
 		static void Parse(const YamlValue &source, ParticleComponent &component)
 		{
-			Parse(source["ParticleInfo"], component.ParticleInfo);
 			Parse(source["ParticleSource"], component.ParticleSource);
+			Parse(source["ParticleInfo"], component.ParticleInfo);
+		}
+
+		static void Parse(const YamlValue &source, ParticleSource &particleSource)
+		{
+			auto enabled = particleSource.IsEnabled();
+			source["Enabled"].Extract(enabled);
+			particleSource.SetEnabled(enabled);
+			auto maxParticleCount = particleSource.GetMaxParticleCount();
+			source["MaxParticleCount"].Extract(maxParticleCount);
+			particleSource.SetMaxParticleCount(maxParticleCount);
+			auto emissionRate = particleSource.GetEmissionRate();
+			source["EmissionRate"].Extract(emissionRate);
+			particleSource.SetEmissionRate(emissionRate);
 		}
 
 		static void Parse(const YamlValue &source, ParticleInfo &particleInfo)
@@ -26,16 +39,6 @@ namespace Hazel
 			source["SizeEnd"].Extract(particleInfo.SizeEnd);
 			source["SizeVariation"].Extract(particleInfo.SizeVariation);
 			source["LifeTime"].Extract(particleInfo.LifeTime);
-		}
-
-		static void Parse(const YamlValue &source, ParticleSource &particleSource)
-		{
-			auto maxParticleCount = particleSource.GetMaxParticleCount();
-			source["MaxParticleCount"].Extract(maxParticleCount);
-			particleSource.SetMaxParticleCount(maxParticleCount);
-			auto emissionRate = particleSource.GetEmissionRate();
-			source["EmissionRate"].Extract(emissionRate);
-			particleSource.SetEmissionRate(emissionRate);
 		}
 	};
 

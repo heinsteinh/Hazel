@@ -11,7 +11,6 @@ namespace Hazel
 		BeginWindow(label);
 		PopWindowStyle();
 		ActivateDockSpace();
-		menu.Draw();
 	}
 
 	void EditorWindow::End()

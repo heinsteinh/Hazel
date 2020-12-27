@@ -9,6 +9,7 @@
 #include "EditorViewport.h"
 #include "Hazel/Scene/Serialization/SceneSerializer.h"
 #include "Hazel/Scene/Parsing/SceneParser.h"
+#include "Hazel/Core/FileSystem/FileDialog.h"
 
 namespace Hazel
 {
@@ -65,8 +66,6 @@ namespace Hazel
 		particleEmitter.AddComponent<TransformComponent>().Transform.Translation.z += 0.1f;
 		particleEmitter.AddComponent<ParticleComponent>();
 		particleEmitter.AddComponent<NativeScriptComponent>(std::make_shared<TestParticles>());
-
-		SceneSerializer::Serialize(*scene, "assets/scenes/examples/Test.yaml");
 	}
 
 	void EditorLayer::OnDetach()
@@ -91,6 +90,32 @@ namespace Hazel
 	void EditorLayer::OnGui()
 	{
 		editorWindow.Begin("Hazel");
+
+		menu.Draw();
+		if (menu.WantQuit())
+		{
+			CloseApplication();
+		}
+		if (menu.WantOpen())
+		{
+			FileDialog dialog(GetWindow());
+			dialog.AddFilter({"YAML files", "*.yaml"});
+			auto filename = dialog.GetOpenFilename();
+			if (!filename.empty())
+			{
+				SceneParser::ParseFile(filename, *scene);
+			}
+		}
+		if (menu.WantSave())
+		{
+			FileDialog dialog(GetWindow());
+			dialog.AddFilter({"YAML files", "*.yaml"});
+			auto filename = dialog.GetSaveFilename();
+			if (!filename.empty())
+			{
+				SceneSerializer::Serialize(filename, *scene);
+			}
+		}
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
 		ImGui::Begin("Viewport");
@@ -141,19 +166,7 @@ namespace Hazel
 
 		scenePanel.Draw("Scene Hierarchy", *scene);
 
-		ImGui::Begin("Test2");
-		if (ImGui::Button("Load"))
-		{
-			SceneParser::ParseFile("assets/scenes/examples/Test.yaml", *scene);
-		}
-		ImGui::End();
-
 		editorWindow.End();
-
-		if (editorWindow.WantQuit())
-		{
-			CloseApplication();
-		}
 	}
 
 	void EditorLayer::OnEvent(Event &e)

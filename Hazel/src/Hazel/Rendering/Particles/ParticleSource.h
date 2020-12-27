@@ -10,6 +10,7 @@ namespace Hazel
 	class ParticleSource
 	{
 	private:
+		bool enabled = true;
 		ParticlePool pool;
 		Rate rate = 5.0f;
 		ParticleEmitter emitter;
@@ -17,6 +18,8 @@ namespace Hazel
 	public:
 		ParticleSource(size_t maxParticleCount = 1000);
 
+		bool IsEnabled() const;
+		void SetEnabled(bool enabled);
 		size_t GetMaxParticleCount() const;
 		void SetMaxParticleCount(size_t maxParticleCount);
 		float GetEmissionRate() const;

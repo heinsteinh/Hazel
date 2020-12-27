@@ -5,7 +5,7 @@
 
 namespace Hazel
 {
-	void SceneSerializer::Serialize(Scene &scene, const std::string &filename)
+	void SceneSerializer::Serialize(const std::string &filename, Scene &scene)
 	{
 		FileWriter::Write(filename, Serialize(scene));
 	}

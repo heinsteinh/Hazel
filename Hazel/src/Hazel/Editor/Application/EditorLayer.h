@@ -7,6 +7,7 @@
 #include "Hazel/Editor/InfoPanels/FpsPanel.h"
 #include "Hazel/Editor/InfoPanels/RendererStatisticsPanel.h"
 #include "Hazel/Editor/InfoPanels/BatchPanel.h"
+#include "EditorMenu.h"
 
 namespace Hazel
 {
@@ -14,6 +15,7 @@ namespace Hazel
 	{
 	private:
 		EditorWindow editorWindow;
+		EditorMenu menu;
 		SceneHierarchyPanel scenePanel;
 		FpsPanel fpsPanel;
 		RendererStatisticsPanel rendererStatisticsPanel;

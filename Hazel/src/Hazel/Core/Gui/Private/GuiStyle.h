@@ -15,7 +15,8 @@ namespace Hazel
 			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 			auto &io = ImGui::GetIO();
 			io.FontDefault = io.Fonts->AddFontFromFileTTF(
-				"C:\\Users\\christian\\source\\repos\\Hazel\\Hazel\\assets\\fonts\\OpenSans\\OpenSans-Regular.ttf", 18.0f);
+				"C:\\Users\\christian\\source\\repos\\Hazel\\Hazel\\assets\\fonts\\OpenSans\\OpenSans-Regular.ttf",
+				18.0f);
 			SetDarkThemeColors();
 		}
 

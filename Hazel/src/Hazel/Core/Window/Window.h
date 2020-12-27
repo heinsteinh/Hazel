@@ -32,7 +32,7 @@ namespace Hazel
 		bool HasVerticalSynchonization() const;
 		void SetVerticalSynchronization(bool verticalSynchronization);
 
-		constexpr GLFWwindow *GetHandle() const
+		GLFWwindow *GetHandle() const
 		{
 			return window;
 		}

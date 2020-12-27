@@ -16,8 +16,27 @@ namespace Hazel
 	public:
 		void Draw(ParticleComponent &component)
 		{
-			Draw(component.ParticleInfo);
 			Draw(component.ParticleSource);
+			Draw(component.ParticleInfo);
+		}
+
+		void Draw(ParticleSource &particleSource)
+		{
+			auto enabled = particleSource.IsEnabled();
+			if (ImGui::Checkbox("Enabled", &enabled))
+			{
+				particleSource.SetEnabled(enabled);
+			}
+			auto maxParticleCount = static_cast<int>(particleSource.GetMaxParticleCount());
+			if (ImGui::DragInt("MaxParticleCount", &maxParticleCount))
+			{
+				particleSource.SetMaxParticleCount(maxParticleCount);
+			}
+			auto emissionRate = particleSource.GetEmissionRate();
+			if (input.Draw("EmissionRate", emissionRate))
+			{
+				particleSource.SetEmissionRate(emissionRate);
+			}
 		}
 
 		void Draw(ParticleInfo &particleInfo)
@@ -32,20 +51,6 @@ namespace Hazel
 			input.Draw("SizeEnd", particleInfo.SizeEnd);
 			input.Draw("SizeVariation", particleInfo.SizeVariation);
 			input.Draw("LifeTime", particleInfo.LifeTime);
-		}
-
-		void Draw(ParticleSource &particleSource)
-		{
-			auto maxParticleCount = static_cast<int>(particleSource.GetMaxParticleCount());
-			if (ImGui::DragInt("MaxParticleCount", &maxParticleCount))
-			{
-				particleSource.SetMaxParticleCount(maxParticleCount);
-			}
-			auto emissionRate = particleSource.GetEmissionRate();
-			if (input.Draw("EmissionRate", emissionRate))
-			{
-				particleSource.SetEmissionRate(emissionRate);
-			}
 		}
 	};
 }

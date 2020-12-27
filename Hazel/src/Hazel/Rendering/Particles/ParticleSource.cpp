@@ -10,6 +10,16 @@ namespace Hazel
 	{
 	}
 
+	bool ParticleSource::IsEnabled() const
+	{
+		return enabled;
+	}
+
+	void ParticleSource::SetEnabled(bool enabled)
+	{
+		this->enabled = enabled;
+	}
+
 	size_t ParticleSource::GetMaxParticleCount() const
 	{
 		return pool.GetSize();
@@ -40,7 +50,10 @@ namespace Hazel
 
 	void ParticleSource::AutoEmitParticles(const glm::vec3 &position, const ParticleInfo &info, float deltaTime)
 	{
-		EmitParticles(position, info, rate.GetCount(deltaTime));
+		if (enabled)
+		{
+			EmitParticles(position, info, rate.GetCount(deltaTime));
+		}
 	}
 
 	void ParticleSource::UpdateParticles(float deltaTime)
