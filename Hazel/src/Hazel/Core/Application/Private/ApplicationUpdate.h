@@ -7,20 +7,20 @@ namespace Hazel
 	class ApplicationUpdate
 	{
 	public:
-		static void MainLoopUpdate(ApplicationContext &context)
+		static void MainLoopUpdate(ApplicationContext &context, ApplicationLayers &layers)
 		{
-			ApplicationRenderer::BeginFrame(context);
-			context.EventSystem.PollEvents();
-			ApplicationRenderer::RenderFrame(context);
-			ApplicationRenderer::RenderGui(context);
+			ApplicationRenderer::BeginFrame(context, layers);
+			context.Window->PollEvents();
+			ApplicationRenderer::RenderFrame(context, layers);
+			ApplicationRenderer::RenderGui(context, layers);
 			ApplicationRenderer::EndFrame(context);
 		}
 
-		static void WindowResizeUpdate(ApplicationContext &context)
+		static void WindowResizeUpdate(ApplicationContext &context, ApplicationLayers &layers)
 		{
-			ApplicationRenderer::BeginFrame(context);
-			ApplicationRenderer::RenderFrame(context);
-			ApplicationRenderer::RenderGui(context);
+			ApplicationRenderer::BeginFrame(context, layers);
+			ApplicationRenderer::RenderFrame(context, layers);
+			ApplicationRenderer::RenderGui(context, layers);
 			ApplicationRenderer::EndFrame(context);
 		}
 	};

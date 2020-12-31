@@ -1,37 +1,30 @@
 #pragma once
 
 #include "Hazel/Scene/Components/TransformComponent.h"
-#include "Hazel/Core/Yaml/YamlSerializer.h"
+#include "Hazel/Core/Yaml/Vector3Serializer.h"
+#include "Hazel/Core/Yaml/QuaternionSerializer.h"
 
 namespace Hazel
 {
-	class TransformSerializer
+	template<>
+	struct YamlSerializer<TransformComponent>
 	{
-	public:
-		static void Serialize(YamlDocument &document, const TransformComponent &component)
-		{
-			Serialize(document, component.Transform);
-		}
-
-		static void Serialize(YamlDocument &document, const Transform &transform)
+		static void Serialize(YamlDocument &document, const TransformComponent &value)
 		{
 			document.BeginMap()
-				.Key().Write("Translation").Value().Write(transform.Translation)
-				.Key().Write("Rotation").Value().Write(transform.Rotation)
-				.Key().Write("Scale").Value().Write(transform.Scale)
+				.Write("Translation", value.Transform.Translation)
+				.Write("Rotation", value.Transform.Rotation)
+				.Write("Scale", value.Transform.Scale)
 				.EndMap();
+		}
+
+		static void Deserialize(const YamlValue &source, TransformComponent &value)
+		{
+			source["Translation"].Extract(value.Transform.Translation);
+			source["Rotation"].Extract(value.Transform.Rotation);
+			source["Scale"].Extract(value.Transform.Scale);
 		}
 	};
 
-	template<>
-	inline void YamlSerializer::Serialize(YamlDocument &document, const TransformComponent &value)
-	{
-		return TransformSerializer::Serialize(document, value);
-	}
-
-	template<>
-	inline void YamlSerializer::Serialize(YamlDocument &document, const Transform &value)
-	{
-		return TransformSerializer::Serialize(document, value);
-	}
+	using TransformSerializer = YamlSerializer<TransformComponent>;
 }

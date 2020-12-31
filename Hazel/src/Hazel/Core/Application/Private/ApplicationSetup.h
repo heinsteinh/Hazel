@@ -1,7 +1,11 @@
 #pragma once
 
 #include "ApplicationInfo.h"
+#include "ApplicationContext.h"
+#include "ApplicationLayers.h"
 #include "ApplicationEvents.h"
+#include "Hazel/Core/Gui/GuiLayer.h"
+#include "Hazel/Core/Logging/Log.h"
 #include "Hazel/Rendering/GraphicsApi/GraphicsApiFactory.h"
 
 namespace Hazel
@@ -9,12 +13,12 @@ namespace Hazel
 	class ApplicationSetup
 	{
 	public:
-		static void Setup(ApplicationInfo &info, ApplicationContext &context)
+		static void Setup(ApplicationInfo &info, ApplicationContext &context, ApplicationLayers &layers)
 		{
 			Log::Debug("Application setup.");
 			SetupWindow(info, context);
-			SetupEventSystem(context);
-			SetupLayers(context);
+			SetupEventSystem(context, layers);
+			SetupLayers(context, layers);
 			context.Chrono.Reset();
 		}
 
@@ -27,22 +31,26 @@ namespace Hazel
 			context.Window->GetGraphicsContext().SetClearColor(info.ClearColor);
 		}
 
-		static void SetupEventSystem(ApplicationContext &context)
+		static void SetupEventSystem(ApplicationContext &context, ApplicationLayers &layers)
 		{
-			context.EventSystem.SetWindow(*context.Window);
-			context.EventSystem.SetCallback([&](Event &e)
+			context.Window->SetEventCallback([&](Event &e)
 			{
-				ApplicationEvents::ProcessEvent(context, e);
+				ApplicationEvents::ProcessEvent(context, layers, e);
 			});
 		}
 
-		static void SetupLayers(ApplicationContext &context)
+		static void SetupLayers(ApplicationContext &context, ApplicationLayers &layers)
 		{
 			if (context.Settings.GuiEnabled)
 			{
-				context.Layers.PushGuiLayer();
+				layers.GuiLayer = std::make_shared<GuiLayer>();
+				layers.Stack.PushOverlay(layers.GuiLayer);
 			}
-			context.Layers.OnAttach(context);
+			for (const auto &layer : layers.Stack)
+			{
+				layer->Attach(context);
+				layer->OnAttach();
+			}
 		}
 	};
 }

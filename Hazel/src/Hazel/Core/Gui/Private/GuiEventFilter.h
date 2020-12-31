@@ -1,15 +1,13 @@
 #pragma once
 
-#include "imgui.h"
-
-#include "Hazel/Core/Events/Event.h"
+#include "Hazel/Core/Events/EventType.h"
 
 namespace Hazel
 {
 	class GuiEventFilter
 	{
 	public:
-		static constexpr bool CanBlockEventType(EventType eventType)
+		static constexpr bool CanBlockEvent(EventType eventType)
 		{
 			switch (eventType)
 			{
@@ -20,11 +18,6 @@ namespace Hazel
 				return true;
 			}
 			return false;
-		}
-
-		static constexpr bool CanBlockEvent(Event &e)
-		{
-			return CanBlockEventType(e.GetType());
 		}
 	};
 }

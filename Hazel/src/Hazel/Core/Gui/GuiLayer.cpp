@@ -53,7 +53,7 @@ namespace Hazel
 
 	void GuiLayer::OnEvent(Event &e)
 	{
-		if (GuiEventFilter::CanBlockEvent(e) && WantBlockEvent(e))
+		if (GuiEventFilter::CanBlockEvent(e.GetType()) && WantBlockEvent(e))
 		{
 			e.Discard();
 		}

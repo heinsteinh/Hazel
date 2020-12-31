@@ -65,75 +65,55 @@ namespace Hazel
 			return node.IsDefined();
 		}
 
+		bool IsNull() const
+		{
+			return IsValid() && node.IsNull();
+		}
+
+		bool IsScalar() const
+		{
+			return IsValid() && node.IsScalar();
+		}
+
+		bool IsSequence() const
+		{
+			return IsValid() && node.IsSequence();
+		}
+
+		bool IsMap() const
+		{
+			return IsValid() && node.IsMap();
+		}
+
 		size_t GetSize() const
 		{
-			if (IsValid())
-			{
-				return node.size();
-			}
+			return IsValid() ? node.size() : 0;
 		}
 
-		void Extract(bool &value) const
+		template<typename T>
+		YamlValue operator[](const T &key) const
 		{
-			if (IsValid())
-			{
-				value = node.as<bool>(value);
-			}
+			return IsValid() ? node[key] : YamlValue();
 		}
 
-		void Extract(int &value) const
+		template<typename T>
+		void ExtractBasicType(T &value) const
 		{
-			if (IsValid())
-			{
-				value = node.as<int>(value);
-			}
-		}
-
-		void Extract(uint32_t &value) const
-		{
-			if (IsValid())
-			{
-				value = node.as<uint32_t>(value);
-			}
-		}
-
-		void Extract(size_t &value) const
-		{
-			if (IsValid())
-			{
-				value = node.as<size_t>(value);
-			}
-		}
-
-		void Extract(float &value) const
-		{
-			if (IsValid())
-			{
-				value = node.as<float>(value);
-			}
-		}
-
-		void Extract(std::string &value) const
-		{
-			if (IsValid())
-			{
-				value = node.as<std::string>(value);
-			}
+			value = node.as<T>(value);
 		}
 
 		template<typename T>
 		void Extract(T &value) const
 		{
-			if (IsValid())
-			{
-				YamlParser::Parse(*this, value);
-			}
+			YamlSerializer<T>::Deserialize(*this, value);
 		}
 
 		template<typename T>
-		YamlValue operator[](const T &index) const
+		T ValueOr(const T &defaultValue)
 		{
-			return node[index];
+			T value = defaultValue;
+			Extract(value);
+			return value;
 		}
 
 	private:

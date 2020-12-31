@@ -8,9 +8,9 @@ namespace Hazel
 {
 	struct BatchInfo
 	{
-		size_t MaxIndexCount = 0;
-		size_t MaxVertexCount = 0;
-		size_t MaxTextureSlotCount = 0;
+		size_t MaxIndexCount = 60000;
+		size_t MaxVertexCount = 40000;
+		size_t MaxTextureSlotCount = 32;
 		IndexFormat IndexFormat = IndexFormat::UInt32;
 		PrimitiveTopology PrimitiveTopology = PrimitiveTopology::Triangles;
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Scene/Entity/SceneContext.h"
+#include "Hazel/Scene/Scene/Scene.h"
 #include "Hazel/Scene/Components/TransformComponent.h"
 #include "Hazel/Scene/Components/ParticleComponent.h"
 
@@ -9,23 +9,25 @@ namespace Hazel
 	class ParticleSystem
 	{
 	public:
-		static void OnUpdate(SceneContext &context)
+		static void OnUpdate(Scene &scene)
 		{
-			auto deltaTime = context.Layer->GetDeltaTime();
-			context.Registry.view<ParticleComponent>().each([&](auto entity, auto &component)
+			auto deltaTime = scene.GetLayer().GetDeltaTime();
+			scene.ForEach<ParticleComponent>([&](auto entity, auto &component)
 			{
-				auto transform = context.Registry.try_get<TransformComponent>(entity);
-				component.UpdateParticles(
-					transform ? transform->Transform.Translation : glm::vec3(0.0f),
+				auto transform = entity.TryGetComponent<TransformComponent>();
+				component.Source.AutoEmitParticles(
+					transform ? transform->Transform.Translation : glm::vec3(1.0f),
+					component.Info,
 					deltaTime);
+				component.Source.UpdateParticles(deltaTime);
 			});
 		}
 
-		static void OnRender(SceneContext &context)
+		static void OnRender(Scene &scene, Renderer2D &renderer)
 		{
-			context.Registry.view<ParticleComponent>().each([&](auto entity, auto &component)
+			scene.ForEach<ParticleComponent>([&](auto entity, auto &component)
 			{
-				component.RenderParticles(*context.Renderer);
+				component.Source.RenderParticles(renderer);
 			});
 		}
 	};

@@ -17,10 +17,15 @@ namespace Hazel
 		std::string directory = std::filesystem::current_path().string();
 
 	public:
-		FileDialog(const Window &window);
+		FileDialog(const Window *window = nullptr);
 
 		std::string GetOpenFilename();
 		std::string GetSaveFilename();
+
+		void SetWindow(const Window *window)
+		{
+			this->window = window;
+		}
 
 		void ClearFilters()
 		{

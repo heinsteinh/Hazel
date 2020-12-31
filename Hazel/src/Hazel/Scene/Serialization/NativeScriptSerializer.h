@@ -5,20 +5,20 @@
 
 namespace Hazel
 {
-	class NativeScriptSerializer
+	template<>
+	struct YamlSerializer<NativeScriptComponent>
 	{
-	public:
-		static void Serialize(YamlDocument &document, const NativeScriptComponent &component)
+		static void Serialize(YamlDocument &document, const NativeScriptComponent &value)
 		{
 			document.BeginMap()
-				.Key().Write("Type").Value().Write(component.GetTypeName())
+				.Write("Type", value.GetTypeName())
 				.EndMap();
+		}
+
+		static void Deserialize(const YamlValue &source, NativeScriptComponent &value)
+		{
 		}
 	};
 
-	template<>
-	void YamlSerializer::Serialize(YamlDocument &document, const NativeScriptComponent &value)
-	{
-		NativeScriptSerializer::Serialize(document, value);
-	}
+	using NativeScriptSerializer = YamlSerializer<NativeScriptComponent>;
 }

@@ -2,7 +2,8 @@
 
 #include "imgui.h"
 
-#include "Hazel/Scene/Scene.h"
+#include "Hazel/Scene/Scene/Scene.h"
+#include "Hazel/Scene/Components/TagComponent.h"
 
 namespace Hazel
 {

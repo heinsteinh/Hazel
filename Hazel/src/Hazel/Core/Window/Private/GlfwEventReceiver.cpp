@@ -1,20 +1,30 @@
-#include "EventReceiver.h"
+#include "GlfwEventReceiver.h"
 
 #include "GLFW/glfw3.h"
 
+#include "Hazel/Core/Events/WindowCloseEvent.h"
+#include "Hazel/Core/Events/WindowResizeEvent.h"
+#include "Hazel/Core/Events/KeyPressEvent.h"
+#include "Hazel/Core/Events/KeyReleaseEvent.h"
+#include "Hazel/Core/Events/KeyTypeEvent.h"
+#include "Hazel/Core/Events/MouseButtonPressEvent.h"
+#include "Hazel/Core/Events/MouseButtonReleaseEvent.h"
+#include "Hazel/Core/Events/MouseMoveEvent.h"
+#include "Hazel/Core/Events/MouseScrollEvent.h"
+
 namespace Hazel
 {
-	void EventReceiver::OnWindowResized(int width, int height)
+	void GlfwEventReceiver::OnWindowResized(int width, int height)
 	{
 		callback(WindowResizeEvent(static_cast<float>(width), static_cast<float>(height)));
 	}
 
-	void EventReceiver::OnWindowClosed()
+	void GlfwEventReceiver::OnWindowClosed()
 	{
 		callback(WindowCloseEvent());
 	}
 
-	void EventReceiver::OnKey(int key, int scancode, int action, int mods)
+	void GlfwEventReceiver::OnKey(int key, int scancode, int action, int mods)
 	{
 		switch (action)
 		{
@@ -32,12 +42,12 @@ namespace Hazel
 		}
 	}
 
-	void EventReceiver::OnChar(unsigned int key)
+	void GlfwEventReceiver::OnChar(unsigned int key)
 	{
 		callback(KeyTypeEvent(key));
 	}
 
-	void EventReceiver::OnMouseButton(int button, int action)
+	void GlfwEventReceiver::OnMouseButton(int button, int action)
 	{
 		switch (action)
 		{
@@ -49,12 +59,12 @@ namespace Hazel
 		}
 	}
 
-	void EventReceiver::OnMouseScrolled(double x, double y)
+	void GlfwEventReceiver::OnMouseScrolled(double x, double y)
 	{
 		callback(MouseScrollEvent(static_cast<float>(x), static_cast<float>(y)));
 	}
 
-	void EventReceiver::OnMouseMoved(double x, double y)
+	void GlfwEventReceiver::OnMouseMoved(double x, double y)
 	{
 		callback(MouseMoveEvent(static_cast<float>(x), static_cast<float>(y)));
 	}

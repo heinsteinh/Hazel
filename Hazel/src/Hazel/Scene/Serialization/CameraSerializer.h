@@ -5,79 +5,37 @@
 
 namespace Hazel
 {
-	class CameraSerializer
+	template<>
+	struct YamlSerializer<CameraComponent>
 	{
-	public:
-		static void Serialize(YamlDocument &document, const CameraComponent &component)
-		{
-			Serialize(document, component.Projection);
-		}
-
-		static void Serialize(YamlDocument &document, const CameraProjection &projection)
-		{
-			document.BeginMap();
-			document.Key().Write("ProjectionType").Value();
-			Serialize(document, projection.ProjectionType);
-			document.Key().Write("OrthographicProjection").Value();
-			Serialize(document, projection.OrthographicProjection);
-			document.Key().Write("PerspectiveProjection").Value();
-			Serialize(document, projection.PerspectiveProjection);
-			document.EndMap();
-		}
-
-		static void Serialize(YamlDocument &document, ProjectionType projectionType)
-		{
-			document.Write(static_cast<int>(projectionType));
-		}
-
-		static void Serialize(YamlDocument &document, const OrthographicProjection &projection)
+		static void Serialize(YamlDocument &document, const CameraComponent &value)
 		{
 			document.BeginMap()
-				.Key().Write("AspectRatio").Value().Write(projection.AspectRatio)
-				.Key().Write("Size").Value().Write(projection.Size)
-				.Key().Write("NearClip").Value().Write(projection.NearClip)
-				.Key().Write("FarClip").Value().Write(projection.FarClip)
+				.Write("ProjectionType", static_cast<int>(value.Projection.ProjectionType))
+				.Write("OrthographicAspectRatio", value.Projection.OrthographicProjection.AspectRatio)
+				.Write("OrthographicSize", value.Projection.OrthographicProjection.Size)
+				.Write("OrthographicNearClip", value.Projection.OrthographicProjection.NearClip)
+				.Write("OrthographicFarClip", value.Projection.OrthographicProjection.FarClip)
+				.Write("PerspectiveAspectRatio", value.Projection.PerspectiveProjection.AspectRatio)
+				.Write("PerspectiveVerticalFov", value.Projection.PerspectiveProjection.VerticalFov)
+				.Write("PerspectiveNearClip", value.Projection.PerspectiveProjection.NearClip)
+				.Write("PerspectiveFarClip", value.Projection.PerspectiveProjection.FarClip)
 				.EndMap();
 		}
 
-		static void Serialize(YamlDocument &document, const PerspectiveProjection &projection)
+		static void Deserialize(const YamlValue &source, CameraComponent &value)
 		{
-			document.BeginMap()
-				.Key().Write("AspectRatio").Value().Write(projection.AspectRatio)
-				.Key().Write("VerticalFov").Value().Write(projection.VerticalFov)
-				.Key().Write("NearClip").Value().Write(projection.NearClip)
-				.Key().Write("FarClip").Value().Write(projection.FarClip)
-				.EndMap();
+			source["ProjectionType"].Extract(reinterpret_cast<int &>(value.Projection.ProjectionType));
+			source["OrthographicAspectRatio"].Extract(value.Projection.OrthographicProjection.AspectRatio);
+			source["OrthographicSize"].Extract(value.Projection.OrthographicProjection.Size);
+			source["OrthographicNearClip"].Extract(value.Projection.OrthographicProjection.NearClip);
+			source["OrthographicFarClip"].Extract(value.Projection.OrthographicProjection.FarClip);
+			source["PerspectiveAspectRatio"].Extract(value.Projection.PerspectiveProjection.AspectRatio);
+			source["PerspectiveVerticalFov"].Extract(value.Projection.PerspectiveProjection.VerticalFov);
+			source["PerspectiveNearClip"].Extract(value.Projection.PerspectiveProjection.NearClip);
+			source["PerspectiveFarClip"].Extract(value.Projection.PerspectiveProjection.FarClip);
 		}
 	};
 
-	template<>
-	inline void YamlSerializer::Serialize(YamlDocument &document, const CameraComponent &value)
-	{
-		CameraSerializer::Serialize(document, value);
-	}
-
-	template<>
-	inline void YamlSerializer::Serialize(YamlDocument &document, const CameraProjection &value)
-	{
-		CameraSerializer::Serialize(document, value);
-	}
-
-	template<>
-	inline void YamlSerializer::Serialize(YamlDocument &document, const ProjectionType &value)
-	{
-		CameraSerializer::Serialize(document, value);
-	}
-
-	template<>
-	inline void YamlSerializer::Serialize(YamlDocument &document, const OrthographicProjection &value)
-	{
-		CameraSerializer::Serialize(document, value);
-	}
-
-	template<>
-	inline void YamlSerializer::Serialize(YamlDocument &document, const PerspectiveProjection &value)
-	{
-		CameraSerializer::Serialize(document, value);
-	}
+	using CameraSerializer = YamlSerializer<CameraComponent>;
 }

@@ -1,64 +1,51 @@
 #pragma once
 
 #include "Hazel/Scene/Components/ParticleComponent.h"
-#include "Hazel/Core/Yaml/YamlSerializer.h"
+#include "Hazel/Core/Yaml/Vector2Serializer.h"
+#include "Hazel/Core/Yaml/Vector3Serializer.h"
+#include "Hazel/Core/Yaml/Vector4Serializer.h"
 
 namespace Hazel
 {
-	class ParticleSerializer
+	template<>
+	struct YamlSerializer<ParticleComponent>
 	{
-	public:
-		static void Serialize(YamlDocument &document, const ParticleComponent &component)
-		{
-			document.BeginMap();
-			document.Key().Write("ParticleSource").Value();
-			Serialize(document, component.ParticleSource);
-			document.Key().Write("ParticleInfo").Value();
-			Serialize(document, component.ParticleInfo);
-			document.EndMap();
-		}
-
-		static void Serialize(YamlDocument &document, const ParticleSource &particleSource)
+		static void Serialize(YamlDocument &document, const ParticleComponent &value)
 		{
 			document.BeginMap()
-				.Key().Write("Enabled").Value().Write(particleSource.IsEnabled())
-				.Key().Write("MaxParticleCount").Value().Write(particleSource.GetMaxParticleCount())
-				.Key().Write("EmissionRate").Value().Write(particleSource.GetEmissionRate())
+				.Write("Enabled", value.Source.IsEnabled())
+				.Write("MaxParticleCount", value.Source.GetMaxParticleCount())
+				.Write("EmissionRate", value.Source.GetEmissionRate())
+				.Write("LinearVelocity", value.Info.LinearVelocity)
+				.Write("LinearVelocityVariation", value.Info.LinearVelocityVariation)
+				.Write("AngularVelocity", value.Info.AngularVelocity)
+				.Write("AngularVelocityVariation", value.Info.AngularVelocityVariation)
+				.Write("ColorBegin", value.Info.ColorBegin)
+				.Write("ColorEnd", value.Info.ColorEnd)
+				.Write("SizeBegin", value.Info.SizeBegin)
+				.Write("SizeEnd", value.Info.SizeEnd)
+				.Write("SizeVariation", value.Info.SizeVariation)
+				.Write("LifeTime", value.Info.LifeTime)
 				.EndMap();
 		}
 
-		static void Serialize(YamlDocument &document, const ParticleInfo &particleInfo)
+		static void Deserialize(const YamlValue &source, ParticleComponent &value)
 		{
-			document.BeginMap()
-				.Key().Write("LinearVelocity").Value().Write(particleInfo.LinearVelocity)
-				.Key().Write("LinearVelocityVariation").Value().Write(particleInfo.LinearVelocityVariation)
-				.Key().Write("AngularVelocity").Value().Write(particleInfo.AngularVelocity)
-				.Key().Write("AngularVelocityVariation").Value().Write(particleInfo.AngularVelocityVariation)
-				.Key().Write("ColorBegin").Value().Write(particleInfo.ColorBegin)
-				.Key().Write("ColorEnd").Value().Write(particleInfo.ColorEnd)
-				.Key().Write("SizeBegin").Value().Write(particleInfo.SizeBegin)
-				.Key().Write("SizeEnd").Value().Write(particleInfo.SizeEnd)
-				.Key().Write("SizeVariation").Value().Write(particleInfo.SizeVariation)
-				.Key().Write("LifeTime").Value().Write(particleInfo.LifeTime)
-				.EndMap();
+			value.Source.SetEnabled(source["Enabled"].ValueOr(value.Source.IsEnabled()));
+			value.Source.SetMaxParticleCount(source["MaxParticleCount"].ValueOr(value.Source.GetMaxParticleCount()));
+			value.Source.SetEmissionRate(source["EmissionRate"].ValueOr(value.Source.GetEmissionRate()));
+			source["LinearVelocity"].Extract(value.Info.LinearVelocity);
+			source["LinearVelocityVariation"].Extract(value.Info.LinearVelocityVariation);
+			source["AngularVelocity"].Extract(value.Info.AngularVelocity);
+			source["AngularVelocityVariation"].Extract(value.Info.AngularVelocityVariation);
+			source["ColorBegin"].Extract(value.Info.ColorBegin);
+			source["ColorEnd"].Extract(value.Info.ColorEnd);
+			source["SizeBegin"].Extract(value.Info.SizeBegin);
+			source["SizeEnd"].Extract(value.Info.SizeEnd);
+			source["SizeVariation"].Extract(value.Info.SizeVariation);
+			source["LifeTime"].Extract(value.Info.LifeTime);
 		}
 	};
 
-	template<>
-	void YamlSerializer::Serialize(YamlDocument &document, const ParticleComponent &value)
-	{
-		return ParticleSerializer::Serialize(document, value);
-	}
-
-	template<>
-	void YamlSerializer::Serialize(YamlDocument &document, const ParticleInfo &value)
-	{
-		return ParticleSerializer::Serialize(document, value);
-	}
-
-	template<>
-	void YamlSerializer::Serialize(YamlDocument &document, const ParticleSource &value)
-	{
-		return ParticleSerializer::Serialize(document, value);
-	}
+	using ParticleSerializer = YamlSerializer<ParticleComponent>;
 }

@@ -5,20 +5,21 @@
 
 namespace Hazel
 {
-	class TagSerializer
+	template<>
+	struct YamlSerializer<TagComponent>
 	{
-	public:
-		static void Serialize(YamlDocument &document, const TagComponent &component)
+		static void Serialize(YamlDocument &document, const TagComponent &value)
 		{
 			document.BeginMap()
-				.Key().Write("Name").Value().Write(component.Name)
+				.Write("Name", value.Name)
 				.EndMap();
+		}
+
+		static void Deserialize(const YamlValue &source, TagComponent &value)
+		{
+			source["Name"].Extract(value.Name);
 		}
 	};
 
-	template<>
-	inline void YamlSerializer::Serialize(YamlDocument &document, const TagComponent &value)
-	{
-		return TagSerializer::Serialize(document, value);
-	}
+	using TagSerializer = YamlSerializer<TagComponent>;
 }

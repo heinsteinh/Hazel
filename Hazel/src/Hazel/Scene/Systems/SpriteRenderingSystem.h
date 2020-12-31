@@ -1,18 +1,18 @@
 #pragma once
 
-#include "Hazel/Scene/Entity/SceneContext.h"
-#include "Hazel/Scene/Rendering/SpriteRenderer.h"
+#include "Hazel/Scene/Scene/Scene.h"
+#include "Private/SpriteRenderer.h"
 
 namespace Hazel
 {
 	class SpriteRenderingSystem
 	{
 	public:
-		static void OnRender(SceneContext &context)
+		static void OnRender(Scene &scene, Renderer2D &renderer)
 		{
-			context.Registry.view<SpriteComponent>().each([&](auto entity, auto &component)
+			scene.ForEach<SpriteComponent>([&](auto entity, auto &component)
 			{
-				SpriteRenderer::RenderSprite(context, entity, component);
+				SpriteRenderer::RenderSprite(renderer, entity, component);
 			});
 		}
 	};

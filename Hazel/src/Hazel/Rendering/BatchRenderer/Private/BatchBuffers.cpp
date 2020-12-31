@@ -3,8 +3,7 @@
 namespace Hazel
 {
 	BatchBuffers::BatchBuffers(GraphicsContext &graphicsContext, const BatchInfo &info)
-		: graphicsContext(&graphicsContext),
-		indexBuffer(graphicsContext.CreateIndexBuffer(info.GetIndexBufferSize())),
+		: indexBuffer(graphicsContext.CreateIndexBuffer(info.GetIndexBufferSize())),
 		vertexBuffer(graphicsContext.CreateVertexBuffer(info.GetVertexBufferSize())),
 		constantBuffer(graphicsContext.CreateConstantBuffer(sizeof(BatchConstants))),
 		inputLayout(graphicsContext.CreateInputLayout(BatchVertex::Attributes))

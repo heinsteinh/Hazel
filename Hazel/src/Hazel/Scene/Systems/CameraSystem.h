@@ -1,27 +1,29 @@
 #pragma once
 
-#include "Hazel/Scene/Entity/SceneContext.h"
-#include "Hazel/Scene/Camera/SceneCamera.h"
+#include "Hazel/Scene/Scene/Scene.h"
 #include "Hazel/Scene/Components/CameraComponent.h"
+#include "Private/SceneCamera.h"
 
 namespace Hazel
 {
 	class CameraSystem
 	{
 	public:
-		static void OnUpdate(SceneContext &context)
+		static void OnUpdate(Scene &scene)
 		{
-			context.PrimaryCamera = SceneCamera::GetCameraEntity(context.Registry, context.PrimaryCamera);
-			context.Camera.View = SceneCamera::GetViewMatrix(context.Registry, context.PrimaryCamera);
-			context.Camera.Projection = SceneCamera::GetProjectionMatrix(context.Registry, context.PrimaryCamera);
-			context.Camera.RecomputeViewProjection();
+			SceneCamera::UpdatePrimaryCamera(scene);
+			auto primaryCamera = scene.GetPrimaryCamera();
+			auto &camera = scene.GetCamera();
+			camera.View = SceneCamera::GetViewMatrix(primaryCamera);
+			camera.Projection = SceneCamera::GetProjectionMatrix(primaryCamera);
+			camera.RecomputeViewProjection();
 		}
 
-		static void OnViewportResize(SceneContext &context, const Rectangle &viewport)
+		static void OnViewportResize(Scene &scene, const Rectangle &viewport)
 		{
-			context.Camera.Viewport = viewport;
+			scene.GetCamera().Viewport = viewport;
 			float aspectRatio = viewport.GetAspectRatio();
-			context.Registry.view<CameraComponent>().each([=](auto entity, auto &component)
+			scene.ForEach<CameraComponent>([&](auto entity, auto &component)
 			{
 				component.Projection.SetAspectRatio(aspectRatio);
 			});

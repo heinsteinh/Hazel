@@ -26,7 +26,7 @@ namespace Hazel
 			textures.resize(textureCount);
 		}
 
-		constexpr size_t BatchTextureArray::GetTextureCount() const
+		size_t BatchTextureArray::GetTextureCount() const
 		{
 			return textureCount;
 		}

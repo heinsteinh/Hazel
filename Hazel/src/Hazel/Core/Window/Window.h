@@ -4,6 +4,7 @@
 #include "Hazel/Core/Input/Key.h"
 #include "Hazel/Core/Input/MouseButton.h"
 #include "Hazel/Core/Geometry/Size.h"
+#include "Private/GlfwEventReceiver.h"
 
 struct GLFWwindow;
 
@@ -16,6 +17,7 @@ namespace Hazel
 		std::string title;
 		bool verticalSynchronization;
 		std::shared_ptr<GraphicsContext> graphicsContext;
+		GlfwEventReceiver eventReceiver;
 
 	public:
 		Window(const WindowInfo &info);
@@ -31,6 +33,8 @@ namespace Hazel
 		void SetPosition(const glm::vec2 &position);
 		bool HasVerticalSynchonization() const;
 		void SetVerticalSynchronization(bool verticalSynchronization);
+		void SetEventCallback(const EventCallback &callback);
+		void PollEvents();
 
 		GLFWwindow *GetHandle() const
 		{

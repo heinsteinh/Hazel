@@ -1,5 +1,7 @@
 #include "BatchContext.h"
 
+#include "BatchShader.h"
+
 namespace Hazel
 {
 	BatchContext::BatchContext(GraphicsContext &graphicsContext, const BatchInfo &info)
@@ -7,9 +9,9 @@ namespace Hazel
 		vertices(info.MaxVertexCount),
 		textures(graphicsContext, info.MaxTextureSlotCount),
 		buffers(graphicsContext, info),
-		shader(graphicsContext)
+		shader(BatchShader::CreateShader(graphicsContext))
 	{
-		graphicsContext.SetShader(shader);
+		graphicsContext.SetShader(shader.get());
 	}
 
 	void BatchContext::SetViewProjectionMatrix(const glm::mat4 &viewProjection)

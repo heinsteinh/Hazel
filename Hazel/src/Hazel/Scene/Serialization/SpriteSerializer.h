@@ -1,24 +1,25 @@
 #pragma once
 
 #include "Hazel/Scene/Components/SpriteComponent.h"
-#include "Hazel/Core/Yaml/YamlSerializer.h"
+#include "Hazel/Core/Yaml/Vector4Serializer.h"
 
 namespace Hazel
 {
-	class SpriteSerializer
+	template<>
+	struct YamlSerializer<SpriteComponent>
 	{
-	public:
-		static void Serialize(YamlDocument &document, const SpriteComponent &component)
+		static void Serialize(YamlDocument &document, const SpriteComponent &value)
 		{
 			document.BeginMap()
-				.Key().Write("Color").Value().Write(component.Color)
+				.Write("Color", value.Color)
 				.EndMap();
+		}
+
+		static void Deserialize(const YamlValue &source, SpriteComponent &value)
+		{
+			source["Color"].Extract(value.Color);
 		}
 	};
 
-	template<>
-	inline void YamlSerializer::Serialize(YamlDocument &document, const SpriteComponent &value)
-	{
-		return SpriteSerializer::Serialize(document, value);
-	}
+	using SpriteSerializer = YamlSerializer<SpriteComponent>;
 }

@@ -4,9 +4,8 @@
 
 #include "entt/entt.hpp"
 
-#include "Hazel/Core/Application/Layer.h"
 #include "Hazel/Core/Camera/Camera.h"
-#include "Hazel/Rendering/Renderer2D/Renderer2D.h"
+#include "Hazel/Core/Application/Layer.h"
 
 namespace Hazel
 {
@@ -14,9 +13,8 @@ namespace Hazel
 	{
 		std::string Name;
 		Layer *Layer = nullptr;
-		Renderer2D *Renderer = nullptr;
-		entt::entity PrimaryCamera = entt::null;
 		Camera Camera;
+		entt::entity PrimaryCamera = entt::null;
 		entt::registry Registry;
 	};
 }

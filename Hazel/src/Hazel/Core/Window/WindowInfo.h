@@ -12,5 +12,6 @@ namespace Hazel
 		std::string Title = "Hazel";
 		glm::vec2 Resolution = {1280.0f, 720.0f};
 		bool VerticalSynchronization = true;
+		int Samples = 4;
 	};
 }

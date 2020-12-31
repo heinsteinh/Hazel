@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SceneContext.h"
+#include "Hazel/Scene/Scene/SceneContext.h"
 #include "EntityListener.h"
 #include "Hazel/Core/Exceptions/AssertionException.h"
 
@@ -38,7 +38,7 @@ namespace Hazel
 
 		SceneContext &GetSceneContext() const
 		{
-			HZ_ASSERT(context, "Invalid entity");
+			HZ_ASSERT(context, "No scene context attached");
 			return *context;
 		}
 

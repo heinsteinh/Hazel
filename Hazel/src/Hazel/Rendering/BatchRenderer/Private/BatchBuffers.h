@@ -11,7 +11,6 @@ namespace Hazel
 	class BatchBuffers
 	{
 	private:
-		GraphicsContext *graphicsContext = nullptr;
 		std::shared_ptr<IndexBuffer> indexBuffer;
 		std::shared_ptr<VertexBuffer> vertexBuffer;
 		std::shared_ptr<ConstantBuffer> constantBuffer;

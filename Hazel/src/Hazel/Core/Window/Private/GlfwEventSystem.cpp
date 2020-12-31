@@ -1,15 +1,17 @@
-#include "GlfwEventCallback.h"
+#include "GlfwEventSystem.h"
 
 #include "GLFW/glfw3.h"
 
+#include "GlfwEventReceiver.h"
+
 namespace Hazel
 {
-	EventReceiver &GlfwEventCallback::GetReceiver(GLFWwindow *window)
+	GlfwEventReceiver &GlfwEventSystem::GetReceiver(GLFWwindow *window)
 	{
-		return *static_cast<EventReceiver *>(glfwGetWindowUserPointer(window));
+		return *static_cast<GlfwEventReceiver *>(glfwGetWindowUserPointer(window));
 	}
 
-	void GlfwEventCallback::RemoveCallbacks(GLFWwindow *window)
+	void GlfwEventSystem::RemoveCallbacks(GLFWwindow *window)
 	{
 		glfwSetWindowSizeCallback(window, nullptr);
 		glfwSetWindowCloseCallback(window, nullptr);
@@ -20,7 +22,7 @@ namespace Hazel
 		glfwSetCursorPosCallback(window, nullptr);
 	}
 
-	void GlfwEventCallback::SetupCallbacks(GLFWwindow *window, EventReceiver &receiver)
+	void GlfwEventSystem::SetupCallbacks(GLFWwindow *window, GlfwEventReceiver &receiver)
 	{
 		glfwSetWindowUserPointer(window, &receiver);
 		glfwSetWindowSizeCallback(window, [](GLFWwindow *window, int width, int height)

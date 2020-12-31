@@ -3,7 +3,7 @@
 #include "Hazel/Scene/Entity/Entity.h"
 #include "Hazel/Core/Exceptions/AssertionException.h"
 
-#define HZ_ASSERT_ATTACHED() HZ_ASSERT(layer, "The script is not attached to a valid entity")
+#define HZ_ASSERT_ATTACHED() HZ_ASSERT(entity.IsValid(), "The script is not attached to a valid entity")
 
 namespace Hazel
 {
@@ -11,7 +11,6 @@ namespace Hazel
 	{
 	private:
 		Entity entity;
-		Layer *layer = nullptr;
 
 	public:
 		virtual ~BaseNativeScript() = default;
@@ -19,13 +18,11 @@ namespace Hazel
 		void Attach(Entity entity)
 		{
 			this->entity = entity;
-			layer = entity.GetSceneContext().Layer;
 		}
 
 		void Detach()
 		{
 			entity = {};
-			layer = nullptr;
 		}
 
 		template<typename ComponentType>
@@ -45,19 +42,19 @@ namespace Hazel
 		float GetDeltaTime() const
 		{
 			HZ_ASSERT_ATTACHED();
-			return layer->GetDeltaTime();
+			return entity.GetSceneContext().Layer->GetDeltaTime();
 		}
 
 		const Window &GetWindow() const
 		{
 			HZ_ASSERT_ATTACHED();
-			return layer->GetWindow();
+			return entity.GetSceneContext().Layer->GetWindow();
 		}
 
 		const Input &GetInput() const
 		{
 			HZ_ASSERT_ATTACHED();
-			return layer->GetInput();
+			return entity.GetSceneContext().Layer->GetInput();
 		}
 
 		const Camera &GetCamera() const

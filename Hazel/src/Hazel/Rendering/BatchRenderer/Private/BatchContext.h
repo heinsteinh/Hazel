@@ -1,11 +1,10 @@
 #pragma once
 
-#include "../BatchInfo.h"
+#include "Hazel/Rendering/BatchRenderer/BatchInfo.h"
 #include "BatchIndices.h"
 #include "BatchConstants.h"
 #include "BatchTextures.h"
 #include "BatchBuffers.h"
-#include "BatchShader.h"
 #include "Hazel/Rendering/Renderer2D/DrawData.h"
 
 namespace Hazel
@@ -18,7 +17,7 @@ namespace Hazel
 		BatchConstants constants;
 		BatchTextures textures;
 		BatchBuffers buffers;
-		BatchShader shader;
+		std::shared_ptr<Shader> shader;
 
 	public:
 		BatchContext(GraphicsContext &graphicsContext, const BatchInfo &info);

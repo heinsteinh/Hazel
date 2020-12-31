@@ -1,12 +1,7 @@
 #pragma once
 
+#include "SceneContext.h"
 #include "Hazel/Scene/Entity/Entity.h"
-#include "Hazel/Scene/Components/TagComponent.h"
-#include "Hazel/Scene/Components/CameraComponent.h"
-#include "Hazel/Scene/Components/TransformComponent.h"
-#include "Hazel/Scene/Components/SpriteComponent.h"
-#include "Hazel/Scene/Components/ParticleComponent.h"
-#include "Hazel/Scene/Components/NativeScriptComponent.h"
 
 namespace Hazel
 {
@@ -16,12 +11,10 @@ namespace Hazel
 		SceneContext context;
 
 	public:
-		Scene(const std::string &name);
-
-		void OnUpdate();
-		void OnRender();
-		void OnViewportResize(const Rectangle &viewport);
-		void OnEvent(Event &e);
+		Scene(const std::string &name, Layer *layer)
+			: context{name, layer}
+		{
+		}
 
 		const std::string &GetName() const
 		{
@@ -33,14 +26,9 @@ namespace Hazel
 			context.Name = name;
 		}
 
-		void Attach(Layer &layer)
+		Layer &GetLayer() const
 		{
-			context.Layer = &layer;
-		}
-
-		void SetRenderer(Renderer2D &renderer)
-		{
-			context.Renderer = &renderer;
+			return *context.Layer;
 		}
 
 		Entity GetPrimaryCamera()
@@ -53,9 +41,14 @@ namespace Hazel
 			context.PrimaryCamera = primaryCamera;
 		}
 
-		const Rectangle &GetViewport() const
+		const Camera &GetCamera() const
 		{
-			return context.Camera.Viewport;
+			return context.Camera;
+		}
+
+		Camera &GetCamera()
+		{
+			return context.Camera;
 		}
 
 		Entity CreateEntity()
@@ -81,6 +74,22 @@ namespace Hazel
 			{
 				functor(Entity(entity, context));
 			});
+		}
+
+		template<typename ComponentType, typename FunctorType>
+		void ForEach(FunctorType functor)
+		{
+			context.Registry.view<ComponentType>().each([&](auto entity, auto &component)
+			{
+				functor(Entity(entity, context), component);
+			});
+		}
+
+		template<typename ComponentType>
+		Entity GetFirstEntityWith()
+		{
+			auto view = context.Registry.view<ComponentType>();
+			return view.empty() ? Entity() : Entity(view.front(), context);
 		}
 	};
 }

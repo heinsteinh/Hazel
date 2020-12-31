@@ -9,12 +9,5 @@ namespace Hazel
 	public:
 		GlfwLoader();
 		~GlfwLoader();
-
-	private:
-		void Init();
-		void SetupErrorCallback();
-		void InitGlfw();
-		void SetupParameters();
-		void Shutdown();
 	};
 }

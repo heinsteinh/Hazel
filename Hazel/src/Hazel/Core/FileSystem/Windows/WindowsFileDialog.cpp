@@ -18,8 +18,8 @@ namespace Hazel
 {
 	static constexpr size_t bufferSize = 512;
 
-	FileDialog::FileDialog(const Window &window)
-		: window(&window)
+	FileDialog::FileDialog(const Window *window)
+		: window(window)
 	{
 	}
 
@@ -28,7 +28,7 @@ namespace Hazel
 		char buffer[bufferSize] = {};
 		OPENFILENAMEA info = {};
 		info.lStructSize = sizeof(OPENFILENAMEA);
-		info.hwndOwner = glfwGetWin32Window(window->GetHandle());
+		info.hwndOwner = window ? glfwGetWin32Window(window->GetHandle()) : nullptr;
 		info.lpstrFile = buffer;
 		info.nMaxFile = sizeof(buffer);
 		auto filterCode = WindowsFileDialogFilter::CreateFilter(filters);
@@ -44,7 +44,7 @@ namespace Hazel
 		char buffer[bufferSize] = {};
 		OPENFILENAMEA info = {};
 		info.lStructSize = sizeof(OPENFILENAME);
-		info.hwndOwner = glfwGetWin32Window(window->GetHandle());
+		info.hwndOwner = window ? glfwGetWin32Window(window->GetHandle()) : nullptr;
 		info.lpstrFile = buffer;
 		info.nMaxFile = sizeof(buffer);
 		info.lpstrInitialDir = directory.c_str();

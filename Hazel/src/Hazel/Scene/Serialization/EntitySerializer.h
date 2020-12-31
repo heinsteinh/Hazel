@@ -10,36 +10,52 @@
 
 namespace Hazel
 {
-	class EntitySerializer
+	template<>
+	struct YamlSerializer<Entity>
 	{
-	public:
-		static void Serialize(YamlDocument &document, Entity entity)
+		static void Serialize(YamlDocument &document, Entity value)
 		{
-			document.BeginMap();
-			document.Key().Write("EntityId").Value().Write(entity.GetId());
-			Serialize<TagComponent>(document, entity, "Tag");
-			Serialize<TransformComponent>(document, entity, "Transform");
-			Serialize<SpriteComponent>(document, entity, "Sprite");
-			Serialize<CameraComponent>(document, entity, "Camera");
-			Serialize<ParticleComponent>(document, entity, "Particle");
-			Serialize<NativeScriptComponent>(document, entity, "NativeScript");
+			document.BeginMap().Write("EntityId", value.GetId());
+			Serialize<TagComponent>(document, value, "Tag");
+			Serialize<TransformComponent>(document, value, "Transform");
+			Serialize<SpriteComponent>(document, value, "Sprite");
+			Serialize<CameraComponent>(document, value, "Camera");
+			Serialize<ParticleComponent>(document, value, "Particle");
+			Serialize<NativeScriptComponent>(document, value, "NativeScript");
 			document.EndMap();
 		}
 
+		static void Deserialize(const YamlValue &source, Entity value)
+		{
+			Deserialize<TagComponent>(source, value, "Tag");
+			Deserialize<TransformComponent>(source, value, "Transform");
+			Deserialize<SpriteComponent>(source, value, "Sprite");
+			Deserialize<CameraComponent>(source, value, "Camera");
+			Deserialize<ParticleComponent>(source, value, "Particle");
+			//Deserialize<NativeScriptComponent>(source, value, "NativeScript");
+		}
+
+	private:
 		template<typename ComponentType>
 		static void Serialize(YamlDocument &document, Entity entity, const char *label)
 		{
 			auto component = entity.TryGetComponent<ComponentType>();
 			if (component)
 			{
-				document.Key().Write(label).Value().Write(*component);
+				document.Write(label, *component);
+			}
+		}
+
+		template<typename ComponentType>
+		static void Deserialize(const YamlValue &source, Entity entity, const char *label)
+		{
+			auto component = source[label];
+			if (component.IsValid())
+			{
+				component.Extract(entity.AddComponent<ComponentType>());
 			}
 		}
 	};
 
-	template<>
-	inline void YamlSerializer::Serialize(YamlDocument &document, const Entity &value)
-	{
-		EntitySerializer::Serialize(document, value);
-	}
+	using EntitySerializer = YamlSerializer<Entity>;
 }

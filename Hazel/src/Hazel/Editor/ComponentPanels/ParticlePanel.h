@@ -16,8 +16,8 @@ namespace Hazel
 	public:
 		void Draw(ParticleComponent &component)
 		{
-			Draw(component.ParticleSource);
-			Draw(component.ParticleInfo);
+			Draw(component.Source);
+			Draw(component.Info);
 		}
 
 		void Draw(ParticleSource &particleSource)

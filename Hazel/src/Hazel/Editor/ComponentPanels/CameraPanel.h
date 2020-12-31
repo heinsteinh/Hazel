@@ -22,17 +22,17 @@ namespace Hazel
 
 		bool Draw(CameraProjection &projection)
 		{
-			auto result = projectionTypePanel.Draw(projection.ProjectionType);
+			auto changed = projectionTypePanel.Draw(projection.ProjectionType);
 			switch (projection.ProjectionType)
 			{
 			case ProjectionType::Orthographic:
-				result |= orthographicProjectionPanel.Draw(projection.OrthographicProjection);
+				changed |= orthographicProjectionPanel.Draw(projection.OrthographicProjection);
 				break;
 			case ProjectionType::Perspective:
-				result |= perspectiveProjectionPanel.Draw(projection.PerspectiveProjection);
+				changed |= perspectiveProjectionPanel.Draw(projection.PerspectiveProjection);
 				break;
 			}
-			return result;
+			return changed;
 		}
 	};
 }

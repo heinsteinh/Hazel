@@ -17,55 +17,6 @@ namespace Hazel
 			return emitter.c_str();
 		}
 
-		YamlDocument &Write(bool value)
-		{
-			emitter << value;
-			return *this;
-		}
-
-		YamlDocument &Write(int value)
-		{
-			emitter << value;
-			return *this;
-		}
-
-		YamlDocument &Write(uint32_t value)
-		{
-			emitter << value;
-			return *this;
-		}
-
-		YamlDocument &Write(size_t value)
-		{
-			emitter << value;
-			return *this;
-		}
-
-		YamlDocument &Write(float value)
-		{
-			emitter << value;
-			return *this;
-		}
-
-		YamlDocument &Write(const char *value)
-		{
-			emitter << value;
-			return *this;
-		}
-
-		YamlDocument &Write(const std::string &value)
-		{
-			emitter << value;
-			return *this;
-		}
-
-		template<typename T>
-		YamlDocument &Write(const T &value)
-		{
-			YamlSerializer::Serialize(*this, value);
-			return *this;
-		}
-
 		YamlDocument &Key()
 		{
 			emitter << YAML::Key;
@@ -105,6 +56,27 @@ namespace Hazel
 		YamlDocument &EndMap()
 		{
 			emitter << YAML::EndMap;
+			return *this;
+		}
+
+		template<typename T>
+		YamlDocument &WriteBasicType(const T &value)
+		{
+			emitter << value;
+			return *this;
+		}
+
+		template<typename T>
+		YamlDocument &Write(const T &value)
+		{
+			YamlSerializer<T>::Serialize(*this, value);
+			return *this;
+		}
+
+		template<typename KeyType, typename ValueType>
+		YamlDocument &Write(const KeyType &key, const ValueType &value)
+		{
+			Key().Write(key).Value().Write(value);
 			return *this;
 		}
 	};

@@ -8,21 +8,19 @@ Entities:
       Rotation: [0, 0, 0, 1]
       Scale: [1, 1, 1]
     Particle:
-      ParticleSource:
-        Enabled: false
-        MaxParticleCount: 1000
-        EmissionRate: 5
-      ParticleInfo:
-        LinearVelocity: [0, 0]
-        LinearVelocityVariation: [0.200000003, 0.200000003]
-        AngularVelocity: 3.14159274
-        AngularVelocityVariation: 3.14159274
-        ColorBegin: [1, 0.300000012, 0, 1]
-        ColorEnd: [1, 0.600000024, 0, 1]
-        SizeBegin: 0.100000001
-        SizeEnd: 0
-        SizeVariation: 0.100000001
-        LifeTime: 2
+      Enabled: false
+      MaxParticleCount: 1000
+      EmissionRate: 5
+      LinearVelocity: [0, 0]
+      LinearVelocityVariation: [0.200000003, 0.200000003]
+      AngularVelocity: 3.14159274
+      AngularVelocityVariation: 3.14159274
+      ColorBegin: [1, 0.300000012, 0, 1]
+      ColorEnd: [1, 0.600000024, 0, 1]
+      SizeBegin: 0.100000001
+      SizeEnd: 0
+      SizeVariation: 0.100000001
+      LifeTime: 2
     NativeScript:
       Type: class Hazel::TestParticles
   - EntityId: 3
@@ -34,16 +32,14 @@ Entities:
       Scale: [1, 1, 1]
     Camera:
       ProjectionType: 0
-      OrthographicProjection:
-        AspectRatio: 1.03017247
-        Size: 1
-        NearClip: -1
-        FarClip: 1
-      PerspectiveProjection:
-        AspectRatio: 1.03017247
-        VerticalFov: 0.785398185
-        NearClip: 0.00999999978
-        FarClip: 1000
+      OrthographicAspectRatio: 0.922413766
+      OrthographicSize: 1
+      OrthographicNearClip: -1
+      OrthographicFarClip: 1
+      PerspectiveAspectRatio: 0.922413766
+      PerspectiveVerticalFov: 0.785398185
+      PerspectiveNearClip: 0.00999999978
+      PerspectiveFarClip: 1000
   - EntityId: 2
     Tag:
       Name: Camera1
@@ -53,27 +49,16 @@ Entities:
       Scale: [1, 1, 1]
     Camera:
       ProjectionType: 0
-      OrthographicProjection:
-        AspectRatio: 1.03017247
-        Size: 1
-        NearClip: -1
-        FarClip: 1
-      PerspectiveProjection:
-        AspectRatio: 1.03017247
-        VerticalFov: 0.785398185
-        NearClip: 0.00999999978
-        FarClip: 1000
+      OrthographicAspectRatio: 0.922413766
+      OrthographicSize: 1
+      OrthographicNearClip: -1
+      OrthographicFarClip: 1
+      PerspectiveAspectRatio: 0.922413766
+      PerspectiveVerticalFov: 0.785398185
+      PerspectiveNearClip: 0.00999999978
+      PerspectiveFarClip: 1000
     NativeScript:
       Type: class Hazel::TestCameraController
-  - EntityId: 1
-    Tag:
-      Name: Square2
-    Transform:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0, 1]
-      Scale: [1, 1, 1]
-    Sprite:
-      Color: [1, 1, 1, 1]
   - EntityId: 0
     Tag:
       Name: Square1
@@ -82,4 +67,4 @@ Entities:
       Rotation: [0, 0, 0, 1]
       Scale: [1.53846157, 1, 1]
     Sprite:
-      Color: [1, 1, 1, 1]
+      Color: [1, 0.00386101007, 0.00386101007, 1]

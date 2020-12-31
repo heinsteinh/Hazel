@@ -2,12 +2,14 @@
 
 #include "Hazel/Core/Application/Layer.h"
 #include "Hazel/Rendering/Renderer2D/Renderer2D.h"
+#include "Hazel/Scene/Manager/SceneManager.h"
 #include "Hazel/Editor/MainWindow/EditorWindow.h"
 #include "Hazel/Editor/ScenePanels/SceneHierarchyPanel.h"
 #include "Hazel/Editor/InfoPanels/FpsPanel.h"
 #include "Hazel/Editor/InfoPanels/RendererStatisticsPanel.h"
 #include "Hazel/Editor/InfoPanels/BatchPanel.h"
 #include "EditorMenu.h"
+#include "SceneFileDialog.h"
 
 namespace Hazel
 {
@@ -28,9 +30,11 @@ namespace Hazel
 		std::shared_ptr<Framebuffer> framebuffer;
 		Rectangle region;
 		SubTexture spriteSheet;
-		std::shared_ptr<Scene> scene;
+		SceneManager sceneManager;
+		Scene scene;
 		Entity camera1;
 		Entity camera2;
+		SceneFileDialog fileDialog;
 
 	public:
 		EditorLayer();

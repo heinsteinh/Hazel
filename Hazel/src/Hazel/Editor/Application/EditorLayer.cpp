@@ -8,13 +8,13 @@
 #include "Hazel/Tests/TestParticles.h"
 #include "EditorViewport.h"
 #include "Hazel/Scene/Serialization/SceneSerializer.h"
-#include "Hazel/Scene/Parsing/SceneParser.h"
 #include "Hazel/Core/FileSystem/FileDialog.h"
 
 namespace Hazel
 {
 	EditorLayer::EditorLayer()
-		: Layer("Hazel Editor")
+		: Layer("Hazel Editor"),
+		scene("Test", this)
 	{
 	}
 
@@ -26,6 +26,7 @@ namespace Hazel
 		rendererInfo.MaxVertexCount = 40000;
 		rendererInfo.MaxTextureSlotCount = graphicsContext.GetMaxTextureSlotCount();
 		renderer = std::make_shared<Renderer2D>(graphicsContext, rendererInfo);
+		sceneManager.SetRenderer(*renderer);
 
 		framebuffer = graphicsContext.CreateFramebuffer({{GetWindow().GetSize()}});
 
@@ -34,38 +35,36 @@ namespace Hazel
 			"assets\\textures\\SpriteSheet.png");
 		region = spriteSheet.GetRegion();
 
-		scene = std::make_shared<Scene>("Test");
-		scene->Attach(*this);
-		scene->SetRenderer(*renderer);
-
-		auto square1 = scene->CreateEntity();
+		auto square1 = scene.CreateEntity();
 		square1.AddComponent<TagComponent>("Square1");
 		square1.AddComponent<SpriteComponent>(glm::vec4(1.0f), spriteSheet);
 		square1.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet.GetRegion().GetAspectRatio();
 
-		auto square2 = scene->CreateEntity();
+		auto square2 = scene.CreateEntity();
 		square2.AddComponent<TagComponent>("Square2");
 		square2.AddComponent<SpriteComponent>(glm::vec4(1.0f));
 		square2.AddComponent<TransformComponent>();
 
-		camera1 = scene->CreateEntity();
+		camera1 = scene.CreateEntity();
 		camera1.AddComponent<TagComponent>("Camera1");
 		camera1.AddComponent<TransformComponent>();
 		camera1.AddComponent<NativeScriptComponent>(std::make_shared<TestCameraController>());
 		camera1.AddComponent<CameraComponent>();
 
-		scene->SetPrimaryCamera(camera1);
+		scene.SetPrimaryCamera(camera1);
 
-		camera2 = scene->CreateEntity();
+		camera2 = scene.CreateEntity();
 		camera2.AddComponent<TagComponent>("Camera2");
 		camera2.AddComponent<TransformComponent>().Transform.Translation.x = 1.0f;
 		camera2.AddComponent<CameraComponent>();
 
-		auto particleEmitter = scene->CreateEntity();
+		auto particleEmitter = scene.CreateEntity();
 		particleEmitter.AddComponent<TagComponent>("Particle Emitter");
 		particleEmitter.AddComponent<TransformComponent>().Transform.Translation.z += 0.1f;
 		particleEmitter.AddComponent<ParticleComponent>();
 		particleEmitter.AddComponent<NativeScriptComponent>(std::make_shared<TestParticles>());
+
+		fileDialog.SetWindow(&GetWindow());
 	}
 
 	void EditorLayer::OnDetach()
@@ -79,11 +78,11 @@ namespace Hazel
 			return;
 		}
 
-		scene->OnUpdate();
+		sceneManager.OnUpdate(scene);
 
 		GetGraphicsContext().SetFramebuffer(framebuffer.get());
 		GetGraphicsContext().Clear();
-		scene->OnRender();
+		sceneManager.OnRender(scene);
 		GetGraphicsContext().SetFramebuffer(nullptr);
 	}
 
@@ -98,23 +97,11 @@ namespace Hazel
 		}
 		if (menu.WantOpen())
 		{
-			FileDialog dialog(GetWindow());
-			dialog.AddFilter({"YAML files", "*.yaml"});
-			auto filename = dialog.GetOpenFilename();
-			if (!filename.empty())
-			{
-				SceneParser::ParseFile(filename, *scene);
-			}
+			fileDialog.Open(scene);
 		}
 		if (menu.WantSave())
 		{
-			FileDialog dialog(GetWindow());
-			dialog.AddFilter({"YAML files", "*.yaml"});
-			auto filename = dialog.GetSaveFilename();
-			if (!filename.empty())
-			{
-				SceneSerializer::Serialize(filename, *scene);
-			}
+			fileDialog.SaveAs(scene);
 		}
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
@@ -134,7 +121,7 @@ namespace Hazel
 			{
 				framebuffer = GetGraphicsContext().CreateFramebuffer({viewportSize});
 			}
-			scene->OnViewportResize(newViewport);
+			sceneManager.OnViewportResize(scene, newViewport);
 			OnUpdate();
 		}
 
@@ -150,7 +137,7 @@ namespace Hazel
 		ImGui::Begin("Test");
 		if (ImGui::Checkbox("Camera 1", &useCamera1))
 		{
-			scene->SetPrimaryCamera(useCamera1 ? camera1 : camera2);
+			scene.SetPrimaryCamera(useCamera1 ? camera1 : camera2);
 		}
 		ImGui::End();
 
@@ -160,17 +147,17 @@ namespace Hazel
 		if (batchPanel.Draw(rendererInfo))
 		{
 			renderer = std::make_shared<Renderer2D>(GetGraphicsContext(), rendererInfo);
-			scene->SetRenderer(*renderer);
+			sceneManager.SetRenderer(*renderer);
 		}
 		ImGui::End();
 
-		scenePanel.Draw("Scene Hierarchy", *scene);
+		scenePanel.Draw("Scene Hierarchy", scene);
 
 		editorWindow.End();
 	}
 
 	void EditorLayer::OnEvent(Event &e)
 	{
-		scene->OnEvent(e);
+		sceneManager.OnEvent(scene, e);
 	}
 }
