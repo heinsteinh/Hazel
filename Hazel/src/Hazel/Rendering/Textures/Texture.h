@@ -21,32 +21,32 @@ namespace Hazel
 		virtual void BufferData(const void *data) = 0;
 		virtual void *GetHandle() const = 0;
 
-		constexpr const TextureInfo &GetInfo() const
+		const TextureInfo &GetInfo() const
 		{
 			return info;
 		}
 
-		constexpr TextureFormat GetFormat() const
+		TextureFormat GetFormat() const
 		{
 			return info.Format;
 		}
 
-		constexpr const glm::vec2 &GetSize() const
+		const glm::vec2 &GetSize() const
 		{
 			return info.Size;
 		}
 
-		constexpr float GetWidth() const
+		float GetWidth() const
 		{
 			return info.Size.x;
 		}
 
-		constexpr float GetHeight() const
+		float GetHeight() const
 		{
 			return info.Size.y;
 		}
 
-		constexpr float GetAspectRatio() const
+		float GetAspectRatio() const
 		{
 			return Size::GetAspectRatio(info.Size);
 		}
