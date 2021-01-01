@@ -2,6 +2,7 @@
 
 #include "Hazel/Core/Application/Layer.h"
 #include "Hazel/Rendering/Renderer2D/Renderer2D.h"
+#include "Hazel/Rendering/Textures/TextureManager.h"
 #include "Hazel/Scene/Manager/SceneManager.h"
 #include "Hazel/Editor/MainWindow/EditorWindow.h"
 #include "Hazel/Editor/ScenePanels/SceneHierarchyPanel.h"
@@ -27,8 +28,8 @@ namespace Hazel
 		bool useCamera1 = true;
 		BatchInfo rendererInfo;
 		std::shared_ptr<Renderer2D> renderer;
+		std::shared_ptr<TextureManager> textureManager;
 		std::shared_ptr<Framebuffer> framebuffer;
-		Rectangle region;
 		SubTexture spriteSheet;
 		SceneManager sceneManager;
 		Scene scene;

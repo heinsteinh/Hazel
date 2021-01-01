@@ -8,7 +8,6 @@
 #include "Hazel/Tests/TestParticles.h"
 #include "EditorViewport.h"
 #include "Hazel/Scene/Serialization/SceneSerializer.h"
-#include "Hazel/Core/FileSystem/FileDialog.h"
 
 namespace Hazel
 {
@@ -22,22 +21,22 @@ namespace Hazel
 	{
 		auto &graphicsContext = GetGraphicsContext();
 
+		framebuffer = graphicsContext.CreateFramebuffer({{GetWindow().GetSize()}});
+
 		rendererInfo.MaxIndexCount = 60000;
 		rendererInfo.MaxVertexCount = 40000;
 		rendererInfo.MaxTextureSlotCount = graphicsContext.GetMaxTextureSlotCount();
 		renderer = std::make_shared<Renderer2D>(graphicsContext, rendererInfo);
 		sceneManager.SetRenderer(*renderer);
 
-		framebuffer = graphicsContext.CreateFramebuffer({{GetWindow().GetSize()}});
+		textureManager = std::make_shared<TextureManager>(graphicsContext);
 
-		spriteSheet = TextureFactory::CreateTextureFromFile(
-			GetGraphicsContext(),
-			"assets\\textures\\SpriteSheet.png");
-		region = spriteSheet.GetRegion();
+		std::string textureFilename = "assets\\textures\\SpriteSheet.png";
+		spriteSheet = textureManager->Load(textureFilename);
 
 		auto square1 = scene.CreateEntity();
 		square1.AddComponent<TagComponent>("Square1");
-		square1.AddComponent<SpriteComponent>(glm::vec4(1.0f), spriteSheet);
+		square1.AddComponent<SpriteComponent>(glm::vec4(1.0f), spriteSheet, textureFilename);
 		square1.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet.GetRegion().GetAspectRatio();
 
 		auto square2 = scene.CreateEntity();
@@ -95,13 +94,20 @@ namespace Hazel
 		{
 			CloseApplication();
 		}
-		if (menu.WantOpen())
+		if (menu.WantOpen() && fileDialog.Open(scene))
 		{
-			fileDialog.Open(scene);
+			SceneSerializer::Deserialize(scene, fileDialog.GetFilename());
+			scene.ForEach<SpriteComponent>([&](auto entity, auto &component)
+			{
+				if (!component.TextureFilename.empty())
+				{
+					component.Texture.SetSource(textureManager->Load(component.TextureFilename));
+				}
+			});
 		}
-		if (menu.WantSave())
+		if (menu.WantSave() && fileDialog.SaveAs(scene))
 		{
-			fileDialog.SaveAs(scene);
+			SceneSerializer::Serialize(scene, fileDialog.GetFilename());
 		}
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});

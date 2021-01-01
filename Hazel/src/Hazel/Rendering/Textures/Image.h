@@ -4,7 +4,7 @@
 
 #include "glm/glm.hpp"
 
-#include "Hazel/Core/FileSystem/OpenFileException.h"
+#include "Hazel/Core/Geometry/Size.h"
 
 namespace Hazel
 {
@@ -25,29 +25,34 @@ namespace Hazel
 		Image &operator=(const Image &other) = delete;
 		Image &operator=(Image &&other) noexcept;
 
-		constexpr glm::vec2 GetSize() const
+		glm::vec2 GetSize() const
 		{
 			return size;
 		}
 
-		constexpr float GetWidth() const
+		float GetWidth() const
 		{
 			return size.x;
 		}
 
-		constexpr float GetHeight() const
+		float GetHeight() const
 		{
 			return size.y;
 		}
 
-		constexpr int GetChannelCount() const
+		int GetChannelCount() const
 		{
 			return channelCount;
 		}
 
-		constexpr void *GetData() const
+		void *GetData() const
 		{
 			return data;
+		}
+
+		bool IsEmpty() const
+		{
+			return Size::IsEmpty(size);
 		}
 	};
 }

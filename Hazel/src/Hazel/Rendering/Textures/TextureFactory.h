@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hazel/Rendering/GraphicsContext/GraphicsContext.h"
+#include "Hazel/Core/FileSystem/OpenFileException.h"
 #include "TextureFormatHelper.h"
 #include "Image.h"
 
@@ -12,6 +13,10 @@ namespace Hazel
 		static std::shared_ptr<Texture> CreateTextureFromFile(GraphicsContext &graphicsContext, const std::string &filename)
 		{
 			Image image(filename);
+			if (image.IsEmpty())
+			{
+				throw OpenFileException(filename);
+			}
 			TextureInfo info;
 			info.Size = image.GetSize();
 			info.Format = TextureFormatHelper::GetTextureFormat(image.GetChannelCount());

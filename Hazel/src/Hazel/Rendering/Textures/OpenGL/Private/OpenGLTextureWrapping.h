@@ -22,7 +22,7 @@ namespace Hazel
 			case TextureWrapping::ClampToBorder:
 				return GL_CLAMP_TO_BORDER;
 			}
-			return 0;
+			return GL_REPEAT;
 		}
 	};
 }

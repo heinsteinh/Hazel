@@ -2,7 +2,6 @@
 
 #include "Hazel/Core/FileSystem/FileDialog.h"
 #include "Hazel/Scene/Scene/Scene.h"
-#include "Hazel/Scene/Serialization/SceneSerializer.h"
 
 namespace Hazel
 {
@@ -11,7 +10,7 @@ namespace Hazel
 	private:
 		FileDialog dialog;
 		std::vector<FileDialogFilter> filters = {{"YAML files", "*.yaml"}};
-		std::string lastFilename;
+		std::string filename;
 
 	public:
 		SceneFileDialog(const Window *window = nullptr)
@@ -20,36 +19,43 @@ namespace Hazel
 			dialog.SetFilters(filters);
 		}
 
+		const std::string &GetFilename() const
+		{
+			return filename;
+		}
+
 		void SetWindow(const Window *window)
 		{
 			dialog.SetWindow(window);
 		}
 
-		void Save(Scene &scene)
+		bool Save(Scene &scene)
 		{
-			lastFilename.empty()
+			return filename.empty()
 				? SaveAs(scene)
-				: SceneSerializer::Serialize(scene, lastFilename);
+				: true;
 		}
 
-		void SaveAs(Scene &scene)
+		bool SaveAs(Scene &scene)
 		{
 			auto filename = dialog.GetSaveFilename();
-			if (!filename.empty())
+			if (filename.empty())
 			{
-				lastFilename = filename;
-				SceneSerializer::Serialize(scene, filename);
+				return false;
 			}
+			this->filename = filename;
+			return true;
 		}
 
-		void Open(Scene &scene)
+		bool Open(Scene &scene)
 		{
 			auto filename = dialog.GetOpenFilename();
-			if (!filename.empty())
+			if (filename.empty())
 			{
-				lastFilename = filename;
-				SceneSerializer::Deserialize(scene, filename);
+				return false;
 			}
+			this->filename = filename;
+			return true;
 		}
 	};
 }

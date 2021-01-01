@@ -1,7 +1,11 @@
 #pragma once
 
+#include <memory>
+
+#include "glm/glm.hpp"
+
 #include "Texture.h"
-#include "TextureRegion.h"
+#include "Hazel/Core/Geometry/Rectangle.h"
 
 namespace Hazel
 {
@@ -9,9 +13,9 @@ namespace Hazel
 	{
 	private:
 		std::shared_ptr<Texture> texture;
+		Rectangle region;
 		glm::vec2 translation{0.0f};
 		glm::vec2 scale{1.0f};
-		Rectangle region;
 
 	public:
 		SubTexture() = default;
@@ -21,25 +25,26 @@ namespace Hazel
 		{
 			if (texture)
 			{
-				region = Rectangle::FromBottomLeftAndSize(translation, texture->GetSize());
+				region = Rectangle::FromBottomLeftAndSize(glm::vec2(0.0f), texture->GetSize());
 			}
 		}
 
 		SubTexture(const std::shared_ptr<Texture> &texture, const Rectangle &region)
-			: texture(texture)
+			: texture(texture),
+			region(region)
 		{
-			SetRegion(region);
+			RecomputeTransform();
 		}
 
-		void SetRegion(const Rectangle &region)
+		const std::shared_ptr<Texture> &GetSource() const
 		{
-			if (texture)
-			{
-				this->region = region;
-				auto &textureSize = texture->GetSize();
-				translation = TextureRegion::GetNormalizedTranslation(region, textureSize);
-				scale = TextureRegion::GetScaleRatio(region, textureSize);
-			}
+			return texture;
+		}
+
+		void SetSource(const std::shared_ptr<Texture> &texture)
+		{
+			this->texture = texture;
+			RecomputeTransform();
 		}
 
 		const Rectangle &GetRegion() const
@@ -47,19 +52,15 @@ namespace Hazel
 			return region;
 		}
 
-		Texture *GetSource() const
+		void SetRegion(const Rectangle &region)
 		{
-			return texture.get();
+			this->region = region;
+			RecomputeTransform();
 		}
 
-		const std::shared_ptr<Texture> &GetSourceForSharing() const
+		glm::vec2 GetSourceCoordinates(const glm::vec2 &subCoordinates) const
 		{
-			return texture;
-		}
-
-		glm::vec2 GetSourceCoordinates(const glm::vec2 &coordinates) const
-		{
-			return translation + scale * coordinates;
+			return translation + scale * subCoordinates;
 		}
 
 		operator bool() const
@@ -70,6 +71,22 @@ namespace Hazel
 		operator Texture *() const
 		{
 			return texture.get();
+		}
+
+	private:
+		void RecomputeTransform()
+		{
+			if (texture && !texture->IsEmpty())
+			{
+				auto &textureSize = texture->GetSize();
+				translation = region.GetBottomLeft() / textureSize;
+				scale = region.GetSize() / textureSize;
+			}
+			else
+			{
+				translation = glm::vec2(0.0f);
+				scale = glm::vec2(1.0f);
+			}
 		}
 	};
 }

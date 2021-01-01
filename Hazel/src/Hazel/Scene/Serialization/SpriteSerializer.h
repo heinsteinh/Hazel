@@ -2,6 +2,7 @@
 
 #include "Hazel/Scene/Components/SpriteComponent.h"
 #include "Hazel/Core/Yaml/Vector4Serializer.h"
+#include "Hazel/Core/Yaml/RectangleSerializer.h"
 
 namespace Hazel
 {
@@ -12,12 +13,16 @@ namespace Hazel
 		{
 			document.BeginMap()
 				.Write("Color", value.Color)
+				.Write("TextureFilename", value.TextureFilename)
+				.Write("TextureRegion", value.Texture.GetRegion())
 				.EndMap();
 		}
 
 		static void Deserialize(const YamlValue &source, SpriteComponent &value)
 		{
 			source["Color"].Extract(value.Color);
+			source["TextureFilename"].Extract(value.TextureFilename);
+			value.Texture.SetRegion(source["TextureRegion"].ValueOr(value.Texture.GetRegion()));
 		}
 	};
 

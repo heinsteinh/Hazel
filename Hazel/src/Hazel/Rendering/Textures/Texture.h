@@ -31,6 +31,11 @@ namespace Hazel
 			return info.Format;
 		}
 
+		bool IsEmpty() const
+		{
+			return Size::IsEmpty(info.Size);
+		}
+
 		const glm::vec2 &GetSize() const
 		{
 			return info.Size;

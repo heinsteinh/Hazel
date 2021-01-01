@@ -93,7 +93,7 @@ namespace Hazel
 		template<typename T>
 		YamlValue operator[](const T &key) const
 		{
-			return IsValid() ? node[key] : YamlValue();
+			return IsMap() || IsSequence() ? node[key] : YamlValue();
 		}
 
 		template<typename T>

@@ -20,7 +20,7 @@ namespace Hazel
 			case TextureFormat::DepthStencil:
 				return GL_DEPTH_STENCIL;
 			}
-			return 0;
+			return GL_RGBA;
 		}
 
 		static constexpr uint32_t GetStorageFormat(TextureFormat format)
@@ -34,7 +34,7 @@ namespace Hazel
 			case TextureFormat::DepthStencil:
 				return GL_DEPTH24_STENCIL8;
 			}
-			return 0;
+			return GL_RGBA8;
 		}
 	};
 }

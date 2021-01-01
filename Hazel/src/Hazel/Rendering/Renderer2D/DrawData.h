@@ -20,7 +20,7 @@ namespace Hazel
 
 		Hazel::Texture *GetTexture() const
 		{
-			return Texture ? Texture->GetSource() : nullptr;
+			return Texture ? Texture->GetSource().get() : nullptr;
 		}
 
 		glm::vec2 GetTextureCoordinates(const glm::vec2 &coordinates) const

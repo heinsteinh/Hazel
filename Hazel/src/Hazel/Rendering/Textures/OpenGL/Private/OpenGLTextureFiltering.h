@@ -18,7 +18,7 @@ namespace Hazel
 			case TextureFiltering::Linear:
 				return GL_LINEAR;
 			}
-			return 0;
+			return GL_LINEAR;
 		}
 	};
 }

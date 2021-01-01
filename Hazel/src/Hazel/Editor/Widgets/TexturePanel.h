@@ -23,7 +23,7 @@ namespace Hazel
 
 		void DrawSource(SubTexture &texture)
 		{
-			auto source = texture.GetSource();
+			auto &source = texture.GetSource();
 			if (source)
 			{
 				ImGui::Text("Source Width: %.0f", source->GetWidth());
