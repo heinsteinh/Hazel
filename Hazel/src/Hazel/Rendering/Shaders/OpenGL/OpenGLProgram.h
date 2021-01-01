@@ -11,7 +11,7 @@ namespace Hazel
 		uint32_t id = 0;
 
 	public:
-		OpenGLProgram(const std::string &name);
+		OpenGLProgram();
 		virtual ~OpenGLProgram();
 
 		void Attach(const OpenGLShader &shader);

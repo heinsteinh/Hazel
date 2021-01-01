@@ -6,17 +6,16 @@
 
 namespace Hazel
 {
-	OpenGLProgram::OpenGLProgram(const std::string &name)
-		: Shader(name),
-		id(glCreateProgram())
+	OpenGLProgram::OpenGLProgram()
+		: id(glCreateProgram())
 	{
-		Log::Debug("Shader '{}' created with id {}.", name, id);
+		Log::Debug("Shader created with id {}.", id);
 	}
 
 	OpenGLProgram::~OpenGLProgram()
 	{
 		glDeleteProgram(id);
-		Log::Debug("Shader '{}' with id {} deleted.", GetName(), id);
+		Log::Debug("Shader with id {} deleted.", id);
 	}
 
 	void OpenGLProgram::Attach(const OpenGLShader &shader)

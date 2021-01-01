@@ -17,7 +17,7 @@ namespace Hazel
 			{
 				throw ShaderCompilationException("Shader must at least contain vertex and pixel sources.");
 			}
-			return Link(info.Name, CompileShaders(info.Sources));
+			return Link(CompileShaders(info.Sources));
 		}
 
 	private:
@@ -44,9 +44,9 @@ namespace Hazel
 			return shader;
 		}
 
-		static std::shared_ptr<OpenGLProgram> Link(const std::string &name, const OpenGLShaders &shaders)
+		static std::shared_ptr<OpenGLProgram> Link(const OpenGLShaders &shaders)
 		{
-			auto program = std::make_shared<OpenGLProgram>(name);
+			auto program = std::make_shared<OpenGLProgram>();
 			shaders.Attach(*program);
 			program->Link();
 			if (!program->IsLinked())
