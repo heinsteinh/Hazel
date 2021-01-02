@@ -23,11 +23,11 @@ namespace Hazel
 			});
 		}
 
-		static void OnRender(Scene &scene, Renderer2D &renderer)
+		static void OnRender(Scene &scene)
 		{
 			scene.ForEach<ParticleComponent>([&](auto entity, auto &component)
 			{
-				component.Source.RenderParticles(renderer);
+				component.Source.RenderParticles(scene.GetRenderer());
 			});
 		}
 	};

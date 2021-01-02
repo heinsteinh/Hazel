@@ -2,14 +2,14 @@
 
 #include "imgui.h"
 
-#include "Hazel/Rendering/BatchRenderer/BatchInfo.h"
+#include "Hazel/Rendering/Renderer2D/RendererInfo.h"
 
 namespace Hazel
 {
 	class BatchPanel
 	{
 	public:
-		bool Draw(BatchInfo &info)
+		bool Draw(RendererInfo &info)
 		{
 			int maxVertexCount = static_cast<int>(info.MaxVertexCount);
 			int maxIndexCount = static_cast<int>(info.MaxIndexCount);

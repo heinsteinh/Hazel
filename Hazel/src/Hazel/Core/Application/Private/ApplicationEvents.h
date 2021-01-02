@@ -17,14 +17,31 @@ namespace Hazel
 		static void ProcessEvent(ApplicationContext &context, ApplicationLayers &layers, Event &e)
 		{
 			//Log::Debug("{}.", e);
+			CheckCloseEvent(context, e);
+			AdjustViewport(context, e);
+			DispatchEvent(layers, e);
+			CheckWindowRefresh(context, layers, e);
+		}
+
+	private:
+		static void CheckCloseEvent(ApplicationContext &context, Event &e)
+		{
 			e.Dispatch([&](WindowCloseEvent &e)
 			{
 				context.Settings.Running = false;
 			});
+		}
+
+		static void AdjustViewport(ApplicationContext &context, Event &e)
+		{
 			e.Dispatch([&](WindowResizeEvent &e)
 			{
 				context.Window->GetGraphicsContext().SetViewport({0.0f, e.GetWidth(), 0.0f, e.GetHeight()});
 			});
+		}
+
+		static void DispatchEvent(ApplicationLayers &layers, Event &e)
+		{
 			for (const auto &layer : Reversed(layers.Stack))
 			{
 				if (e.IsHandled())
@@ -34,6 +51,10 @@ namespace Hazel
 				InputManager::OnEvent(layer->GetInput(), e);
 				layer->OnEvent(e);
 			}
+		}
+
+		static void CheckWindowRefresh(ApplicationContext &context, ApplicationLayers &layers, Event &e)
+		{
 			e.Dispatch([&](WindowResizeEvent &e)
 			{
 				ApplicationUpdate::WindowResizeUpdate(context, layers);

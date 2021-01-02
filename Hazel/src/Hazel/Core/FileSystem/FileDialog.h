@@ -15,12 +15,28 @@ namespace Hazel
 		const Window *window = nullptr;
 		std::vector<FileDialogFilter> filters;
 		std::string directory = std::filesystem::current_path().string();
+		std::string filename;
 
 	public:
-		FileDialog(const Window *window = nullptr);
+		FileDialog() = default;
 
-		std::string GetOpenFilename();
-		std::string GetSaveFilename();
+		FileDialog(const Window &window)
+			: window(&window)
+		{
+		}
+
+		bool GetOpenFilename();
+		bool GetSaveFilename();
+
+		const std::string &GetFilename() const
+		{
+			return filename;
+		}
+
+		bool GetSaveFilenameIfEmpty()
+		{
+			return filename.empty() ? GetSaveFilename() : true;
+		}
 
 		void SetWindow(const Window *window)
 		{
@@ -37,7 +53,7 @@ namespace Hazel
 			this->filters = filters;
 		}
 
-		void AddFilter(const FileDialogFilter filter)
+		void AddFilter(const FileDialogFilter &filter)
 		{
 			filters.push_back(filter);
 		}

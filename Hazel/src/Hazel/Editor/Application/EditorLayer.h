@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hazel/Core/Application/Layer.h"
+#include "Hazel/Core/FileSystem/FileDialog.h"
 #include "Hazel/Rendering/Renderer2D/Renderer2D.h"
 #include "Hazel/Rendering/Textures/TextureManager.h"
 #include "Hazel/Scene/Manager/SceneManager.h"
@@ -10,7 +11,6 @@
 #include "Hazel/Editor/InfoPanels/RendererStatisticsPanel.h"
 #include "Hazel/Editor/InfoPanels/BatchPanel.h"
 #include "EditorMenu.h"
-#include "SceneFileDialog.h"
 
 namespace Hazel
 {
@@ -26,16 +26,14 @@ namespace Hazel
 
 		Rectangle viewport;
 		bool useCamera1 = true;
-		BatchInfo rendererInfo;
-		std::shared_ptr<Renderer2D> renderer;
-		std::shared_ptr<TextureManager> textureManager;
+		RendererInfo rendererInfo;
 		std::shared_ptr<Framebuffer> framebuffer;
 		SubTexture spriteSheet;
 		SceneManager sceneManager;
-		Scene scene;
+		std::shared_ptr<Scene> scene;
 		Entity camera1;
 		Entity camera2;
-		SceneFileDialog fileDialog;
+		FileDialog fileDialog;
 
 	public:
 		EditorLayer();

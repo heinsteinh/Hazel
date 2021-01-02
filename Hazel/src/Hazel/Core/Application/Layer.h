@@ -14,12 +14,10 @@
 #include "Hazel/Core/Events/MouseButtonReleaseEvent.h"
 #include "Hazel/Core/Events/MouseMoveEvent.h"
 #include "Hazel/Core/Events/MouseScrollEvent.h"
-#include "Hazel/Core/Exceptions/AssertionException.h"
+#include "Private/ApplicationContext.h"
 
 namespace Hazel
 {
-	struct ApplicationContext;
-
 	class Layer
 	{
 	private:
@@ -28,29 +26,105 @@ namespace Hazel
 		ApplicationContext *context = nullptr;
 
 	public:
-		Layer(const std::string &name);
+		Layer(const std::string &name)
+			: name(name)
+		{
+		}
 		virtual ~Layer() = default;
 
-		const std::string &GetName() const;
-		float GetDeltaTime() const;
-		GraphicsApi &GetGraphicsApi() const;
-		Window &GetWindow() const;
-		GraphicsContext &GetGraphicsContext() const;
-		const Input &GetInput() const;
-		Input &GetInput();
-		void CloseApplication();
-		void EnableGuiRender(bool guiRenderingEnabled);
-		bool IsGuiKeyboardFilterEnabled() const;
-		void EnableGuiKeyboardFilter(bool guiKeyboardFilterEnabled);
-		bool IsGuiMouseFilterEnabled() const;
-		void EnableGuiMouseFilter(bool guiMouseFilterEnabled);
-		void Attach(ApplicationContext &context);
-		void Detach();
+		const std::string &GetName() const
+		{
+			return name;
+		}
 
-		virtual void OnAttach();
-		virtual void OnDetach();
-		virtual void OnEvent(Event &e);
-		virtual void OnUpdate();
-		virtual void OnGui();
+		float GetDeltaTime() const
+		{
+			return context->DeltaTime;
+		}
+
+		GraphicsApi &GetGraphicsApi() const
+		{
+			return *context->GraphicsApi;
+		}
+
+		Window &GetWindow() const
+		{
+			return *context->Window;
+		}
+
+		GraphicsContext &GetGraphicsContext() const
+		{
+			return context->Window->GetGraphicsContext();
+		}
+
+		const Input &GetInput() const
+		{
+			return input;
+		}
+
+		Input &GetInput()
+		{
+			return input;
+		}
+
+		void CloseApplication()
+		{
+			context->Settings.Running = false;
+		}
+
+		void EnableGuiRender(bool guiRenderingEnabled)
+		{
+			context->Settings.GuiRenderingEnabled = guiRenderingEnabled;
+		}
+
+		bool IsGuiKeyboardFilterEnabled() const
+		{
+			return context->Settings.GuiKeyboardFilterEnabled;
+		}
+
+		void EnableGuiKeyboardFilter(bool guiKeyboardFilterEnabled)
+		{
+			context->Settings.GuiKeyboardFilterEnabled = guiKeyboardFilterEnabled;
+		}
+
+		bool IsGuiMouseFilterEnabled() const
+		{
+			return context->Settings.GuiMouseFilterEnabled;
+		}
+
+		void EnableGuiMouseFilter(bool guiMouseFilterEnabled)
+		{
+			context->Settings.GuiMouseFilterEnabled = guiMouseFilterEnabled;
+		}
+
+		void Attach(ApplicationContext &context)
+		{
+			this->context = &context;
+		}
+
+		void Detach()
+		{
+			context = nullptr;
+		}
+
+		virtual void OnAttach()
+		{
+		}
+
+		virtual void OnDetach()
+		{
+		}
+
+		virtual void OnEvent(Event &e)
+		{
+		}
+
+		virtual void OnUpdate()
+		{
+		}
+
+		virtual void OnGui()
+		{
+		}
 	};
 }

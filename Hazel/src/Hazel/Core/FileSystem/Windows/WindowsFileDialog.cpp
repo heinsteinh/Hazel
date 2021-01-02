@@ -16,16 +16,9 @@
 
 namespace Hazel
 {
-	static constexpr size_t bufferSize = 512;
-
-	FileDialog::FileDialog(const Window *window)
-		: window(window)
+	bool FileDialog::GetOpenFilename()
 	{
-	}
-
-	std::string FileDialog::GetOpenFilename()
-	{
-		char buffer[bufferSize] = {};
+		char buffer[512] = {};
 		OPENFILENAMEA info = {};
 		info.lStructSize = sizeof(OPENFILENAMEA);
 		info.hwndOwner = window ? glfwGetWin32Window(window->GetHandle()) : nullptr;
@@ -36,12 +29,17 @@ namespace Hazel
 		info.lpstrInitialDir = directory.c_str();
 		info.nFilterIndex = 1;
 		info.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
-		return GetOpenFileNameA(&info) == TRUE ? info.lpstrFile : std::string();
+		if (GetOpenFileNameA(&info) == TRUE)
+		{
+			filename = info.lpstrFile;
+			return true;
+		}
+		return false;
 	}
 
-	std::string FileDialog::GetSaveFilename()
+	bool FileDialog::GetSaveFilename()
 	{
-		char buffer[bufferSize] = {};
+		char buffer[512] = {};
 		OPENFILENAMEA info = {};
 		info.lStructSize = sizeof(OPENFILENAME);
 		info.hwndOwner = window ? glfwGetWin32Window(window->GetHandle()) : nullptr;
@@ -58,7 +56,12 @@ namespace Hazel
 			extension = Filename::GetExtension(filters[0].Pattern);
 		}
 		info.lpstrDefExt = extension.c_str();
-		return GetSaveFileNameA(&info) == TRUE ? info.lpstrFile : std::string();
+		if (GetSaveFileNameA(&info) == TRUE)
+		{
+			filename = info.lpstrFile;
+			return true;
+		}
+		return false;
 	}
 }
 

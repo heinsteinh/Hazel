@@ -37,6 +37,16 @@ namespace Hazel
 			}
 		}
 
+		const PanelType &GetPanel() const
+		{
+			return panel;
+		}
+
+		PanelType &GetPanel()
+		{
+			return panel;
+		}
+
 	private:
 		bool Begin(const char *label)
 		{

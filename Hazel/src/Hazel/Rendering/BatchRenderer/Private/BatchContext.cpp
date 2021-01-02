@@ -4,7 +4,7 @@
 
 namespace Hazel
 {
-	BatchContext::BatchContext(GraphicsContext &graphicsContext, const BatchInfo &info)
+	BatchContext::BatchContext(GraphicsContext &graphicsContext, const RendererInfo &info)
 		: indices(info.MaxIndexCount, info.IndexFormat),
 		vertices(info.MaxVertexCount),
 		textures(graphicsContext, info.MaxTextureSlotCount),

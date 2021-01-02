@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Hazel/Rendering/GraphicsContext/GraphicsContext.h"
-#include "Hazel/Core/FileSystem/OpenFileException.h"
 #include "TextureFormatHelper.h"
 #include "Image.h"
 
@@ -15,7 +14,7 @@ namespace Hazel
 			Image image(filename);
 			if (image.IsEmpty())
 			{
-				throw OpenFileException(filename);
+				return {};
 			}
 			TextureInfo info;
 			info.Size = image.GetSize();

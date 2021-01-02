@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Hazel/Rendering/BatchRenderer/BatchInfo.h"
 #include "BatchIndices.h"
 #include "BatchConstants.h"
 #include "BatchTextures.h"
 #include "BatchBuffers.h"
+#include "Hazel/Rendering/Renderer2D/RendererInfo.h"
 #include "Hazel/Rendering/Renderer2D/DrawData.h"
 
 namespace Hazel
@@ -20,7 +20,7 @@ namespace Hazel
 		std::shared_ptr<Shader> shader;
 
 	public:
-		BatchContext(GraphicsContext &graphicsContext, const BatchInfo &info);
+		BatchContext(GraphicsContext &graphicsContext, const RendererInfo &info);
 
 		void SetViewProjectionMatrix(const glm::mat4 &viewProjection);
 		void Clear();

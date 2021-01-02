@@ -49,10 +49,25 @@ namespace Hazel
 		template<typename ComponentType>
 		static void Deserialize(const YamlValue &source, Entity entity, const char *label)
 		{
-			auto component = source[label];
-			if (component.IsValid())
+			auto serializedComponent = source[label];
+			if (serializedComponent.IsValid())
 			{
-				component.Extract(entity.AddComponent<ComponentType>());
+				serializedComponent.Extract(entity.AddComponent<ComponentType>());
+			}
+		}
+
+		template<>
+		static void Deserialize<SpriteComponent>(const YamlValue &source, Entity entity, const char *label)
+		{
+			auto serializedComponent = source[label];
+			if (serializedComponent.IsValid())
+			{
+				auto &component = entity.AddComponent<SpriteComponent>();
+				serializedComponent.Extract(component);
+				if (!component.TextureFilename.empty())
+				{
+					component.Texture = entity.GetTextureManager().Load(component.TextureFilename);
+				}
 			}
 		}
 	};

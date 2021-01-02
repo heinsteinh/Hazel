@@ -2,7 +2,7 @@
 
 namespace Hazel
 {
-	BatchRenderer::BatchRenderer(GraphicsContext &graphicsContext, const BatchInfo &info)
+	BatchRenderer::BatchRenderer(GraphicsContext &graphicsContext, const RendererInfo &info)
 		: graphicsContext(&graphicsContext),
 		batch(graphicsContext, info)
 	{

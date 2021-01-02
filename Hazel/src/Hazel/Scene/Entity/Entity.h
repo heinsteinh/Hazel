@@ -2,7 +2,6 @@
 
 #include "Hazel/Scene/Scene/SceneContext.h"
 #include "EntityListener.h"
-#include "Hazel/Core/Exceptions/AssertionException.h"
 
 namespace Hazel
 {
@@ -36,39 +35,47 @@ namespace Hazel
 			return static_cast<uint32_t>(entity);
 		}
 
-		SceneContext &GetSceneContext() const
+		Layer &GetLayer() const
 		{
-			HZ_ASSERT(context, "No scene context attached");
-			return *context;
+			return *context->ManagerContext->Layer;
+		}
+
+		Renderer2D &GetRenderer() const
+		{
+			return *context->ManagerContext->Renderer;
+		}
+
+		TextureManager &GetTextureManager() const
+		{
+			return *context->ManagerContext->TextureManager;
+		}
+
+		const Camera &GetCamera() const
+		{
+			return context->Camera;
 		}
 
 		template<typename ComponentType>
 		bool HasComponent() const
 		{
-			HZ_ASSERT(IsValid(), "Invalid entity");
 			return context->Registry.has<ComponentType>(entity);
 		}
 
 		template<typename ComponentType>
 		ComponentType &GetComponent()
 		{
-			HZ_ASSERT(IsValid(), "Invalid entity");
-			HZ_ASSERT(HasComponent<ComponentType>(), "Cannot get non-existing component.");
 			return context->Registry.get<ComponentType>(entity);
 		}
 
 		template<typename ComponentType>
 		ComponentType *TryGetComponent()
 		{
-			HZ_ASSERT(IsValid(), "Invalid entity");
 			return context->Registry.try_get<ComponentType>(entity);
 		}
 
 		template<typename ComponentType, typename ...Args>
 		ComponentType &AddComponent(Args &&...args)
 		{
-			HZ_ASSERT(IsValid(), "Invalid entity");
-			HZ_ASSERT(!HasComponent<ComponentType>(), "Already has component.");
 			auto &component = context->Registry.emplace<ComponentType>(entity, std::forward<Args>(args)...);
 			EntityListener::OnComponentAdded<ComponentType>(*this, component);
 			return component;
@@ -77,8 +84,6 @@ namespace Hazel
 		template<typename ComponentType>
 		void RemoveComponent()
 		{
-			HZ_ASSERT(IsValid(), "Invalid entity");
-			HZ_ASSERT(HasComponent<ComponentType>(), "Cannot remove non-existing component.");
 			EntityListener::OnComponentRemoved<ComponentType>(*this);
 			context->Registry.remove<ComponentType>(entity);
 		}

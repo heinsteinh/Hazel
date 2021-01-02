@@ -17,16 +17,9 @@ namespace Hazel
 		std::unordered_map<std::string, std::shared_ptr<Texture>> textures;
 
 	public:
-		TextureManager() = default;
-
 		TextureManager(GraphicsContext &graphicsContext)
 			: graphicsContext(&graphicsContext)
 		{
-		}
-
-		void SetGraphicsContext(GraphicsContext &graphicsContext)
-		{
-			this->graphicsContext = &graphicsContext;
 		}
 
 		const std::shared_ptr<Texture> &Load(const std::string &filename)

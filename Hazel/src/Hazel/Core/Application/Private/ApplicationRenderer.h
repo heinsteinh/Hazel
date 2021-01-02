@@ -33,7 +33,7 @@ namespace Hazel
 
 		static void RenderGui(ApplicationContext &context, ApplicationLayers &layers)
 		{
-			if (context.Settings.GuiRenderingEnabled && layers.GuiLayer)
+			if (layers.GuiLayer && context.Settings.GuiRenderingEnabled)
 			{
 				layers.GuiLayer->BeginRender();
 				for (const auto &layer : layers.Stack)

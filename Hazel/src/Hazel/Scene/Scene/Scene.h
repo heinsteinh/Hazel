@@ -11,8 +11,8 @@ namespace Hazel
 		SceneContext context;
 
 	public:
-		Scene(const std::string &name, Layer *layer)
-			: context{name, layer}
+		Scene(const std::string &name, SceneManagerContext &managerContext)
+			: context{name, &managerContext}
 		{
 		}
 
@@ -28,7 +28,17 @@ namespace Hazel
 
 		Layer &GetLayer() const
 		{
-			return *context.Layer;
+			return *context.ManagerContext->Layer;
+		}
+
+		Renderer2D &GetRenderer() const
+		{
+			return *context.ManagerContext->Renderer;
+		}
+
+		TextureManager &GetTextureManager() const
+		{
+			return *context.ManagerContext->TextureManager;
 		}
 
 		Entity GetPrimaryCamera()

@@ -10,7 +10,7 @@ namespace Hazel
 		BatchRenderer batchRenderer;
 
 	public:
-		Renderer2D(GraphicsContext &graphicsContext, const BatchInfo &info);
+		Renderer2D(GraphicsContext &graphicsContext, const RendererInfo &info);
 
 		void BeginScene(const glm::mat4 &viewProjection);
 		void Render(const DrawData &drawData);

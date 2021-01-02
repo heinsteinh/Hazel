@@ -2,11 +2,10 @@
 
 #include "Hazel/Rendering/GraphicsContext/IndexFormatHelper.h"
 #include "Hazel/Rendering/GraphicsContext/PrimitiveTopology.h"
-#include "Private/BatchVertex.h"
 
 namespace Hazel
 {
-	struct BatchInfo
+	struct RendererInfo
 	{
 		size_t MaxIndexCount = 60000;
 		size_t MaxVertexCount = 40000;
@@ -19,9 +18,9 @@ namespace Hazel
 			return IndexFormatHelper::GetSize(MaxIndexCount, IndexFormat);
 		}
 
-		size_t GetVertexBufferSize() const
+		size_t GetVertexBufferSize(size_t vertexSize) const
 		{
-			return MaxVertexCount * sizeof(BatchVertex);
+			return MaxVertexCount * vertexSize;
 		}
 	};
 }

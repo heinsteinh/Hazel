@@ -4,8 +4,9 @@
 
 #include "Hazel/Rendering/Renderer2D/RendererStatistics.h"
 #include "Hazel/Rendering/Renderer2D/DrawData.h"
-#include "Private/BatchContext.h"
+#include "Hazel/Rendering/Renderer2D/RendererInfo.h"
 #include "BatchException.h"
+#include "Private/BatchContext.h"
 
 namespace Hazel
 {
@@ -17,7 +18,7 @@ namespace Hazel
 		RendererStatistics statistics;
 
 	public:
-		BatchRenderer(GraphicsContext &graphicsContext, const BatchInfo &info);
+		BatchRenderer(GraphicsContext &graphicsContext, const RendererInfo &info);
 
 		void BeginScene(const glm::mat4 &viewProjectionMatrix);
 		void Render(const DrawData &drawData);

@@ -17,7 +17,7 @@ namespace Hazel
 
 		void RecomputeViewProjection()
 		{
-			ViewProjection = CameraView::GetViewProjectionMatrix(View, Projection);
+			ViewProjection = Projection * View;
 		}
 
 		glm::vec3 GetWorldPosition(const glm::vec2 &screenPosition) const
