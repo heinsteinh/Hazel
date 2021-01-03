@@ -2,8 +2,9 @@
 
 #include "imgui.h"
 
+#include "Hazel/Scene/Entity/Entity.h"
 #include "Hazel/Scene/Components/SpriteComponent.h"
-#include "Hazel/Editor/Widgets/InputText.h"
+#include "Hazel/Core/FileSystem/FileDialog.h"
 #include "Hazel/Editor/Widgets/RectanglePanel.h"
 #include "Hazel/Editor/Utils/TreeNodeFlags.h"
 
@@ -12,21 +13,30 @@ namespace Hazel
 	class SpritePanel
 	{
 	private:
-		InputText inputText;
 		RectanglePanel rectanglePanel;
-		bool browse = false;
-		bool load = false;
 
 	public:
-		void Draw(SpriteComponent &component)
+		void Draw(Entity entity, SpriteComponent &component)
 		{
-			browse = load = false;
 			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
 			if (ImGui::TreeNodeEx("Texture", TreeNodeFlags::GetDefaultFlags()))
 			{
-				inputText.Draw("Path", component.TextureTemporaryFilename);
-				browse = ImGui::Button("Browse");
-				load = ImGui::Button("Load");
+				ImGui::Text("Source: %s", component.TextureFilename.c_str());
+				if (ImGui::Button("Remove"))
+				{
+					component.TextureFilename.clear();
+					component.Texture.SetSource(nullptr);
+				}
+				ImGui::SameLine();
+				if (ImGui::Button("Browse..."))
+				{
+					FileDialog dialog(entity.GetLayer().GetWindow());
+					if (dialog.GetOpenFilename())
+					{
+						component.TextureFilename = dialog.GetFilename();
+						component.Texture = entity.GetTextureManager().Load(component.TextureFilename);
+					}
+				}
 				if (component.Texture)
 				{
 					ImGui::Text("Region");
@@ -38,16 +48,6 @@ namespace Hazel
 				}
 				ImGui::TreePop();
 			}
-		}
-
-		bool WantBrowse() const
-		{
-			return browse;
-		}
-
-		bool WantLoad() const
-		{
-			return load;
 		}
 	};
 }

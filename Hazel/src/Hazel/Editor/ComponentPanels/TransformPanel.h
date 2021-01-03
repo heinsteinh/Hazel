@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Hazel/Scene/Entity/Entity.h"
 #include "Hazel/Scene/Components/TransformComponent.h"
 #include "Hazel/Editor/Widgets/FloatInput.h"
 
@@ -35,7 +36,7 @@ namespace Hazel
 			scalePanel.SetLimits(minValue, maxValue);
 		}
 
-		void Draw(TransformComponent &component)
+		void Draw(Entity entity, TransformComponent &component)
 		{
 			Draw(component.Transform);
 		}

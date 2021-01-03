@@ -9,7 +9,6 @@
 #include "Hazel/Editor/ComponentPanels/SpritePanel.h"
 #include "Hazel/Editor/ComponentPanels/ParticlePanel.h"
 #include "Hazel/Editor/ComponentPanels/NativeScriptPanel.h"
-#include "Hazel/Core/FileSystem/FileDialog.h"
 #include "Private/ComponentNode.h"
 #include "Private/AddComponentMenu.h"
 
@@ -33,7 +32,6 @@ namespace Hazel
 			if (entity.IsValid())
 			{
 				DrawComponents(entity);
-				UpdateSpriteTexture(entity);
 			}
 			ImGui::End();
 		}
@@ -51,25 +49,6 @@ namespace Hazel
 			spriteNode.Draw("Sprite", entity);
 			particleNode.Draw("Particle", entity);
 			nativeScriptNode.Draw("Native Script", entity);
-		}
-
-		void UpdateSpriteTexture(Entity entity)
-		{
-			auto &panel = spriteNode.GetPanel();
-			if (panel.WantBrowse())
-			{
-				FileDialog dialog(entity.GetLayer().GetWindow());
-				if (dialog.GetOpenFilename())
-				{
-					entity.GetComponent<SpriteComponent>().TextureTemporaryFilename = dialog.GetFilename();
-				}
-			}
-			if (panel.WantLoad())
-			{
-				auto &component = entity.GetComponent<SpriteComponent>();
-				component.TextureFilename = component.TextureTemporaryFilename;
-				component.Texture = entity.GetTextureManager().Load(component.TextureFilename);
-			}
 		}
 	};
 }

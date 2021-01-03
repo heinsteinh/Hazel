@@ -13,14 +13,15 @@ namespace Hazel
 	{
 		glm::vec4 Color{1.0f};
 		std::string TextureFilename;
-		std::string TextureTemporaryFilename;
 		SubTexture Texture;
 	};
 
 	template<>
 	inline void EntityListener::OnComponentAdded(Entity entity, SpriteComponent &component)
 	{
-		component.TextureTemporaryFilename = component.TextureFilename;
-		component.Texture = entity.GetTextureManager().Load(component.TextureFilename);
+		if (!component.TextureFilename.empty())
+		{
+			component.Texture = entity.GetTextureManager().Load(component.TextureFilename);
+		}
 	}
 }

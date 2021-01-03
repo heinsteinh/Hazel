@@ -9,21 +9,27 @@ namespace Hazel
 	class InputText
 	{
 	private:
-		std::string buffer;
-
-	public:
-		InputText(size_t size = 128)
-			: buffer(512, '\0')
+		static int ResizeCallback(ImGuiInputTextCallbackData *data)
 		{
+			auto value = static_cast<std::string *>(data->UserData);
+			if (data->EventFlag == ImGuiInputTextFlags_CallbackResize)
+			{
+				value->resize(data->BufTextLen);
+				data->Buf = value->data();
+			}
+			return 0;
 		}
 
-		void Draw(const char *label, std::string &value)
+	public:
+		bool Draw(const char *label, std::string &value)
 		{
-			buffer = value;
-			if (ImGui::InputText(label, buffer.data(), buffer.capacity()))
-			{
-				value = buffer;
-			}
+			return ImGui::InputText(
+				label,
+				value.data(),
+				value.capacity() + 1,
+				ImGuiInputTextFlags_CallbackResize,
+				&ResizeCallback,
+				&value);
 		}
 	};
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Hazel/Scene/Entity/Entity.h"
 #include "Hazel/Scene/Components/CameraComponent.h"
 #include "Hazel/Editor/Widgets/ProjectionTypePanel.h"
 #include "Hazel/Editor/Widgets/OrthographicProjectionPanel.h"
@@ -15,7 +16,7 @@ namespace Hazel
 		PerspectiveProjectionPanel perspectiveProjectionPanel;
 
 	public:
-		bool Draw(CameraComponent &component)
+		bool Draw(Entity entity, CameraComponent &component)
 		{
 			return Draw(component.Projection);
 		}

@@ -58,9 +58,9 @@ namespace Hazel
 			RecomputeTransform();
 		}
 
-		glm::vec2 GetSourceCoordinates(const glm::vec2 &subCoordinates) const
+		glm::vec2 GetSourceCoordinates(const glm::vec2 &coordinates) const
 		{
-			return translation + scale * subCoordinates;
+			return translation + scale * coordinates;
 		}
 
 		operator bool() const

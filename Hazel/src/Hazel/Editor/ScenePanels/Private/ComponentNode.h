@@ -37,16 +37,6 @@ namespace Hazel
 			}
 		}
 
-		const PanelType &GetPanel() const
-		{
-			return panel;
-		}
-
-		PanelType &GetPanel()
-		{
-			return panel;
-		}
-
 	private:
 		bool Begin(const char *label)
 		{
@@ -58,7 +48,7 @@ namespace Hazel
 
 		void Draw(Entity entity, ComponentType &component)
 		{
-			panel.Draw(component);
+			panel.Draw(entity, component);
 			if (settingsMenu.WantRemoveComponent())
 			{
 				entity.RemoveComponent<ComponentType>();

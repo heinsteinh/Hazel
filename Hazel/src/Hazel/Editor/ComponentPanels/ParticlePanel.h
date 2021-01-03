@@ -3,6 +3,7 @@
 #include "imgui.h"
 #include "glm/gtc/type_ptr.hpp"
 
+#include "Hazel/Scene/Entity/Entity.h"
 #include "Hazel/Scene/Components/ParticleComponent.h"
 #include "Hazel/Editor/Widgets/FloatInput.h"
 
@@ -14,7 +15,7 @@ namespace Hazel
 		FloatInput input;
 
 	public:
-		void Draw(ParticleComponent &component)
+		void Draw(Entity entity, ParticleComponent &component)
 		{
 			Draw(component.Source);
 			Draw(component.Info);

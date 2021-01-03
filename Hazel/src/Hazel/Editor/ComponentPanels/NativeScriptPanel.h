@@ -2,6 +2,7 @@
 
 #include "imgui.h"
 
+#include "Hazel/Scene/Entity/Entity.h"
 #include "Hazel/Scene/Components/NativeScriptComponent.h"
 
 namespace Hazel
@@ -9,13 +10,10 @@ namespace Hazel
 	class NativeScriptPanel
 	{
 	public:
-		void Draw(NativeScriptComponent &component)
+		void Draw(Entity entity, NativeScriptComponent &component)
 		{
-			if (component.Script)
-			{
-				ImGui::Text("Type: %s", component.GetTypeName());
-				component.Script->OnGui();
-			}
+			ImGui::Text("Type: %s", component.GetTypeName());
+			component.Script->OnGui();
 		}
 	};
 }
