@@ -4,13 +4,13 @@ Entities:
     Tag:
       Name: Particle Emitter
     Transform:
-      Translation: [0.113505758, 0.0689655393, 1.10000002]
+      Translation: [0, 0, 0.100000001]
       Rotation: [0, 0, 0, 1]
       Scale: [1, 1, 1]
     Particle:
       Enabled: true
       MaxParticleCount: 1000
-      EmissionRate: 100
+      EmissionRate: 5
       LinearVelocity: [0, 0]
       LinearVelocityVariation: [0.200000003, 0.200000003]
       AngularVelocity: 3.14159274
@@ -32,11 +32,9 @@ Entities:
       Scale: [1, 1, 1]
     Camera:
       ProjectionType: 0
-      OrthographicAspectRatio: 1.00431037
-      OrthographicSize: 1
+      OrthographicSize: 2
       OrthographicNearClip: -1
       OrthographicFarClip: 1
-      PerspectiveAspectRatio: 1.00431037
       PerspectiveVerticalFov: 0.785398185
       PerspectiveNearClip: 0.00999999978
       PerspectiveFarClip: 1000
@@ -49,11 +47,9 @@ Entities:
       Scale: [1, 1, 1]
     Camera:
       ProjectionType: 0
-      OrthographicAspectRatio: 1.00431037
-      OrthographicSize: 0.999999821
+      OrthographicSize: 2
       OrthographicNearClip: -1
       OrthographicFarClip: 1
-      PerspectiveAspectRatio: 1.00431037
       PerspectiveVerticalFov: 0.785398185
       PerspectiveNearClip: 0.00999999978
       PerspectiveFarClip: 1000
@@ -68,13 +64,13 @@ Entities:
       Scale: [1, 1, 1]
     Sprite:
       Color: [1, 1, 1, 1]
-      TextureFilename: C:\Users\christian\source\repos\Hazel\Editor\assets\textures\TestOverlay.png
-      TextureRegion: [29, 800, 0, 600]
+      TextureFilename: ""
+      TextureRegion: [0, 0, 0, 0]
   - EntityId: 0
     Tag:
       Name: Square1
     Transform:
-      Translation: [0, 0, 0.400000006]
+      Translation: [0, 0, 0]
       Rotation: [0, 0, 0, 1]
       Scale: [1.53846157, 1, 1]
     Sprite:

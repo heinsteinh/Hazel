@@ -22,7 +22,7 @@ namespace Hazel
 		static void OnViewportResize(Scene &scene, const Rectangle &viewport)
 		{
 			scene.GetCamera().Viewport = viewport;
-			float aspectRatio = viewport.GetAspectRatio();
+			auto aspectRatio = viewport.GetAspectRatio();
 			scene.ForEach<CameraComponent>([&](auto entity, auto &component)
 			{
 				component.Projection.SetAspectRatio(aspectRatio);
