@@ -1,26 +1,29 @@
 #include "Renderer2D.h"
 
-#include "Hazel/Rendering/Textures/TextureFactory.h"
+#include "SquareMesh.h"
+#include "Shader2D.h"
 
 namespace Hazel
 {
-	Renderer2D::Renderer2D(GraphicsContext &graphicsContext, const RendererInfo &info)
-		: batchRenderer(graphicsContext, info)
+	Renderer2D::Renderer2D(const RendererInfo &info)
+		: renderer(info),
+		squareMesh(SquareMesh::CreateMesh()),
+		defaultShader(Shader2D::CreateShader(*info.GraphicsContext))
 	{
 	}
 
-	void Renderer2D::BeginScene(const glm::mat4 &viewProjection)
+	void Renderer2D::BeginScene(const Camera &camera)
 	{
-		batchRenderer.BeginScene(viewProjection);
+		renderer.BeginScene(camera);
 	}
 
-	void Renderer2D::Render(const DrawData &drawData)
+	void Renderer2D::Submit(const RenderCommand &command)
 	{
-		batchRenderer.Render(drawData);
+		renderer.Submit(command);
 	}
 
 	void Renderer2D::EndScene()
 	{
-		batchRenderer.EndScene();
+		renderer.EndScene();
 	}
 }

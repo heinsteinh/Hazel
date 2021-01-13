@@ -4,6 +4,7 @@
 #include "Hazel/Scene/Systems/NativeScriptSystem.h"
 #include "Hazel/Scene/Systems/SpriteRenderingSystem.h"
 #include "Hazel/Scene/Systems/ParticleSystem.h"
+#include "Hazel/Rendering/Renderer2D/Shader2D.h"
 
 namespace Hazel
 {
@@ -14,15 +15,16 @@ namespace Hazel
 
 	void SceneManager::ResetRenderer(const RendererInfo &rendererInfo)
 	{
-		context.Renderer = std::make_unique<Renderer2D>(context.Layer->GetGraphicsContext(), rendererInfo);
+		context.Renderer = std::make_unique<Renderer2D>(rendererInfo);
 	}
 
 	void SceneManager::OnAttach(Layer &layer, const RendererInfo &rendererInfo)
 	{
 		context.Layer = &layer;
 		auto &graphicsContext = layer.GetGraphicsContext();
-		context.Renderer = std::make_unique<Renderer2D>(graphicsContext, rendererInfo);
+		context.Renderer = std::make_unique<Renderer2D>(rendererInfo);
 		context.TextureManager = std::make_unique<TextureManager>(graphicsContext);
+		context.ShaderManager = std::make_unique<ShaderManager>(graphicsContext);
 	}
 
 	void SceneManager::OnUpdate(Scene &scene)
@@ -36,7 +38,7 @@ namespace Hazel
 	{
 		if (scene.GetPrimaryCamera().IsValid())
 		{
-			context.Renderer->BeginScene(scene.GetCamera().ViewProjection);
+			context.Renderer->BeginScene(scene.GetCamera());
 			SpriteRenderingSystem::OnRender(scene);
 			ParticleSystem::OnRender(scene);
 			context.Renderer->EndScene();

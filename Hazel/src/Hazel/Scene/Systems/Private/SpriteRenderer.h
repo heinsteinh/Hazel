@@ -13,28 +13,12 @@ namespace Hazel
 	public:
 		static void RenderSprite(Renderer2D &renderer, Entity entity, const SpriteComponent &sprite)
 		{
-			DrawData drawData;
-			AddMesh(drawData);
-			AddSprite(drawData, sprite);
-			AddTransform(drawData, entity.TryGetComponent<TransformComponent>());
-			renderer.Render(drawData);
-		}
-
-	private:
-		static void AddMesh(DrawData &drawData)
-		{
-			drawData.Mesh = &SquareMesh::GetMesh();
-		}
-
-		static void AddSprite(DrawData &drawData, const SpriteComponent &sprite)
-		{
-			drawData.Color = &sprite.Color;
-			drawData.Texture = &sprite.Texture;
-		}
-
-		static void AddTransform(DrawData &drawData, const TransformComponent *transform)
-		{
-			drawData.Transform = transform ? &transform->Transform : nullptr;
+			RenderCommand command;
+			command.Mesh = &entity.GetRenderer().GetSquareMesh();
+			command.Material = &sprite.Material;
+			auto transform = entity.TryGetComponent<TransformComponent>();
+			command.Transform = transform ? &transform->Transform : nullptr;
+			renderer.Submit(command);
 		}
 	};
 }

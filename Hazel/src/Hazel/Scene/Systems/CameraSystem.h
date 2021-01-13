@@ -14,14 +14,16 @@ namespace Hazel
 			SceneCamera::UpdatePrimaryCamera(scene);
 			auto primaryCamera = scene.GetPrimaryCamera();
 			auto &camera = scene.GetCamera();
-			camera.View = SceneCamera::GetViewMatrix(primaryCamera);
-			camera.Projection = SceneCamera::GetProjectionMatrix(primaryCamera);
-			camera.RecomputeViewProjection();
+			auto projection = primaryCamera.TryGetComponent<CameraComponent>();
+			auto transform = primaryCamera.TryGetComponent<TransformComponent>();
+			camera.SetViewProjection(
+				projection ? &projection->Projection : nullptr,
+				transform ? &transform->Transform : nullptr);
 		}
 
 		static void OnViewportResize(Scene &scene, const Rectangle &viewport)
 		{
-			scene.GetCamera().Viewport = viewport;
+			scene.GetCamera().SetViewport(viewport);
 			auto aspectRatio = viewport.GetAspectRatio();
 			scene.ForEach<CameraComponent>([&](auto entity, auto &component)
 			{

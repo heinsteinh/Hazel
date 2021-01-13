@@ -3,6 +3,7 @@
 #include "glm/glm.hpp"
 
 #include "Hazel/Rendering/Renderer2D/Renderer2D.h"
+#include "Hazel/Rendering/Renderer2D/SquareMesh.h"
 #include "Particle.h"
 
 namespace Hazel

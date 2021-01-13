@@ -6,12 +6,12 @@ namespace Hazel
 {
 	void ParticleRenderer::RenderParticle(Renderer2D &renderer, const Particle &particle)
 	{
-		DrawData drawData;
-		drawData.Mesh = &SquareMesh::GetMesh();
-		drawData.Transform = &particle.Transform;
+		/*RenderCommand command;
+		command.Mesh = squareMesh.get();
+		command.Transform = &particle.Transform;
 		auto color = GetColor(particle);
-		drawData.Color = &color;
-		renderer.Render(drawData);
+		command.Material.Color = color;
+		renderer.Render(drawData);*/
 	}
 
 	glm::vec4 ParticleRenderer::GetColor(const Particle &particle)

@@ -18,6 +18,16 @@ namespace Hazel
 			}
 		}
 
+		static glm::vec3 GetCameraPosition(Entity camera)
+		{
+			if (camera.IsNull())
+			{
+				return glm::vec3(0.0f);
+			}
+			auto component = camera.TryGetComponent<TransformComponent>();
+			return component ? component->Transform.Translation : glm::vec3(0.0f);
+		}
+
 		static glm::mat4 GetViewMatrix(Entity camera)
 		{
 			if (camera.IsNull())

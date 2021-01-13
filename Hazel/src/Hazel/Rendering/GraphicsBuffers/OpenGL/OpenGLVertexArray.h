@@ -10,7 +10,7 @@ namespace Hazel
 		uint32_t id;
 
 	public:
-		OpenGLVertexArray(const VertexAttributes &vertexAttributes);
+		OpenGLVertexArray(const VertexLayout &vertexAttributes);
 		~OpenGLVertexArray();
 
 		void Bind() const;

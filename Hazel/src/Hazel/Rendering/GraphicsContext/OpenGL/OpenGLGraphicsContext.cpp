@@ -21,8 +21,8 @@ namespace Hazel
 	{
 		MakeCurrent();
 		static OpenGLLoader loader;
-		buffers.SetMaxUniformBufferBindingCount(OpenGLInfo::GetMaxUniformBufferBindingCount());
-		textures.SetMaxTextureSlotCount(OpenGLInfo::GetMaxTextureSlotCount());
+		buffers.SetUniformBufferBindingCount(OpenGLInfo::GetUniformBufferBindingCount());
+		textures.SetTextureSlotCount(OpenGLInfo::GetTextureSlotCount());
 	}
 
 	void OpenGLGraphicsContext::MakeCurrent() const
@@ -73,12 +73,12 @@ namespace Hazel
 		return std::make_shared<OpenGLVertexBuffer>(size);
 	}
 
-	std::shared_ptr<ConstantBuffer> OpenGLGraphicsContext::CreateConstantBuffer(size_t size)
+	std::shared_ptr<UniformBuffer> OpenGLGraphicsContext::CreateUniformBuffer(size_t size)
 	{
 		return std::make_shared<OpenGLUniformBuffer>(size);
 	}
 
-	std::shared_ptr<InputLayout> OpenGLGraphicsContext::CreateInputLayout(const VertexAttributes &vertexAttributes)
+	std::shared_ptr<InputLayout> OpenGLGraphicsContext::CreateInputLayout(const VertexLayout &vertexAttributes)
 	{
 		MakeCurrent();
 		return std::make_shared<OpenGLVertexArray>(vertexAttributes);
@@ -114,15 +114,15 @@ namespace Hazel
 		this->buffers.SetVertexBuffer(vertexBuffer);
 	}
 
-	size_t OpenGLGraphicsContext::GetMaxConstantBufferBindingCount()
+	size_t OpenGLGraphicsContext::GetUniformBufferBindingCount()
 	{
-		return buffers.GetMaxUniformBufferBindingCount();
+		return buffers.GetUniformBufferBindingCount();
 	}
 
-	void OpenGLGraphicsContext::SetConstantBuffer(ConstantBuffer *constantBuffer, size_t binding)
+	void OpenGLGraphicsContext::SetUniformBuffer(UniformBuffer *constantBuffer, size_t binding)
 	{
 		MakeCurrent();
-		this->buffers.SetConstantBuffer(constantBuffer, binding);
+		this->buffers.SetUniformBuffer(constantBuffer, binding);
 	}
 
 	void OpenGLGraphicsContext::SetInputLayout(InputLayout *inputLayout)
@@ -131,9 +131,9 @@ namespace Hazel
 		this->buffers.SetInputLayout(inputLayout);
 	}
 
-	size_t OpenGLGraphicsContext::GetMaxTextureSlotCount()
+	size_t OpenGLGraphicsContext::GetTextureSlotCount()
 	{
-		return textures.GetMaxTextureSlotCount();
+		return textures.GetTextureSlotCount();
 	}
 
 	void OpenGLGraphicsContext::SetTexture(Texture *texture, size_t slot)

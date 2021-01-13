@@ -1,7 +1,9 @@
 #pragma once
 
-#include <vector>
 #include <memory>
+
+#include "spdlog/fmt/fmt.h"
+#include "glad/glad.h"
 
 #include "OpenGLProgram.h"
 #include "Private/OpenGLShaders.h"
@@ -13,33 +15,28 @@ namespace Hazel
 	public:
 		static std::shared_ptr<OpenGLProgram> Compile(const ShaderInfo &info)
 		{
-			if (!info.Sources.IsValid())
+			if (info.VertexSource.empty() || info.PixelSource.empty())
 			{
-				throw ShaderCompilationException("Shader must at least contain vertex and pixel sources.");
+				throw ShaderCompilationException("The shader must at least contain vertex and pixel sources.");
 			}
-			return Link(CompileShaders(info.Sources));
+			return Link(CompileShaders(info));
 		}
 
 	private:
-		static OpenGLShaders CompileShaders(const ShaderSourceMap &sources)
+		static OpenGLShaders CompileShaders(const ShaderInfo &info)
 		{
 			OpenGLShaders shaders;
-			for (const auto &[shaderType, source] : sources)
-			{
-				if (!source.empty())
-				{
-					shaders[shaderType] = CompileShader(shaderType, source);
-				}
-			}
+			shaders.AddVertexShader(CompileShader(GL_VERTEX_SHADER, info.VertexSource));
+			shaders.AddPixelShader(CompileShader(GL_FRAGMENT_SHADER, info.PixelSource));
 			return shaders;
 		}
 
-		static OpenGLShader CompileShader(ShaderType shaderType, const std::string &source)
+		static OpenGLShader CompileShader(int shaderType, const std::string &source)
 		{
 			OpenGLShader shader(shaderType, source);
 			if (!shader.IsCompiled())
 			{
-				throw ShaderCompilationException(fmt::format("Shader {} compilation failed: {}", shaderType, shader.GetInfoLog()));
+				throw ShaderCompilationException(fmt::format("Shader compilation failed: {}", shader.GetInfoLog()));
 			}
 			return shader;
 		}

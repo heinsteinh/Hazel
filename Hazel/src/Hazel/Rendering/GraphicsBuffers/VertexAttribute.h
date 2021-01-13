@@ -30,6 +30,11 @@ namespace Hazel
 			return offset;
 		}
 
+		constexpr void SetOffset(size_t offset)
+		{
+			this->offset = offset;
+		}
+
 		constexpr bool IsNormalized() const
 		{
 			return normalized;
@@ -55,9 +60,14 @@ namespace Hazel
 			return ShaderDataTypeHelper::GetSize(type);
 		}
 
-		constexpr void SetOffset(size_t offset)
+		constexpr bool operator==(const VertexAttribute &other) const
 		{
-			this->offset = offset;
+			return type == other.type && offset == other.offset && normalized == other.normalized;
+		}
+
+		constexpr bool operator!=(const VertexAttribute &other) const
+		{
+			return !(*this == other);
 		}
 	};
 }

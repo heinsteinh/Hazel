@@ -22,21 +22,20 @@ namespace Hazel
 
 		framebuffer = graphicsContext.CreateFramebuffer({{GetWindow().GetSize()}});
 
-		rendererInfo.MaxIndexCount = 60000;
-		rendererInfo.MaxVertexCount = 40000;
-		rendererInfo.MaxTextureSlotCount = graphicsContext.GetMaxTextureSlotCount();
+		rendererInfo.GraphicsContext = &graphicsContext;
+		rendererInfo.TextureSlotCount = graphicsContext.GetTextureSlotCount();
 		sceneManager.OnAttach(*this, rendererInfo);
 
 		scene = sceneManager.CreateScene("Test");
 
 		auto square1 = scene->CreateEntity();
 		square1.AddComponent<TagComponent>("Square1");
-		spriteSheet = square1.AddComponent<SpriteComponent>(glm::vec4(1.0f), "assets\\textures\\SpriteSheet.png").Texture;
+		spriteSheet = square1.AddComponent<SpriteComponent>(Material(), "assets\\textures\\SpriteSheet.png").Material.Texture;
 		square1.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet.GetRegion().GetAspectRatio();
 
 		auto square2 = scene->CreateEntity();
 		square2.AddComponent<TagComponent>("Square2");
-		square2.AddComponent<SpriteComponent>(glm::vec4(1.0f));
+		square2.AddComponent<SpriteComponent>();
 		square2.AddComponent<TransformComponent>();
 
 		camera1 = scene->CreateEntity();

@@ -2,8 +2,6 @@
 
 #include <string>
 
-#include "Hazel/Rendering/Shaders/ShaderType.h"
-
 namespace Hazel
 {
 	class OpenGLShader
@@ -13,7 +11,7 @@ namespace Hazel
 
 	public:
 		OpenGLShader() = default;
-		OpenGLShader(ShaderType type, const std::string &source);
+		OpenGLShader(int type, const std::string &source);
 		OpenGLShader(const OpenGLShader &other) = delete;
 		OpenGLShader(OpenGLShader &&other) noexcept;
 		~OpenGLShader();

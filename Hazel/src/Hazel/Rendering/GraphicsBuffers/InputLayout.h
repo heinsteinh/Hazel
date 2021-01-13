@@ -1,25 +1,25 @@
 #pragma once
 
-#include "VertexAttributes.h"
+#include "VertexLayout.h"
 
 namespace Hazel
 {
 	class InputLayout
 	{
 	private:
-		VertexAttributes attributes;
+		VertexLayout vertexLayout;
 
 	public:
-		InputLayout(const VertexAttributes &attributes)
-			: attributes(attributes)
+		InputLayout(const VertexLayout &vertexLayout)
+			: vertexLayout(vertexLayout)
 		{
 		}
 
 		virtual ~InputLayout() = default;
 
-		constexpr const VertexAttributes &GetAttributes() const
+		const VertexLayout &GetVertexLayout() const
 		{
-			return attributes;
+			return vertexLayout;
 		}
 	};
 }

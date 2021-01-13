@@ -8,7 +8,7 @@ namespace Hazel
 		size_t size = 0;
 
 	public:
-		constexpr VertexBuffer(size_t size)
+		VertexBuffer(size_t size)
 			: size(size)
 		{
 		}
@@ -17,7 +17,7 @@ namespace Hazel
 
 		virtual void BufferData(const void *data, size_t size) = 0;
 
-		constexpr size_t GetSize() const
+		size_t GetSize() const
 		{
 			return size;
 		}

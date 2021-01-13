@@ -2,40 +2,61 @@
 
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "Hazel/Core/Geometry/Rectangle.h"
 #include "CameraView.h"
 #include "CameraProjection.h"
-#include "Hazel/Core/Geometry/Rectangle.h"
 
 namespace Hazel
 {
-	struct Camera
+	class Camera
 	{
-		Rectangle Viewport;
-		glm::mat4 View{1.0f};
-		glm::mat4 Projection{1.0f};
-		glm::mat4 ViewProjection{1.0f};
+	private:
+		Rectangle viewport;
+		glm::vec3 position{0.0f};
+		glm::mat4 view{1.0f};
+		glm::mat4 projection{1.0f};
+		glm::mat4 viewProjection{1.0f};
 
-		void RecomputeViewProjection()
+	public:
+		const Rectangle &GetViewport() const
 		{
-			ViewProjection = Projection * View;
+			return viewport;
+		}
+
+		void SetViewport(const Rectangle &viewport)
+		{
+			this->viewport = viewport;
+		}
+
+		const glm::mat4 &GetViewProjection() const
+		{
+			return viewProjection;
+		}
+
+		void SetViewProjection(const CameraProjection *projection, const Transform *transform)
+		{
+			position = transform ? transform->Translation : glm::vec3(0.0f);
+			view = transform ? CameraView::GetViewMatrix(*transform) : glm::mat4(1.0f);
+			this->projection = projection ? projection->ToMatrix() : glm::mat4(1.0f);
+			viewProjection = this->projection * view;
 		}
 
 		glm::vec3 GetWorldPosition(const glm::vec2 &screenPosition) const
 		{
 			return glm::unProject(
 				glm::vec3(screenPosition, 0.0f),
-				View,
-				Projection,
-				CameraView::GetProjectionViewport(Viewport));
+				view,
+				projection,
+				CameraView::GetProjectionViewport(viewport));
 		}
 
 		glm::vec2 GetScreenPosition(const glm::vec3 &worldPosition) const
 		{
 			return glm::project(
 				worldPosition,
-				View,
-				Projection,
-				CameraView::GetProjectionViewport(Viewport));
+				view,
+				projection,
+				CameraView::GetProjectionViewport(viewport));
 		}
 	};
 }

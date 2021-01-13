@@ -4,16 +4,15 @@
 
 #include "glm/glm.hpp"
 
-#include "Hazel/Rendering/Textures/SubTexture.h"
+#include "Hazel/Rendering/Materials/Material.h"
 #include "Hazel/Scene/Entity/Entity.h"
 
 namespace Hazel
 {
 	struct SpriteComponent
 	{
-		glm::vec4 Color{1.0f};
+		Material Material;
 		std::string TextureFilename;
-		SubTexture Texture;
 	};
 
 	template<>
@@ -21,7 +20,8 @@ namespace Hazel
 	{
 		if (!component.TextureFilename.empty())
 		{
-			component.Texture = entity.GetTextureManager().Load(component.TextureFilename);
+			component.Material.Texture = entity.GetTextureManager().Load(component.TextureFilename);
 		}
+		component.Material.Shader = entity.GetRenderer().GetDefaultShader();
 	}
 }

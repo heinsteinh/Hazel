@@ -18,7 +18,7 @@ namespace Hazel
 	public:
 		void Draw(Entity entity, SpriteComponent &component)
 		{
-			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
+			ImGui::ColorEdit4("Color", glm::value_ptr(component.Material.Color));
 			if (ImGui::TreeNodeEx("Texture", TreeNodeFlags::GetDefaultFlags()))
 			{
 				DrawTextureSource(entity, component);
@@ -34,7 +34,7 @@ namespace Hazel
 			if (ImGui::Button("Remove"))
 			{
 				component.TextureFilename.clear();
-				component.Texture.SetSource(nullptr);
+				component.Material.Texture.SetSource(nullptr);
 			}
 			ImGui::SameLine();
 			if (ImGui::Button("Browse..."))
@@ -43,20 +43,20 @@ namespace Hazel
 				if (dialog.GetOpenFilename())
 				{
 					component.TextureFilename = dialog.GetFilename();
-					component.Texture = entity.GetTextureManager().Load(component.TextureFilename);
+					component.Material.Texture = entity.GetTextureManager().Load(component.TextureFilename);
 				}
 			}
 		}
 
 		void DrawTextureRegion(SpriteComponent &component)
 		{
-			if (component.Texture)
+			if (component.Material.Texture)
 			{
 				ImGui::Text("Region");
-				auto region = component.Texture.GetRegion();
+				auto region = component.Material.Texture.GetRegion();
 				if (rectanglePanel.Draw(region))
 				{
-					component.Texture.SetRegion(region);
+					component.Material.Texture.SetRegion(region);
 				}
 			}
 		}

@@ -42,12 +42,12 @@ namespace Hazel
 			}
 		}
 
-		size_t GetMaxUniformBufferBindingCount() const
+		size_t GetUniformBufferBindingCount() const
 		{
 			return uniformBuffers.size();
 		}
 
-		void SetMaxUniformBufferBindingCount(size_t maxUniformBufferBindingCount)
+		void SetUniformBufferBindingCount(size_t maxUniformBufferBindingCount)
 		{
 			uniformBuffers.resize(maxUniformBufferBindingCount);
 		}
@@ -58,7 +58,7 @@ namespace Hazel
 			return uniformBuffers[binding];
 		}
 
-		void SetConstantBuffer(ConstantBuffer *constantBuffer, size_t binding)
+		void SetUniformBuffer(UniformBuffer *constantBuffer, size_t binding)
 		{
 			HZ_ASSERT(binding < uniformBuffers.size(), "Binding out of range");
 			auto &uniformBuffer = uniformBuffers[binding];

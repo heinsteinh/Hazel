@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 
-#include "Hazel/Rendering/Renderer2D/RendererStatistics.h"
+#include "Hazel/Rendering/Renderer/RendererStatistics.h"
 
 namespace Hazel
 {
@@ -12,9 +12,9 @@ namespace Hazel
 		void Draw(const RendererStatistics &statistics)
 		{
 			ImGui::Text("Draw Call: %zu", statistics.DrawCallCount);
-			ImGui::Text("Vertex: %zu (Max: %zu)", statistics.VertexCount, statistics.MaxVertexCount);
-			ImGui::Text("Index: %zu (Max: %zu)", statistics.IndexCount, statistics.MaxIndexCount);
-			ImGui::Text("Texture Slots: %zu (Max: %zu)", statistics.UsedTextureSlotCount, statistics.MaxTextureSlotCount);
+			ImGui::Text("Vertex: %zu", statistics.VertexCount);
+			ImGui::Text("Index: %zu", statistics.IndexCount);
+			ImGui::Text("Texture Slots: %zu (Max: %zu)", statistics.TextureCount, statistics.TextureSlotCount);
 		}
 	};
 }

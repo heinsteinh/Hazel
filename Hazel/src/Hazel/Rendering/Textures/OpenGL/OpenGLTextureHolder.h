@@ -10,12 +10,12 @@ namespace Hazel
 		std::vector<OpenGLTexture *> textures;
 
 	public:
-		size_t GetMaxTextureSlotCount() const
+		size_t GetTextureSlotCount() const
 		{
 			return textures.size();
 		}
 
-		void SetMaxTextureSlotCount(size_t maxTextureSlotCount)
+		void SetTextureSlotCount(size_t maxTextureSlotCount)
 		{
 			textures.resize(maxTextureSlotCount, nullptr);
 		}

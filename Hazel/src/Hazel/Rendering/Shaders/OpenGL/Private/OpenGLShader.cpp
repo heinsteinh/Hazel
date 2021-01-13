@@ -2,12 +2,10 @@
 
 #include "glad/glad.h"
 
-#include "OpenGLShaderType.h"
-
 namespace Hazel
 {
-	OpenGLShader::OpenGLShader(ShaderType type, const std::string &source)
-		: id(glCreateShader(OpenGLShaderType::GetShaderType(type)))
+	OpenGLShader::OpenGLShader(int type, const std::string &source)
+		: id(glCreateShader(type))
 	{
 		const char *data = source.c_str();
 		glShaderSource(id, 1, &data, nullptr);

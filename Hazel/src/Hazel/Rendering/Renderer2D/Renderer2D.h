@@ -1,24 +1,36 @@
 #pragma once
 
-#include "Hazel/Rendering/BatchRenderer/BatchRenderer.h"
+#include "Hazel/Rendering/Renderer/Renderer.h"
 
 namespace Hazel
 {
 	class Renderer2D
 	{
 	private:
-		BatchRenderer batchRenderer;
+		Renderer renderer;
+		const std::shared_ptr<const Mesh> squareMesh;
+		const std::shared_ptr<MaterialShader> defaultShader;
 
 	public:
-		Renderer2D(GraphicsContext &graphicsContext, const RendererInfo &info);
+		Renderer2D(const RendererInfo &info);
 
-		void BeginScene(const glm::mat4 &viewProjection);
-		void Render(const DrawData &drawData);
+		void BeginScene(const Camera &camera);
+		void Submit(const RenderCommand &renderCommand);
 		void EndScene();
+
+		const Mesh &GetSquareMesh() const
+		{
+			return *squareMesh;
+		}
+
+		const std::shared_ptr<MaterialShader> &GetDefaultShader() const
+		{
+			return defaultShader;
+		}
 
 		const RendererStatistics &GetStatistics() const
 		{
-			return batchRenderer.GetStatistics();
+			return renderer.GetStatistics();
 		}
 	};
 }

@@ -12,17 +12,17 @@ namespace Hazel
 		static void Serialize(YamlDocument &document, const SpriteComponent &value)
 		{
 			document.BeginMap()
-				.Write("Color", value.Color)
+				.Write("Color", value.Material.Color)
 				.Write("TextureFilename", value.TextureFilename)
-				.Write("TextureRegion", value.Texture.GetRegion())
+				.Write("TextureRegion", value.Material.Texture.GetRegion())
 				.EndMap();
 		}
 
 		static void Deserialize(const YamlValue &source, SpriteComponent &value)
 		{
-			source["Color"].Extract(value.Color);
+			source["Color"].Extract(value.Material.Color);
 			source["TextureFilename"].Extract(value.TextureFilename);
-			value.Texture.SetRegion(source["TextureRegion"].ValueOr(value.Texture.GetRegion()));
+			value.Material.Texture.SetRegion(source["TextureRegion"].ValueOr(value.Material.Texture.GetRegion()));
 		}
 	};
 

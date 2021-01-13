@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Hazel/Rendering/GraphicsBuffers/ConstantBuffer.h"
+#include "Hazel/Rendering/GraphicsBuffers/UniformBuffer.h"
 
 namespace Hazel
 {
-	class OpenGLUniformBuffer : public ConstantBuffer
+	class OpenGLUniformBuffer : public UniformBuffer
 	{
 	private:
 		uint32_t id = 0;

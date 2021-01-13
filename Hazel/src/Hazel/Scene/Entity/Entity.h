@@ -50,6 +50,11 @@ namespace Hazel
 			return *context->ManagerContext->TextureManager;
 		}
 
+		ShaderManager &GetShaderManager() const
+		{
+			return *context->ManagerContext->ShaderManager;
+		}
+
 		const Camera &GetCamera() const
 		{
 			return context->Camera;

@@ -66,7 +66,7 @@ namespace Hazel
 				serializedComponent.Extract(component);
 				if (!component.TextureFilename.empty())
 				{
-					component.Texture = entity.GetTextureManager().Load(component.TextureFilename);
+					component.Material.Texture = entity.GetTextureManager().Load(component.TextureFilename);
 				}
 			}
 		}

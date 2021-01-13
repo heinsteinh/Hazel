@@ -13,6 +13,6 @@ namespace Hazel
 	template<>
 	inline void EntityListener::OnComponentAdded(Entity entity, CameraComponent &component)
 	{
-		component.Projection.SetAspectRatio(entity.GetCamera().Viewport.GetAspectRatio());
+		component.Projection.SetAspectRatio(entity.GetCamera().GetViewport().GetAspectRatio());
 	};
 }

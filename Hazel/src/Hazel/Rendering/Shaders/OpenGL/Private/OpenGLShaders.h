@@ -9,7 +9,7 @@ namespace Hazel
 	class OpenGLShaders
 	{
 	private:
-		std::array<OpenGLShader, static_cast<size_t>(ShaderType::Count)> shaders;
+		std::array<OpenGLShader, 2> shaders;
 
 	public:
 		void Attach(OpenGLProgram &program) const
@@ -34,24 +34,24 @@ namespace Hazel
 			}
 		}
 
-		constexpr const OpenGLShader &Get(ShaderType shaderType) const
+		const OpenGLShader &GetVertexShader() const
 		{
-			return shaders[static_cast<size_t>(shaderType)];
+			return shaders[0];
 		}
 
-		constexpr OpenGLShader &Get(ShaderType shaderType)
+		void AddVertexShader(OpenGLShader &&shader)
 		{
-			return shaders[static_cast<size_t>(shaderType)];
+			shaders[0] = std::move(shader);
 		}
 
-		constexpr const OpenGLShader &operator[](ShaderType shaderType) const
+		const OpenGLShader &GetPixelShader() const
 		{
-			return Get(shaderType);
+			return shaders[1];
 		}
 
-		constexpr OpenGLShader &operator[](ShaderType shaderType)
+		void AddPixelShader(OpenGLShader &&shader)
 		{
-			return Get(shaderType);
+			shaders[1] = std::move(shader);
 		}
 
 		auto begin() const

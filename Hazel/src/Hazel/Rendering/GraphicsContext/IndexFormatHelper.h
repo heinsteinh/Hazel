@@ -21,9 +21,28 @@ namespace Hazel
 			return 0;
 		}
 
-		static constexpr size_t GetSize(size_t indexCount, IndexFormat indexFormat)
+		template<typename IndexType>
+		static constexpr IndexFormat GetIndexFormat()
 		{
-			return indexCount * GetSize(indexFormat);
+			static_assert(false, "Invalid index type");
+		}
+
+		template<>
+		static constexpr IndexFormat GetIndexFormat<uint8_t>()
+		{
+			return IndexFormat::UInt8;
+		}
+
+		template<>
+		static constexpr IndexFormat GetIndexFormat<uint16_t>()
+		{
+			return IndexFormat::UInt16;
+		}
+
+		template<>
+		static constexpr IndexFormat GetIndexFormat<uint32_t>()
+		{
+			return IndexFormat::UInt32;
 		}
 	};
 }

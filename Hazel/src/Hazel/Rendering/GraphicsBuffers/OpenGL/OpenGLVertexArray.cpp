@@ -8,7 +8,7 @@
 
 namespace Hazel
 {
-	OpenGLVertexArray::OpenGLVertexArray(const VertexAttributes &vertexAttributes)
+	OpenGLVertexArray::OpenGLVertexArray(const VertexLayout &vertexAttributes)
 		: InputLayout(vertexAttributes)
 	{
 		glCreateVertexArrays(1, &id);
@@ -33,18 +33,18 @@ namespace Hazel
 
 	void OpenGLVertexArray::AddCurrentVertexBuffer()
 	{
-		auto &vertexAttributes = GetAttributes();
-		for (size_t i = 0; i < vertexAttributes.GetSize(); i++)
+		auto &layout = GetVertexLayout();
+		for (size_t i = 0; i < layout.GetAttributeCount(); i++)
 		{
 			int index = static_cast<int>(i);
-			auto &attribute = vertexAttributes.GetAttribute(i);
+			auto &attribute = layout.GetAttribute(i);
 			glEnableVertexArrayAttrib(id, index);
 			glVertexAttribPointer(
 				index,
 				static_cast<int>(attribute.GetComponentCount()),
 				OpenGLDataType::GetDataType(attribute.GetComponentType()),
 				attribute.IsNormalized() ? GL_TRUE : GL_FALSE,
-				static_cast<int>(vertexAttributes.GetStride()),
+				static_cast<int>(layout.GetStride()),
 				reinterpret_cast<const void *>(attribute.GetOffset()));
 		}
 	}

@@ -7,7 +7,7 @@
 namespace Hazel
 {
 	OpenGLUniformBuffer::OpenGLUniformBuffer(size_t size)
-		: ConstantBuffer(size)
+		: UniformBuffer(size)
 	{
 		glCreateBuffers(1, &id);
 		glNamedBufferData(id, size, nullptr, GL_DYNAMIC_DRAW);

@@ -41,6 +41,11 @@ namespace Hazel
 			return *context.ManagerContext->TextureManager;
 		}
 
+		ShaderManager &GetShaderManager() const
+		{
+			return *context.ManagerContext->ShaderManager;
+		}
+
 		Entity GetPrimaryCamera()
 		{
 			return {context.PrimaryCamera, context};
