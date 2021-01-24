@@ -68,9 +68,9 @@ namespace Hazel
 			return static_cast<bool>(texture);
 		}
 
-		operator Texture *() const
+		operator const std::shared_ptr<Texture> &() const
 		{
-			return texture.get();
+			return texture;
 		}
 
 	private:

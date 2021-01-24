@@ -12,7 +12,7 @@ namespace Hazel
 		{
 			scene.ForEach<SpriteComponent>([&](auto entity, auto &component)
 			{
-				SpriteRenderer::RenderSprite(scene.GetRenderer(), entity, component);
+				SpriteRenderer::RenderSprite(entity, component);
 			});
 		}
 	};

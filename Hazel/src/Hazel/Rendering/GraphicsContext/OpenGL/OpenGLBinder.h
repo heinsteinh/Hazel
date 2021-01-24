@@ -1,30 +1,53 @@
 #pragma once
 
-#include "Hazel/Core/Exceptions/AssertionException.h"
+#include <memory>
+
+#include "Hazel/Core/Utils/StaticCast.h"
 
 namespace Hazel
 {
 	class OpenGLBinder
 	{
 	public:
-		template<typename BaseType, typename OpenGLType>
-		static void Bind(OpenGLType *&target, BaseType *source)
+		template<typename OpenGLType, typename BaseType>
+		static bool Bind(std::weak_ptr<OpenGLType> &currentObject, const std::shared_ptr<BaseType> &newObject)
 		{
-			if (target == source)
+			return Bind(currentObject, StaticCast::Convert<OpenGLType>(newObject));
+		}
+
+		template<typename OpenGLType>
+		static bool Bind(std::weak_ptr<OpenGLType> &currentObject, const std::shared_ptr<OpenGLType> &newObject)
+		{
+			auto strongRef = currentObject.lock();
+			auto bound = Bind(strongRef, newObject);
+			currentObject = strongRef;
+			return bound;
+		}
+
+		template<typename OpenGLType, typename BaseType>
+		static bool Bind(std::shared_ptr<OpenGLType> &currentObject, const std::shared_ptr<BaseType> &newObject)
+		{
+			return Bind(currentObject, StaticCast::Convert<OpenGLType>(newObject));
+		}
+
+		template<typename OpenGLType>
+		static bool Bind(std::shared_ptr<OpenGLType> &currentObject, const std::shared_ptr<OpenGLType> &newObject)
+		{
+			if (newObject != currentObject)
 			{
-				return;
+				if (newObject)
+				{
+					newObject->Bind();
+					currentObject = newObject;
+					return true;
+				}
+				else
+				{
+					currentObject->Unbind();
+					currentObject = nullptr;
+				}
 			}
-			if (source)
-			{
-				HZ_ASSERT(typeid(*source) == typeid(OpenGLType), "Not an OpenGL type.");
-				target = static_cast<OpenGLType *>(source);
-				target->Bind();
-			}
-			else
-			{
-				target->Unbind();
-				target = nullptr;
-			}
+			return false;
 		}
 	};
 }

@@ -3,27 +3,14 @@
 #include "glad/glad.h"
 
 #include "Hazel/Core/Logging/Log.h"
-#include "Private/OpenGLTextureFiltering.h"
-#include "Private/OpenGLTextureWrapping.h"
-#include "Private/OpenGLTextureFormat.h"
+#include "Private/OpenGLTextureFactory.h"
 
 namespace Hazel
 {
 	OpenGLTexture::OpenGLTexture(const TextureInfo &info)
-		: Texture(info)
+		: Texture(OpenGLTextureFactory::CreateTexture(id, info), info)
 	{
-		glCreateTextures(GL_TEXTURE_2D, 1, &id);
 		Log::Debug("Texture created with id {}.", id);
-		glTextureStorage2D(
-			id,
-			1,
-			OpenGLTextureFormat::GetStorageFormat(info.Format),
-			static_cast<int>(info.Size.x),
-			static_cast<int>(info.Size.y));
-		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, OpenGLTextureFiltering::GetTextureFiltering(info.MinFilter));
-		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, OpenGLTextureFiltering::GetTextureFiltering(info.MagFilter));
-		glTextureParameteri(id, GL_TEXTURE_WRAP_S, OpenGLTextureWrapping::GetTextureWrapping(info.SWrap));
-		glTextureParameteri(id, GL_TEXTURE_WRAP_T, OpenGLTextureWrapping::GetTextureWrapping(info.TWrap));
 	}
 
 	OpenGLTexture::~OpenGLTexture()
@@ -32,9 +19,14 @@ namespace Hazel
 		Log::Info("Texture {} destroyed.", id);
 	}
 
-	void OpenGLTexture::Bind(size_t slot) const
+	void OpenGLTexture::Bind() const
 	{
-		glBindTextureUnit(static_cast<uint32_t>(slot), id);
+		glBindTextureUnit(slot, id);
+	}
+
+	void OpenGLTexture::Unbind() const
+	{
+		glBindTextureUnit(slot, 0);
 	}
 
 	void OpenGLTexture::BufferData(const void *data)
@@ -49,10 +41,5 @@ namespace Hazel
 			OpenGLTextureFormat::GetTextureFormat(GetFormat()),
 			GL_UNSIGNED_BYTE,
 			data);
-	}
-
-	void *OpenGLTexture::GetHandle() const
-	{
-		return reinterpret_cast<void *>(static_cast<size_t>(id));
 	}
 }

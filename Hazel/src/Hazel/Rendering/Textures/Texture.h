@@ -1,25 +1,31 @@
 #pragma once
 
-#include "TextureInfo.h"
 #include "Hazel/Core/Geometry/Size.h"
+#include "TextureInfo.h"
 
 namespace Hazel
 {
 	class Texture
 	{
 	private:
+		void *handle = nullptr;
 		TextureInfo info;
 
 	public:
-		Texture(const TextureInfo &info)
-			: info(info)
+		Texture(void *handle, const TextureInfo &info)
+			: handle(handle),
+			info(info)
 		{
 		}
 
 		virtual ~Texture() = default;
 
 		virtual void BufferData(const void *data) = 0;
-		virtual void *GetHandle() const = 0;
+
+		void *GetHandle() const
+		{
+			return handle;
+		}
 
 		const TextureInfo &GetInfo() const
 		{

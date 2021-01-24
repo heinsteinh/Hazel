@@ -1,34 +1,26 @@
 #pragma once
 
 #include "RendererInfo.h"
-#include "Hazel/Core/Camera/Camera.h"
-#include "RenderQueue.h"
-#include "Private/RenderCommandHandler.h"
+#include "RendererException.h"
+#include "Private/RendererContext.h"
 
 namespace Hazel
 {
 	class Renderer
 	{
 	private:
-		RenderQueue renderQueue;
-		RenderCommandHandler commandHandler;
+		RendererContext context;
 
 	public:
 		Renderer(const RendererInfo &info);
 
-		void BeginScene(const Camera &camera);
-		void Submit(const RenderCommand &renderCommand);
+		void BeginScene(const Camera &camera, const std::shared_ptr<Framebuffer> &framebuffer = nullptr);
+		void Submit(const RenderCommand &command);
 		void EndScene();
 
 		const RendererStatistics &GetStatistics() const
 		{
-			return commandHandler.GetStatistics();
-		}
-
-		template<typename FunctorType>
-		void SortRenderQueue(FunctorType functor)
-		{
-			renderQueue.Sort(functor);
+			return context.Statistics;
 		}
 	};
 }

@@ -2,8 +2,8 @@
 
 #include "glm/glm.hpp"
 
+#include "Hazel/Rendering/Shaders/Shader.h"
 #include "Hazel/Rendering/Textures/SubTexture.h"
-#include "MaterialShader.h"
 
 namespace Hazel
 {
@@ -11,6 +11,6 @@ namespace Hazel
 	{
 		glm::vec4 Color{1.0f};
 		SubTexture Texture;
-		std::shared_ptr<MaterialShader> Shader;
+		std::shared_ptr<Shader> Shader;
 	};
 }

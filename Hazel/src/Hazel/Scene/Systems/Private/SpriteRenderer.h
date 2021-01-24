@@ -11,13 +11,16 @@ namespace Hazel
 	class SpriteRenderer
 	{
 	public:
-		static void RenderSprite(Renderer2D &renderer, Entity entity, const SpriteComponent &sprite)
+		static void RenderSprite(Entity entity, const SpriteComponent &sprite)
 		{
+			auto &renderer = entity.GetRenderer();
 			RenderCommand command;
-			command.Mesh = &entity.GetRenderer().GetSquareMesh();
-			command.Material = &sprite.Material;
+			command.Mesh = &renderer.GetSquareMesh();
 			auto transform = entity.TryGetComponent<TransformComponent>();
 			command.Transform = transform ? &transform->Transform : nullptr;
+			command.Color = &sprite.Material.Color;
+			command.Texture = &sprite.Material.Texture;
+			command.Shader = &sprite.Material.Shader;
 			renderer.Submit(command);
 		}
 	};

@@ -23,12 +23,6 @@ namespace Hazel
 			return rate;
 		}
 
-		void SetRate(float rate)
-		{
-			this->rate = rate;
-			accumulator = 0.0f;
-		}
-
 		int GetCount(float deltaTime)
 		{
 			float count = rate * deltaTime;
@@ -40,6 +34,11 @@ namespace Hazel
 				accumulator -= 1.0f;
 			}
 			return static_cast<int>(result);
+		}
+
+		operator float() const
+		{
+			return rate;
 		}
 	};
 }

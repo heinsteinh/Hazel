@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Rendering/Meshes/Vertex.h"
+#include "Hazel/Rendering/Mesh/Vertex.h"
 #include "Hazel/Rendering/Renderer/RenderCommand.h"
 
 namespace Hazel
@@ -8,54 +8,54 @@ namespace Hazel
 	class RendererVertexBuilder
 	{
 	public:
-		static void AddVertices(RendererVertices &vertices, const RenderCommand &command, size_t textureSlot)
+		static void AddVertices(RendererVertices &vertices, const RenderCommand &object, size_t textureSlot)
 		{
-			command.Mesh->Vertices.ForEach([&](ConstantVertex vertex)
+			object.Mesh->Vertices.ForEach([&](ConstantVertex vertex)
 			{
-				BuildVertex(vertices.Add(vertex), command, textureSlot);
+				BuildVertex(vertices.Add(vertex), object, textureSlot);
 			});
 		}
 
-		static void BuildVertex(Vertex vertex, const RenderCommand &command, size_t textureSlot)
+		static void BuildVertex(Vertex vertex, const RenderCommand &object, size_t textureSlot)
 		{
-			ApplyTransform(vertex, *command.Mesh, command.Transform);
-			UpdateColor(vertex, *command.Mesh, command.Material->Color);
-			UpdateTextureCoordinates(vertex, *command.Mesh, command.Material->Texture);
-			UpdateTextureSlot(vertex, *command.Mesh, textureSlot);
+			ApplyTransform(vertex, *object.Mesh, object.Transform);
+			UpdateColor(vertex, *object.Mesh, object.Color);
+			UpdateTextureCoordinates(vertex, *object.Mesh, object.Texture);
+			UpdateTextureSlot(vertex, *object.Mesh, textureSlot);
 		}
 
 	private:
 		static void ApplyTransform(Vertex vertex, const Mesh &mesh, const Transform *transform)
 		{
-			if (transform && mesh.PositionIndex)
+			if (transform && mesh.InputMap.PositionIndex)
 			{
-				auto &position = vertex.GetAttribute<glm::vec3>(*mesh.PositionIndex);
+				auto &position = vertex.GetAttribute<glm::vec3>(*mesh.InputMap.PositionIndex);
 				position = transform->Apply(position);
 			}
 		}
 
-		static void UpdateColor(Vertex vertex, const Mesh &mesh, const glm::vec4 &color)
+		static void UpdateColor(Vertex vertex, const Mesh &mesh, const glm::vec4 *color)
 		{
-			if (mesh.ColorIndex)
+			if (color && mesh.InputMap.ColorIndex)
 			{
-				vertex.GetAttribute<glm::vec4>(*mesh.ColorIndex) *= color;
+				vertex.GetAttribute<glm::vec4>(*mesh.InputMap.ColorIndex) *= *color;
 			}
 		}
 
-		static void UpdateTextureCoordinates(Vertex vertex, const Mesh &mesh, const SubTexture &texture)
+		static void UpdateTextureCoordinates(Vertex vertex, const Mesh &mesh, const SubTexture *texture)
 		{
-			if (mesh.TextureCoordinatesIndex)
+			if (texture && mesh.InputMap.TextureCoordinatesIndex)
 			{
-				auto &coordinates = vertex.GetAttribute<glm::vec2>(*mesh.TextureCoordinatesIndex);
-				coordinates = texture.GetSourceCoordinates(coordinates);
+				auto &coordinates = vertex.GetAttribute<glm::vec2>(*mesh.InputMap.TextureCoordinatesIndex);
+				coordinates = texture->GetSourceCoordinates(coordinates);
 			}
 		}
 
 		static void UpdateTextureSlot(Vertex vertex, const Mesh &mesh, size_t textureSlot)
 		{
-			if (mesh.TextureSlotIndex)
+			if (mesh.InputMap.TextureSlotIndex)
 			{
-				vertex.GetAttribute<float>(*mesh.TextureSlotIndex) = static_cast<float>(textureSlot);
+				vertex.GetAttribute<float>(*mesh.InputMap.TextureSlotIndex) = static_cast<float>(textureSlot);
 			}
 		}
 	};

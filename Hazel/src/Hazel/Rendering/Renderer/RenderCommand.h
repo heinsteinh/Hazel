@@ -4,7 +4,7 @@
 
 #include "glm/glm.hpp"
 
-#include "Hazel/Rendering/Meshes/Mesh.h"
+#include "Hazel/Rendering/Mesh/Mesh.h"
 #include "Hazel/Core/Geometry/Transform.h"
 #include "Hazel/Rendering/Materials/Material.h"
 
@@ -14,6 +14,8 @@ namespace Hazel
 	{
 		const Mesh *Mesh = nullptr;
 		const Transform *Transform = nullptr;
-		const Material *Material = nullptr;
+		const glm::vec4 *Color = nullptr;
+		const SubTexture *Texture = nullptr;
+		const std::shared_ptr<Shader> *Shader = nullptr;
 	};
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "glm/glm.hpp"
+
 #include "TextureFormat.h"
 #include "TextureFiltering.h"
 #include "TextureWrapping.h"

@@ -25,7 +25,7 @@ namespace Hazel
 	private:
 		static void SetupWindow(ApplicationInfo &info, ApplicationContext &context)
 		{
-			context.GraphicsApi = GraphicsApiFactory::Create(info.GraphicsApi);
+			context.GraphicsApi = GraphicsApiFactory::CreateApi(info.GraphicsApi);
 			info.WindowInfo.GraphicsApi = context.GraphicsApi.get();
 			context.Window = std::make_unique<Window>(info.WindowInfo);
 			context.Window->GetGraphicsContext().SetClearColor(info.ClearColor);

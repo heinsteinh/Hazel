@@ -2,7 +2,7 @@
 
 #include "glad/glad.h"
 
-#include "Hazel/Rendering/GraphicsContext/PrimitiveTopology.h"
+#include "Hazel/Rendering/Mesh/PrimitiveTopology.h"
 
 namespace Hazel
 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Hazel/Rendering/GraphicsContext/IndexFormatHelper.h"
-#include "Hazel/Rendering/Meshes/ByteArray.h"
+#include "Hazel/Rendering/Mesh/IndexFormatHelper.h"
+#include "Hazel/Rendering/Mesh/ByteArray.h"
 
 namespace Hazel
 {

@@ -24,7 +24,6 @@ namespace Hazel
 		auto &graphicsContext = layer.GetGraphicsContext();
 		context.Renderer = std::make_unique<Renderer2D>(rendererInfo);
 		context.TextureManager = std::make_unique<TextureManager>(graphicsContext);
-		context.ShaderManager = std::make_unique<ShaderManager>(graphicsContext);
 	}
 
 	void SceneManager::OnUpdate(Scene &scene)
@@ -34,11 +33,11 @@ namespace Hazel
 		ParticleSystem::OnUpdate(scene);
 	}
 
-	void SceneManager::OnRender(Scene &scene)
+	void SceneManager::OnRender(Scene &scene, const std::shared_ptr<Framebuffer> &framebuffer)
 	{
 		if (scene.GetPrimaryCamera().IsValid())
 		{
-			context.Renderer->BeginScene(scene.GetCamera());
+			context.Renderer->BeginScene(scene.GetCamera(), framebuffer);
 			SpriteRenderingSystem::OnRender(scene);
 			ParticleSystem::OnRender(scene);
 			context.Renderer->EndScene();

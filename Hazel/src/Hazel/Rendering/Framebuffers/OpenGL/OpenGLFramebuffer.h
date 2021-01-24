@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "Hazel/Rendering/Framebuffers/Framebuffer.h"
 #include "Hazel/Rendering/Textures/OpenGL/OpenGLTexture.h"
 
@@ -16,18 +18,18 @@ namespace Hazel
 		OpenGLFramebuffer(const FramebufferInfo &info);
 		virtual ~OpenGLFramebuffer();
 
-		void Bind() const;
-		void Unbind() const;
 		uint32_t GetStatus() const;
 		bool IsComplete() const;
 		const std::string &GetStatusName() const;
 		void SetColorAttachment(const std::shared_ptr<OpenGLTexture> &colorAttachment);
 		void SetDepthAttachment(const std::shared_ptr<OpenGLTexture> &depthAttachment);
+		void Bind() const;
+		void Unbind() const;
 
-		virtual std::shared_ptr<Texture> GetColorAttachment() const override;
-		virtual std::shared_ptr<Texture> GetDepthAttachment() const override;
+		virtual Texture &GetColorAttachment() const override;
+		virtual Texture &GetDepthAttachment() const override;
 
-		constexpr uint32_t GetId() const
+		uint32_t GetId() const
 		{
 			return id;
 		}

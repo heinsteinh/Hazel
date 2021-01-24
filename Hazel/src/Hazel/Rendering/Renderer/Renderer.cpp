@@ -1,29 +1,30 @@
 #include "Renderer.h"
 
+#include "Private/RendererShaderManager.h"
+#include "Private/RendererDrawCall.h"
+#include "Private/RendererSubmission.h"
+
 namespace Hazel
 {
 	Renderer::Renderer(const RendererInfo &info)
-		: commandHandler(info)
+		: context(info)
 	{
 	}
 
-	void Renderer::BeginScene(const Camera &camera)
+	void Renderer::BeginScene(const Camera &camera, const std::shared_ptr<Framebuffer> &framebuffer)
 	{
-		commandHandler.SetCamera(camera);
+		context.Statistics.Reset();
+		context.Command.Framebuffer = framebuffer;
+		RendererShaderManager::UpdateCamera(context, camera);
 	}
 
-	void Renderer::Submit(const RenderCommand &renderCommand)
+	void Renderer::Submit(const RenderCommand &command)
 	{
-		renderQueue.Add(renderCommand);
+		RendererSubmission::Submit(context, command);
 	}
 
 	void Renderer::EndScene()
 	{
-		for (const auto &command : renderQueue)
-		{
-			commandHandler.Submit(command);
-		}
-		commandHandler.Flush();
-		renderQueue.Clear();
+		RendererDrawCall::Flush(context);
 	}
 }

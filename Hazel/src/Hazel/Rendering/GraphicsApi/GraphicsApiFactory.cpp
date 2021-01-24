@@ -5,7 +5,7 @@
 
 namespace Hazel
 {
-	std::unique_ptr<GraphicsApi> GraphicsApiFactory::Create(AvailableGraphicsApi graphicsApi)
+	std::unique_ptr<GraphicsApi> GraphicsApiFactory::CreateApi(AvailableGraphicsApi graphicsApi)
 	{
 		switch (graphicsApi)
 		{
@@ -13,5 +13,6 @@ namespace Hazel
 			return std::make_unique<OpenGL>();
 		}
 		HZ_ASSERT(false, "Invalid API");
+		return nullptr;
 	}
 }

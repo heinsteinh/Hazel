@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Hazel/Rendering/Renderer/RendererInfo.h"
-#include "Hazel/Rendering/Renderer/RendererStatistics.h"
 #include "Hazel/Rendering/Renderer/RenderCommand.h"
 #include "RendererIndices.h"
 #include "RendererVertices.h"
@@ -17,34 +16,28 @@ namespace Hazel
 		RendererIndices indices;
 		RendererVertices vertices;
 		RendererTextures textures;
-		std::shared_ptr<IndexBuffer> indexBuffer;
-		std::shared_ptr<VertexBuffer> vertexBuffer;
 
 	public:
 		RendererBatch(const RendererInfo &info)
 			: indices(info.IndexBufferSize),
 			vertices(info.VertexBufferSize),
-			textures(*info.GraphicsContext, info.TextureSlotCount),
-			indexBuffer(info.GraphicsContext->CreateIndexBuffer(info.IndexBufferSize)),
-			vertexBuffer(info.GraphicsContext->CreateVertexBuffer(info.VertexBufferSize))
+			textures(*info.GraphicsContext, info.TextureSlotCount)
 		{
-			info.GraphicsContext->SetIndexBuffer(indexBuffer.get());
-			info.GraphicsContext->SetVertexBuffer(vertexBuffer.get());
 		}
 
-		size_t GetIndexCount() const
+		const RendererIndices &GetIndices() const
 		{
-			return indices.GetIndexCount();
+			return indices;
 		}
 
-		size_t GetVertexCount() const
+		const RendererVertices &GetVertices() const
 		{
-			return vertices.GetVertexCount();
+			return vertices;
 		}
 
-		size_t GetTextureCount() const
+		const RendererTextures &GetTextures() const
 		{
-			return textures.GetTextureCount();
+			return textures;
 		}
 
 		void SetIndexFormat(IndexFormat indexFormat)
@@ -57,27 +50,31 @@ namespace Hazel
 			vertices.SetVertexLayout(vertexLayout);
 		}
 
+		bool IsEmpty() const
+		{
+			return indices.GetIndexCount() == 0;
+		}
+
+		bool CanContain(const Mesh &mesh)
+		{
+			return indices.CanContain(mesh.Indices.GetIndexCount())
+				&& vertices.CanContain(mesh.Vertices.GetVertexCount());
+		}
+
 		bool Add(const RenderCommand &command)
 		{
 			if (!CanContain(*command.Mesh))
 			{
 				return false;
 			}
-			auto textureSlot = textures.Add(command.Material->Texture);
+			auto textureSlot = textures.Add(command.Texture);
 			if (!textureSlot)
 			{
 				return false;
 			}
-			AddIndices(command.Mesh->Indices);
-			AddVertices(command, *textureSlot);
+			RendererIndexBuilder::AddIndices(indices, command.Mesh->Indices, vertices.GetVertexCount());
+			RendererVertexBuilder::AddVertices(vertices, command, *textureSlot);
 			return true;
-		}
-
-		void BufferData()
-		{
-			indexBuffer->BufferData(indices.GetData(), indices.GetSize());
-			vertexBuffer->BufferData(vertices.GetData(), vertices.GetSize());
-			textures.Bind();
 		}
 
 		void Clear()
@@ -85,23 +82,6 @@ namespace Hazel
 			indices.Clear();
 			vertices.Clear();
 			textures.Clear();
-		}
-
-	private:
-		bool CanContain(const Mesh &mesh)
-		{
-			return indices.CanContain(mesh.Indices.GetIndexCount())
-				&& vertices.CanContain(mesh.Vertices.GetVertexCount());
-		}
-
-		void AddIndices(const IndexArray &indices)
-		{
-			RendererIndexBuilder::AddIndices(indices, this->indices, vertices.GetVertexCount());
-		}
-
-		void AddVertices(const RenderCommand &command, size_t textureSlot)
-		{
-			RendererVertexBuilder::AddVertices(vertices, command, textureSlot);
 		}
 	};
 }

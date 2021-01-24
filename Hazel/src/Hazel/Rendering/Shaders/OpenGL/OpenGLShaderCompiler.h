@@ -5,43 +5,26 @@
 #include "spdlog/fmt/fmt.h"
 #include "glad/glad.h"
 
+#include "OpenGLShader.h"
 #include "OpenGLProgram.h"
-#include "Private/OpenGLShaders.h"
+#include "Private/OpenGLShaderModules.h"
 
 namespace Hazel
 {
 	class OpenGLShaderCompiler
 	{
 	public:
-		static std::shared_ptr<OpenGLProgram> Compile(const ShaderInfo &info)
+		static std::shared_ptr<OpenGLShader> Compile(const ShaderInfo &info)
 		{
 			if (info.VertexSource.empty() || info.PixelSource.empty())
 			{
 				throw ShaderCompilationException("The shader must at least contain vertex and pixel sources.");
 			}
-			return Link(CompileShaders(info));
+			return std::make_shared<OpenGLShader>(info, Link(CompileShaders(info)));
 		}
 
 	private:
-		static OpenGLShaders CompileShaders(const ShaderInfo &info)
-		{
-			OpenGLShaders shaders;
-			shaders.AddVertexShader(CompileShader(GL_VERTEX_SHADER, info.VertexSource));
-			shaders.AddPixelShader(CompileShader(GL_FRAGMENT_SHADER, info.PixelSource));
-			return shaders;
-		}
-
-		static OpenGLShader CompileShader(int shaderType, const std::string &source)
-		{
-			OpenGLShader shader(shaderType, source);
-			if (!shader.IsCompiled())
-			{
-				throw ShaderCompilationException(fmt::format("Shader compilation failed: {}", shader.GetInfoLog()));
-			}
-			return shader;
-		}
-
-		static std::shared_ptr<OpenGLProgram> Link(const OpenGLShaders &shaders)
+		static std::shared_ptr<OpenGLProgram> Link(const OpenGLShaderModules &shaders)
 		{
 			auto program = std::make_shared<OpenGLProgram>();
 			shaders.Attach(*program);
@@ -52,6 +35,24 @@ namespace Hazel
 			}
 			shaders.Detach(*program);
 			return program;
+		}
+
+		static OpenGLShaderModules CompileShaders(const ShaderInfo &info)
+		{
+			OpenGLShaderModules shaders;
+			shaders.AddVertexShader(CompileShader(GL_VERTEX_SHADER, info.VertexSource));
+			shaders.AddPixelShader(CompileShader(GL_FRAGMENT_SHADER, info.PixelSource));
+			return shaders;
+		}
+
+		static OpenGLShaderModule CompileShader(int shaderType, const std::string &source)
+		{
+			OpenGLShaderModule shader(shaderType, source);
+			if (!shader.IsCompiled())
+			{
+				throw ShaderCompilationException(fmt::format("Shader compilation failed: {}", shader.GetInfoLog()));
+			}
+			return shader;
 		}
 	};
 }

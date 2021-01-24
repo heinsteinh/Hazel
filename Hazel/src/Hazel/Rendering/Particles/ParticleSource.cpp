@@ -32,12 +32,12 @@ namespace Hazel
 
 	float ParticleSource::GetEmissionRate() const
 	{
-		return rate.GetRate();
+		return rate;
 	}
 
 	void ParticleSource::SetEmissionRate(float rate)
 	{
-		this->rate.SetRate(rate);
+		this->rate = rate;
 	}
 
 	void ParticleSource::EmitParticles(const glm::vec3 &position, const ParticleInfo &info, int count)

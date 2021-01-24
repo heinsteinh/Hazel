@@ -2,7 +2,7 @@
 
 #include "glm/glm.hpp"
 
-#include "Hazel/Rendering/GraphicsBuffers/VertexLayout.h"
+#include "Hazel/Rendering/Mesh/VertexLayout.h"
 
 namespace Hazel
 {

@@ -1,30 +1,34 @@
 #pragma once
 
-#include "Hazel/Rendering/Shaders/Shader.h"
-#include "Private/OpenGLShader.h"
+#include "Private/OpenGLShaderModule.h"
 
 namespace Hazel
 {
-	class OpenGLProgram : public Shader
+	class OpenGLProgram
 	{
 	private:
 		uint32_t id = 0;
 
 	public:
 		OpenGLProgram();
-		virtual ~OpenGLProgram();
+		~OpenGLProgram();
 
-		void Attach(const OpenGLShader &shader);
-		void Detach(const OpenGLShader &shader);
+		void Attach(const OpenGLShaderModule &shader);
+		void Detach(const OpenGLShaderModule &shader);
 		void Link();
 		bool IsLinked() const;
 		std::string GetInfoLog() const;
 		void Bind() const;
 		void Unbind() const;
 
-		constexpr uint32_t GetId() const
+		uint32_t GetId() const
 		{
 			return id;
+		}
+
+		bool IsValid() const
+		{
+			return id != 0;
 		}
 	};
 }

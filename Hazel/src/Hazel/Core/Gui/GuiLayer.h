@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Hazel/Core/Application/Layer.h"
+#include "Hazel/Rendering/GuiRenderer/GuiRenderer.h"
 #include "Private/GuiContext.h"
-#include "GuiRenderer.h"
 
 namespace Hazel
 {

@@ -20,18 +20,6 @@ namespace Hazel
 		Log::Debug("Framebuffer {} destruction.", id);
 	}
 
-	void OpenGLFramebuffer::Bind() const
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, id);
-		auto size = GetSize();
-		glViewport(0, 0, static_cast<int>(size.x), static_cast<int>(size.y));
-	}
-
-	void OpenGLFramebuffer::Unbind() const
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	}
-
 	uint32_t OpenGLFramebuffer::GetStatus() const
 	{
 		return glCheckNamedFramebufferStatus(id, GL_FRAMEBUFFER);
@@ -59,14 +47,26 @@ namespace Hazel
 		Attach(GL_DEPTH_STENCIL_ATTACHMENT, depthAttachment);
 	}
 
-	std::shared_ptr<Texture> OpenGLFramebuffer::GetColorAttachment() const
+	void OpenGLFramebuffer::Bind() const
 	{
-		return colorAttachment;
+		glBindFramebuffer(GL_FRAMEBUFFER, id);
+		auto size = GetSize();
+		glViewport(0, 0, static_cast<int>(size.x), static_cast<int>(size.y));
 	}
 
-	std::shared_ptr<Texture> OpenGLFramebuffer::GetDepthAttachment() const
+	void OpenGLFramebuffer::Unbind() const
 	{
-		return depthAttachment;
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	Texture &OpenGLFramebuffer::GetColorAttachment() const
+	{
+		return *colorAttachment;
+	}
+
+	Texture &OpenGLFramebuffer::GetDepthAttachment() const
+	{
+		return *depthAttachment;
 	}
 
 	void OpenGLFramebuffer::Attach(int attachmentType, const std::shared_ptr<OpenGLTexture> &texture)

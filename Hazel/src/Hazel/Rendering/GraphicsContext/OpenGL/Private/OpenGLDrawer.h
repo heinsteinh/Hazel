@@ -3,6 +3,7 @@
 #include "glad/glad.h"
 
 #include "Hazel/Core/Geometry/Rectangle.h"
+#include "Hazel/Rendering/GraphicsContext/DrawCommand.h"
 #include "OpenGLPrimitiveTopology.h"
 #include "OpenGLIndexFormat.h"
 
@@ -10,22 +11,8 @@ namespace Hazel
 {
 	class OpenGLDrawer
 	{
-	private:
-		int indexFormat = GL_UNSIGNED_INT;
-		int primitiveTopology = GL_TRIANGLES;
-
 	public:
-		void SetIndexFormat(IndexFormat indexFormat)
-		{
-			this->indexFormat = OpenGLIndexFormat::GetIndexFormat(indexFormat);
-		}
-
-		void SetPrimitiveTopology(PrimitiveTopology primitiveTopology)
-		{
-			this->primitiveTopology = OpenGLPrimitiveTopology::GetPrimitiveTopology(primitiveTopology);
-		}
-
-		void SetViewport(const Rectangle &viewport)
+		static void SetViewport(const Rectangle &viewport)
 		{
 			glViewport(
 				static_cast<int>(viewport.Left),
@@ -34,22 +21,22 @@ namespace Hazel
 				static_cast<int>(viewport.GetHeight()));
 		}
 
-		void SetClearColor(const glm::vec4 &color)
+		static void SetClearColor(const glm::vec4 &color)
 		{
 			glClearColor(color.r, color.g, color.b, color.a);
 		}
 
-		void Clear()
+		static void Clear()
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 
-		void DrawIndexed(size_t indexCount)
+		static void DrawIndexed(const DrawCommand &command)
 		{
 			glDrawElements(
-				primitiveTopology,
-				static_cast<int>(indexCount),
-				indexFormat,
+				OpenGLPrimitiveTopology::GetPrimitiveTopology(command.PrimitiveTopology),
+				static_cast<int>(command.IndexCount),
+				OpenGLIndexFormat::GetIndexFormat(command.IndexFormat),
 				nullptr);
 		}
 	};

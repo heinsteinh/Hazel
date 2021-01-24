@@ -9,12 +9,12 @@ namespace Hazel
 	private:
 		Renderer renderer;
 		const std::shared_ptr<const Mesh> squareMesh;
-		const std::shared_ptr<MaterialShader> defaultShader;
+		const std::shared_ptr<Shader> defaultShader;
 
 	public:
 		Renderer2D(const RendererInfo &info);
 
-		void BeginScene(const Camera &camera);
+		void BeginScene(const Camera &camera, const std::shared_ptr<Framebuffer> &framebuffer = nullptr);
 		void Submit(const RenderCommand &renderCommand);
 		void EndScene();
 
@@ -23,7 +23,7 @@ namespace Hazel
 			return *squareMesh;
 		}
 
-		const std::shared_ptr<MaterialShader> &GetDefaultShader() const
+		const std::shared_ptr<Shader> &GetDefaultShader() const
 		{
 			return defaultShader;
 		}

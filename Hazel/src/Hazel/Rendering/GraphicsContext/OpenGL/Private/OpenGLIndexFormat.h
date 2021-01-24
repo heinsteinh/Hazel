@@ -2,7 +2,7 @@
 
 #include "glad/glad.h"
 
-#include "Hazel/Rendering/GraphicsContext/IndexFormat.h"
+#include "Hazel/Rendering/Mesh/IndexFormat.h"
 
 namespace Hazel
 {

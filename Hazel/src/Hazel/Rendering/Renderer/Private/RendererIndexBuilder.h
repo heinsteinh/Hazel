@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Rendering/Meshes/IndexArray.h"
+#include "Hazel/Rendering/Mesh/IndexArray.h"
 #include "RendererIndices.h"
 
 namespace Hazel
@@ -8,24 +8,24 @@ namespace Hazel
 	class RendererIndexBuilder
 	{
 	public:
-		static void AddIndices(const IndexArray &source, RendererIndices &destination, size_t vertexCount)
+		static void AddIndices(RendererIndices &destination, const IndexArray &source, size_t vertexCount)
 		{
 			switch (source.GetIndexFormat())
 			{
 			case IndexFormat::UInt8:
-				AddIndices<uint8_t>(source, destination, vertexCount);
+				AddIndices<uint8_t>(destination, source, vertexCount);
 				break;
 			case IndexFormat::UInt16:
-				AddIndices<uint16_t>(source, destination, vertexCount);
+				AddIndices<uint16_t>(destination, source, vertexCount);
 				break;
 			case IndexFormat::UInt32:
-				AddIndices<uint32_t>(source, destination, vertexCount);
+				AddIndices<uint32_t>(destination, source, vertexCount);
 				break;
 			}
 		}
 
 		template<typename IndexType>
-		static void AddIndices(const IndexArray &source, RendererIndices &destination, size_t vertexCount)
+		static void AddIndices(RendererIndices &destination, const IndexArray &source, size_t vertexCount)
 		{
 			source.ForEach<IndexType>([&](size_t index)
 			{

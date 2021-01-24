@@ -12,9 +12,9 @@ namespace Hazel
 	{
 	}
 
-	void Renderer2D::BeginScene(const Camera &camera)
+	void Renderer2D::BeginScene(const Camera &camera, const std::shared_ptr<Framebuffer> &framebuffer)
 	{
-		renderer.BeginScene(camera);
+		renderer.BeginScene(camera, framebuffer);
 	}
 
 	void Renderer2D::Submit(const RenderCommand &command)

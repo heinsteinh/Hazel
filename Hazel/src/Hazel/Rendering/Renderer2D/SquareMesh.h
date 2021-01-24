@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "Hazel/Rendering/GraphicsContext/IndexFormatHelper.h"
-#include "Hazel/Rendering/Meshes/Mesh.h"
+#include "Hazel/Rendering/Mesh/Mesh.h"
+#include "Hazel/Rendering/Mesh/IndexFormatHelper.h"
 #include "Vertex2D.h"
 
 namespace Hazel
@@ -37,10 +37,10 @@ namespace Hazel
 		static void AddVertexLayout(Mesh &mesh)
 		{
 			mesh.Vertices.SetLayout(Vertex2D::Layout);
-			mesh.PositionIndex = Vertex2D::PositionIndex;
-			mesh.ColorIndex = Vertex2D::ColorIndex;
-			mesh.TextureCoordinatesIndex = Vertex2D::TextureCoordinatesIndex;
-			mesh.TextureSlotIndex = Vertex2D::TextureSlotIndex;
+			mesh.InputMap.PositionIndex = Vertex2D::PositionIndex;
+			mesh.InputMap.ColorIndex = Vertex2D::ColorIndex;
+			mesh.InputMap.TextureCoordinatesIndex = Vertex2D::TextureCoordinatesIndex;
+			mesh.InputMap.TextureSlotIndex = Vertex2D::TextureSlotIndex;
 		}
 
 		static void AddVertices(Mesh &mesh)

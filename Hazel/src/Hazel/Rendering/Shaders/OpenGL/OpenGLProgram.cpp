@@ -14,16 +14,19 @@ namespace Hazel
 
 	OpenGLProgram::~OpenGLProgram()
 	{
-		glDeleteProgram(id);
-		Log::Debug("Shader with id {} deleted.", id);
+		if (id)
+		{
+			glDeleteProgram(id);
+			Log::Debug("Shader with id {} deleted.", id);
+		}
 	}
 
-	void OpenGLProgram::Attach(const OpenGLShader &shader)
+	void OpenGLProgram::Attach(const OpenGLShaderModule &shader)
 	{
 		glAttachShader(id, shader.GetId());
 	}
 
-	void OpenGLProgram::Detach(const OpenGLShader &shader)
+	void OpenGLProgram::Detach(const OpenGLShaderModule &shader)
 	{
 		glDetachShader(id, shader.GetId());
 	}

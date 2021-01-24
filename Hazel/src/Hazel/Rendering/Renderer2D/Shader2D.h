@@ -3,7 +3,7 @@
 #include "glm/glm.hpp"
 
 #include "Hazel/Rendering/GraphicsContext/GraphicsContext.h"
-#include "Hazel/Rendering/Materials/MaterialShader.h"
+#include "Hazel/Rendering/Shaders/Shader.h"
 #include "Hazel/Core/FileSystem/FileReader.h"
 #include "Uniform2D.h"
 #include "Vertex2D.h"
@@ -13,17 +13,15 @@ namespace Hazel
 	class Shader2D
 	{
 	public:
-		static std::shared_ptr<MaterialShader> CreateShader(GraphicsContext &graphicsContext)
+		static std::shared_ptr<Shader> CreateShader(GraphicsContext &graphicsContext)
 		{
-			auto shader = std::make_shared<MaterialShader>();
 			ShaderInfo info;
+			info.UniformLayout = Uniform2D::Layout;
+			info.UniformMap.ViewProjectionIndex = Uniform2D::ViewProjectionIndex;
+			info.InputLayout = Vertex2D::Layout;
 			info.VertexSource = FileReader::ReadAll("C:\\Users\\christian\\source\\repos\\Hazel\\Hazel\\assets\\shaders\\Shader2D.vert");
 			info.PixelSource = FileReader::ReadAll("C:\\Users\\christian\\source\\repos\\Hazel\\Hazel\\assets\\shaders\\Shader2D.frag");
-			shader->Shader = graphicsContext.CreateShader(info);
-			shader->Uniform.Init<Uniform2D>(Uniform2D::Layout);
-			shader->ViewProjectionIndex = Uniform2D::ViewProjectionIndex;
-			shader->InputLayout = graphicsContext.CreateInputLayout(Vertex2D::Layout);
-			return shader;
+			return graphicsContext.CreateShader(info);
 		}
 	};
 }

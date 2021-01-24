@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Hazel/Rendering/GraphicsBuffers/VertexLayout.h"
-#include "Hazel/Rendering/Meshes/ByteArray.h"
-#include "Hazel/Rendering/Meshes/ConstantVertex.h"
+#include "Hazel/Rendering/Mesh/VertexLayout.h"
+#include "Hazel/Rendering/Mesh/ByteArray.h"
+#include "Hazel/Rendering/Mesh/ConstantVertex.h"
 
 namespace Hazel
 {

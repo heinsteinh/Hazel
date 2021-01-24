@@ -1,12 +1,9 @@
 #pragma once
 
-#include <memory>
-
-#include "FramebufferInfo.h"
-#include "FramebufferAttachmentType.h"
-#include "FramebufferCreationException.h"
-#include "Hazel/Rendering/Textures/Texture.h"
 #include "Hazel/Core/Geometry/Size.h"
+#include "Hazel/Rendering/Textures/Texture.h"
+#include "FramebufferInfo.h"
+#include "FramebufferCreationException.h"
 
 namespace Hazel
 {
@@ -23,30 +20,30 @@ namespace Hazel
 
 		virtual ~Framebuffer() = default;
 
-		virtual std::shared_ptr<Texture> GetColorAttachment() const = 0;
-		virtual std::shared_ptr<Texture> GetDepthAttachment() const = 0;
+		virtual Texture &GetColorAttachment() const = 0;
+		virtual Texture &GetDepthAttachment() const = 0;
 
-		constexpr const FramebufferInfo &GetInfo() const
+		const FramebufferInfo &GetInfo() const
 		{
 			return info;
 		}
 
-		constexpr const glm::vec2 &GetSize() const
+		const glm::vec2 &GetSize() const
 		{
 			return GetInfo().Size;
 		}
 
-		constexpr float GetWidth() const
+		float GetWidth() const
 		{
 			return GetSize().x;
 		}
 
-		constexpr float GetHeight() const
+		float GetHeight() const
 		{
 			return GetSize().y;
 		}
 
-		constexpr float GetAspectRatio() const
+		float GetAspectRatio() const
 		{
 			return Size::GetAspectRatio(GetSize());
 		}

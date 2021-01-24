@@ -74,10 +74,8 @@ namespace Hazel
 
 		sceneManager.OnUpdate(*scene);
 
-		GetGraphicsContext().SetFramebuffer(framebuffer.get());
 		GetGraphicsContext().Clear();
-		sceneManager.OnRender(*scene);
-		GetGraphicsContext().SetFramebuffer(nullptr);
+		sceneManager.OnRender(*scene, framebuffer);
 	}
 
 	void EditorLayer::OnGui()
@@ -120,7 +118,7 @@ namespace Hazel
 		}
 
 		ImGui::Image(
-			framebuffer->GetColorAttachment()->GetHandle(),
+			framebuffer->GetColorAttachment().GetHandle(),
 			{viewportSize.x, viewportSize.y},
 			{0.0f, 1.0f},
 			{1.0f, 0.0f});

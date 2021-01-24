@@ -15,7 +15,7 @@ namespace Hazel
 		void ResetRenderer(const RendererInfo &rendererInfo);
 		void OnAttach(Layer &layer, const RendererInfo &rendererInfo = {});
 		void OnUpdate(Scene &scene);
-		void OnRender(Scene &scene);
+		void OnRender(Scene &scene, const std::shared_ptr<Framebuffer> &framebuffer = nullptr);
 		void OnViewportResize(Scene &scene, const Rectangle &viewport);
 		void OnEvent(Scene &scene, Event &e);
 

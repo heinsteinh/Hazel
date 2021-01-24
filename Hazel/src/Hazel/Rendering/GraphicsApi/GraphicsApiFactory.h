@@ -8,6 +8,6 @@ namespace Hazel
 	class GraphicsApiFactory
 	{
 	public:
-		static std::unique_ptr<GraphicsApi> Create(AvailableGraphicsApi graphicsApi);
+		static std::unique_ptr<GraphicsApi> CreateApi(AvailableGraphicsApi graphicsApi);
 	};
 }
