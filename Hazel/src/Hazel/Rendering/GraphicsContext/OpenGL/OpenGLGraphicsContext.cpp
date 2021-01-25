@@ -2,7 +2,7 @@
 
 #include "GLFW/glfw3.h"
 
-#include "Hazel/Rendering/GuiRenderer/OpenGL/OpenGLImGuiRenderer.h"
+#include "Hazel/Rendering/GuiRenderer/OpenGL/OpenGLGuiRenderer.h"
 #include "Hazel/Rendering/Framebuffers/OpenGL/OpenGLFramebufferFactory.h"
 #include "Hazel/Rendering/Shaders/OpenGL/OpenGLShaderCompiler.h"
 #include "OpenGLCommandBinder.h"
@@ -21,7 +21,7 @@ namespace Hazel
 	std::shared_ptr<GuiRenderer> OpenGLGraphicsContext::CreateGuiRenderer()
 	{
 		handle.MakeCurrent();
-		return std::make_shared<OpenGLImGuiRenderer>(handle, context);
+		return std::make_shared<OpenGLGuiRenderer>(handle, context);
 	}
 
 	std::shared_ptr<Framebuffer> OpenGLGraphicsContext::CreateFramebuffer(const FramebufferInfo &info)

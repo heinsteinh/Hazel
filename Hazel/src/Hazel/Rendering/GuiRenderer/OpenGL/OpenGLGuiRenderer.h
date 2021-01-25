@@ -7,14 +7,14 @@ struct GLFWwindow;
 
 namespace Hazel
 {
-	class OpenGLImGuiRenderer : public GuiRenderer
+	class OpenGLGuiRenderer : public GuiRenderer
 	{
 	private:
 		OpenGLBindingContext *context;
 
 	public:
-		OpenGLImGuiRenderer(GLFWwindow *window, OpenGLBindingContext &context);
-		virtual ~OpenGLImGuiRenderer();
+		OpenGLGuiRenderer(GLFWwindow *window, OpenGLBindingContext &context);
+		virtual ~OpenGLGuiRenderer();
 
 		virtual void CreateNewFrame() override;
 		virtual void RenderDrawData() override;

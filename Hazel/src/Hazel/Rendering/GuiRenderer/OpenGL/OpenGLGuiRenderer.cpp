@@ -1,4 +1,4 @@
-#include "OpenGLImGuiRenderer.h"
+#include "OpenGLGuiRenderer.h"
 
 #include "GLFW/glfw3.h"
 #include "imgui.h"
@@ -14,32 +14,28 @@
 
 namespace Hazel
 {
-	OpenGLImGuiRenderer::OpenGLImGuiRenderer(GLFWwindow *window, OpenGLBindingContext &context)
+	OpenGLGuiRenderer::OpenGLGuiRenderer(GLFWwindow *window, OpenGLBindingContext &context)
 		: context(&context)
 	{
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init("#version 410");
 	}
 
-	OpenGLImGuiRenderer::~OpenGLImGuiRenderer()
+	OpenGLGuiRenderer::~OpenGLGuiRenderer()
 	{
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 	}
 
-	void OpenGLImGuiRenderer::CreateNewFrame()
+	void OpenGLGuiRenderer::CreateNewFrame()
 	{
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 	}
 
-	void OpenGLImGuiRenderer::RenderDrawData()
+	void OpenGLGuiRenderer::RenderDrawData()
 	{
-		auto framebuffer = context->GetFramebuffer();
-		if (framebuffer)
-		{
-			context->SetFramebuffer({});
-		}
+		context->SetFramebuffer({});
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
