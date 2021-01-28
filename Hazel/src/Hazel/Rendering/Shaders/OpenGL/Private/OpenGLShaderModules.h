@@ -2,7 +2,7 @@
 
 #include <array>
 
-#include "OpenGLProgram.h"
+#include "Hazel/Rendering/Shaders/OpenGL/OpenGLProgram.h"
 
 namespace Hazel
 {

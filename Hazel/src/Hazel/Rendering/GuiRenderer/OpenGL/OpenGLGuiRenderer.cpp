@@ -37,10 +37,10 @@ namespace Hazel
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
-			GLFWwindow *currentContext = glfwGetCurrentContext();
+			auto currentContextBackup = glfwGetCurrentContext();
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
-			glfwMakeContextCurrent(currentContext);
+			glfwMakeContextCurrent(currentContextBackup);
 		}
 	}
 }

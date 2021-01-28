@@ -31,6 +31,7 @@ namespace Hazel
 			if (context.SetProgram(shader.GetProgram()) || shader.IsUniformUpdated())
 			{
 				BufferUniform(context, shader);
+				shader.ResetUniformUpdated();
 			}
 		}
 
@@ -39,7 +40,6 @@ namespace Hazel
 			auto &uniform = shader.GetUniform();
 			auto uniformSize = uniform.GetSize();
 			context.EnsureUniformBufferSize(uniformSize).BufferData(uniform.GetData(), uniformSize);
-			shader.ResetUniformUpdated();
 		}
 
 		static void BindVertexArray(OpenGLBindingContext &context, const DrawCommand &command, OpenGLShader &shader)

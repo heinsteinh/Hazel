@@ -71,6 +71,7 @@ namespace Hazel
 		void ResizeUniformBuffer(size_t size)
 		{
 			uniformBuffer = std::make_shared<OpenGLUniformBuffer>(size);
+			uniformBuffer->SetBinding(0);
 			uniformBuffer->Bind();
 		}
 

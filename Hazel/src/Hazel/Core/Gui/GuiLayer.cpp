@@ -47,8 +47,8 @@ namespace Hazel
 
 	void GuiLayer::OnDetach()
 	{
-		context = nullptr;
-		renderer = nullptr;
+		context.reset();
+		renderer.reset();
 	}
 
 	void GuiLayer::OnEvent(Event &e)

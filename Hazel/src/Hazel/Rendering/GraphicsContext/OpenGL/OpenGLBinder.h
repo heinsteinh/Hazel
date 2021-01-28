@@ -19,9 +19,9 @@ namespace Hazel
 		static bool Bind(std::weak_ptr<OpenGLType> &currentObject, const std::shared_ptr<OpenGLType> &newObject)
 		{
 			auto strongRef = currentObject.lock();
-			auto bound = Bind(strongRef, newObject);
+			auto newlyBound = Bind(strongRef, newObject);
 			currentObject = strongRef;
-			return bound;
+			return newlyBound;
 		}
 
 		template<typename OpenGLType, typename BaseType>
@@ -33,21 +33,19 @@ namespace Hazel
 		template<typename OpenGLType>
 		static bool Bind(std::shared_ptr<OpenGLType> &currentObject, const std::shared_ptr<OpenGLType> &newObject)
 		{
-			if (newObject != currentObject)
+			if (newObject == currentObject)
 			{
-				if (newObject)
-				{
-					newObject->Bind();
-					currentObject = newObject;
-					return true;
-				}
-				else
-				{
-					currentObject->Unbind();
-					currentObject = nullptr;
-				}
+				return false;
 			}
-			return false;
+			if (!newObject)
+			{
+				currentObject->Unbind();
+				currentObject = nullptr;
+				return false;
+			}
+			newObject->Bind();
+			currentObject = newObject;
+			return true;
 		}
 	};
 }
