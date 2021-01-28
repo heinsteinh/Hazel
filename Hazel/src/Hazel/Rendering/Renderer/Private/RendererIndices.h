@@ -42,7 +42,7 @@ namespace Hazel
 
 		size_t GetSize() const
 		{
-			return data.GetSize();
+			return indexCount * data.GetItemSize();
 		}
 
 		void Resize(size_t size)

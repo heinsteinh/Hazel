@@ -17,6 +17,6 @@ namespace Hazel
 		virtual ~OpenGLGuiRenderer();
 
 		virtual void CreateNewFrame() override;
-		virtual void RenderDrawData() override;
+		virtual void RenderDrawData(const std::shared_ptr<Framebuffer> &framebuffer = {}) override;
 	};
 }

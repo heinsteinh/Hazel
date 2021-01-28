@@ -2,8 +2,6 @@
 
 #include "GLFW/glfw3.h"
 #include "imgui.h"
-#include "backends/imgui_impl_glfw.h"
-#include "backends/imgui_impl_opengl3.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4996)
@@ -33,9 +31,9 @@ namespace Hazel
 		ImGui_ImplGlfw_NewFrame();
 	}
 
-	void OpenGLGuiRenderer::RenderDrawData()
+	void OpenGLGuiRenderer::RenderDrawData(const std::shared_ptr<Framebuffer> &framebuffer)
 	{
-		context->SetFramebuffer({});
+		context->SetFramebuffer(framebuffer);
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{

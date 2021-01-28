@@ -66,9 +66,10 @@ namespace Hazel
 		OpenGLDrawer::SetClearColor(color);
 	}
 
-	void OpenGLGraphicsContext::Clear()
+	void OpenGLGraphicsContext::Clear(const std::shared_ptr<Framebuffer> &framebuffer)
 	{
 		handle.MakeCurrent();
+		context.SetFramebuffer(framebuffer);
 		OpenGLDrawer::Clear();
 	}
 

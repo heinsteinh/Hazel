@@ -33,7 +33,7 @@ namespace Hazel
 		virtual std::shared_ptr<Texture> CreateTexture(const TextureInfo &info) = 0;
 		virtual void SetViewport(const Rectangle &viewport) = 0;
 		virtual void SetClearColor(const glm::vec4 &color) = 0;
-		virtual void Clear() = 0;
+		virtual void Clear(const std::shared_ptr<Framebuffer> &framebuffer = {}) = 0;
 		virtual void DrawIndexed(const DrawCommand &command) = 0;
 		virtual void SwapBuffers() = 0;
 

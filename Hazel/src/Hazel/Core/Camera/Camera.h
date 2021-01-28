@@ -35,8 +35,16 @@ namespace Hazel
 
 		void SetViewProjection(const CameraProjection *projection, const Transform *transform)
 		{
-			position = transform ? transform->Translation : glm::vec3(0.0f);
-			view = transform ? CameraView::GetViewMatrix(*transform) : glm::mat4(1.0f);
+			if (transform)
+			{
+				position = transform->Translation;
+				view = CameraView::GetViewMatrix(*transform);
+			}
+			else
+			{
+				position = glm::vec3(0.0f);
+				view = glm::mat4(1.0f);
+			}
 			this->projection = projection ? projection->ToMatrix() : glm::mat4(1.0f);
 			viewProjection = this->projection * view;
 		}

@@ -74,7 +74,7 @@ namespace Hazel
 
 		sceneManager.OnUpdate(*scene);
 
-		GetGraphicsContext().Clear();
+		GetGraphicsContext().Clear(framebuffer);
 		sceneManager.OnRender(*scene, framebuffer);
 	}
 

@@ -25,7 +25,7 @@ namespace Hazel
 		virtual std::shared_ptr<Texture> CreateTexture(const TextureInfo &info) override;
 		virtual void SetViewport(const Rectangle &viewport) override;
 		virtual void SetClearColor(const glm::vec4 &color) override;
-		virtual void Clear() override;
+		virtual void Clear(const std::shared_ptr<Framebuffer> &framebuffer = {}) override;
 		virtual void DrawIndexed(const DrawCommand &command) override;
 		virtual void SwapBuffers() override;
 	};
