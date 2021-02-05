@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "glm/glm.hpp"
 
 #include "TextureFormat.h"
@@ -10,11 +12,13 @@ namespace Hazel
 {
 	struct TextureInfo
 	{
+		std::string Name;
+		std::string Filename;
 		glm::vec2 Size{1.0f};
 		TextureFormat Format = TextureFormat::Rgba8;
 		TextureFiltering MinFilter = TextureFiltering::Linear;
 		TextureFiltering MagFilter = TextureFiltering::Linear;
-		TextureWrapping SWrap = TextureWrapping::Repeat;
-		TextureWrapping TWrap = TextureWrapping::Repeat;
+		TextureWrapping WrapS = TextureWrapping::Repeat;
+		TextureWrapping WrapT = TextureWrapping::Repeat;
 	};
 }

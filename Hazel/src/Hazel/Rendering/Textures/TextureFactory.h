@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hazel/Core/Images/Image.h"
+#include "Hazel/Core/FileSystem/Filename.h"
 #include "Hazel/Rendering/GraphicsContext/GraphicsContext.h"
 #include "TextureFormatHelper.h"
 
@@ -13,6 +14,8 @@ namespace Hazel
 		{
 			auto image = Image::FromFile(filename);
 			TextureInfo info;
+			info.Name = Filename::GetBaseName(filename);
+			info.Filename = filename;
 			info.Size = image.GetSize();
 			info.Format = TextureFormatHelper::GetTextureFormat(image.GetChannelCount());
 			auto texture = graphicsContext.CreateTexture(info);

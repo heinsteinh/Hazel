@@ -9,6 +9,15 @@ namespace Hazel
 	class NativeScriptSystem
 	{
 	public:
+		static void OnPlay(Scene &scene)
+		{
+			scene.ForEach<NativeScriptComponent>([](auto entity, auto &component)
+			{
+				component.Script->Attach(entity);
+				component.Script->OnCreate();
+			});
+		}
+
 		static void OnUpdate(Scene &scene)
 		{
 			scene.ForEach<NativeScriptComponent>([](auto entity, auto &component)

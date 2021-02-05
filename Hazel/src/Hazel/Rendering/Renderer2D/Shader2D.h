@@ -16,11 +16,17 @@ namespace Hazel
 		static std::shared_ptr<Shader> CreateShader(GraphicsContext &graphicsContext)
 		{
 			ShaderInfo info;
+			info.Name = "Shader2D";
+			info.Filename = "";
 			info.UniformLayout = Uniform2D::Layout;
-			info.UniformMap.ViewProjectionIndex = Uniform2D::ViewProjectionIndex;
+			info.Properties.ViewProjectionIndex = Uniform2D::ViewProjectionIndex;
 			info.InputLayout = Vertex2D::Layout;
-			info.VertexSource = FileReader::ReadAll("C:\\Users\\christian\\source\\repos\\Hazel\\Hazel\\assets\\shaders\\Shader2D.vert");
-			info.PixelSource = FileReader::ReadAll("C:\\Users\\christian\\source\\repos\\Hazel\\Hazel\\assets\\shaders\\Shader2D.frag");
+			info.Properties.PositionIndex = Vertex2D::PositionIndex;
+			info.Properties.ColorIndex = Vertex2D::ColorIndex;
+			info.Properties.TextureCoordinatesIndex = Vertex2D::TextureCoordinatesIndex;
+			info.Properties.TextureSlotIndex = Vertex2D::TextureSlotIndex;
+			info.Sources[ShaderType::Vertex] = FileReader::ReadAll("C:\\Users\\christian\\source\\repos\\Hazel\\Hazel\\assets\\shaders\\Shader2D.vert");
+			info.Sources[ShaderType::Fragment] = FileReader::ReadAll("C:\\Users\\christian\\source\\repos\\Hazel\\Hazel\\assets\\shaders\\Shader2D.frag");
 			return graphicsContext.CreateShader(info);
 		}
 	};

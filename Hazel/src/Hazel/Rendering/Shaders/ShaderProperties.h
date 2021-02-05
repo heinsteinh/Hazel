@@ -4,8 +4,9 @@
 
 namespace Hazel
 {
-	struct ShaderInputMap
+	struct ShaderProperties
 	{
+		std::optional<size_t> ViewProjectionIndex;
 		std::optional<size_t> PositionIndex;
 		std::optional<size_t> ColorIndex;
 		std::optional<size_t> TextureCoordinatesIndex;

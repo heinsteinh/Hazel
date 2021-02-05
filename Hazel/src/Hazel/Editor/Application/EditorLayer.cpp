@@ -28,10 +28,21 @@ namespace Hazel
 
 		scene = sceneManager.CreateScene("Test");
 
+		auto &renderer = sceneManager.GetRenderer();
+		auto &assetManager = sceneManager.GetAssetManager();
+
+		auto spriteSheet = TextureFactory::CreateTextureFromFile(
+			graphicsContext,
+			R"(C:\Users\christian\source\repos\Hazel\Editor\assets\textures\SpriteSheet.png)");
+
+		assetManager.AddTexture(spriteSheet);
+		assetManager.AddScriptFactory<TestCameraController>("TestCameraController");
+		assetManager.AddScriptFactory<TestParticles>("TestParticles");
+
 		auto square1 = scene->CreateEntity();
 		square1.AddComponent<TagComponent>("Square1");
-		spriteSheet = square1.AddComponent<SpriteComponent>(Material(), "assets\\textures\\SpriteSheet.png").Material.Texture;
-		square1.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet.GetRegion().GetAspectRatio();
+		square1.AddComponent<SpriteComponent>().Material.Texture = assetManager.GetTexture("SpriteSheet");
+		square1.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet->GetAspectRatio();
 
 		auto square2 = scene->CreateEntity();
 		square2.AddComponent<TagComponent>("Square2");
@@ -41,7 +52,7 @@ namespace Hazel
 		camera1 = scene->CreateEntity();
 		camera1.AddComponent<TagComponent>("Camera1");
 		camera1.AddComponent<TransformComponent>();
-		camera1.AddComponent<NativeScriptComponent>(std::make_shared<TestCameraController>());
+		camera1.AddComponent<NativeScriptComponent>(assetManager.CreateScript("TestCameraController"));
 		camera1.AddComponent<CameraComponent>();
 
 		scene->SetPrimaryCamera(camera1);
@@ -55,7 +66,9 @@ namespace Hazel
 		particleEmitter.AddComponent<TagComponent>("Particle Emitter");
 		particleEmitter.AddComponent<TransformComponent>().Transform.Translation.z += 0.1f;
 		particleEmitter.AddComponent<ParticleComponent>();
-		particleEmitter.AddComponent<NativeScriptComponent>(std::make_shared<TestParticles>());
+		particleEmitter.AddComponent<NativeScriptComponent>(assetManager.CreateScript("TestParticles"));
+
+		sceneManager.OnPlay(*scene);
 
 		fileDialog.SetWindow(&GetWindow());
 		fileDialog.SetFilters({{"YAML files", "*.yaml"}});
@@ -90,6 +103,7 @@ namespace Hazel
 		if (menu.WantOpen() && fileDialog.GetOpenFilename())
 		{
 			SceneSerializer::Deserialize(*scene, fileDialog.GetFilename());
+			sceneManager.OnPlay(*scene);
 		}
 		if (menu.WantSave() && fileDialog.GetSaveFilename())
 		{

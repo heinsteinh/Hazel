@@ -37,10 +37,6 @@ namespace Hazel
 		static void AddVertexLayout(Mesh &mesh)
 		{
 			mesh.Vertices.SetLayout(Vertex2D::Layout);
-			mesh.InputMap.PositionIndex = Vertex2D::PositionIndex;
-			mesh.InputMap.ColorIndex = Vertex2D::ColorIndex;
-			mesh.InputMap.TextureCoordinatesIndex = Vertex2D::TextureCoordinatesIndex;
-			mesh.InputMap.TextureSlotIndex = Vertex2D::TextureSlotIndex;
 		}
 
 		static void AddVertices(Mesh &mesh)

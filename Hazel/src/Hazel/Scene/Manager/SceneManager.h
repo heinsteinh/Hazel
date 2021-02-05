@@ -14,6 +14,7 @@ namespace Hazel
 		std::shared_ptr<Scene> CreateScene(const std::string &name);
 		void ResetRenderer(const RendererInfo &rendererInfo);
 		void OnAttach(Layer &layer, const RendererInfo &rendererInfo = {});
+		void OnPlay(Scene &scene);
 		void OnUpdate(Scene &scene);
 		void OnRender(Scene &scene, const std::shared_ptr<Framebuffer> &framebuffer = nullptr);
 		void OnViewportResize(Scene &scene, const Rectangle &viewport);
@@ -22,6 +23,16 @@ namespace Hazel
 		Renderer2D &GetRenderer() const
 		{
 			return *context.Renderer;
+		}
+
+		const AssetManager &GetAssetManager() const
+		{
+			return context.AssetManager;
+		}
+
+		AssetManager &GetAssetManager()
+		{
+			return context.AssetManager;
 		}
 	};
 }

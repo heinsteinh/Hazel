@@ -2,9 +2,10 @@
 
 #include "imgui.h"
 
+#include "Hazel/Core/FileSystem/FileDialog.h"
+#include "Hazel/Rendering/Textures/TextureFactory.h"
 #include "Hazel/Scene/Entity/Entity.h"
 #include "Hazel/Scene/Components/SpriteComponent.h"
-#include "Hazel/Core/FileSystem/FileDialog.h"
 #include "Hazel/Editor/Widgets/RectanglePanel.h"
 #include "Hazel/Editor/Utils/TreeNodeFlags.h"
 
@@ -30,10 +31,10 @@ namespace Hazel
 	private:
 		void DrawTextureSource(Entity entity, SpriteComponent &component)
 		{
-			ImGui::Text("Source: %s", component.TextureFilename.empty() ? "None" : component.TextureFilename.c_str());
+			auto &texture = component.Material.Texture.GetSource();
+			ImGui::Text("Source: %s", texture ? texture->GetName().c_str() : "None");
 			if (ImGui::Button("Remove"))
 			{
-				component.TextureFilename.clear();
 				component.Material.Texture.SetSource(nullptr);
 			}
 			ImGui::SameLine();
@@ -42,8 +43,16 @@ namespace Hazel
 				FileDialog dialog(entity.GetLayer().GetWindow());
 				if (dialog.GetOpenFilename())
 				{
-					component.TextureFilename = dialog.GetFilename();
-					component.Material.Texture = entity.GetTextureManager().Load(component.TextureFilename);
+					auto &filename = dialog.GetFilename();
+					auto name = Filename::GetBaseName(filename);
+					auto &assetManager = entity.GetAssetManager();
+					component.Material.Texture = assetManager.GetTexture(name);
+					if (!component.Material.Texture)
+					{
+						component.Material.Texture = assetManager.AddTexture(TextureFactory::CreateTextureFromFile(
+							entity.GetLayer().GetGraphicsContext(),
+							dialog.GetFilename()));
+					}
 				}
 			}
 		}

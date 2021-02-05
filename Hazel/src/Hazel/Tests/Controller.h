@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ControllerSettings.h"
 #include "Hazel/Core/Geometry/Transform.h"
 #include "Hazel/Core/Input/Input.h"
+#include "ControllerSettings.h"
 
 namespace Hazel
 {
@@ -17,12 +17,13 @@ namespace Hazel
 			return settings;
 		}
 
-		void Update(Transform &transform, const Input &input, float deltaTime)
+		void UpdateTransform(Transform &transform, const Input &input, float deltaTime)
 		{
 			UpdatePosition(transform, input, deltaTime);
 			UpdateRotation(transform, input, deltaTime);
 		}
 
+	private:
 		void UpdatePosition(Transform &transform, const Input &input, float deltaTime)
 		{
 			auto deltaPosition = settings.TranslationSpeed * deltaTime;

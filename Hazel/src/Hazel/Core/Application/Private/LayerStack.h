@@ -14,26 +14,6 @@ namespace Hazel
 		size_t top = 0;
 
 	public:
-		auto begin()
-		{
-			return layers.begin();
-		}
-
-		auto end()
-		{
-			return layers.end();
-		}
-
-		auto rbegin()
-		{
-			return layers.rbegin();
-		}
-
-		auto rend()
-		{
-			return layers.rend();
-		}
-
 		void LayerStack::PushLayer(const std::shared_ptr<Layer> &layer)
 		{
 			layers.emplace(layers.begin() + top, layer);
@@ -61,6 +41,24 @@ namespace Hazel
 			if (i != layers.end())
 			{
 				layers.erase(i);
+			}
+		}
+
+		template<typename FunctorType>
+		void FromTopToBottom(FunctorType functor) const
+		{
+			for (auto i = layers.rbegin(); i != layers.rend(); ++i)
+			{
+				functor(*i);
+			}
+		}
+
+		template<typename FunctorType>
+		void FromBottomToTop(FunctorType functor) const
+		{
+			for (auto i = layers.begin(); i != layers.end(); ++i)
+			{
+				functor(*i);
 			}
 		}
 	};

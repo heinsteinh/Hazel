@@ -46,11 +46,11 @@ namespace Hazel
 				layers.GuiLayer = std::make_shared<GuiLayer>();
 				layers.Stack.PushOverlay(layers.GuiLayer);
 			}
-			for (const auto &layer : layers.Stack)
+			layers.Stack.FromBottomToTop([&](const auto &layer)
 			{
 				layer->Attach(context);
 				layer->OnAttach();
-			}
+			});
 		}
 	};
 }

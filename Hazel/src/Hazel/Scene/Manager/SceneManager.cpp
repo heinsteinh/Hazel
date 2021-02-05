@@ -21,9 +21,12 @@ namespace Hazel
 	void SceneManager::OnAttach(Layer &layer, const RendererInfo &rendererInfo)
 	{
 		context.Layer = &layer;
-		auto &graphicsContext = layer.GetGraphicsContext();
 		context.Renderer = std::make_unique<Renderer2D>(rendererInfo);
-		context.TextureManager = std::make_unique<TextureManager>(graphicsContext);
+	}
+
+	void SceneManager::OnPlay(Scene &scene)
+	{
+		NativeScriptSystem::OnPlay(scene);
 	}
 
 	void SceneManager::OnUpdate(Scene &scene)

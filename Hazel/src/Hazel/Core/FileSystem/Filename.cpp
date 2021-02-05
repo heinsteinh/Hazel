@@ -5,7 +5,7 @@ namespace Hazel
 	std::string Filename::GetDirectory(const std::string &filename)
 	{
 		size_t offset = filename.find_last_of("/\\");
-		return offset == std::string::npos ? "" : filename.substr(0, offset);
+		return offset == std::string::npos ? std::string() : filename.substr(0, offset);
 	}
 
 	std::string Filename::GetBaseName(const std::string &filename)

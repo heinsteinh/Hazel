@@ -7,10 +7,21 @@ namespace Hazel
 	class NativeScript
 	{
 	private:
+		std::string name;
 		Entity entity;
 
 	public:
 		virtual ~NativeScript() = default;
+
+		const std::string &GetName() const
+		{
+			return name;
+		}
+
+		void SetName(const std::string &name)
+		{
+			this->name = name;
+		}
 
 		void Attach(Entity entity)
 		{

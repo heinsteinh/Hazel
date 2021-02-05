@@ -32,19 +32,24 @@ namespace Hazel
 			return info;
 		}
 
-		TextureFormat GetFormat() const
+		const std::string &GetName() const
 		{
-			return info.Format;
+			return info.Name;
 		}
 
-		bool IsEmpty() const
+		const std::string &GetFilename() const
 		{
-			return Size::IsEmpty(info.Size);
+			return info.Filename;
 		}
 
 		const glm::vec2 &GetSize() const
 		{
 			return info.Size;
+		}
+
+		bool IsEmpty() const
+		{
+			return Size::IsEmpty(info.Size);
 		}
 
 		float GetWidth() const
@@ -60,6 +65,11 @@ namespace Hazel
 		float GetAspectRatio() const
 		{
 			return Size::GetAspectRatio(info.Size);
+		}
+
+		TextureFormat GetFormat() const
+		{
+			return info.Format;
 		}
 	};
 }

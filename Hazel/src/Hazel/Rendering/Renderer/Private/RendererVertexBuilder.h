@@ -18,44 +18,45 @@ namespace Hazel
 
 		static void BuildVertex(Vertex vertex, const RenderCommand &object, size_t textureSlot)
 		{
-			ApplyTransform(vertex, *object.Mesh, object.Transform);
-			UpdateColor(vertex, *object.Mesh, object.Color);
-			UpdateTextureCoordinates(vertex, *object.Mesh, object.Texture);
-			UpdateTextureSlot(vertex, *object.Mesh, textureSlot);
+			auto &properties = (*object.Shader)->GetProperties();
+			ApplyTransform(vertex, properties, object.Transform);
+			UpdateColor(vertex, properties, object.Color);
+			UpdateTextureCoordinates(vertex, properties, object.Texture);
+			UpdateTextureSlot(vertex, properties, textureSlot);
 		}
 
 	private:
-		static void ApplyTransform(Vertex vertex, const Mesh &mesh, const Transform *transform)
+		static void ApplyTransform(Vertex vertex, const ShaderProperties &properties, const Transform *transform)
 		{
-			if (transform && mesh.InputMap.PositionIndex)
+			if (transform && properties.PositionIndex)
 			{
-				auto &position = vertex.GetAttribute<glm::vec3>(*mesh.InputMap.PositionIndex);
+				auto &position = vertex.GetAttribute<glm::vec3>(*properties.PositionIndex);
 				position = transform->Apply(position);
 			}
 		}
 
-		static void UpdateColor(Vertex vertex, const Mesh &mesh, const glm::vec4 *color)
+		static void UpdateColor(Vertex vertex, const ShaderProperties &properties, const glm::vec4 *color)
 		{
-			if (color && mesh.InputMap.ColorIndex)
+			if (color && properties.ColorIndex)
 			{
-				vertex.GetAttribute<glm::vec4>(*mesh.InputMap.ColorIndex) *= *color;
+				vertex.GetAttribute<glm::vec4>(*properties.ColorIndex) *= *color;
 			}
 		}
 
-		static void UpdateTextureCoordinates(Vertex vertex, const Mesh &mesh, const SubTexture *texture)
+		static void UpdateTextureCoordinates(Vertex vertex, const ShaderProperties &properties, const SubTexture *texture)
 		{
-			if (texture && mesh.InputMap.TextureCoordinatesIndex)
+			if (texture && properties.TextureCoordinatesIndex)
 			{
-				auto &coordinates = vertex.GetAttribute<glm::vec2>(*mesh.InputMap.TextureCoordinatesIndex);
+				auto &coordinates = vertex.GetAttribute<glm::vec2>(*properties.TextureCoordinatesIndex);
 				coordinates = texture->GetSourceCoordinates(coordinates);
 			}
 		}
 
-		static void UpdateTextureSlot(Vertex vertex, const Mesh &mesh, size_t textureSlot)
+		static void UpdateTextureSlot(Vertex vertex, const ShaderProperties &properties, size_t textureSlot)
 		{
-			if (mesh.InputMap.TextureSlotIndex)
+			if (properties.TextureSlotIndex)
 			{
-				vertex.GetAttribute<float>(*mesh.InputMap.TextureSlotIndex) = static_cast<float>(textureSlot);
+				vertex.GetAttribute<float>(*properties.TextureSlotIndex) = static_cast<float>(textureSlot);
 			}
 		}
 	};

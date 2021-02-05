@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Hazel/Scene/Components/NativeScriptComponent.h"
 #include "Hazel/Core/Yaml/YamlSerializer.h"
+#include "Hazel/Scene/Components/NativeScriptComponent.h"
 
 namespace Hazel
 {
@@ -11,12 +11,17 @@ namespace Hazel
 		static void Serialize(YamlDocument &document, const NativeScriptComponent &value)
 		{
 			document.BeginMap()
-				.Write("Type", value.GetTypeName())
+				.Write("Script", value.Script->GetName())
 				.EndMap();
 		}
 
 		static void Deserialize(const YamlValue &source, NativeScriptComponent &value)
 		{
+		}
+
+		static std::string GetScriptName(const YamlValue &source)
+		{
+			return source["Script"].ValueOr(std::string());
 		}
 	};
 

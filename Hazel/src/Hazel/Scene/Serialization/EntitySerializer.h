@@ -27,12 +27,12 @@ namespace Hazel
 
 		static void Deserialize(const YamlValue &source, Entity value)
 		{
-			Deserialize<TagComponent>(source, value, "Tag");
-			Deserialize<TransformComponent>(source, value, "Transform");
-			Deserialize<SpriteComponent>(source, value, "Sprite");
-			Deserialize<CameraComponent>(source, value, "Camera");
-			Deserialize<ParticleComponent>(source, value, "Particle");
-			//Deserialize<NativeScriptComponent>(source, value, "NativeScript");
+			Deserialize<TagComponent>(source["Tag"], value);
+			Deserialize<TransformComponent>(source["Transform"], value);
+			Deserialize<SpriteComponent>(source["Sprite"], value);
+			Deserialize<CameraComponent>(source["Camera"], value);
+			Deserialize<ParticleComponent>(source["Particle"], value);
+			Deserialize<NativeScriptComponent>(source["NativeScript"], value);
 		}
 
 	private:
@@ -47,27 +47,36 @@ namespace Hazel
 		}
 
 		template<typename ComponentType>
-		static void Deserialize(const YamlValue &source, Entity entity, const char *label)
+		static void Deserialize(const YamlValue &source, Entity entity)
 		{
-			auto serializedComponent = source[label];
-			if (serializedComponent.IsValid())
+			if (source.IsValid())
 			{
-				serializedComponent.Extract(entity.AddComponent<ComponentType>());
+				auto &component = entity.AddComponent<ComponentType>();
+				source.Extract(component);
+				SetupComponent(source, entity, component);
 			}
 		}
 
-		template<>
-		static void Deserialize<SpriteComponent>(const YamlValue &source, Entity entity, const char *label)
+		template<typename ComponentType>
+		static void SetupComponent(const YamlValue &source, Entity entity, ComponentType &component)
 		{
-			auto serializedComponent = source[label];
-			if (serializedComponent.IsValid())
+		}
+
+		static void SetupComponent(const YamlValue &source, Entity entity, SpriteComponent &component)
+		{
+			auto name = SpriteSerializer::GetTextureName(source);
+			if (!name.empty())
 			{
-				auto &component = entity.AddComponent<SpriteComponent>();
-				serializedComponent.Extract(component);
-				if (!component.TextureFilename.empty())
-				{
-					component.Material.Texture = entity.GetTextureManager().Load(component.TextureFilename);
-				}
+				component.Material.Texture = entity.GetAssetManager().GetTexture(name);
+			}
+		}
+
+		static void SetupComponent(const YamlValue &source, Entity entity, NativeScriptComponent &component)
+		{
+			auto name = NativeScriptSerializer::GetScriptName(source);
+			if (!name.empty())
+			{
+				component.Script = entity.GetAssetManager().CreateScript(name);
 			}
 		}
 	};

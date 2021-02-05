@@ -3,7 +3,6 @@
 #include "Hazel/Core/Application/Layer.h"
 #include "Hazel/Core/FileSystem/FileDialog.h"
 #include "Hazel/Rendering/Renderer2D/Renderer2D.h"
-#include "Hazel/Rendering/Textures/TextureManager.h"
 #include "Hazel/Scene/Manager/SceneManager.h"
 #include "Hazel/Editor/MainWindow/EditorWindow.h"
 #include "Hazel/Editor/ScenePanels/SceneHierarchyPanel.h"
@@ -28,7 +27,6 @@ namespace Hazel
 		bool useCamera1 = true;
 		RendererInfo rendererInfo;
 		std::shared_ptr<Framebuffer> framebuffer;
-		SubTexture spriteSheet;
 		SceneManager sceneManager;
 		std::shared_ptr<Scene> scene;
 		Entity camera1;

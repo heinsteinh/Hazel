@@ -4,7 +4,7 @@ Entities:
     Tag:
       Name: Particle Emitter
     Transform:
-      Translation: [-0.385057479, 0.675287366, 1.10000002]
+      Translation: [0.24568966, 0.735632181, 1.10000002]
       Rotation: [0, 0, 0, 1]
       Scale: [1, 1, 1]
     Particle:
@@ -22,7 +22,7 @@ Entities:
       SizeVariation: 0.100000001
       LifeTime: 2
     NativeScript:
-      Type: class Hazel::TestParticles
+      Script: TestParticles
   - EntityId: 3
     Tag:
       Name: Camera2
@@ -54,26 +54,28 @@ Entities:
       PerspectiveNearClip: 0.00999999978
       PerspectiveFarClip: 1000
     NativeScript:
-      Type: class Hazel::TestCameraController
+      Script: TestCameraController
   - EntityId: 1
     Tag:
       Name: Square2
     Transform:
-      Translation: [0, -0.400000006, 0]
+      Translation: [0, 0, -0.100000001]
       Rotation: [0, 0, 0, 1]
-      Scale: [1.70000005, 1, 1]
+      Scale: [1, 1, 1]
     Sprite:
       Color: [1, 1, 1, 1]
-      TextureFilename: C:\Users\christian\source\repos\Hazel\Editor\assets\textures\Test.jpg
-      TextureRegion: [0, 1920, 0, 1080]
+      Texture: TestOverlay
+      TextureRegion: [0, 800, 0, 600]
+      Shader: Shader2D
   - EntityId: 0
     Tag:
       Name: Square1
     Transform:
-      Translation: [0, 0.400000006, 0.400000006]
+      Translation: [0, 0, 0]
       Rotation: [0, 0, 0, 1]
       Scale: [1.53846157, 1, 1]
     Sprite:
       Color: [1, 1, 1, 1]
-      TextureFilename: assets\textures\SpriteSheet.png
+      Texture: SpriteSheet
       TextureRegion: [0, 2560, 0, 1664]
+      Shader: Shader2D

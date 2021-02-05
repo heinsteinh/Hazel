@@ -2,9 +2,9 @@
 
 #include "glm/glm.hpp"
 
+#include "Hazel/Rendering/Mesh/Uniform.h"
 #include "Hazel/Rendering/Mesh/VertexLayout.h"
 #include "ShaderInfo.h"
-#include "Uniform.h"
 #include "ShaderCompilationException.h"
 
 namespace Hazel
@@ -12,20 +12,34 @@ namespace Hazel
 	class Shader
 	{
 	private:
+		std::string name;
+		std::string filename;
 		Uniform uniform;
-		ShaderUniformMap uniformMap;
 		bool uniformUpdated = true;
 		VertexLayout inputLayout;
+		ShaderProperties properties;
 
 	public:
 		Shader(const ShaderInfo &info)
-			: uniform(info.UniformLayout),
-			uniformMap(info.UniformMap),
-			inputLayout(info.InputLayout)
+			: name(info.Name),
+			filename(info.Filename),
+			uniform(info.UniformLayout),
+			inputLayout(info.InputLayout),
+			properties(info.Properties)
 		{
 		}
 
 		virtual ~Shader() = default;
+
+		const std::string &GetName() const
+		{
+			return name;
+		}
+
+		const std::string &GetFilename() const
+		{
+			return filename;
+		}
 
 		const Uniform &GetUniform() const
 		{
@@ -36,12 +50,6 @@ namespace Hazel
 		{
 			uniformUpdated = true;
 			return uniform;
-		}
-
-		void SetViewProjection(const glm::mat4 &viewProjection)
-		{
-			uniformMap.UpdateAttribute(uniform, uniformMap.ViewProjectionIndex, viewProjection);
-			uniformUpdated = true;
 		}
 
 		bool IsUniformUpdated() const
@@ -62,6 +70,11 @@ namespace Hazel
 		const VertexLayout &GetInputLayout() const
 		{
 			return inputLayout;
+		}
+
+		const ShaderProperties &GetProperties() const
+		{
+			return properties;
 		}
 	};
 }

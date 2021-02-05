@@ -2,7 +2,6 @@
 
 #include "Hazel/Rendering/Renderer/RendererInfo.h"
 #include "Hazel/Rendering/GraphicsContext/DrawCommand.h"
-#include "Hazel/Rendering/Shaders/Uniform.h"
 #include "RendererBatch.h"
 
 namespace Hazel

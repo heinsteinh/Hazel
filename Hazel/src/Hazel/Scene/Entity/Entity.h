@@ -1,5 +1,7 @@
 #pragma once
 
+#include "entt/entt.hpp"
+
 #include "Hazel/Scene/Scene/SceneContext.h"
 #include "EntityListener.h"
 
@@ -45,14 +47,9 @@ namespace Hazel
 			return *context->ManagerContext->Renderer;
 		}
 
-		TextureManager &GetTextureManager() const
+		AssetManager &GetAssetManager() const
 		{
-			return *context->ManagerContext->TextureManager;
-		}
-
-		ShaderManager &GetShaderManager() const
-		{
-			return *context->ManagerContext->ShaderManager;
+			return context->ManagerContext->AssetManager;
 		}
 
 		const Camera &GetCamera() const
@@ -82,7 +79,7 @@ namespace Hazel
 		ComponentType &AddComponent(Args &&...args)
 		{
 			auto &component = context->Registry.emplace<ComponentType>(entity, std::forward<Args>(args)...);
-			EntityListener::OnComponentAdded<ComponentType>(*this, component);
+			EntityListener::OnComponentAdded(*this, component);
 			return component;
 		}
 

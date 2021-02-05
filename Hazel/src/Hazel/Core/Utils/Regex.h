@@ -1,6 +1,7 @@
 #pragma once
 
-#include "RegexMatch.h"
+#include <string>
+#include <regex>
 
 namespace Hazel
 {
@@ -15,9 +16,36 @@ namespace Hazel
 		{
 		}
 
-		RegexMatch FindAll(const std::string &source) const
+		std::sregex_iterator Begin(const std::string &source) const
 		{
-			return {source, pattern};
+			return {source.begin(), source.end(), pattern};
+		}
+
+		std::sregex_iterator End() const
+		{
+			return {};
+		}
+
+		bool Match(const std::string &source) const
+		{
+			return std::regex_match(source, pattern);
+		}
+
+		std::smatch Search(const std::string &source) const
+		{
+			std::smatch match;
+			std::regex_search(source, match, pattern);
+			return match;
+		}
+
+		template<typename FunctorType>
+		void ForEachMatch(const std::string &source, FunctorType functor) const
+		{
+			std::sregex_iterator last;
+			for (auto i = GetIterator(source); i != last; ++i)
+			{
+				functor(*i);
+			}
 		}
 	};
 }

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "SceneContext.h"
 #include "Hazel/Scene/Entity/Entity.h"
+#include "SceneContext.h"
 
 namespace Hazel
 {
@@ -36,14 +36,9 @@ namespace Hazel
 			return *context.ManagerContext->Renderer;
 		}
 
-		TextureManager &GetTextureManager() const
+		AssetManager &GetAssetManager() const
 		{
-			return *context.ManagerContext->TextureManager;
-		}
-
-		ShaderManager &GetShaderManager() const
-		{
-			return *context.ManagerContext->ShaderManager;
+			return context.ManagerContext->AssetManager;
 		}
 
 		Entity GetPrimaryCamera()

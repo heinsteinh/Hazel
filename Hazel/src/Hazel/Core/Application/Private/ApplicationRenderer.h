@@ -14,20 +14,20 @@ namespace Hazel
 		{
 			context.DeltaTime = context.Chrono.Reset();
 			context.Window->GetGraphicsContext().Clear();
-			for (const auto &layer : layers.Stack)
+			layers.Stack.FromBottomToTop([](const auto &layer)
 			{
 				InputManager::OnNewFrame(layer->GetInput());
-			}
+			});
 		}
 
 		static void RenderFrame(ApplicationContext &context, ApplicationLayers &layers)
 		{
 			if (!context.Window->IsMinimized())
 			{
-				for (const auto &layer : layers.Stack)
+				layers.Stack.FromBottomToTop([](const auto &layer)
 				{
 					layer->OnUpdate();
-				}
+				});
 			}
 		}
 
@@ -36,10 +36,10 @@ namespace Hazel
 			if (layers.GuiLayer && context.Settings.GuiRenderingEnabled)
 			{
 				layers.GuiLayer->BeginRender();
-				for (const auto &layer : layers.Stack)
+				layers.Stack.FromBottomToTop([](const auto &layer)
 				{
 					layer->OnGui();
-				}
+				});
 				layers.GuiLayer->EndRender();
 			}
 		}

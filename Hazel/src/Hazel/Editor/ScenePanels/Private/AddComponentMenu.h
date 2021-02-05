@@ -39,7 +39,7 @@ namespace Hazel
 		template<typename ComponentType>
 		void DrawItem(const char *label, Entity entity)
 		{
-			if (!entity.HasComponent<ComponentType>() && ImGui::MenuItem(label))
+			if (ImGui::MenuItem(label) && !entity.HasComponent<ComponentType>())
 			{
 				entity.AddComponent<ComponentType>();
 				ImGui::CloseCurrentPopup();

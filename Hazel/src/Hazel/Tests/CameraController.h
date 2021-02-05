@@ -1,9 +1,9 @@
 #pragma once
 
-#include "CameraControllerSettings.h"
 #include "Hazel/Core/Camera/CameraProjection.h"
 #include "Hazel/Core/Input/Input.h"
 #include "Hazel/Core/Geometry/Range.h"
+#include "CameraControllerSettings.h"
 
 namespace Hazel
 {
@@ -18,11 +18,12 @@ namespace Hazel
 			return settings;
 		}
 
-		void Update(CameraProjection &projection, const Input &input, float deltaTime)
+		void UpdateProjection(CameraProjection &projection, const Input &input, float deltaTime)
 		{
 			SetZoomLevel(projection, ComputeZoomLevel(input, deltaTime, GetZoomLevel(projection)));
 		}
 
+	private:
 		float ComputeZoomLevel(const Input &input, float deltaTime, float zoomLevel)
 		{
 			return Range::Clamp(

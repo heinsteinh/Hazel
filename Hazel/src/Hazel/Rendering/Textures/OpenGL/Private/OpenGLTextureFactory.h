@@ -24,8 +24,8 @@ namespace Hazel
 				static_cast<int>(info.Size.y));
 			glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, OpenGLTextureFiltering::GetTextureFiltering(info.MinFilter));
 			glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, OpenGLTextureFiltering::GetTextureFiltering(info.MagFilter));
-			glTextureParameteri(id, GL_TEXTURE_WRAP_S, OpenGLTextureWrapping::GetTextureWrapping(info.SWrap));
-			glTextureParameteri(id, GL_TEXTURE_WRAP_T, OpenGLTextureWrapping::GetTextureWrapping(info.TWrap));
+			glTextureParameteri(id, GL_TEXTURE_WRAP_S, OpenGLTextureWrapping::GetTextureWrapping(info.WrapS));
+			glTextureParameteri(id, GL_TEXTURE_WRAP_T, OpenGLTextureWrapping::GetTextureWrapping(info.WrapT));
 			return OpenGLId::GetHandle(id);
 		}
 	};

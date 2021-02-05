@@ -22,12 +22,12 @@ namespace Hazel
 			auto camera = TryGetComponent<CameraComponent>();
 			if (camera)
 			{
-				cameraController.Update(camera->Projection, input, deltaTime);
+				cameraController.UpdateProjection(camera->Projection, input, deltaTime);
 			}
 			auto transform = TryGetComponent<TransformComponent>();
 			if (transform)
 			{
-				controller.Update(transform->Transform, input, deltaTime);
+				controller.UpdateTransform(transform->Transform, input, deltaTime);
 			}
 		}
 	};

@@ -32,7 +32,13 @@ namespace Hazel
 	private:
 		static void UploadViewProjection(RendererContext &context, const std::shared_ptr<Shader> &shader)
 		{
-			shader->SetViewProjection(context.Camera ? context.Camera->GetViewProjection() : glm::mat4(1.0f));
+			auto index = shader->GetProperties().ViewProjectionIndex;
+			if (index)
+			{
+				shader->UpdateUniform().GetAttribute<glm::mat4>(*index) = context.Camera
+					? context.Camera->GetViewProjection()
+					: glm::mat4(1.0f);
+			}
 		}
 	};
 }

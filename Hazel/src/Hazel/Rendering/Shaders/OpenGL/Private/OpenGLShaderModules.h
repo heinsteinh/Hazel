@@ -1,7 +1,6 @@
 #pragma once
 
-#include <array>
-
+#include "Hazel/Core/Utils/EnumMap.h"
 #include "Hazel/Rendering/Shaders/OpenGL/OpenGLProgram.h"
 
 namespace Hazel
@@ -9,64 +8,51 @@ namespace Hazel
 	class OpenGLShaderModules
 	{
 	private:
-		std::array<OpenGLShaderModule, 2> shaders;
+		EnumMap<ShaderType, OpenGLShaderModule> shaders;
 
 	public:
 		void Attach(OpenGLProgram &program) const
 		{
-			for (const auto &shader : shaders)
+			shaders.ForEach([&](auto shaderType, const auto &shader)
 			{
 				if (shader.IsValid())
 				{
 					program.Attach(shader);
 				}
-			}
+			});
 		}
 
 		void Detach(OpenGLProgram &program) const
 		{
-			for (const auto &shader : shaders)
+			shaders.ForEach([&](auto shaderType, const auto &shader)
 			{
 				if (shader.IsValid())
 				{
 					program.Detach(shader);
 				}
-			}
+			});
 		}
 
-		const OpenGLShaderModule &GetVertexShader() const
+		const OpenGLShaderModule &operator[](ShaderType shaderType) const
 		{
-			return shaders[0];
+			return shaders[shaderType];
 		}
 
-		void AddVertexShader(OpenGLShaderModule &&shader)
+		OpenGLShaderModule &operator[](ShaderType shaderType)
 		{
-			shaders[0] = std::move(shader);
+			return shaders[shaderType];
 		}
 
-		const OpenGLShaderModule &GetPixelShader() const
+		template<typename FunctorType>
+		void ForEach(FunctorType functor) const
 		{
-			return shaders[1];
+			shaders.ForEach(functor);
 		}
 
-		void AddPixelShader(OpenGLShaderModule &&shader)
+		template<typename FunctorType>
+		void ForEach(FunctorType functor)
 		{
-			shaders[1] = std::move(shader);
-		}
-
-		auto begin() const
-		{
-			return shaders.begin();
-		}
-
-		auto begin()
-		{
-			return shaders.begin();
-		}
-
-		auto end() const
-		{
-			return shaders.end();
+			shaders.ForEach(functor);
 		}
 	};
 }
