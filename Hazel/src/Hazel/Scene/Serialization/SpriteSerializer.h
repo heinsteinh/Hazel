@@ -14,7 +14,8 @@ namespace Hazel
 			auto &texture = value.Material.Texture.GetSource();
 			document.BeginMap()
 				.Write("Color", value.Material.Color)
-				.Write("Texture", texture ? texture->GetName() : "")
+				.Write("TextureId", texture ? texture->GetName() : "")
+				.Write("TextureFilename", texture ? texture->GetFilename() : "")
 				.Write("TextureRegion", value.Material.Texture.GetRegion())
 				.Write("Shader", value.Material.Shader->GetName())
 				.EndMap();
@@ -28,7 +29,12 @@ namespace Hazel
 
 		static std::string GetTextureName(const YamlValue &source)
 		{
-			return source["Texture"].ValueOr(std::string());
+			return source["TextureId"].ValueOr(std::string());
+		}
+
+		static std::string GetTextureFilename(const YamlValue &source)
+		{
+			return source["TextureFilename"].ValueOr(std::string());
 		}
 
 		static std::string GetShaderName(const YamlValue &source)

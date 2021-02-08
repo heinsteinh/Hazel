@@ -13,6 +13,10 @@ namespace Hazel
 		static std::shared_ptr<Texture> CreateTextureFromFile(GraphicsContext &graphicsContext, const std::string &filename)
 		{
 			auto image = Image::FromFile(filename);
+			if (!image.IsValid())
+			{
+				return nullptr;
+			}
 			TextureInfo info;
 			info.Name = Filename::GetBaseName(filename);
 			info.Filename = filename;

@@ -11,17 +11,13 @@ namespace Hazel
 		int width = 0;
 		int height = 0;
 		image.data = stbi_load(filename.c_str(), &width, &height, &image.channelCount, 0);
-		if (!image.data)
-		{
-			throw OpenFileException(filename);
-		}
 		image.size = {static_cast<float>(width), static_cast<float>(height)};
 		return image;
 	}
 
 	Image::Image(Image &&other) noexcept
-		: size(other.size),
-		channelCount(other.channelCount),
+		: size(std::exchange(other.size, glm::vec2(0.0f))),
+		channelCount(std::exchange(other.channelCount, 0)),
 		data(std::exchange(other.data, nullptr))
 	{
 	}

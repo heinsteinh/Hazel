@@ -5,7 +5,6 @@
 #include "glm/glm.hpp"
 
 #include "Hazel/Core/Geometry/Size.h"
-#include "Hazel/Core/FileSystem/OpenFileException.h"
 
 namespace Hazel
 {
@@ -55,6 +54,11 @@ namespace Hazel
 		bool IsEmpty() const
 		{
 			return Size::IsEmpty(size);
+		}
+
+		bool IsValid() const
+		{
+			return data != nullptr;
 		}
 	};
 }

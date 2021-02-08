@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Hazel/Rendering/Textures/TextureFactory.h"
 #include "Hazel/Scene/Entity/Entity.h"
 #include "TagSerializer.h"
 #include "TransformSerializer.h"
@@ -67,7 +68,18 @@ namespace Hazel
 			auto name = SpriteSerializer::GetTextureName(source);
 			if (!name.empty())
 			{
-				component.Material.Texture = entity.GetAssetManager().GetTexture(name);
+				auto &assetManager = entity.GetAssetManager();
+				component.Material.Texture.SetSource(assetManager.GetTexture(name));
+				if (!component.Material.Texture)
+				{
+					auto texture = TextureFactory::CreateTextureFromFile(
+						entity.GetLayer().GetGraphicsContext(),
+						SpriteSerializer::GetTextureFilename(source));
+					if (texture)
+					{
+						component.Material.Texture.SetSource(assetManager.AddTexture(texture));
+					}
+				}
 			}
 		}
 
