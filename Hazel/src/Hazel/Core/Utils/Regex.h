@@ -42,7 +42,7 @@ namespace Hazel
 		void ForEachMatch(const std::string &source, FunctorType functor) const
 		{
 			std::sregex_iterator last;
-			for (auto i = GetIterator(source); i != last; ++i)
+			for (auto i = Begin(source); i != last; ++i)
 			{
 				functor(*i);
 			}

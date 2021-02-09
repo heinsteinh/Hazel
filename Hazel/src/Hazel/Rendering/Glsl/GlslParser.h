@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hazel/Core/Utils/Regex.h"
+#include "Hazel/Core/FileSystem/Filename.h"
 #include "Hazel/Core/FileSystem/FileReader.h"
 #include "Hazel/Rendering/Shaders/ShaderInfo.h"
 #include "Hazel/Rendering/Shaders/ShaderTypeName.h"
@@ -12,7 +13,7 @@ namespace Hazel
 	{
 	private:
 		static inline const Regex typePattern = R"(##\s*(\w*))";
-		static inline const Regex uniformBlockPattern = R"((?s)layout\s*\(binding\s*=\s*(\d+)\)\s*uniform\s*\w+\s*\{\s*(.*?)\s*\})";
+		static inline const Regex uniformBlockPattern = R"(layout\s*\(binding\s*=\s*(\d+)\)\s*uniform\s*\w+\s*\{\s*(.*?)\s*\})";
 		static inline const Regex uniformPattern = R"((\w+) (\w+);)";
 		static inline const Regex inputPattern = R"(layout\s*\(location\s*=\s*(\d+)\)\s*in\s*(\w+)\s*(\w+);)";
 
@@ -20,6 +21,8 @@ namespace Hazel
 		static ShaderInfo Parse(const std::string &filename)
 		{
 			ShaderInfo info;
+			info.Name = Filename::GetBaseName(filename);
+			info.Filename = filename;
 			info.Sources = SplitShaders(FileReader::ReadAll(filename));
 		}
 
@@ -45,13 +48,6 @@ namespace Hazel
 					: first->prefix().str();
 			}
 			return sources;
-		}
-
-		static VertexLayout GetInputLayout(const std::string &vertexSource)
-		{
-			inputPattern.ForEachMatch(vertexSource, [](const auto &match)
-			{
-			});
 		}
 	};
 }

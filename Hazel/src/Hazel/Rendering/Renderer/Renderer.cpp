@@ -1,5 +1,6 @@
 #include "Renderer.h"
 
+#include "Hazel/Core/Exceptions/AssertionException.h"
 #include "Private/RendererShaderManager.h"
 #include "Private/RendererDrawCall.h"
 #include "Private/RendererSubmission.h"
@@ -20,6 +21,7 @@ namespace Hazel
 
 	void Renderer::Submit(const RenderCommand &command)
 	{
+		HZ_ASSERT(command.IsValid(), "Render command needs a mesh and a shader");
 		RendererSubmission::Submit(context, command);
 	}
 

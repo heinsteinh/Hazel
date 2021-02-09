@@ -20,7 +20,7 @@ namespace Hazel
 			command.Transform = transform ? &transform->Transform : nullptr;
 			command.Color = &sprite.Material.Color;
 			command.Texture = &sprite.Material.Texture;
-			command.Shader = &sprite.Material.Shader;
+			command.Shader = sprite.Material.Shader ? &sprite.Material.Shader : &renderer.GetDefaultShader();
 			renderer.Submit(command);
 		}
 	};

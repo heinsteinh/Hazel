@@ -8,6 +8,9 @@
 #include "CameraSerializer.h"
 #include "ParticleSerializer.h"
 #include "NativeScriptSerializer.h"
+#include "Private/ComponentTexture.h"
+#include "Private/ComponentShader.h"
+#include "Private/ComponentNativeScript.h"
 
 namespace Hazel
 {
@@ -65,31 +68,14 @@ namespace Hazel
 
 		static void SetupComponent(const YamlValue &source, Entity entity, SpriteComponent &component)
 		{
-			auto name = SpriteSerializer::GetTextureName(source);
-			if (!name.empty())
-			{
-				auto &assetManager = entity.GetAssetManager();
-				component.Material.Texture.SetSource(assetManager.GetTexture(name));
-				if (!component.Material.Texture)
-				{
-					auto texture = TextureFactory::CreateTextureFromFile(
-						entity.GetLayer().GetGraphicsContext(),
-						SpriteSerializer::GetTextureFilename(source));
-					if (texture)
-					{
-						component.Material.Texture.SetSource(assetManager.AddTexture(texture));
-					}
-				}
-			}
+			component.Material.Shader = ComponentShader::ExtractShader(source, entity);
+			component.Material.Texture = ComponentTexture::ExtractTexture(source, entity);
+			SpriteSerializer::UpdateTextureRegion(source, component.Material.Texture);
 		}
 
 		static void SetupComponent(const YamlValue &source, Entity entity, NativeScriptComponent &component)
 		{
-			auto name = NativeScriptSerializer::GetScriptName(source);
-			if (!name.empty())
-			{
-				component.Script = entity.GetAssetManager().CreateScript(name);
-			}
+			component.Script = ComponentNativeScript::ExtractScript(source, entity);
 		}
 	};
 

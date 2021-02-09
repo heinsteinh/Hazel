@@ -12,20 +12,22 @@ Entities:
       TextureId: SpriteSheet
       TextureFilename: C:\Users\christian\source\repos\Hazel\Editor\assets\textures\SpriteSheet.png
       TextureRegion: [0, 2560, 0, 1664]
-      Shader: Shader2D
+      ShaderId: ""
+      ShaderFilename: ""
   - EntityId: 1048579
     Tag:
       Name: Square2
     Transform:
-      Translation: [0, 0, 1]
+      Translation: [0, 0, 0.600000024]
       Rotation: [0, 0, 0, 1]
       Scale: [1, 1, 1]
     Sprite:
       Color: [1, 1, 1, 1]
       TextureId: Test
       TextureFilename: C:\Users\christian\source\repos\Hazel\Editor\assets\textures\Test.jpg
-      TextureRegion: [0, 3745, 0, 1080]
-      Shader: Shader2D
+      TextureRegion: [0, 3836, 0, 2161]
+      ShaderId: ""
+      ShaderFilename: ""
   - EntityId: 1048578
     Tag:
       Name: Camera1
@@ -62,19 +64,19 @@ Entities:
     Tag:
       Name: Particle Emitter
     Transform:
-      Translation: [-0.0244252998, 0.724137902, 1.10000002]
+      Translation: [-0.104885057, 0.75574708, 1.10000002]
       Rotation: [0, 0, 0, 1]
       Scale: [1, 1, 1]
     Particle:
       Enabled: true
       MaxParticleCount: 1000
-      EmissionRate: 204
+      EmissionRate: 116
       LinearVelocity: [0, 0]
       LinearVelocityVariation: [0.200000003, 0.200000003]
       AngularVelocity: 3.14159274
       AngularVelocityVariation: 3.14159274
-      ColorBegin: [1, 0.300000012, 0, 1]
-      ColorEnd: [1, 0.600000024, 0, 1]
+      ColorBegin: [1, 0, 0, 1]
+      ColorEnd: [0.934363008, 1, 0, 1]
       SizeBegin: 0.100000001
       SizeEnd: 0
       SizeVariation: 0.100000001

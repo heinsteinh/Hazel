@@ -17,5 +17,10 @@ namespace Hazel
 		const glm::vec4 *Color = nullptr;
 		const SubTexture *Texture = nullptr;
 		const std::shared_ptr<Shader> *Shader = nullptr;
+
+		bool IsValid() const
+		{
+			return Mesh && Shader && *Shader;
+		}
 	};
 }

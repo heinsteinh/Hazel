@@ -13,13 +13,4 @@ namespace Hazel
 	{
 		Material Material;
 	};
-
-	template<>
-	inline void EntityListener::OnComponentAdded(Entity entity, SpriteComponent &component)
-	{
-		if (!component.Material.Shader)
-		{
-			component.Material.Shader = entity.GetRenderer().GetDefaultShader();
-		}
-	}
 }
