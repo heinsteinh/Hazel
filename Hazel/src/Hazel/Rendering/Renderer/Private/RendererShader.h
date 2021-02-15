@@ -4,7 +4,7 @@
 
 namespace Hazel
 {
-	class RendererShaderManager
+	class RendererShader
 	{
 	public:
 		static void UpdateCamera(RendererContext &context, const Camera &camera)

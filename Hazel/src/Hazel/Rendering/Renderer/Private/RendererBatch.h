@@ -5,8 +5,6 @@
 #include "RendererIndices.h"
 #include "RendererVertices.h"
 #include "RendererTextures.h"
-#include "RendererIndexBuilder.h"
-#include "RendererVertexBuilder.h"
 
 namespace Hazel
 {
@@ -18,12 +16,10 @@ namespace Hazel
 		RendererTextures textures;
 
 	public:
-		RendererBatch(const RendererInfo &info)
-			: indices(info.IndexBufferSize),
-			vertices(info.VertexBufferSize),
-			textures(*info.GraphicsContext, info.TextureSlotCount)
-		{
-		}
+		RendererBatch(const RendererInfo &info);
+
+		bool Add(const RenderCommand &command);
+		void Clear();
 
 		const RendererIndices &GetIndices() const
 		{
@@ -59,29 +55,6 @@ namespace Hazel
 		{
 			return indices.CanContain(mesh.Indices.GetIndexCount())
 				&& vertices.CanContain(mesh.Vertices.GetVertexCount());
-		}
-
-		bool Add(const RenderCommand &command)
-		{
-			if (!CanContain(*command.Mesh))
-			{
-				return false;
-			}
-			auto textureSlot = textures.Add(command.Texture);
-			if (!textureSlot)
-			{
-				return false;
-			}
-			RendererIndexBuilder::AddIndices(indices, command.Mesh->Indices, vertices.GetVertexCount());
-			RendererVertexBuilder::AddVertices(vertices, command, *textureSlot);
-			return true;
-		}
-
-		void Clear()
-		{
-			indices.Clear();
-			vertices.Clear();
-			textures.Clear();
 		}
 	};
 }

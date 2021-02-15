@@ -4,7 +4,7 @@
 
 namespace Hazel
 {
-	class RendererMeshManager
+	class RendererMeshFormat
 	{
 	public:
 		static bool HasMeshFormat(RendererContext &context, const Mesh &mesh)

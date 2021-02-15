@@ -42,6 +42,11 @@ namespace Hazel
 			return data.GetSize();
 		}
 
+		size_t GetAttributeCount() const
+		{
+			return layout.GetAttributeCount();
+		}
+
 		const void *GetAttribute(size_t index) const
 		{
 			return VertexHelper::GetAttribute(layout, data.GetData(), index);

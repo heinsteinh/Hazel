@@ -1,7 +1,7 @@
 #include "Renderer.h"
 
 #include "Hazel/Core/Exceptions/AssertionException.h"
-#include "Private/RendererShaderManager.h"
+#include "Private/RendererShader.h"
 #include "Private/RendererDrawCall.h"
 #include "Private/RendererSubmission.h"
 
@@ -16,7 +16,7 @@ namespace Hazel
 	{
 		context.Statistics.Reset();
 		context.Command.Framebuffer = framebuffer;
-		RendererShaderManager::UpdateCamera(context, camera);
+		RendererShader::UpdateCamera(context, camera);
 	}
 
 	void Renderer::Submit(const RenderCommand &command)

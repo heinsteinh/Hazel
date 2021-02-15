@@ -2,8 +2,8 @@
 
 #include "Hazel/Rendering/Renderer/RendererException.h"
 #include "RendererContext.h"
-#include "RendererShaderManager.h"
-#include "RendererMeshManager.h"
+#include "RendererShader.h"
+#include "RendererMeshFormat.h"
 #include "RendererDrawCall.h"
 
 namespace Hazel
@@ -24,19 +24,19 @@ namespace Hazel
 	private:
 		static void SetupShader(RendererContext &context, const RenderCommand &command)
 		{
-			if (!RendererShaderManager::HasShader(context, *command.Shader))
+			if (!RendererShader::HasShader(context, *command.Shader))
 			{
 				RendererDrawCall::Flush(context);
-				RendererShaderManager::SetShader(context, *command.Shader);
+				RendererShader::SetShader(context, *command.Shader);
 			}
 		}
 
 		static void SetupMeshFormat(RendererContext &context, const RenderCommand &command)
 		{
-			if (!RendererMeshManager::HasMeshFormat(context, *command.Mesh))
+			if (!RendererMeshFormat::HasMeshFormat(context, *command.Mesh))
 			{
 				RendererDrawCall::Flush(context);
-				RendererMeshManager::SetMeshFormat(context, *command.Mesh);
+				RendererMeshFormat::SetMeshFormat(context, *command.Mesh);
 			}
 		}
 
