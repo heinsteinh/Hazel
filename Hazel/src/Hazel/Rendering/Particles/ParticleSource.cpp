@@ -44,7 +44,7 @@ namespace Hazel
 	{
 		for (int i = 0; i < count; i++)
 		{
-			emitter.EmitParticle(pool.GetNextParticle(), position, info);
+			emitter.SetupParticle(pool.AddParticle(), position, info);
 		}
 	}
 

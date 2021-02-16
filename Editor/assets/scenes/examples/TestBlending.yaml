@@ -1,10 +1,10 @@
 Scene: Test
 Entities:
-  - EntityId: 1048580
+  - EntityId: 1048579
     Tag:
       Name: Particle Emitter
     Transform:
-      Translation: [-0.285919547, 0.729885101, 1.10000002]
+      Translation: [-0.096982725, 0.493965447, 1.10000002]
       Rotation: [0, 0, 0, 1]
       Scale: [1, 1, 1]
     Particle:
@@ -32,7 +32,7 @@ Entities:
       Scale: [1, 1, 1]
     Camera:
       ProjectionType: 0
-      OrthographicSize: 2
+      OrthographicSize: 2.60000014
       OrthographicNearClip: -1
       OrthographicFarClip: 1
       PerspectiveVerticalFov: 0.785398185
@@ -44,25 +44,25 @@ Entities:
     Tag:
       Name: Square2
     Transform:
-      Translation: [0, 0, 0.600000024]
+      Translation: [0, 0, 0.100000001]
       Rotation: [0, 0, 0, 1]
       Scale: [1, 1, 1]
     Sprite:
       Color: [1, 1, 1, 1]
-      TextureId: Test
-      TextureFilename: C:\Users\christian\source\repos\Hazel\Editor\assets\textures\Test.jpg
-      TextureRegion: [0, 3836, 0, 2161]
+      TextureId: TestOverlay
+      TextureFilename: C:\Users\christian\source\repos\Hazel\Editor\assets\textures\TestOverlay.png
+      TextureRegion: [0, 800, 0, 600]
       ShaderId: ""
       ShaderFilename: ""
   - EntityId: 1048576
     Tag:
       Name: Square1
     Transform:
-      Translation: [0, 0, 0]
+      Translation: [0, -0.400000006, 0.200000003]
       Rotation: [0, 0, 0, 1]
       Scale: [1.53846157, 1, 1]
     Sprite:
-      Color: [1, 1, 1, 1]
+      Color: [0.344020069, 0.961389959, 0.0371193066, 1]
       TextureId: SpriteSheet
       TextureFilename: C:\Users\christian\source\repos\Hazel\Editor\assets\textures\SpriteSheet.png
       TextureRegion: [0, 2560, 0, 1664]

@@ -2,7 +2,7 @@
 
 namespace Hazel
 {
-	void ParticleEmitter::EmitParticle(Particle &particle, const glm::vec3 &position, const ParticleInfo &info)
+	void ParticleEmitter::SetupParticle(Particle &particle, const glm::vec3 &position, const ParticleInfo &info)
 	{
 		particle.Active = true;
 		SetupPosition(particle, position);

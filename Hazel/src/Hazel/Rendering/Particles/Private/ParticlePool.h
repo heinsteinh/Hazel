@@ -44,7 +44,7 @@ namespace Hazel
 			index %= particles.size();
 		}
 
-		Particle &GetNextParticle()
+		Particle &AddParticle()
 		{
 			auto &particle = particles[index];
 			index = (index + 1) % particles.size();

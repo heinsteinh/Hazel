@@ -21,12 +21,10 @@ namespace Hazel
 			renderer.Submit(command);
 		}
 
+	private:
 		static glm::vec4 GetColor(const Particle &particle)
 		{
-			auto life = particle.GetLife();
-			auto color = glm::mix(particle.ColorEnd, particle.ColorBegin, life);
-			color.a *= life;
-			return color;
+			return glm::mix(particle.ColorEnd, particle.ColorBegin, particle.GetLife());
 		}
 	};
 }

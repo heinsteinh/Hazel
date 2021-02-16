@@ -95,6 +95,15 @@ namespace Hazel
 			});
 		}
 
+		template<typename ComponentType, typename FunctorType>
+		void Sort(FunctorType functor)
+		{
+			context.Registry.sort<ComponentType>([&](const entt::entity left, const entt::entity right)
+			{
+				return functor(Entity(left, context), Entity(right, context));
+			}, entt::insertion_sort());
+		}
+
 		template<typename ComponentType>
 		Entity GetFirstEntityWith()
 		{

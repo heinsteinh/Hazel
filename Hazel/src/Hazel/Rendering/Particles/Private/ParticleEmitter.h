@@ -12,7 +12,7 @@ namespace Hazel
 		Random random;
 
 	public:
-		void EmitParticle(Particle &particle, const glm::vec3 &position, const ParticleInfo &info);
+		void SetupParticle(Particle &particle, const glm::vec3 &position, const ParticleInfo &info);
 
 	private:
 		void SetupPosition(Particle &particle, const glm::vec3 &position);

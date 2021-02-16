@@ -42,20 +42,12 @@ namespace Hazel
 
 		std::optional<size_t> Add(const SubTexture *texture)
 		{
-			if (!texture)
-			{
-				return 0;
-			}
-			return Add(texture->GetSource());
+			return texture ? Add(texture->GetSource()) : 0;
 		}
 
 		std::optional<size_t> Add(const std::shared_ptr<Texture> &texture)
 		{
-			if (!texture)
-			{
-				return 0;
-			}
-			return textures.Add(texture);
+			return texture ? textures.Add(texture) : 0;
 		}
 
 		void Clear()
