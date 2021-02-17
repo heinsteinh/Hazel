@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstddef>
+
 #include "Hazel/Core/Exceptions/AssertionException.h"
 #include "VertexLayout.h"
 
@@ -10,12 +12,12 @@ namespace Hazel
 	public:
 		static const void *GetAttribute(const VertexLayout &layout, const void *data, size_t index)
 		{
-			return static_cast<const char *>(data) + layout.GetAttribute(index).GetOffset();
+			return static_cast<const std::byte *>(data) + layout.GetAttribute(index).GetOffset();
 		}
 
 		static void *GetAttribute(const VertexLayout &layout, void *data, size_t index)
 		{
-			return static_cast<char *>(data) + layout.GetAttribute(index).GetOffset();
+			return static_cast<std::byte *>(data) + layout.GetAttribute(index).GetOffset();
 		}
 
 		template<typename T>
