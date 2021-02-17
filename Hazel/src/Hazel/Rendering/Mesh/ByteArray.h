@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <vector>
 
 #include "Hazel/Core/Exceptions/AssertionException.h"
@@ -10,14 +11,14 @@ namespace Hazel
 	{
 	private:
 		size_t itemSize = 0;
-		std::vector<char> data;
+		std::vector<std::byte> data;
 
 	public:
 		ByteArray() = default;
 
 		ByteArray(size_t itemSize, size_t itemCount = 0)
 			: itemSize(itemSize),
-			data(itemSize *itemCount, '\0')
+			data(itemSize *itemCount, std::byte(0))
 		{
 		}
 
@@ -48,7 +49,7 @@ namespace Hazel
 
 		void Resize(size_t size)
 		{
-			data.resize(size, '\0');
+			data.resize(size, std::byte(0));
 		}
 
 		size_t GetItemCount() const
@@ -58,7 +59,7 @@ namespace Hazel
 
 		void SetItemCount(size_t itemCount)
 		{
-			data.resize(itemCount * itemSize, '\0');
+			data.resize(itemCount * itemSize, std::byte(0));
 		}
 
 		void ReserveItemCount(size_t itemCount)
