@@ -1,6 +1,6 @@
 #include "GraphicsApiFactory.h"
 
-#include "OpenGL/OpenGL.h"
+#include "OpenGL/OpenGLGraphicsApi.h"
 #include "Hazel/Core/Exceptions/AssertionException.h"
 
 namespace Hazel
@@ -10,7 +10,7 @@ namespace Hazel
 		switch (graphicsApi)
 		{
 		case AvailableGraphicsApi::OpenGL:
-			return std::make_unique<OpenGL>();
+			return std::make_unique<OpenGLGraphicsApi>();
 		}
 		HZ_ASSERT(false, "Invalid API");
 		return nullptr;

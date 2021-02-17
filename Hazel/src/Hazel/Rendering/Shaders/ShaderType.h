@@ -6,8 +6,7 @@ namespace Hazel
 	{
 		Unknown = -1,
 		Vertex,
-		Pixel,
-		Fragment = Pixel,
-		Count = Pixel + 1
+		Fragment,
+		Count = Fragment + 1
 	};
 }

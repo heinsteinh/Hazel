@@ -17,7 +17,7 @@ namespace Hazel
 
 		ByteArray(size_t itemSize, size_t itemCount = 0)
 			: itemSize(itemSize),
-			data(itemSize *itemCount)
+			data(itemSize *itemCount, '\0')
 		{
 		}
 
@@ -48,7 +48,7 @@ namespace Hazel
 
 		void Resize(size_t size)
 		{
-			data.resize(size);
+			data.resize(size, '\0');
 		}
 
 		size_t GetItemCount() const
@@ -58,15 +58,10 @@ namespace Hazel
 
 		void SetItemCount(size_t itemCount)
 		{
-			data.resize(itemCount * itemSize);
+			data.resize(itemCount * itemSize, '\0');
 		}
 
-		void Clear()
-		{
-			data.clear();
-		}
-
-		void Reserve(size_t itemCount)
+		void ReserveItemCount(size_t itemCount)
 		{
 			data.reserve(itemCount * itemSize);
 		}
@@ -74,6 +69,11 @@ namespace Hazel
 		void ReserveSize(size_t size)
 		{
 			data.reserve(size);
+		}
+
+		void Clear()
+		{
+			data.clear();
 		}
 
 		const void *GetItem(size_t index) const

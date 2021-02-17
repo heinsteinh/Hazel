@@ -21,7 +21,7 @@ namespace Hazel
 
 		bool IsValid() const
 		{
-			return !Sources[ShaderType::Vertex].empty() && !Sources[ShaderType::Pixel].empty();
+			return !Sources[ShaderType::Vertex].empty() && !Sources[ShaderType::Fragment].empty();
 		}
 	};
 }

@@ -11,13 +11,11 @@ namespace Hazel
 	{
 	public:
 		static inline const std::string Vertex = "vertex";
-		static inline const std::string Pixel = "pixel";
 		static inline const std::string Fragment = "fragment";
 		static inline const std::string Unknown = "unknown";
 
 		static inline const std::unordered_map<std::string, ShaderType> Types = {
 			{Vertex, ShaderType::Vertex},
-			{Pixel, ShaderType::Pixel},
 			{Fragment, ShaderType::Fragment}
 		};
 
@@ -27,8 +25,8 @@ namespace Hazel
 			{
 			case ShaderType::Vertex:
 				return Vertex;
-			case ShaderType::Pixel:
-				return Pixel;
+			case ShaderType::Fragment:
+				return Fragment;
 			default:
 				return Unknown;
 			}

@@ -64,9 +64,9 @@ namespace Hazel
 			return data.GetItemCount();
 		}
 
-		void Reserve(size_t count)
+		void ReserveVertexCount(size_t vertexCount)
 		{
-			data.Reserve(count);
+			data.ReserveItemCount(vertexCount);
 		}
 
 		void ReserveSize(size_t size)

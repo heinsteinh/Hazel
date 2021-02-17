@@ -12,7 +12,7 @@ namespace Hazel
 	public:
 		void Draw(Entity entity, NativeScriptComponent &component)
 		{
-			ImGui::Text("Script Id: %s", component.Script->GetName());
+			ImGui::Text("Script Id: %s", component.Script->GetName().c_str());
 			component.Script->OnGui();
 		}
 	};

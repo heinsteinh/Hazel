@@ -25,7 +25,7 @@ namespace Hazel
 		static void AddIndices(Mesh &mesh)
 		{
 			mesh.Indices.SetIndexFormat(IndexFormat::UInt16);
-			mesh.Indices.Reserve(6);
+			mesh.Indices.ReserveIndexCount(6);
 			mesh.Indices.AddIndex<uint16_t>(0);
 			mesh.Indices.AddIndex<uint16_t>(1);
 			mesh.Indices.AddIndex<uint16_t>(2);
@@ -41,7 +41,7 @@ namespace Hazel
 
 		static void AddVertices(Mesh &mesh)
 		{
-			mesh.Vertices.Reserve(4);
+			mesh.Vertices.ReserveVertexCount(4);
 			auto &topLeft = mesh.Vertices.Emplace<Vertex2D>();
 			topLeft.Position = {-0.5f, 0.5f, 0.0f};
 			topLeft.TextureCoordinates = {0.0f, 1.0f};
