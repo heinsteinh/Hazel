@@ -13,11 +13,10 @@ namespace Hazel
 		static void RenderParticle(Renderer2D &renderer, const Particle &particle)
 		{
 			RenderCommand command;
-			command.Mesh = &renderer.GetSquareMesh();
-			command.Transform = &particle.Transform;
-			auto color = GetColor(particle);
-			command.Color = &color;
-			command.Shader = &renderer.GetDefaultShader();
+			command.Mesh = renderer.GetSquareMesh();
+			command.Transform = particle.Transform;
+			command.Color = GetColor(particle);
+			command.Shader = renderer.GetDefaultShader();
 			renderer.Submit(command);
 		}
 

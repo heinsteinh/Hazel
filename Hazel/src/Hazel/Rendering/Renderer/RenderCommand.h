@@ -12,15 +12,20 @@ namespace Hazel
 {
 	struct RenderCommand
 	{
-		const Mesh *Mesh = nullptr;
-		const Transform *Transform = nullptr;
-		const glm::vec4 *Color = nullptr;
-		const SubTexture *Texture = nullptr;
-		const std::shared_ptr<Shader> *Shader = nullptr;
+		std::shared_ptr<Mesh> Mesh;
+		Transform Transform;
+		glm::vec4 Color{1.0f};
+		SubTexture Texture;
+		std::shared_ptr<Shader> Shader;
 
 		bool IsValid() const
 		{
-			return Mesh && Shader && *Shader;
+			return Mesh && Shader;
+		}
+
+		bool operator<(const RenderCommand &other) const
+		{
+			return std::tie(Mesh, Shader) < std::tie(other.Mesh, other.Shader);
 		}
 	};
 }

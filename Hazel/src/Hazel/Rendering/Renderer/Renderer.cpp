@@ -21,12 +21,18 @@ namespace Hazel
 
 	void Renderer::Submit(const RenderCommand &command)
 	{
-		HZ_ASSERT(command.IsValid(), "Render command needs a mesh and a shader");
-		RendererSubmission::Submit(context, command);
+		HZ_ASSERT(command.IsValid(), "Render command needs at least a mesh and a shader");
+		context.RenderQueue.Add(command);
 	}
 
 	void Renderer::EndScene()
 	{
+		context.RenderQueue.Sort();
+		for (const auto &command : context.RenderQueue)
+		{
+			RendererSubmission::Submit(context, command);
+		}
 		RendererDrawCall::Flush(context);
+		context.RenderQueue.Clear();
 	}
 }

@@ -8,7 +8,7 @@ namespace Hazel
 	{
 	private:
 		Renderer renderer;
-		const std::shared_ptr<const Mesh> squareMesh;
+		const std::shared_ptr<Mesh> squareMesh;
 		const std::shared_ptr<Shader> defaultShader;
 
 	public:
@@ -18,9 +18,9 @@ namespace Hazel
 		void Submit(const RenderCommand &renderCommand);
 		void EndScene();
 
-		const Mesh &GetSquareMesh() const
+		const std::shared_ptr<Mesh> &GetSquareMesh() const
 		{
-			return *squareMesh;
+			return squareMesh;
 		}
 
 		const std::shared_ptr<Shader> &GetDefaultShader() const

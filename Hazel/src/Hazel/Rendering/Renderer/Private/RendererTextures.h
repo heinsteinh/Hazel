@@ -40,11 +40,6 @@ namespace Hazel
 			return textures.GetTexture(slot);
 		}
 
-		std::optional<size_t> Add(const SubTexture *texture)
-		{
-			return texture ? Add(texture->GetSource()) : 0;
-		}
-
 		std::optional<size_t> Add(const std::shared_ptr<Texture> &texture)
 		{
 			return texture ? textures.Add(texture) : 0;

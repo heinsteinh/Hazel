@@ -24,10 +24,10 @@ namespace Hazel
 	private:
 		static void SetupShader(RendererContext &context, const RenderCommand &command)
 		{
-			if (!RendererShader::HasShader(context, *command.Shader))
+			if (!RendererShader::HasShader(context, command.Shader))
 			{
 				RendererDrawCall::Flush(context);
-				RendererShader::SetShader(context, *command.Shader);
+				RendererShader::SetShader(context, command.Shader);
 			}
 		}
 

@@ -4,6 +4,7 @@
 #include "Hazel/Rendering/GraphicsContext/GraphicsContext.h"
 #include "Hazel/Rendering/GraphicsContext/DrawCommand.h"
 #include "Hazel/Rendering/Renderer/RendererStatistics.h"
+#include "Hazel/Rendering/Renderer/RenderQueue.h"
 #include "RendererBatch.h"
 #include "RendererBuffers.h"
 
@@ -13,6 +14,7 @@ namespace Hazel
 	{
 		GraphicsContext *GraphicsContext = nullptr;
 		const Camera *Camera = nullptr;
+		RenderQueue RenderQueue;
 		DrawCommand Command;
 		RendererBatch Batch;
 		RendererBuffers Buffers;

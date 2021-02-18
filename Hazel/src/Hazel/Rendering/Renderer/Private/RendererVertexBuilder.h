@@ -8,17 +8,17 @@ namespace Hazel
 	class RendererVertexBuilder
 	{
 	public:
-		static void AddVertices(RendererVertices &vertices, const RenderCommand &object, size_t textureSlot)
+		static void AddVertices(RendererVertices &vertices, const RenderCommand &command, size_t textureSlot)
 		{
-			object.Mesh->Vertices.ForEach([&](ConstantVertex vertex)
+			command.Mesh->Vertices.ForEach([&](auto vertex)
 			{
-				BuildVertex(vertices.Add(vertex), object, textureSlot);
+				BuildVertex(vertices.Add(vertex), command, textureSlot);
 			});
 		}
 
 		static void BuildVertex(Vertex vertex, const RenderCommand &object, size_t textureSlot)
 		{
-			auto &properties = (*object.Shader)->GetProperties();
+			auto &properties = object.Shader->GetProperties();
 			ApplyTransform(vertex, properties, object.Transform);
 			UpdateColor(vertex, properties, object.Color);
 			UpdateTextureCoordinates(vertex, properties, object.Texture);
@@ -26,29 +26,29 @@ namespace Hazel
 		}
 
 	private:
-		static void ApplyTransform(Vertex vertex, const ShaderProperties &properties, const Transform *transform)
+		static void ApplyTransform(Vertex vertex, const ShaderProperties &properties, const Transform &transform)
 		{
-			if (transform && properties.PositionIndex)
+			if (properties.PositionIndex)
 			{
 				auto &position = vertex.GetAttribute<glm::vec3>(*properties.PositionIndex);
-				position = transform->Apply(position);
+				position = transform.Apply(position);
 			}
 		}
 
-		static void UpdateColor(Vertex vertex, const ShaderProperties &properties, const glm::vec4 *color)
+		static void UpdateColor(Vertex vertex, const ShaderProperties &properties, const glm::vec4 &color)
 		{
-			if (color && properties.ColorIndex)
+			if (properties.ColorIndex)
 			{
-				vertex.GetAttribute<glm::vec4>(*properties.ColorIndex) *= *color;
+				vertex.GetAttribute<glm::vec4>(*properties.ColorIndex) *= color;
 			}
 		}
 
-		static void UpdateTextureCoordinates(Vertex vertex, const ShaderProperties &properties, const SubTexture *texture)
+		static void UpdateTextureCoordinates(Vertex vertex, const ShaderProperties &properties, const SubTexture &texture)
 		{
-			if (texture && properties.TextureCoordinatesIndex)
+			if (properties.TextureCoordinatesIndex)
 			{
 				auto &coordinates = vertex.GetAttribute<glm::vec2>(*properties.TextureCoordinatesIndex);
-				coordinates = texture->GetSourceCoordinates(coordinates);
+				coordinates = texture.GetSourceCoordinates(coordinates);
 			}
 		}
 

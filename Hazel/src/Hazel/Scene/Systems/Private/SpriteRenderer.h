@@ -15,12 +15,15 @@ namespace Hazel
 		{
 			auto &renderer = entity.GetRenderer();
 			RenderCommand command;
-			command.Mesh = &renderer.GetSquareMesh();
+			command.Mesh = renderer.GetSquareMesh();
 			auto transform = entity.TryGetComponent<TransformComponent>();
-			command.Transform = transform ? &transform->Transform : nullptr;
-			command.Color = &sprite.Material.Color;
-			command.Texture = &sprite.Material.Texture;
-			command.Shader = sprite.Material.Shader ? &sprite.Material.Shader : &renderer.GetDefaultShader();
+			if (transform)
+			{
+				command.Transform = transform->Transform;
+			}
+			command.Color = sprite.Material.Color;
+			command.Texture = sprite.Material.Texture;
+			command.Shader = sprite.Material.Shader ? sprite.Material.Shader : renderer.GetDefaultShader();
 			renderer.Submit(command);
 		}
 	};
