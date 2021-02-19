@@ -2,7 +2,8 @@
 
 #include "Hazel/Rendering/Renderer/RendererInfo.h"
 #include "Hazel/Rendering/GraphicsContext/DrawCommand.h"
-#include "RendererBatch.h"
+#include "RendererIndices.h"
+#include "RendererVertices.h"
 
 namespace Hazel
 {
@@ -21,21 +22,23 @@ namespace Hazel
 		{
 		}
 
-		void Bind(DrawCommand &command)
+		const std::shared_ptr<IndexBuffer> &GetIndexBuffer() const
 		{
-			command.IndexBuffer = indexBuffer;
-			command.VertexBuffer = vertexBuffer;
+			return indexBuffer;
 		}
 
-		void BufferIndices(const RendererBatch &batch)
+		const std::shared_ptr<VertexBuffer> &GetVertexBuffer() const
 		{
-			auto &indices = batch.GetIndices();
+			return vertexBuffer;
+		}
+
+		void BufferIndices(const RendererIndices &indices)
+		{
 			indexBuffer->BufferData(indices.GetData(), indices.GetSize());
 		}
 
-		void BufferVertices(const RendererBatch &batch)
+		void BufferVertices(const RendererVertices &vertices)
 		{
-			auto &vertices = batch.GetVertices();
 			vertexBuffer->BufferData(vertices.GetData(), vertices.GetSize());
 		}
 	};

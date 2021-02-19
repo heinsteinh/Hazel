@@ -16,14 +16,14 @@ namespace Hazel
 			case ShaderDataType::Float2:
 			case ShaderDataType::Float3:
 			case ShaderDataType::Float4:
-			case ShaderDataType::Matrix3:
-			case ShaderDataType::Matrix4:
+			case ShaderDataType::Mat3:
+			case ShaderDataType::Mat4:
 				return DataType::Float;
-			case ShaderDataType::Integer:
-			case ShaderDataType::Integer2:
-			case ShaderDataType::Integer3:
-			case ShaderDataType::Integer4:
-				return DataType::Integer;
+			case ShaderDataType::Int:
+			case ShaderDataType::Int2:
+			case ShaderDataType::Int3:
+			case ShaderDataType::Int4:
+				return DataType::Int;
 			case ShaderDataType::Bool:
 				return DataType::Bool;
 			default:
@@ -36,21 +36,21 @@ namespace Hazel
 			switch (type)
 			{
 			case ShaderDataType::Float:
-			case ShaderDataType::Integer:
+			case ShaderDataType::Int:
 			case ShaderDataType::Bool:
 				return 1;
 			case ShaderDataType::Float2:
-			case ShaderDataType::Integer2:
+			case ShaderDataType::Int2:
 				return 2;
 			case ShaderDataType::Float3:
-			case ShaderDataType::Integer3:
+			case ShaderDataType::Int3:
 				return 3;
 			case ShaderDataType::Float4:
-			case ShaderDataType::Integer4:
+			case ShaderDataType::Int4:
 				return 4;
-			case ShaderDataType::Matrix3:
+			case ShaderDataType::Mat3:
 				return 9;
-			case ShaderDataType::Matrix4:
+			case ShaderDataType::Mat4:
 				return 16;
 			default:
 				return 0;

@@ -6,7 +6,7 @@ namespace Hazel
     {
         Unknown,
         Bool,
-        Integer,
+        Int,
         Float
     };
 }

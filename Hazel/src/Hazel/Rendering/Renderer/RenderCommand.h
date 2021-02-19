@@ -17,15 +17,11 @@ namespace Hazel
 		glm::vec4 Color{1.0f};
 		SubTexture Texture;
 		std::shared_ptr<Shader> Shader;
+		bool Transparency = false;
 
 		bool IsValid() const
 		{
 			return Mesh && Shader;
-		}
-
-		bool operator<(const RenderCommand &other) const
-		{
-			return std::tie(Mesh, Shader) < std::tie(other.Mesh, other.Shader);
 		}
 	};
 }

@@ -14,7 +14,7 @@ namespace Hazel
 		static void RenderSprite(Entity entity, const SpriteComponent &sprite)
 		{
 			auto &renderer = entity.GetRenderer();
-			RenderCommand command;
+			auto &command = renderer.AddRenderCommand();
 			command.Mesh = renderer.GetSquareMesh();
 			auto transform = entity.TryGetComponent<TransformComponent>();
 			if (transform)
@@ -24,7 +24,7 @@ namespace Hazel
 			command.Color = sprite.Material.Color;
 			command.Texture = sprite.Material.Texture;
 			command.Shader = sprite.Material.Shader ? sprite.Material.Shader : renderer.GetDefaultShader();
-			renderer.Submit(command);
+			command.Transparency = sprite.Material.Transparency;
 		}
 	};
 }

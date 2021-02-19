@@ -17,11 +17,6 @@ namespace Hazel
 		renderer.BeginScene(camera, framebuffer);
 	}
 
-	void Renderer2D::Submit(const RenderCommand &command)
-	{
-		renderer.Submit(command);
-	}
-
 	void Renderer2D::EndScene()
 	{
 		renderer.EndScene();

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Hazel/Core/Camera/Camera.h"
 #include "RendererContext.h"
 
 namespace Hazel
@@ -9,12 +10,10 @@ namespace Hazel
 	public:
 		static void UpdateCamera(RendererContext &context, const Camera &camera)
 		{
-			context.Camera = &camera;
-			auto shader = context.Command.Shader.lock();
-			if (shader)
-			{
-				UploadViewProjection(context, shader);
-			}
+			context.CameraProjectionType = ProjectionType::Orthographic;
+			context.ViewProjection = camera.GetViewProjection();
+			context.CameraPosition = camera.GetPosition();
+			UploadViewProjection(context, context.Command.Shader.lock());
 		}
 
 		static bool HasShader(RendererContext &context, const std::shared_ptr<Shader> &shader)
@@ -32,12 +31,13 @@ namespace Hazel
 	private:
 		static void UploadViewProjection(RendererContext &context, const std::shared_ptr<Shader> &shader)
 		{
-			auto index = shader->GetProperties().ViewProjectionIndex;
-			if (index)
+			if (shader)
 			{
-				shader->UpdateUniform().GetAttribute<glm::mat4>(*index) = context.Camera
-					? context.Camera->GetViewProjection()
-					: glm::mat4(1.0f);
+				auto index = shader->GetProperties().ViewProjectionIndex;
+				if (index)
+				{
+					shader->UpdateUniform().GetAttribute<glm::mat4>(*index) = context.ViewProjection;
+				}
 			}
 		}
 	};

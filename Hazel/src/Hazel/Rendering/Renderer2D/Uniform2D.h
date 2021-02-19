@@ -9,7 +9,7 @@ namespace Hazel
 	struct Uniform2D
 	{
 		static inline const VertexLayout Layout = {
-			ShaderDataType::Matrix4
+			ShaderDataType::Mat4
 		};
 
 		static constexpr size_t ViewProjectionIndex = 0;

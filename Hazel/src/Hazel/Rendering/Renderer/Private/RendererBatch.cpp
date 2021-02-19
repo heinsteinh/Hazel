@@ -6,7 +6,7 @@
 namespace Hazel
 {
 	RendererBatch::RendererBatch(const RendererInfo &info)
-		: indices(info.IndexBufferSize),
+		: indices(info.IndexFormat, info.IndexBufferSize),
 		vertices(info.VertexBufferSize),
 		textures(*info.GraphicsContext, info.TextureSlotCount)
 	{

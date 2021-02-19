@@ -15,12 +15,12 @@ namespace Hazel
 			{"vec2", ShaderDataType::Float2},
 			{"vec3", ShaderDataType::Float3},
 			{"vec4", ShaderDataType::Float4},
-			{"mat3", ShaderDataType::Matrix3},
-			{"mat4", ShaderDataType::Matrix4},
-			{"int", ShaderDataType::Integer},
-			{"ivec2", ShaderDataType::Integer2},
-			{"ivec3", ShaderDataType::Integer3},
-			{"ivec4", ShaderDataType::Integer4},
+			{"mat3", ShaderDataType::Mat3},
+			{"mat4", ShaderDataType::Mat4},
+			{"int", ShaderDataType::Int},
+			{"ivec2", ShaderDataType::Int2},
+			{"ivec3", ShaderDataType::Int3},
+			{"ivec4", ShaderDataType::Int4},
 			{"bool", ShaderDataType::Bool}
 		};
 

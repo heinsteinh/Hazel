@@ -28,18 +28,17 @@ namespace Hazel
 
 		static void BufferData(RendererContext &context)
 		{
-			context.Buffers.BufferIndices(context.Batch);
-			context.Buffers.BufferVertices(context.Batch);
-			BufferTextures(context);
+			context.Buffers.BufferIndices(context.Batch.GetIndices());
+			context.Buffers.BufferVertices(context.Batch.GetVertices());
+			BufferTextures(context.Command, context.Batch.GetTextures());
 		}
 
-		static void BufferTextures(RendererContext &context)
+		static void BufferTextures(DrawCommand &command, const RendererTextures &textures)
 		{
-			context.Command.Textures.clear();
-			auto &textures = context.Batch.GetTextures();
+			command.Textures.clear();
 			for (size_t slot = 0; slot < textures.GetTextureCount(); slot++)
 			{
-				context.Command.Textures.push_back(textures.GetTexture(slot));
+				command.Textures.push_back(textures.GetTexture(slot));
 			}
 		}
 

@@ -20,37 +20,39 @@ namespace Hazel
 				.Write("TextureRegion", value.Material.Texture.GetRegion())
 				.Write("ShaderId", shader ? shader->GetName() : "")
 				.Write("ShaderFilename", shader ? shader->GetFilename() : "")
+				.Write("Transparency", value.Material.Transparency)
 				.EndMap();
 		}
 
 		static void Deserialize(const YamlValue &source, SpriteComponent &value)
 		{
 			source["Color"].Extract(value.Material.Color);
+			source["Transparency"].Extract(value.Material.Transparency);
 		}
 
 		static std::string GetTextureName(const YamlValue &source)
 		{
-			return source["TextureId"].ValueOr(std::string());
+			return source["TextureId"].GetValueOr(std::string());
 		}
 
 		static std::string GetTextureFilename(const YamlValue &source)
 		{
-			return source["TextureFilename"].ValueOr(std::string());
+			return source["TextureFilename"].GetValueOr(std::string());
 		}
 
 		static void UpdateTextureRegion(const YamlValue &source, SubTexture &texture)
 		{
-			texture.SetRegion(source["TextureRegion"].ValueOr(texture.GetRegion()));
+			texture.SetRegion(source["TextureRegion"].GetValueOr(texture.GetRegion()));
 		}
 
 		static std::string GetShaderName(const YamlValue &source)
 		{
-			return source["ShaderId"].ValueOr(std::string());
+			return source["ShaderId"].GetValueOr(std::string());
 		}
 
 		static std::string GetShaderFilename(const YamlValue &source)
 		{
-			return source["ShaderFilename"].ValueOr(std::string());
+			return source["ShaderFilename"].GetValueOr(std::string());
 		}
 	};
 

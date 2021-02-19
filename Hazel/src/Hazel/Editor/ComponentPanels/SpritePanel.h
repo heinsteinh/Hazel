@@ -26,6 +26,7 @@ namespace Hazel
 				DrawTextureRegion(component);
 				ImGui::TreePop();
 			}
+			ImGui::Checkbox("Transparency", &component.Material.Transparency);
 		}
 
 	private:
@@ -40,21 +41,32 @@ namespace Hazel
 			ImGui::SameLine();
 			if (ImGui::Button("Browse..."))
 			{
-				FileDialog dialog(entity.GetLayer().GetWindow());
-				if (dialog.GetOpenFilename())
-				{
-					auto &filename = dialog.GetFilename();
-					auto name = Filename::GetBaseName(filename);
-					auto &assetManager = entity.GetAssetManager();
-					component.Material.Texture = assetManager.GetTexture(name);
-					if (!component.Material.Texture)
-					{
-						component.Material.Texture = assetManager.AddTexture(TextureFactory::CreateTextureFromFile(
-							entity.GetLayer().GetGraphicsContext(),
-							dialog.GetFilename()));
-					}
-				}
+				UpdateTextureFromFile(entity, component);
 			}
+		}
+
+		void UpdateTextureFromFile(Entity entity, SpriteComponent &component)
+		{
+			auto &layer = entity.GetLayer();
+			FileDialog dialog(layer.GetWindow());
+			if (dialog.GetOpenFilename())
+			{
+				component.Material.Texture = CreateTextureFromFile(entity, dialog.GetFilename());
+			}
+		}
+
+		std::shared_ptr<Texture> CreateTextureFromFile(Entity entity, const std::string &filename)
+		{
+			auto &assetManager = entity.GetAssetManager();
+			auto name = Filename::GetBaseName(filename);
+			auto texture = assetManager.GetTexture(name);
+			if (texture && texture->GetFilename() == filename)
+			{
+				return texture;
+			}
+			return assetManager.AddTexture(TextureFactory::CreateTextureFromFile(
+				entity.GetLayer().GetGraphicsContext(),
+				filename));
 		}
 
 		void DrawTextureRegion(SpriteComponent &component)

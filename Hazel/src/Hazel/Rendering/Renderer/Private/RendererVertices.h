@@ -2,7 +2,7 @@
 
 #include "Hazel/Rendering/Mesh/VertexLayout.h"
 #include "Hazel/Rendering/Mesh/ByteArray.h"
-#include "Hazel/Rendering/Mesh/ConstantVertex.h"
+#include "Hazel/Rendering/Mesh/ConstVertex.h"
 
 namespace Hazel
 {
@@ -66,7 +66,7 @@ namespace Hazel
 			return data.GetItemSize();
 		}
 
-		Vertex Add(ConstantVertex vertex)
+		Vertex Add(ConstVertex vertex)
 		{
 			HZ_ASSERT(CanContain(1), "Buffer too small");
 			HZ_ASSERT(vertex.GetSize() == GetVertexSize(), "Vertex layout mismatch");

@@ -31,9 +31,9 @@ namespace Hazel
 
 		static void Deserialize(const YamlValue &source, ParticleComponent &value)
 		{
-			value.Source.SetEnabled(source["Enabled"].ValueOr(value.Source.IsEnabled()));
-			value.Source.SetMaxParticleCount(source["MaxParticleCount"].ValueOr(value.Source.GetMaxParticleCount()));
-			value.Source.SetEmissionRate(source["EmissionRate"].ValueOr(value.Source.GetEmissionRate()));
+			value.Source.SetEnabled(source["Enabled"].GetValueOr(value.Source.IsEnabled()));
+			value.Source.SetMaxParticleCount(source["MaxParticleCount"].GetValueOr(value.Source.GetMaxParticleCount()));
+			value.Source.SetEmissionRate(source["EmissionRate"].GetValueOr(value.Source.GetEmissionRate()));
 			source["LinearVelocity"].Extract(value.Info.LinearVelocity);
 			source["LinearVelocityVariation"].Extract(value.Info.LinearVelocityVariation);
 			source["AngularVelocity"].Extract(value.Info.AngularVelocity);

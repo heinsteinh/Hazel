@@ -21,7 +21,7 @@ namespace Hazel
 
 		static std::string GetScriptName(const YamlValue &source)
 		{
-			return source["Script"].ValueOr(std::string());
+			return source["Script"].GetValueOr(std::string());
 		}
 	};
 

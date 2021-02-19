@@ -109,7 +109,7 @@ namespace Hazel
 		}
 
 		template<typename T>
-		T ValueOr(const T &defaultValue)
+		T GetValueOr(const T &defaultValue)
 		{
 			T value = defaultValue;
 			Extract(value);

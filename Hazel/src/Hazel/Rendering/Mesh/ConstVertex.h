@@ -5,20 +5,20 @@
 
 namespace Hazel
 {
-	class ConstantVertex
+	class ConstVertex
 	{
 	private:
 		const VertexLayout *layout = nullptr;
 		const void *data = nullptr;
 
 	public:
-		ConstantVertex(const VertexLayout &layout, const void *data)
+		ConstVertex(const VertexLayout &layout, const void *data)
 			: layout(&layout),
 			data(data)
 		{
 		}
 
-		ConstantVertex(const Vertex &vertex)
+		ConstVertex(const Vertex &vertex)
 			: layout(&vertex.GetLayout()),
 			data(vertex.GetData())
 		{

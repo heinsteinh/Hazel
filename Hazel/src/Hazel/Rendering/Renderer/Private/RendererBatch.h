@@ -36,11 +36,6 @@ namespace Hazel
 			return textures;
 		}
 
-		void SetIndexFormat(IndexFormat indexFormat)
-		{
-			indices.SetIndexFormat(indexFormat);
-		}
-
 		void SetVertexLayout(const VertexLayout &vertexLayout)
 		{
 			vertices.SetVertexLayout(vertexLayout);

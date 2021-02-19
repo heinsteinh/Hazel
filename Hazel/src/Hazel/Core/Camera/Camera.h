@@ -28,6 +28,11 @@ namespace Hazel
 			this->viewport = viewport;
 		}
 
+		const glm::vec3 &GetPosition() const
+		{
+			return position;
+		}
+
 		const glm::mat4 &GetViewProjection() const
 		{
 			return viewProjection;

@@ -12,5 +12,6 @@ namespace Hazel
 		glm::vec4 Color{1.0f};
 		SubTexture Texture;
 		std::shared_ptr<Shader> Shader;
+		bool Transparency = false;
 	};
 }

@@ -15,7 +15,7 @@ namespace Hazel
 			{
 			case DataType::Float:
 				return GL_FLOAT;
-			case DataType::Integer:
+			case DataType::Int:
 				return GL_INT;
 			case DataType::Bool:
 				return GL_BOOL;

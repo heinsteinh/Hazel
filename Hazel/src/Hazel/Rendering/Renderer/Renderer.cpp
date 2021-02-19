@@ -1,9 +1,9 @@
 #include "Renderer.h"
 
-#include "Hazel/Core/Exceptions/AssertionException.h"
 #include "Private/RendererShader.h"
 #include "Private/RendererDrawCall.h"
 #include "Private/RendererSubmission.h"
+#include "Private/RenderCommandSorter.h"
 
 namespace Hazel
 {
@@ -19,15 +19,9 @@ namespace Hazel
 		RendererShader::UpdateCamera(context, camera);
 	}
 
-	void Renderer::Submit(const RenderCommand &command)
-	{
-		HZ_ASSERT(command.IsValid(), "Render command needs at least a mesh and a shader");
-		context.RenderQueue.Add(command);
-	}
-
 	void Renderer::EndScene()
 	{
-		context.RenderQueue.Sort();
+		RenderCommandSorter::SortRenderQueue(context);
 		for (const auto &command : context.RenderQueue)
 		{
 			RendererSubmission::Submit(context, command);

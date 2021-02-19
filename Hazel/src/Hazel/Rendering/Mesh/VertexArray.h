@@ -2,7 +2,7 @@
 
 #include "VertexLayout.h"
 #include "ByteArray.h"
-#include "ConstantVertex.h"
+#include "ConstVertex.h"
 #include "Vertex.h"
 
 namespace Hazel
@@ -44,7 +44,7 @@ namespace Hazel
 			return data.GetSize();
 		}
 
-		ConstantVertex GetVertex(size_t index) const
+		ConstVertex GetVertex(size_t index) const
 		{
 			return {vertexLayout, data.GetItem(index)};
 		}
@@ -79,7 +79,7 @@ namespace Hazel
 			data.Clear();
 		}
 
-		void AddVertex(ConstantVertex vertex)
+		void AddVertex(ConstVertex vertex)
 		{
 			data.AddItem(vertex.GetData());
 		}
@@ -95,7 +95,7 @@ namespace Hazel
 		{
 			data.ForEach([&](const void *vertexData)
 			{
-				functor(ConstantVertex(vertexLayout, vertexData));
+				functor(ConstVertex(vertexLayout, vertexData));
 			});
 		}
 

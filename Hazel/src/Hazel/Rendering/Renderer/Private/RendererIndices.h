@@ -9,20 +9,22 @@ namespace Hazel
 	{
 	private:
 		size_t indexCount = 0;
+		IndexFormat indexFormat = IndexFormat::UInt16;
 		ByteArray data;
 
 	public:
 		RendererIndices() = default;
 
-		RendererIndices(size_t size)
+		RendererIndices(IndexFormat indexFormat, size_t size)
+			: indexFormat(indexFormat),
+			data(IndexFormatHelper::GetSize(indexFormat))
 		{
 			Resize(size);
 		}
 
-		void SetIndexFormat(IndexFormat indexFormat)
+		IndexFormat GetIndexFormat() const
 		{
-			data.SetItemSize(IndexFormatHelper::GetSize(indexFormat));
-			Clear();
+			return indexFormat;
 		}
 
 		size_t GetIndexCount() const

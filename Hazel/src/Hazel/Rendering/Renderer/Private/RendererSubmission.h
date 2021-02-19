@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Hazel/Core/Exceptions/AssertionException.h"
 #include "Hazel/Rendering/Renderer/RendererException.h"
 #include "RendererContext.h"
 #include "RendererShader.h"
@@ -13,6 +14,7 @@ namespace Hazel
 	public:
 		static void Submit(RendererContext &context, const RenderCommand &command)
 		{
+			HZ_ASSERT(command.IsValid(), "Render command needs at least a mesh and a shader");
 			SetupShader(context, command);
 			SetupMeshFormat(context, command);
 			if (!AddVertices(context, command))

@@ -34,15 +34,16 @@ namespace Hazel
 			commands.clear();
 		}
 
-		void Sort()
-		{
-			std::sort(commands.begin(), commands.end());
-		}
-
 		template<typename FunctorType>
 		void Sort(FunctorType functor)
 		{
 			std::sort(commands.begin(), commands.end(), std::move(functor));
+		}
+
+		template<typename ...Args>
+		RenderCommand &Emplace(Args &&...args)
+		{
+			return commands.emplace_back(std::forward<Args>(args)...);
 		}
 	};
 }

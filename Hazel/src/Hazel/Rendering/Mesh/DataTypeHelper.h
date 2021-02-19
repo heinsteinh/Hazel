@@ -13,7 +13,7 @@ namespace Hazel
 			{
 			case DataType::Bool:
 				return 1;
-			case DataType::Integer:
+			case DataType::Int:
 				return 4;
 			case DataType::Float:
 				return 4;

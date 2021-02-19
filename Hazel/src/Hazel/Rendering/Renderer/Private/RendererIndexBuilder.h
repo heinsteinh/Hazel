@@ -24,12 +24,30 @@ namespace Hazel
 			}
 		}
 
-		template<typename IndexType>
+	private:
+		template<typename SourceType>
 		static void AddIndices(RendererIndices &destination, const IndexArray &source, size_t vertexCount)
 		{
-			source.ForEach<IndexType>([&](size_t index)
+			switch (destination.GetIndexFormat())
 			{
-				destination.Add<IndexType>(vertexCount + index);
+			case IndexFormat::UInt8:
+				AddIndices<uint8_t, SourceType>(destination, source, vertexCount);
+				break;
+			case IndexFormat::UInt16:
+				AddIndices<uint16_t, SourceType>(destination, source, vertexCount);
+				break;
+			case IndexFormat::UInt32:
+				AddIndices<uint32_t, SourceType>(destination, source, vertexCount);
+				break;
+			}
+		}
+
+		template<typename DestinationType, typename SourceType>
+		static void AddIndices(RendererIndices &destination, const IndexArray &source, size_t vertexCount)
+		{
+			source.ForEach<SourceType>([&](size_t index)
+			{
+				destination.Add<DestinationType>(vertexCount + index);
 			});
 		}
 	};
