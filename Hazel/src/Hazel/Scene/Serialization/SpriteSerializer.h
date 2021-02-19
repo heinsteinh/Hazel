@@ -15,10 +15,10 @@ namespace Hazel
 			auto &shader = value.Material.Shader;
 			document.BeginMap()
 				.Write("Color", value.Material.Color)
-				.Write("TextureId", texture ? texture->GetName() : "")
+				.Write("TextureName", texture ? texture->GetName() : "")
 				.Write("TextureFilename", texture ? texture->GetFilename() : "")
 				.Write("TextureRegion", value.Material.Texture.GetRegion())
-				.Write("ShaderId", shader ? shader->GetName() : "")
+				.Write("ShaderName", shader ? shader->GetName() : "")
 				.Write("ShaderFilename", shader ? shader->GetFilename() : "")
 				.Write("Transparency", value.Material.Transparency)
 				.EndMap();
@@ -32,7 +32,7 @@ namespace Hazel
 
 		static std::string GetTextureName(const YamlValue &source)
 		{
-			return source["TextureId"].GetValueOr(std::string());
+			return source["TextureName"].GetValueOr(std::string());
 		}
 
 		static std::string GetTextureFilename(const YamlValue &source)
@@ -47,7 +47,7 @@ namespace Hazel
 
 		static std::string GetShaderName(const YamlValue &source)
 		{
-			return source["ShaderId"].GetValueOr(std::string());
+			return source["ShaderName"].GetValueOr(std::string());
 		}
 
 		static std::string GetShaderFilename(const YamlValue &source)

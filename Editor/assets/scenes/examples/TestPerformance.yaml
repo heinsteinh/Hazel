@@ -1,10 +1,42 @@
 Scene: Test
 Entities:
-  - EntityId: 4
+  - EntityId: 1048579
+    Tag:
+      Name: Square1
+    Transform:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0, 1]
+      Scale: [1.53846157, 1, 1]
+    Sprite:
+      Color: [1, 1, 1, 1]
+      TextureName: SpriteSheet
+      TextureFilename: C:\Users\christian\source\repos\Hazel\Editor\assets\textures\SpriteSheet.png
+      TextureRegion: [0, 2560, 0, 1664]
+      ShaderName: ""
+      ShaderFilename: ""
+      Transparency: false
+  - EntityId: 1048578
+    Tag:
+      Name: Camera1
+    Transform:
+      Translation: [0, 0, 0.100000001]
+      Rotation: [0, 0, 0, 1]
+      Scale: [1, 1, 1]
+    Camera:
+      ProjectionType: 0
+      OrthographicSize: 2
+      OrthographicNearClip: -1
+      OrthographicFarClip: 1
+      PerspectiveVerticalFov: 0.785398185
+      PerspectiveNearClip: 0.00999999978
+      PerspectiveFarClip: 1000
+    NativeScript:
+      Script: TestCameraController
+  - EntityId: 1048576
     Tag:
       Name: Particle Emitter
     Transform:
-      Translation: [-0.445833385, -0.058333382, 1.10000002]
+      Translation: [-0.301724106, -0.454023004, 1.10000002]
       Rotation: [0, 0, 0, 1]
       Scale: [1, 1, 1]
     Particle:
@@ -20,53 +52,6 @@ Entities:
       SizeBegin: 0.100000001
       SizeEnd: 0
       SizeVariation: 0.100000001
-      LifeTime: 15
+      LifeTime: 10
     NativeScript:
       Script: TestParticles
-  - EntityId: 2
-    Tag:
-      Name: Camera1
-    Transform:
-      Translation: [0, 0, 0.100000001]
-      Rotation: [0, 0, 0, 1]
-      Scale: [1, 1, 1]
-    Camera:
-      ProjectionType: 0
-      OrthographicSize: 5.79999971
-      OrthographicNearClip: -1
-      OrthographicFarClip: 1
-      PerspectiveVerticalFov: 0.785398185
-      PerspectiveNearClip: 0.00999999978
-      PerspectiveFarClip: 1000
-    NativeScript:
-      Script: TestCameraController
-  - EntityId: 1
-    Tag:
-      Name: Square2
-    Transform:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0, 1]
-      Scale: [1, 1, 1]
-    Sprite:
-      Color: [1, 1, 1, 1]
-      TextureId: ""
-      TextureFilename: ""
-      TextureRegion: [0, 0, 0, 0]
-      ShaderId: ""
-      ShaderFilename: ""
-      Transparency: false
-  - EntityId: 0
-    Tag:
-      Name: Square1
-    Transform:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0, 1]
-      Scale: [1.53846157, 1, 1]
-    Sprite:
-      Color: [1, 1, 1, 1]
-      TextureId: SpriteSheet
-      TextureFilename: C:\Users\christian\source\repos\Hazel\Editor\assets\textures\SpriteSheet.png
-      TextureRegion: [0, 2560, 0, 1664]
-      ShaderId: ""
-      ShaderFilename: ""
-      Transparency: false

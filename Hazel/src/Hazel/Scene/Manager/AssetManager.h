@@ -32,7 +32,7 @@ namespace Hazel
 
 		const std::shared_ptr<Shader> &AddShader(const std::shared_ptr<Shader> &shader)
 		{
-			return shaders[shader->GetName()] = shader;
+			return shaders[shader->GetFilename()] = shader;
 		}
 
 		std::shared_ptr<Texture> GetTexture(const std::string &name) const
@@ -43,7 +43,7 @@ namespace Hazel
 
 		const std::shared_ptr<Texture> &AddTexture(const std::shared_ptr<Texture> &texture)
 		{
-			return textures[texture->GetName()] = texture;
+			return textures[texture->GetFilename()] = texture;
 		}
 
 		std::unique_ptr<NativeScript> CreateScript(const std::string &name) const

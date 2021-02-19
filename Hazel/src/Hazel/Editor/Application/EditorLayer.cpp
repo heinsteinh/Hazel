@@ -31,9 +31,9 @@ namespace Hazel
 		auto &renderer = sceneManager.GetRenderer();
 		auto &assetManager = sceneManager.GetAssetManager();
 
-		auto spriteSheet = TextureFactory::CreateTextureFromFile(
-			graphicsContext,
-			R"(C:\Users\christian\source\repos\Hazel\Editor\assets\textures\SpriteSheet.png)");
+		std::string testFilename = R"(C:\Users\christian\source\repos\Hazel\Editor\assets\textures\SpriteSheet.png)";
+
+		auto spriteSheet = TextureFactory::CreateTextureFromFile(graphicsContext, testFilename);
 
 		assetManager.AddTexture(spriteSheet);
 		assetManager.AddScriptFactory<TestCameraController>("TestCameraController");
@@ -41,7 +41,7 @@ namespace Hazel
 
 		auto square1 = scene->CreateEntity();
 		square1.AddComponent<TagComponent>("Square1");
-		square1.AddComponent<SpriteComponent>().Material.Texture = assetManager.GetTexture("SpriteSheet");
+		square1.AddComponent<SpriteComponent>().Material.Texture = assetManager.GetTexture(testFilename);
 		square1.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet->GetAspectRatio();
 
 		auto square2 = scene->CreateEntity();

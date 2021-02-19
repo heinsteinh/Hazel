@@ -36,6 +36,11 @@ namespace Hazel
 			return name;
 		}
 
+		void SetName(const std::string &name)
+		{
+			this->name = name;
+		}
+
 		const std::string &GetFilename() const
 		{
 			return filename;
