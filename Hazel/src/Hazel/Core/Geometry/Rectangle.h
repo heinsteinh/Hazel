@@ -25,11 +25,12 @@ namespace Hazel
 
 		static constexpr Rectangle FromPositionAndSize(const glm::vec2 &position, const glm::vec2 &size)
 		{
+			auto halfSize = size / 2.0f;
 			return {
-				position.x - size.x / 2.0f,
-				position.x + size.x / 2.0f,
-				position.y - size.y / 2.0f,
-				position.y + size.y / 2.0f
+				position.x - halfSize.x,
+				position.x + halfSize.x,
+				position.y - halfSize.y,
+				position.y + halfSize.y
 			};
 		}
 
