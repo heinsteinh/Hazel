@@ -16,8 +16,7 @@ namespace Hazel
 
 		void Bind() const;
 		void Unbind() const;
-
-		virtual void BufferData(const void *data) override;
+		void BufferData(const void *data);
 
 		uint32_t GetId() const
 		{

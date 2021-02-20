@@ -43,8 +43,8 @@ namespace Hazel
 			}
 			info.Filename = filename;
 			info.Size = image.GetSize();
+			info.Data = image.GetData();
 			auto texture = entity.GetLayer().GetGraphicsContext().CreateTexture(info);
-			texture->BufferData(image.GetData());
 			return texture;
 		}
 	};

@@ -20,8 +20,6 @@ namespace Hazel
 
 		virtual ~Texture() = default;
 
-		virtual void BufferData(const void *data) = 0;
-
 		void *GetHandle() const
 		{
 			return handle;

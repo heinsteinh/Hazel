@@ -15,6 +15,7 @@ namespace Hazel
 		std::string Name;
 		std::string Filename;
 		glm::vec2 Size{1.0f};
+		const void *Data = nullptr;
 		TextureFormat Format = TextureFormat::Rgba8;
 		TextureFiltering MinFilter = TextureFiltering::Linear;
 		TextureFiltering MagFilter = TextureFiltering::Linear;

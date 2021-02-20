@@ -58,9 +58,8 @@ namespace Hazel
 		std::shared_ptr<Texture> CreateTextureFromFile(Entity entity, const std::string &filename)
 		{
 			auto &assetManager = entity.GetAssetManager();
-			auto name = Filename::GetBaseName(filename);
-			auto texture = assetManager.GetTexture(name);
-			if (texture && texture->GetFilename() == filename)
+			auto texture = assetManager.GetTexture(filename);
+			if (texture)
 			{
 				return texture;
 			}

@@ -11,6 +11,10 @@ namespace Hazel
 		: Texture(OpenGLTextureFactory::CreateTexture(id, info), info)
 	{
 		Log::Debug("Texture created with id {}.", id);
+		if (info.Data)
+		{
+			BufferData(info.Data);
+		}
 	}
 
 	OpenGLTexture::~OpenGLTexture()
