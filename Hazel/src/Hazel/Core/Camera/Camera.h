@@ -2,7 +2,7 @@
 
 #include "glm/gtc/matrix_transform.hpp"
 
-#include "Hazel/Core/Geometry/Rectangle.h"
+#include "Hazel/Core/Geometry/Box2D.h"
 #include "CameraView.h"
 #include "CameraProjection.h"
 
@@ -11,19 +11,19 @@ namespace Hazel
 	class Camera
 	{
 	private:
-		Rectangle viewport;
+		Box2D viewport;
 		glm::vec3 position{0.0f};
 		glm::mat4 view{1.0f};
 		glm::mat4 projection{1.0f};
 		glm::mat4 viewProjection{1.0f};
 
 	public:
-		const Rectangle &GetViewport() const
+		const Box2D &GetViewport() const
 		{
 			return viewport;
 		}
 
-		void SetViewport(const Rectangle &viewport)
+		void SetViewport(const Box2D &viewport)
 		{
 			this->viewport = viewport;
 		}

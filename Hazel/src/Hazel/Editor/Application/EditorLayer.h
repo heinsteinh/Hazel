@@ -23,7 +23,7 @@ namespace Hazel
 		RendererStatisticsPanel rendererStatisticsPanel;
 		BatchPanel batchPanel;
 
-		Rectangle viewport;
+		Box2D viewport;
 		bool useCamera1 = true;
 		RendererInfo rendererInfo;
 		std::shared_ptr<Framebuffer> framebuffer;

@@ -4,14 +4,14 @@
 
 #include "Hazel/Rendering/Textures/SubTexture.h"
 
-#include "RectanglePanel.h"
+#include "Box2DPanel.h"
 
 namespace Hazel
 {
 	class TexturePanel
 	{
 	private:
-		RectanglePanel rectanglePanel;
+		Box2DPanel rectanglePanel;
 
 	public:
 		void Draw(SubTexture &texture)

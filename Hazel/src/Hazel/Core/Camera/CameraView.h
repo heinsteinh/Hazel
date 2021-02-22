@@ -1,18 +1,18 @@
 #pragma once
 
 #include "Hazel/Core/Geometry/Transform.h"
-#include "Hazel/Core/Geometry/Rectangle.h"
+#include "Hazel/Core/Geometry/Box2D.h"
 
 namespace Hazel
 {
 	class CameraView
 	{
 	public:
-		static glm::vec4 GetProjectionViewport(const Rectangle &viewport)
+		static glm::vec4 GetProjectionViewport(const Box2D &viewport)
 		{
 			return glm::vec4(
-				viewport.Left,
-				viewport.Top,
+				viewport.Min.x,
+				viewport.Max.y,
 				viewport.GetWidth(),
 				-viewport.GetHeight());
 		}

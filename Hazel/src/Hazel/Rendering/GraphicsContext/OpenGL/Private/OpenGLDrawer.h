@@ -2,7 +2,7 @@
 
 #include "glad/glad.h"
 
-#include "Hazel/Core/Geometry/Rectangle.h"
+#include "Hazel/Core/Geometry/Box2D.h"
 #include "Hazel/Rendering/GraphicsContext/DrawCommand.h"
 #include "OpenGLPrimitiveTopology.h"
 #include "OpenGLIndexFormat.h"
@@ -12,11 +12,11 @@ namespace Hazel
 	class OpenGLDrawer
 	{
 	public:
-		static void SetViewport(const Rectangle &viewport)
+		static void SetViewport(const Box2D &viewport)
 		{
 			glViewport(
-				static_cast<int>(viewport.Left),
-				static_cast<int>(viewport.Bottom),
+				static_cast<int>(viewport.Min.x),
+				static_cast<int>(viewport.Min.y),
 				static_cast<int>(viewport.GetWidth()),
 				static_cast<int>(viewport.GetHeight()));
 		}

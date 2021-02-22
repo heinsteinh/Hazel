@@ -47,7 +47,7 @@ namespace Hazel
 		}
 	}
 
-	void SceneManager::OnViewportResize(Scene &scene, const Rectangle &viewport)
+	void SceneManager::OnViewportResize(Scene &scene, const Box2D &viewport)
 	{
 		CameraSystem::OnViewportResize(scene, viewport);
 	}

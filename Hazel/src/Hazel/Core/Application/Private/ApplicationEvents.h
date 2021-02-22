@@ -35,7 +35,7 @@ namespace Hazel
 		{
 			e.Dispatch([&](WindowResizeEvent &e)
 			{
-				context.Window->GetGraphicsContext().SetViewport({0.0f, e.GetWidth(), 0.0f, e.GetHeight()});
+				context.Window->GetGraphicsContext().SetViewport({glm::vec2(0.0f), e.GetSize()});
 			});
 		}
 

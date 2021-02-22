@@ -54,7 +54,7 @@ namespace Hazel
 		return std::make_shared<OpenGLTexture>(info);
 	}
 
-	void OpenGLGraphicsContext::SetViewport(const Rectangle &viewport)
+	void OpenGLGraphicsContext::SetViewport(const Box2D &viewport)
 	{
 		handle.MakeCurrent();
 		OpenGLDrawer::SetViewport(viewport);

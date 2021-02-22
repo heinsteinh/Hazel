@@ -7,7 +7,7 @@
 #include "Hazel/Rendering/GraphicsBuffers/IndexBuffer.h"
 #include "Hazel/Rendering/GraphicsBuffers/VertexBuffer.h"
 #include "Hazel/Rendering/Textures/Texture.h"
-#include "Hazel/Core/Geometry/Rectangle.h"
+#include "Hazel/Core/Geometry/Box2D.h"
 #include "DrawCommand.h"
 
 namespace Hazel
@@ -31,7 +31,7 @@ namespace Hazel
 		virtual std::shared_ptr<IndexBuffer> CreateIndexBuffer(size_t size) = 0;
 		virtual std::shared_ptr<VertexBuffer> CreateVertexBuffer(size_t size) = 0;
 		virtual std::shared_ptr<Texture> CreateTexture(const TextureInfo &info) = 0;
-		virtual void SetViewport(const Rectangle &viewport) = 0;
+		virtual void SetViewport(const Box2D &viewport) = 0;
 		virtual void SetClearColor(const glm::vec4 &color) = 0;
 		virtual void Clear(const std::shared_ptr<Framebuffer> &framebuffer = {}) = 0;
 		virtual void DrawIndexed(const DrawCommand &command) = 0;

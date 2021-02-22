@@ -17,7 +17,7 @@ namespace Hazel
 		void OnPlay(Scene &scene);
 		void OnUpdate(Scene &scene);
 		void OnRender(Scene &scene, const std::shared_ptr<Framebuffer> &framebuffer = nullptr);
-		void OnViewportResize(Scene &scene, const Rectangle &viewport);
+		void OnViewportResize(Scene &scene, const Box2D &viewport);
 		void OnEvent(Scene &scene, Event &e);
 
 		Renderer2D &GetRenderer() const

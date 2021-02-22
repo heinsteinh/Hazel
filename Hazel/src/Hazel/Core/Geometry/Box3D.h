@@ -1,13 +1,36 @@
 #pragma once
 
+#include "glm/glm.hpp"
+
 #include "Range.h"
 
 namespace Hazel
 {
-	struct Bounds
+	struct Box3D
 	{
 		glm::vec3 Min{0.0f};
 		glm::vec3 Max{0.0f};
+
+		constexpr glm::vec3 GetPosition() const
+		{
+			return Min + GetSize() / 2.0f;
+		}
+
+		constexpr glm::vec3 GetSize() const
+		{
+			return Max - Min;
+		}
+
+		constexpr float GetVolume() const
+		{
+			auto size = GetSize();
+			return size.x * size.y * size.z;
+		}
+
+		constexpr bool IsEmpty() const
+		{
+			return Min == Max;
+		}
 
 		constexpr bool ContainsX(float position) const
 		{
@@ -57,6 +80,16 @@ namespace Hazel
 		constexpr glm::vec3 Clamp(const glm::vec3 &position) const
 		{
 			return {ClampX(position.x), ClampY(position.y), ClampZ(position.z)};
+		}
+
+		constexpr bool operator==(const Box3D &other) const
+		{
+			return Min == other.Min && Max == other.Max;
+		}
+
+		constexpr bool operator!=(const Box3D &other) const
+		{
+			return !(*this == other);
 		}
 	};
 }

@@ -7,7 +7,7 @@ namespace Hazel
 	class Chrono
 	{
 	private:
-		float referenceTime = 0.0f;
+		double referenceTime = 0.0;
 
 	public:
 		Chrono()
@@ -17,7 +17,7 @@ namespace Hazel
 
 		float Read()
 		{
-			return Time::GetTime() - referenceTime;
+			return static_cast<float>(Time::GetTime() - referenceTime);
 		}
 
 		float Reset()
@@ -25,7 +25,7 @@ namespace Hazel
 			auto time = Time::GetTime();
 			auto deltaTime = time - referenceTime;
 			referenceTime = time;
-			return deltaTime;
+			return static_cast<float>(deltaTime);
 		}
 	};
 }

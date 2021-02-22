@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 
-#include "Hazel/Core/Geometry/Rectangle.h"
+#include "Hazel/Core/Geometry/Box2D.h"
 #include "Hazel/Core/Window/Window.h"
 
 namespace Hazel
@@ -10,11 +10,10 @@ namespace Hazel
 	class EditorViewport
 	{
 	public:
-		static Rectangle GetViewport(const Window &window)
+		static Box2D GetViewport(const Window &window)
 		{
-			return Rectangle::FromBottomLeftAndSize(
-				GetViewportPosition() - window.GetPosition(),
-				GetViewportSize());
+			auto bottomLeft = GetViewportPosition() - window.GetPosition();
+			return {bottomLeft, bottomLeft + GetViewportSize()};
 		}
 
 		static glm::vec2 GetViewportPosition()

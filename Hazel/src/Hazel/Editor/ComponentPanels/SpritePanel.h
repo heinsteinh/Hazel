@@ -6,7 +6,7 @@
 #include "Hazel/Rendering/Textures/TextureFactory.h"
 #include "Hazel/Scene/Entity/Entity.h"
 #include "Hazel/Scene/Components/SpriteComponent.h"
-#include "Hazel/Editor/Widgets/RectanglePanel.h"
+#include "Hazel/Editor/Widgets/Box2DPanel.h"
 #include "Hazel/Editor/Utils/TreeNodeFlags.h"
 
 namespace Hazel
@@ -14,7 +14,7 @@ namespace Hazel
 	class SpritePanel
 	{
 	private:
-		RectanglePanel rectanglePanel;
+		Box2DPanel rectanglePanel;
 
 	public:
 		void Draw(Entity entity, SpriteComponent &component)

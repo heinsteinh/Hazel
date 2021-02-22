@@ -5,7 +5,7 @@
 #include "glm/glm.hpp"
 
 #include "Texture.h"
-#include "Hazel/Core/Geometry/Rectangle.h"
+#include "Hazel/Core/Geometry/Box2D.h"
 
 namespace Hazel
 {
@@ -13,7 +13,7 @@ namespace Hazel
 	{
 	private:
 		std::shared_ptr<Texture> texture;
-		Rectangle region;
+		Box2D region;
 		glm::vec2 translation{0.0f};
 		glm::vec2 scale{1.0f};
 
@@ -25,11 +25,11 @@ namespace Hazel
 		{
 			if (texture)
 			{
-				region = Rectangle::FromBottomLeftAndSize(glm::vec2(0.0f), texture->GetSize());
+				region = {glm::vec2(0.0f), texture->GetSize()};
 			}
 		}
 
-		SubTexture(const std::shared_ptr<Texture> &texture, const Rectangle &region)
+		SubTexture(const std::shared_ptr<Texture> &texture, const Box2D &region)
 			: texture(texture),
 			region(region)
 		{
@@ -47,12 +47,12 @@ namespace Hazel
 			RecomputeTransform();
 		}
 
-		const Rectangle &GetRegion() const
+		const Box2D &GetRegion() const
 		{
 			return region;
 		}
 
-		void SetRegion(const Rectangle &region)
+		void SetRegion(const Box2D &region)
 		{
 			this->region = region;
 			RecomputeTransform();
@@ -79,7 +79,7 @@ namespace Hazel
 			if (texture && !texture->IsEmpty())
 			{
 				auto &textureSize = texture->GetSize();
-				translation = region.GetBottomLeft() / textureSize;
+				translation = region.Min / textureSize;
 				scale = region.GetSize() / textureSize;
 			}
 			else

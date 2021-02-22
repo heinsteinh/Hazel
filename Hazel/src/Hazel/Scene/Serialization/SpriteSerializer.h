@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Hazel/Core/Yaml/Vector4Serializer.h"
-#include "Hazel/Core/Yaml/RectangleSerializer.h"
+#include "Hazel/Core/Yaml/Box2DSerializer.h"
 #include "Hazel/Scene/Components/SpriteComponent.h"
 
 namespace Hazel

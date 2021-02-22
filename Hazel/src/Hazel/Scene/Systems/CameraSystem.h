@@ -21,7 +21,7 @@ namespace Hazel
 				transform ? &transform->Transform : nullptr);
 		}
 
-		static void OnViewportResize(Scene &scene, const Rectangle &viewport)
+		static void OnViewportResize(Scene &scene, const Box2D &viewport)
 		{
 			scene.GetCamera().SetViewport(viewport);
 			auto aspectRatio = viewport.GetAspectRatio();
