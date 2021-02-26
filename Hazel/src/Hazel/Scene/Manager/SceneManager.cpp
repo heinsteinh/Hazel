@@ -38,7 +38,7 @@ namespace Hazel
 
 	void SceneManager::OnRender(Scene &scene, const std::shared_ptr<Framebuffer> &framebuffer)
 	{
-		if (scene.GetPrimaryCamera().IsValid())
+		if (scene.GetCameraEntity().IsValid())
 		{
 			context.Renderer->BeginScene(scene.GetCamera(), framebuffer);
 			SpriteRenderingSystem::OnRender(scene);

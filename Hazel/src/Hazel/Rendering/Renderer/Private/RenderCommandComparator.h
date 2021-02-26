@@ -9,25 +9,33 @@ namespace Hazel
 	class RenderCommandComparator
 	{
 	public:
-		static bool ComparePipeline(const RenderCommand &left, const RenderCommand &right)
+		static constexpr auto TieForOrthographicProjection(const RenderCommand &command)
 		{
-			return left.Mesh->PrimitiveTopology < right.Mesh->PrimitiveTopology
-				|| left.Shader < right.Shader;
+			return std::tie(
+				command.Transparency,
+				command.Transform.Translation.z,
+				command.Mesh->PrimitiveTopology,
+				command.Shader);
 		}
 
-		static bool CompareTransparency(const RenderCommand &left, const RenderCommand &right)
+		static constexpr auto TieForPerspectiveProjection(const RenderCommand &command, const float &cameraDistance)
 		{
-			return left.Transparency < right.Transparency;
+			return std::tie(
+				command.Transparency,
+				cameraDistance,
+				command.Mesh->PrimitiveTopology,
+				command.Shader);
 		}
 
-		static bool CompareZCoordinate(const RenderCommand &left, const RenderCommand &right)
+		static constexpr bool CompareForOrthographicProjection(const RenderCommand &left, const RenderCommand &right)
 		{
-			return left.Transform.Translation.z < right.Transform.Translation.z;
+			return TieForOrthographicProjection(left) < TieForOrthographicProjection(right);
 		}
 
-		static bool CompareCameraDistance(const RenderCommand &left, const RenderCommand &right, const glm::vec3 &cameraPosition)
+		static constexpr bool CompareForPerspectiveProjection(const RenderCommand &left, const RenderCommand &right, const glm::vec3 &cameraPosition)
 		{
-			return glm::distance(left.Transform.Translation, cameraPosition) > glm::distance(right.Transform.Translation, cameraPosition);
+			return TieForPerspectiveProjection(left, glm::distance(left.Transform.Translation, cameraPosition))
+				< TieForPerspectiveProjection(left, glm::distance(right.Transform.Translation, cameraPosition));
 		}
 	};
 }

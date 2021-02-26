@@ -4,7 +4,6 @@
 
 #include "Hazel/Core/Geometry/Box2D.h"
 #include "CameraView.h"
-#include "CameraProjection.h"
 
 namespace Hazel
 {
@@ -33,25 +32,21 @@ namespace Hazel
 			return position;
 		}
 
+		void SetPosition(const glm::vec3 &position)
+		{
+			this->position = position;
+		}
+
 		const glm::mat4 &GetViewProjection() const
 		{
 			return viewProjection;
 		}
 
-		void SetViewProjection(const CameraProjection *projection, const Transform *transform)
+		void SetViewProjection(const glm::mat4 &view, const glm::mat4 &projection)
 		{
-			if (transform)
-			{
-				position = transform->Translation;
-				view = CameraView::GetViewMatrix(*transform);
-			}
-			else
-			{
-				position = glm::vec3(0.0f);
-				view = glm::mat4(1.0f);
-			}
-			this->projection = projection ? projection->ToMatrix() : glm::mat4(1.0f);
-			viewProjection = this->projection * view;
+			this->view = view;
+			this->projection = projection;
+			viewProjection = projection * view;
 		}
 
 		glm::vec3 GetWorldPosition(const glm::vec2 &screenPosition) const

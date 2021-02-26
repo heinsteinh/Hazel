@@ -3,38 +3,35 @@
 #include "imgui.h"
 
 #include "Hazel/Scene/Scene/Scene.h"
-#include "Private/EntityPanelPopup.h"
+#include "Hazel/Editor/Widgets/Panel.h"
+#include "Private/CreateEntityPopup.h"
 #include "Private/EntityNode.h"
 
 namespace Hazel
 {
 	class EntityPanel
 	{
-	private:
-		EntityPanelPopup popup;
-		EntityNode node;
-
 	public:
-		void Draw(const char *label, Scene &scene, Entity &selectedEntity)
+		static void Draw(const char *label, Scene &scene, Entity &selectedEntity)
 		{
-			ImGui::Begin(label);
+			Panel::Begin(label);
 			scene.ForEach([&](auto entity)
 			{
 				DrawEntity(scene, entity, selectedEntity);
 			});
-			if (WantDeselectEntity())
+			if (Panel::IsClicked())
 			{
 				selectedEntity = {};
 			}
-			popup.Draw(scene);
-			ImGui::End();
+			CreateEntityPopup::Draw(scene);
+			Panel::End();
 		}
 
 	private:
-		void DrawEntity(Scene &scene, Entity entity, Entity &selectedEntity)
+		static void DrawEntity(Scene &scene, Entity entity, Entity &selectedEntity)
 		{
-			node.Draw(entity, selectedEntity);
-			if (node.WantDestroyEntity())
+			auto status = EntityNode::Draw(entity, selectedEntity);
+			if (status.EntityDestroyed)
 			{
 				if (entity == selectedEntity)
 				{
@@ -42,11 +39,6 @@ namespace Hazel
 				}
 				scene.DestroyEntity(entity);
 			}
-		}
-
-		bool WantDeselectEntity() const
-		{
-			return ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsWindowHovered();
 		}
 	};
 }

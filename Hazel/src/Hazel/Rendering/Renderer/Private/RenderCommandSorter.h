@@ -13,40 +13,28 @@ namespace Hazel
 			switch (context.CameraProjectionType)
 			{
 			case ProjectionType::Orthographic:
-				SortByZCoordinate(context);
+				SortForOrthographicProjection(context);
 				break;
 			case ProjectionType::Perspective:
-				SortByCameraDistance(context);
+				SortForPerspectiveProjection(context);
 				break;
 			}
 		}
 
 	private:
-		static void SortByZCoordinate(RendererContext &context)
+		static void SortForOrthographicProjection(RendererContext &context)
 		{
 			context.RenderQueue.Sort([&](const auto &left, const auto &right)
 			{
-				if (left.Transparency || right.Transparency)
-				{
-					return RenderCommandComparator::CompareTransparency(left, right)
-						|| RenderCommandComparator::CompareZCoordinate(left, right)
-						|| RenderCommandComparator::ComparePipeline(left, right);
-				}
-				return RenderCommandComparator::ComparePipeline(left, right);
+				return RenderCommandComparator::CompareForOrthographicProjection(left, right);
 			});
 		}
 
-		static void SortByCameraDistance(RendererContext &context)
+		static void SortForPerspectiveProjection(RendererContext &context)
 		{
 			context.RenderQueue.Sort([&](const auto &left, const auto &right)
 			{
-				if (left.Transparency || right.Transparency)
-				{
-					return RenderCommandComparator::CompareTransparency(left, right)
-						|| RenderCommandComparator::CompareCameraDistance(left, right, context.CameraPosition)
-						|| RenderCommandComparator::ComparePipeline(left, right);
-				}
-				return RenderCommandComparator::ComparePipeline(left, right);
+				return RenderCommandComparator::CompareForPerspectiveProjection(left, right, context.CameraPosition);
 			});
 		}
 	};

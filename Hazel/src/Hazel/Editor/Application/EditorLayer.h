@@ -2,27 +2,14 @@
 
 #include "Hazel/Core/Application/Layer.h"
 #include "Hazel/Core/FileSystem/FileDialog.h"
-#include "Hazel/Rendering/Renderer2D/Renderer2D.h"
 #include "Hazel/Scene/Manager/SceneManager.h"
-#include "Hazel/Editor/MainWindow/EditorWindow.h"
-#include "Hazel/Editor/ScenePanels/SceneHierarchyPanel.h"
-#include "Hazel/Editor/InfoPanels/FpsPanel.h"
-#include "Hazel/Editor/InfoPanels/RendererStatisticsPanel.h"
-#include "Hazel/Editor/InfoPanels/BatchPanel.h"
-#include "EditorMenu.h"
 
 namespace Hazel
 {
 	class EditorLayer : public Layer
 	{
 	private:
-		EditorWindow editorWindow;
-		EditorMenu menu;
-		SceneHierarchyPanel scenePanel;
-		FpsPanel fpsPanel;
-		RendererStatisticsPanel rendererStatisticsPanel;
-		BatchPanel batchPanel;
-
+		Entity selectedEntity;
 		Box2D viewport;
 		bool useCamera1 = true;
 		RendererInfo rendererInfo;

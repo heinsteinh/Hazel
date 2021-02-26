@@ -1,46 +1,51 @@
 #pragma once
 
-#include "EntityPanelHelper.h"
-#include "EntityNodePopup.h"
+#include "Hazel/Scene/Entity/Entity.h"
+#include "Hazel/Scene/Components/TagComponent.h"
+#include "Hazel/Editor/Widgets/TreeNode.h"
+#include "DestroyEntityPopup.h"
 
 namespace Hazel
 {
 	class EntityNode
 	{
-	private:
-		EntityNodePopup popup;
-
 	public:
-		bool WantDestroyEntity() const
-		{
-			return popup.WantDestroyEntity();
-		}
+		using Status = DestroyEntityPopup::Status;
 
-		bool Begin(Entity entity, Entity selectedEntity)
+		static Status Draw(Entity entity, Entity &selectedEntity)
 		{
-			return ImGui::TreeNodeEx(
-				EntityPanelHelper::GetEntityId(entity),
-				EntityPanelHelper::GetFlags(entity, selectedEntity),
-				EntityPanelHelper::GetTag(entity));
-		}
-
-		void Draw(Entity entity, Entity &selectedEntity)
-		{
-			bool open = Begin(entity, selectedEntity);
-			if (ImGui::IsItemClicked())
+			bool open = BeginTreeNode(entity, selectedEntity);
+			if (TreeNode::IsClicked())
 			{
 				selectedEntity = entity;
 			}
-			popup.Draw(entity);
+			auto status = DestroyEntityPopup::Draw();
 			if (open)
 			{
-				End();
+				TreeNode::End();
 			}
+			return status;
 		}
 
-		void End()
+	private:
+		static bool BeginTreeNode(Entity entity, Entity selectedEntity)
 		{
-			ImGui::TreePop();
+			TreeNodeSettings settings;
+			settings.Selected = entity == selectedEntity;
+			settings.OpenOnArrow = true;
+			settings.SpanAvailableWidth = true;
+			return TreeNode::Begin(GetTag(entity), GetEntityId(entity), settings);
+		}
+
+		static const void *GetEntityId(Entity entity)
+		{
+			return reinterpret_cast<const void *>(static_cast<size_t>(entity.GetId()));
+		}
+
+		static const char *GetTag(Entity entity)
+		{
+			auto tag = entity.TryGetComponent<TagComponent>();
+			return tag ? tag->Name.c_str() : "Unknown";
 		}
 	};
 }

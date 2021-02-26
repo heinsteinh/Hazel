@@ -8,16 +8,11 @@ namespace Hazel
 {
 	class SceneHierarchyPanel
 	{
-	private:
-		Entity selectedEntity;
-		EntityPanel entityPanel;
-		PropertiesPanel propertiesPanel;
-
 	public:
-		void Draw(const char *label, Scene &scene)
+		static void Draw(const char *label, Scene &scene, Entity &selectedEntity)
 		{
-			entityPanel.Draw(label, scene, selectedEntity);
-			propertiesPanel.Draw("Properties", selectedEntity);
+			EntityPanel::Draw(label, scene, selectedEntity);
+			PropertiesPanel::Draw("Properties", selectedEntity);
 		}
 	};
 }

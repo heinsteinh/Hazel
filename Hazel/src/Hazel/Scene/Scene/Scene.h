@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hazel/Scene/Entity/Entity.h"
+#include "Hazel/Scene/Components/NativeScriptComponent.h"
 #include "SceneContext.h"
 
 namespace Hazel
@@ -41,14 +42,14 @@ namespace Hazel
 			return context.ManagerContext->AssetManager;
 		}
 
-		Entity GetPrimaryCamera()
+		Entity GetCameraEntity()
 		{
-			return {context.PrimaryCamera, context};
+			return {context.CameraEntity, context};
 		}
 
-		void SetPrimaryCamera(Entity primaryCamera)
+		void SetCameraEntity(Entity primaryCamera)
 		{
-			context.PrimaryCamera = primaryCamera;
+			context.CameraEntity = primaryCamera;
 		}
 
 		const Camera &GetCamera() const
@@ -73,7 +74,7 @@ namespace Hazel
 
 		void Clear()
 		{
-			context.PrimaryCamera = entt::null;
+			context.CameraEntity = entt::null;
 			context.Registry.clear();
 		}
 

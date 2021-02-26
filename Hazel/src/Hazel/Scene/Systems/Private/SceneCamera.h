@@ -9,16 +9,17 @@ namespace Hazel
 	class SceneCamera
 	{
 	public:
-		static void UpdatePrimaryCamera(Scene &scene)
+		static Entity GetCameraEntity(Scene &scene)
 		{
-			auto camera = scene.GetPrimaryCamera();
+			auto camera = scene.GetCameraEntity();
 			if (!camera.IsValid() || !camera.HasComponent<CameraComponent>())
 			{
-				scene.SetPrimaryCamera(scene.GetFirstEntityWith<CameraComponent>());
+				camera = scene.GetFirstEntityWith<CameraComponent>();
 			}
+			return camera;
 		}
 
-		static glm::vec3 GetCameraPosition(Entity camera)
+		static glm::vec3 GetPosition(Entity camera)
 		{
 			if (camera.IsNull())
 			{

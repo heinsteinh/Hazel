@@ -11,19 +11,19 @@ namespace Hazel
 	public:
 		static void OnUpdate(Scene &scene)
 		{
-			SceneCamera::UpdatePrimaryCamera(scene);
-			auto primaryCamera = scene.GetPrimaryCamera();
+			auto cameraEntity = SceneCamera::GetCameraEntity(scene);
+			scene.SetCameraEntity(cameraEntity);
 			auto &camera = scene.GetCamera();
-			auto projection = primaryCamera.TryGetComponent<CameraComponent>();
-			auto transform = primaryCamera.TryGetComponent<TransformComponent>();
+			camera.SetPosition(SceneCamera::GetPosition(cameraEntity));
 			camera.SetViewProjection(
-				projection ? &projection->Projection : nullptr,
-				transform ? &transform->Transform : nullptr);
+				SceneCamera::GetViewMatrix(cameraEntity),
+				SceneCamera::GetProjectionMatrix(cameraEntity));
 		}
 
 		static void OnViewportResize(Scene &scene, const Box2D &viewport)
 		{
-			scene.GetCamera().SetViewport(viewport);
+			auto &camera = scene.GetCamera();
+			camera.SetViewport(viewport);
 			auto aspectRatio = viewport.GetAspectRatio();
 			scene.ForEach<CameraComponent>([&](auto entity, auto &component)
 			{

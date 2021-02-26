@@ -3,52 +3,51 @@
 #include "imgui.h"
 
 #include "Hazel/Scene/Entity/Entity.h"
-#include "Hazel/Editor/ComponentPanels/TagPanel.h"
-#include "Hazel/Editor/ComponentPanels/TransformPanel.h"
-#include "Hazel/Editor/ComponentPanels/CameraPanel.h"
-#include "Hazel/Editor/ComponentPanels/SpritePanel.h"
-#include "Hazel/Editor/ComponentPanels/ParticlePanel.h"
-#include "Hazel/Editor/ComponentPanels/NativeScriptPanel.h"
+#include "Hazel/Editor/ComponentNodes/TagNode.h"
+#include "Hazel/Editor/ComponentNodes/TransformNode.h"
+#include "Hazel/Editor/ComponentNodes/CameraNode.h"
+#include "Hazel/Editor/ComponentNodes/SpriteNode.h"
+#include "Hazel/Editor/ComponentNodes/ParticleNode.h"
+#include "Hazel/Editor/ComponentNodes/NativeScriptNode.h"
+#include "Hazel/Editor/Widgets/Panel.h"
+#include "Hazel/Editor/Widgets/Button.h"
 #include "Private/ComponentNode.h"
-#include "Private/AddComponentMenu.h"
+#include "Private/AddComponentPopup.h"
 
 namespace Hazel
 {
 	class PropertiesPanel
 	{
-	private:
-		ComponentNode<TagComponent, TagPanel> tagNode;
-		ComponentNode<TransformComponent, TransformPanel> transformNode;
-		ComponentNode<CameraComponent, CameraPanel> cameraNode;
-		ComponentNode<SpriteComponent, SpritePanel> spriteNode;
-		ComponentNode<ParticleComponent, ParticlePanel> particleNode;
-		ComponentNode<NativeScriptComponent, NativeScriptPanel> nativeScriptNode;
-		AddComponentMenu addComponentMenu;
-
 	public:
-		void Draw(const char *label, Entity entity)
+		static void Draw(const char *label, Entity entity)
 		{
-			ImGui::Begin(label);
+			Panel::Begin(label);
 			if (entity.IsValid())
 			{
 				DrawComponents(entity);
 			}
-			ImGui::End();
+			Panel::End();
 		}
 
 	private:
-		void DrawComponents(Entity entity)
+		static void DrawComponents(Entity entity)
 		{
-			tagNode.Draw(entity);
-			ImGui::SameLine();
-			ImGui::PushItemWidth(-1);
-			addComponentMenu.Draw("Add Component", entity);
-			ImGui::PopItemWidth();
-			transformNode.Draw("Transform", entity);
-			cameraNode.Draw("Camera", entity);
-			spriteNode.Draw("Sprite", entity);
-			particleNode.Draw("Particle", entity);
-			nativeScriptNode.Draw("Native Script", entity);
+			ComponentNode<TagComponent, TagNode>::Draw(entity);
+			ComponentNode<TransformComponent, TransformNode>::Draw("Transform", entity);
+			ComponentNode<CameraComponent, CameraNode>::Draw("Camera", entity);
+			ComponentNode<SpriteComponent, SpriteNode>::Draw("Sprite", entity);
+			ComponentNode<ParticleComponent, ParticleNode>::Draw("Particle", entity);
+			ComponentNode<NativeScriptComponent, NativeScriptNode>::Draw("Native Script", entity);
+			DrawAddComponentPopup(entity);
+		}
+
+		static void DrawAddComponentPopup(Entity entity)
+		{
+			if (Button::Draw("AddComponent"))
+			{
+				AddComponentPopup::Open();
+			}
+			AddComponentPopup::Draw(entity);
 		}
 	};
 }

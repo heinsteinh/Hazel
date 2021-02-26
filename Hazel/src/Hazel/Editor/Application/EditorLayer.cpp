@@ -6,8 +6,18 @@
 #include "Hazel/Rendering/Textures/TextureFactory.h"
 #include "Hazel/Tests/TestCameraController.h"
 #include "Hazel/Tests/TestParticles.h"
-#include "EditorViewport.h"
 #include "Hazel/Scene/Serialization/SceneSerializer.h"
+#include "Hazel/Scene/Components/TagComponent.h"
+#include "Hazel/Scene/Components/TransformComponent.h"
+#include "Hazel/Scene/Components/SpriteComponent.h"
+#include "Hazel/Scene/Components/NativeScriptComponent.h"
+#include "Hazel/Editor/Viewport/EditorWindow.h"
+#include "Hazel/Editor/Viewport/EditorMenu.h"
+#include "Hazel/Editor/Viewport/EditorViewport.h"
+#include "Hazel/Editor/Utils/FpsPanel.h"
+#include "Hazel/Editor/Utils/BatchPanel.h"
+#include "Hazel/Editor/Utils/RendererStatisticsPanel.h"
+#include "Hazel/Editor/ScenePanels/SceneHierarchyPanel.h"
 
 namespace Hazel
 {
@@ -55,7 +65,7 @@ namespace Hazel
 		camera1.AddComponent<NativeScriptComponent>(assetManager.CreateScript("TestCameraController"));
 		camera1.AddComponent<CameraComponent>();
 
-		scene->SetPrimaryCamera(camera1);
+		scene->SetCameraEntity(camera1);
 
 		camera2 = scene->CreateEntity();
 		camera2.AddComponent<TagComponent>("Camera2");
@@ -93,19 +103,19 @@ namespace Hazel
 
 	void EditorLayer::OnGui()
 	{
-		editorWindow.Begin("Hazel");
+		EditorWindow::Begin("Hazel");
 
-		menu.Draw();
-		if (menu.WantQuit())
+		auto status = EditorMenu::Draw(GetInput());
+		if (status.Quit)
 		{
 			CloseApplication();
 		}
-		if (menu.WantOpen() && fileDialog.GetOpenFilename())
+		if (status.Open && fileDialog.GetOpenFilename())
 		{
 			SceneSerializer::Deserialize(*scene, fileDialog.GetFilename());
 			sceneManager.OnPlay(*scene);
 		}
-		if (menu.WantSave() && fileDialog.GetSaveFilename())
+		if (status.Save && fileDialog.GetSaveFilename())
 		{
 			SceneSerializer::Serialize(*scene, fileDialog.GetFilename());
 		}
@@ -143,22 +153,22 @@ namespace Hazel
 		ImGui::Begin("Test");
 		if (ImGui::Checkbox("Camera 1", &useCamera1))
 		{
-			scene->SetPrimaryCamera(useCamera1 ? camera1 : camera2);
+			scene->SetCameraEntity(useCamera1 ? camera1 : camera2);
 		}
 		ImGui::End();
 
 		ImGui::Begin("Settings");
-		fpsPanel.Draw(GetDeltaTime());
-		rendererStatisticsPanel.Draw(sceneManager.GetRenderer().GetStatistics());
-		if (batchPanel.Draw(rendererInfo))
+		FpsPanel::Draw(GetDeltaTime());
+		RendererStatisticsPanel::Draw(sceneManager.GetRenderer().GetStatistics());
+		if (BatchPanel::Draw(rendererInfo))
 		{
 			sceneManager.ResetRenderer(rendererInfo);
 		}
 		ImGui::End();
 
-		scenePanel.Draw("Scene Hierarchy", *scene);
+		SceneHierarchyPanel::Draw("Scene Hierarchy", *scene, selectedEntity);
 
-		editorWindow.End();
+		EditorWindow::End();
 	}
 
 	void EditorLayer::OnEvent(Event &e)

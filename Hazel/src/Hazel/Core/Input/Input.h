@@ -18,7 +18,7 @@ namespace Hazel
 		glm::vec2 mouseScrollOffset{0.0f};
 
 	public:
-		constexpr bool IsKeyPressed(Key key) const
+		bool IsKeyPressed(Key key) const
 		{
 			return keys[static_cast<size_t>(key)];
 		}
@@ -33,7 +33,7 @@ namespace Hazel
 			keys.reset();
 		}
 
-		constexpr bool IsMouseButtonPressed(MouseButton mouseButton) const
+		bool IsMouseButtonPressed(MouseButton mouseButton) const
 		{
 			return mouseButtons[static_cast<size_t>(mouseButton)];
 		}
@@ -48,27 +48,27 @@ namespace Hazel
 			mouseButtons.reset();
 		}
 
-		constexpr const glm::vec2 &GetMousePosition() const
+		const glm::vec2 &GetMousePosition() const
 		{
 			return mousePosition;
 		}
 
-		constexpr void SetMousePosition(const glm::vec2 &mousePosition)
+		void SetMousePosition(const glm::vec2 &mousePosition)
 		{
 			this->mousePosition = mousePosition;
 		}
 
-		constexpr const glm::vec2 &GetMouseScrollOffset() const
+		const glm::vec2 &GetMouseScrollOffset() const
 		{
 			return mouseScrollOffset;
 		}
 
-		constexpr void SetMouseScrollOffset(const glm::vec2 &mouseScrollOffset)
+		void SetMouseScrollOffset(const glm::vec2 &mouseScrollOffset)
 		{
 			this->mouseScrollOffset = mouseScrollOffset;
 		}
 
-		constexpr void ClearMouseScrollOffset()
+		void ClearMouseScrollOffset()
 		{
 			mouseScrollOffset = glm::vec2(0.0f);
 		}
@@ -78,6 +78,12 @@ namespace Hazel
 			ClearKeys();
 			ClearMouseButtons();
 			ClearMouseScrollOffset();
+		}
+
+		template<typename ...Args>
+		bool IsKeyPressed(Key key, Args ...args) const
+		{
+			return IsKeyPressed(key) && IsKeyPressed(args...);
 		}
 	};
 }

@@ -8,6 +8,18 @@ namespace Hazel
 {
 	class InputText
 	{
+	public:
+		static bool Draw(const char *label, std::string &value)
+		{
+			return ImGui::InputText(
+				label,
+				value.data(),
+				value.capacity() + 1,
+				ImGuiInputTextFlags_CallbackResize,
+				&ResizeCallback,
+				&value);
+		}
+
 	private:
 		static int ResizeCallback(ImGuiInputTextCallbackData *data)
 		{
@@ -18,18 +30,6 @@ namespace Hazel
 				data->Buf = value->data();
 			}
 			return 0;
-		}
-
-	public:
-		bool Draw(const char *label, std::string &value)
-		{
-			return ImGui::InputText(
-				label,
-				value.data(),
-				value.capacity() + 1,
-				ImGuiInputTextFlags_CallbackResize,
-				&ResizeCallback,
-				&value);
 		}
 	};
 }

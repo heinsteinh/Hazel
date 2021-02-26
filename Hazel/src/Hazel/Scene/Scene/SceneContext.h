@@ -14,7 +14,7 @@ namespace Hazel
 		std::string Name;
 		SceneManagerContext *ManagerContext = nullptr;
 		Camera Camera;
-		entt::entity PrimaryCamera = entt::null;
+		entt::entity CameraEntity = entt::null;
 		entt::registry Registry;
 	};
 }

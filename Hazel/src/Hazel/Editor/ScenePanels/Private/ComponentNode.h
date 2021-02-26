@@ -1,10 +1,11 @@
 #pragma once
 
-#include "imgui.h"
-
 #include "Hazel/Scene/Entity/Entity.h"
-#include "ComponentSettingsMenu.h"
-#include "Hazel/Editor/Utils/TreeNodeFlags.h"
+#include "Hazel/Editor/Widgets/Panel.h"
+#include "Hazel/Editor/Widgets/TreeNode.h"
+#include "Hazel/Editor/Widgets/Spacer.h"
+#include "Hazel/Editor/Widgets/Button.h"
+#include "RemoveComponentPopup.h"
 
 namespace Hazel
 {
@@ -12,52 +13,44 @@ namespace Hazel
 	class ComponentNode
 	{
 	private:
-		static inline void *hashCode = reinterpret_cast<void *>(typeid(ComponentType).hash_code());
-
-		PanelType panel;
-		ComponentSettingsMenu settingsMenu;
+		static inline const void *id = reinterpret_cast<const void *>(typeid(ComponentType).hash_code());
 
 	public:
-		void Draw(const char *label, Entity entity)
+		static void Draw(const char *label, Entity entity)
 		{
 			auto component = entity.TryGetComponent<ComponentType>();
-			if (component && Begin(label))
+			if (component && BeginTreeNode(label))
 			{
-				Draw(entity, *component);
-				End();
+				DrawComponent(entity, *component);
+				TreeNode::End();
 			}
 		}
 
-		void Draw(Entity entity)
+		static void Draw(Entity entity)
 		{
 			auto component = entity.TryGetComponent<ComponentType>();
 			if (component)
 			{
-				Draw(entity, *component);
+				DrawComponent(entity, *component);
 			}
 		}
 
 	private:
-		bool Begin(const char *label)
+		static bool BeginTreeNode(const char *label)
 		{
-			bool open = ImGui::TreeNodeEx(hashCode, TreeNodeFlags::GetDefaultFlags(), label);
-			ImGui::SameLine(ImGui::GetWindowWidth() - 25.0f);
-			settingsMenu.Draw();
-			return open;
+			TreeNodeSettings settings;
+			settings.DefaultOpen = true;
+			settings.Framed = true;
+			return TreeNode::Begin(label, id, settings);
 		}
 
-		void Draw(Entity entity, ComponentType &component)
+		static void DrawComponent(Entity entity, ComponentType &component)
 		{
-			panel.Draw(entity, component);
-			if (settingsMenu.WantRemoveComponent())
+			PanelType::Draw(entity, component);
+			if (Button::Draw("Remove Component"))
 			{
 				entity.RemoveComponent<ComponentType>();
 			}
-		}
-
-		void End()
-		{
-			ImGui::TreePop();
 		}
 	};
 }
