@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Hazel/Scene/Entity/Entity.h"
-#include "Hazel/Scene/Components/TransformComponent.h"
 #include "Hazel/Scene/Components/CameraComponent.h"
 #include "Hazel/Scene/Components/SpriteComponent.h"
+#include "Hazel/Scene/Components/ParticleComponent.h"
 #include "Hazel/Editor/Widgets/Button.h"
 #include "Hazel/Editor/Widgets/Popup.h"
 
@@ -25,9 +25,9 @@ namespace Hazel
 			bool changed = false;
 			if (Popup::Begin(id))
 			{
-				changed |= DrawItem<TransformComponent>("Transform", entity);
 				changed |= DrawItem<CameraComponent>("Camera", entity);
 				changed |= DrawItem<SpriteComponent>("Sprite", entity);
+				changed |= DrawItem<ParticleComponent>("Particle", entity);
 				Popup::End();
 			}
 			return changed;

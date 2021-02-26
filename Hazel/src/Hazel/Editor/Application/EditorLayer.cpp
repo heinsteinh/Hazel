@@ -7,8 +7,6 @@
 #include "Hazel/Tests/TestCameraController.h"
 #include "Hazel/Tests/TestParticles.h"
 #include "Hazel/Scene/Serialization/SceneSerializer.h"
-#include "Hazel/Scene/Components/TagComponent.h"
-#include "Hazel/Scene/Components/TransformComponent.h"
 #include "Hazel/Scene/Components/SpriteComponent.h"
 #include "Hazel/Scene/Components/NativeScriptComponent.h"
 #include "Hazel/Editor/Viewport/EditorWindow.h"
@@ -49,32 +47,25 @@ namespace Hazel
 		assetManager.AddScriptFactory<TestCameraController>("TestCameraController");
 		assetManager.AddScriptFactory<TestParticles>("TestParticles");
 
-		auto square1 = scene->CreateEntity();
-		square1.AddComponent<TagComponent>("Square1");
+		auto square1 = scene->CreateEntity("Square1");
 		square1.AddComponent<SpriteComponent>().Material.Texture = assetManager.GetTexture(testFilename);
-		square1.AddComponent<TransformComponent>().Transform.Scale.x = spriteSheet->GetAspectRatio();
+		square1.GetTransform().Scale.x = spriteSheet->GetAspectRatio();
 
-		auto square2 = scene->CreateEntity();
-		square2.AddComponent<TagComponent>("Square2");
+		auto square2 = scene->CreateEntity("Square2");
 		square2.AddComponent<SpriteComponent>();
-		square2.AddComponent<TransformComponent>();
 
-		camera1 = scene->CreateEntity();
-		camera1.AddComponent<TagComponent>("Camera1");
-		camera1.AddComponent<TransformComponent>();
+		camera1 = scene->CreateEntity("Camera1");
 		camera1.AddComponent<NativeScriptComponent>(assetManager.CreateScript("TestCameraController"));
 		camera1.AddComponent<CameraComponent>();
 
 		scene->SetCameraEntity(camera1);
 
-		camera2 = scene->CreateEntity();
-		camera2.AddComponent<TagComponent>("Camera2");
-		camera2.AddComponent<TransformComponent>().Transform.Translation.x = 1.0f;
+		camera2 = scene->CreateEntity("Camera2");
+		camera2.GetTransform().Translation.x = 1.0f;
 		camera2.AddComponent<CameraComponent>();
 
-		auto particleEmitter = scene->CreateEntity();
-		particleEmitter.AddComponent<TagComponent>("Particle Emitter");
-		particleEmitter.AddComponent<TransformComponent>().Transform.Translation.z += 0.1f;
+		auto particleEmitter = scene->CreateEntity("Particle Emitter");
+		particleEmitter.GetTransform().Translation.z += 0.1f;
 		particleEmitter.AddComponent<ParticleComponent>();
 		particleEmitter.AddComponent<NativeScriptComponent>(assetManager.CreateScript("TestParticles"));
 

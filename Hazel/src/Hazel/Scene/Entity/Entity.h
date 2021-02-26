@@ -1,8 +1,12 @@
 #pragma once
 
+#include <type_traits>
+
 #include "entt/entt.hpp"
 
 #include "Hazel/Scene/Scene/SceneContext.h"
+#include "Hazel/Scene/Components/TagComponent.h"
+#include "Hazel/Scene/Components/TransformComponent.h"
 #include "EntityListener.h"
 
 namespace Hazel
@@ -37,6 +41,16 @@ namespace Hazel
 			return static_cast<uint32_t>(entity);
 		}
 
+		std::string &GetTag() const
+		{
+			return GetComponent<TagComponent>().Name;
+		}
+
+		Transform &GetTransform() const
+		{
+			return GetComponent<TransformComponent>().Transform;
+		}
+
 		Layer &GetLayer() const
 		{
 			return *context->ManagerContext->Layer;
@@ -64,19 +78,19 @@ namespace Hazel
 		}
 
 		template<typename ComponentType>
-		ComponentType &GetComponent()
+		ComponentType &GetComponent() const
 		{
 			return context->Registry.get<ComponentType>(entity);
 		}
 
 		template<typename ComponentType>
-		ComponentType *TryGetComponent()
+		ComponentType *TryGetComponent() const
 		{
 			return context->Registry.try_get<ComponentType>(entity);
 		}
 
 		template<typename ComponentType, typename ...Args>
-		ComponentType &AddComponent(Args &&...args)
+		ComponentType &AddComponent(Args &&...args) const
 		{
 			auto &component = context->Registry.emplace<ComponentType>(entity, std::forward<Args>(args)...);
 			EntityListener::OnComponentAdded(*this, component);
@@ -84,10 +98,22 @@ namespace Hazel
 		}
 
 		template<typename ComponentType>
-		void RemoveComponent()
+		void RemoveComponent() const
 		{
 			EntityListener::OnComponentRemoved<ComponentType>(*this);
 			context->Registry.remove<ComponentType>(entity);
+		}
+
+		template<>
+		void RemoveComponent<TagComponent>() const
+		{
+			HZ_ASSERT(false, "Entity must have a tag");
+		}
+
+		template<>
+		void RemoveComponent<TransformComponent>() const
+		{
+			HZ_ASSERT(false, "Entity must have a transform");
 		}
 
 		bool operator==(const Entity &other) const

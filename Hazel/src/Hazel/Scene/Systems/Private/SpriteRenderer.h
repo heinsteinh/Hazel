@@ -4,7 +4,6 @@
 #include "Hazel/Rendering/Renderer2D/Renderer2D.h"
 #include "Hazel/Rendering/Renderer2D/SquareMesh.h"
 #include "Hazel/Scene/Components/SpriteComponent.h"
-#include "Hazel/Scene/Components/TransformComponent.h"
 
 namespace Hazel
 {
@@ -16,11 +15,7 @@ namespace Hazel
 			auto &renderer = entity.GetRenderer();
 			auto &command = renderer.AddRenderCommand();
 			command.Mesh = renderer.GetSquareMesh();
-			auto transform = entity.TryGetComponent<TransformComponent>();
-			if (transform)
-			{
-				command.Transform = transform->Transform;
-			}
+			command.Transform = entity.GetTransform();
 			command.Color = sprite.Material.Color;
 			command.Texture = sprite.Material.Texture;
 			command.Shader = sprite.Material.Shader ? sprite.Material.Shader : renderer.GetDefaultShader();

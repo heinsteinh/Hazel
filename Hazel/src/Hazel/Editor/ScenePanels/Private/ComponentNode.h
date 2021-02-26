@@ -9,34 +9,14 @@
 
 namespace Hazel
 {
-	template<typename ComponentType, typename PanelType>
+	template<typename ComponentType>
 	class ComponentNode
 	{
 	private:
 		static inline const void *id = reinterpret_cast<const void *>(typeid(ComponentType).hash_code());
 
 	public:
-		static void Draw(const char *label, Entity entity)
-		{
-			auto component = entity.TryGetComponent<ComponentType>();
-			if (component && BeginTreeNode(label))
-			{
-				DrawComponent(entity, *component);
-				TreeNode::End();
-			}
-		}
-
-		static void Draw(Entity entity)
-		{
-			auto component = entity.TryGetComponent<ComponentType>();
-			if (component)
-			{
-				DrawComponent(entity, *component);
-			}
-		}
-
-	private:
-		static bool BeginTreeNode(const char *label)
+		static bool Begin(const char *label)
 		{
 			TreeNodeSettings settings;
 			settings.DefaultOpen = true;
@@ -44,13 +24,17 @@ namespace Hazel
 			return TreeNode::Begin(label, id, settings);
 		}
 
-		static void DrawComponent(Entity entity, ComponentType &component)
+		static void DrawRemoveComponent(Entity entity)
 		{
-			PanelType::Draw(entity, component);
 			if (Button::Draw("Remove Component"))
 			{
 				entity.RemoveComponent<ComponentType>();
 			}
+		}
+
+		static void End()
+		{
+			TreeNode::End();
 		}
 	};
 }

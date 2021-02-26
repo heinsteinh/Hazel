@@ -4,7 +4,6 @@
 #include "CameraController.h"
 #include "Controller.h"
 #include "Hazel/Scene/Components/CameraComponent.h"
-#include "Hazel/Scene/Components/TransformComponent.h"
 
 namespace Hazel
 {
@@ -24,11 +23,7 @@ namespace Hazel
 			{
 				cameraController.UpdateProjection(camera->Projection, input, deltaTime);
 			}
-			auto transform = TryGetComponent<TransformComponent>();
-			if (transform)
-			{
-				controller.UpdateTransform(transform->Transform, input, deltaTime);
-			}
+			controller.UpdateTransform(GetTransform(), input, deltaTime);
 		}
 	};
 }

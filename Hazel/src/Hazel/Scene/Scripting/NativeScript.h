@@ -33,18 +33,6 @@ namespace Hazel
 			entity = {};
 		}
 
-		template<typename ComponentType>
-		ComponentType &GetComponent()
-		{
-			return entity.GetComponent<ComponentType>();
-		}
-
-		template<typename ComponentType>
-		ComponentType *TryGetComponent()
-		{
-			return entity.TryGetComponent<ComponentType>();
-		}
-
 		float GetDeltaTime() const
 		{
 			return entity.GetLayer().GetDeltaTime();
@@ -63,6 +51,23 @@ namespace Hazel
 		const Camera &GetCamera() const
 		{
 			return entity.GetCamera();
+		}
+
+		Transform &GetTransform() const
+		{
+			return entity.GetTransform();
+		}
+
+		template<typename ComponentType>
+		ComponentType &GetComponent() const
+		{
+			return entity.GetComponent<ComponentType>();
+		}
+
+		template<typename ComponentType>
+		ComponentType *TryGetComponent() const
+		{
+			return entity.TryGetComponent<ComponentType>();
 		}
 
 		virtual void OnCreate()

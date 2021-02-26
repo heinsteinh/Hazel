@@ -11,9 +11,14 @@ namespace Hazel
 	class TagNode
 	{
 	public:
-		static bool Draw(Entity entity, TagComponent &component)
+		static bool Draw(TagComponent &component)
 		{
-			return InputText::Draw("##Tag", component.Name);
+			return Draw(component.Name);
+		}
+
+		static bool Draw(std::string &tag)
+		{
+			return InputText::Draw("##Tag", tag);
 		}
 	};
 }

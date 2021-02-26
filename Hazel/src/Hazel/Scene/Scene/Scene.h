@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Hazel/Scene/Entity/Entity.h"
+#include "Hazel/Scene/Components/TagComponent.h"
+#include "Hazel/Scene/Components/TransformComponent.h"
 #include "Hazel/Scene/Components/NativeScriptComponent.h"
 #include "SceneContext.h"
 
@@ -62,9 +64,12 @@ namespace Hazel
 			return context.Camera;
 		}
 
-		Entity CreateEntity()
+		Entity CreateEntity(const std::string &name = {})
 		{
-			return {context.Registry.create(), context};
+			Entity entity(context.Registry.create(), context);
+			entity.AddComponent<TagComponent>(name);
+			entity.AddComponent<TransformComponent>();
+			return entity;
 		}
 
 		void DestroyEntity(Entity entity)

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Hazel/Scene/Scene/Scene.h"
-#include "Hazel/Scene/Components/TransformComponent.h"
 #include "Hazel/Scene/Components/ParticleComponent.h"
 
 namespace Hazel
@@ -14,9 +13,8 @@ namespace Hazel
 			auto deltaTime = scene.GetLayer().GetDeltaTime();
 			scene.ForEach<ParticleComponent>([&](auto entity, auto &component)
 			{
-				auto transform = entity.TryGetComponent<TransformComponent>();
 				component.Source.AutoEmitParticles(
-					transform ? transform->Transform.Translation : glm::vec3(1.0f),
+					entity.GetTransform().Translation,
 					component.Info,
 					deltaTime);
 				component.Source.UpdateParticles(deltaTime);

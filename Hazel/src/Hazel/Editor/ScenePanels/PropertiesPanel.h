@@ -25,6 +25,7 @@ namespace Hazel
 			if (entity.IsValid())
 			{
 				DrawComponents(entity);
+				DrawAddComponent(entity);
 			}
 			Panel::End();
 		}
@@ -32,22 +33,47 @@ namespace Hazel
 	private:
 		static void DrawComponents(Entity entity)
 		{
-			ComponentNode<TagComponent, TagNode>::Draw(entity);
-			ComponentNode<TransformComponent, TransformNode>::Draw("Transform", entity);
-			ComponentNode<CameraComponent, CameraNode>::Draw("Camera", entity);
-			ComponentNode<SpriteComponent, SpriteNode>::Draw("Sprite", entity);
-			ComponentNode<ParticleComponent, ParticleNode>::Draw("Particle", entity);
-			ComponentNode<NativeScriptComponent, NativeScriptNode>::Draw("Native Script", entity);
-			DrawAddComponentPopup(entity);
+			DrawTag(entity);
+			DrawTransform("Transform", entity);
+			DrawComponent<CameraComponent, CameraNode>("Camera", entity);
+			DrawComponent<SpriteComponent, SpriteNode>("Sprite", entity);
+			DrawComponent<ParticleComponent, ParticleNode>("Particle", entity);
+			DrawComponent<NativeScriptComponent, NativeScriptNode>("Native Script", entity);
 		}
 
-		static void DrawAddComponentPopup(Entity entity)
+		static void DrawTag(Entity entity)
+		{
+			TagNode::Draw(entity.GetTag());
+		}
+
+		static void DrawTransform(const char *label, Entity entity)
+		{
+			if (ComponentNode<TransformComponent>::Begin(label))
+			{
+				TransformNode::Draw(entity.GetTransform());
+				ComponentNode<TransformComponent>::End();
+			}
+		}
+
+		static void DrawAddComponent(Entity entity)
 		{
 			if (Button::Draw("AddComponent"))
 			{
 				AddComponentPopup::Open();
 			}
 			AddComponentPopup::Draw(entity);
+		}
+
+		template<typename ComponentType, typename NodeType>
+		static void DrawComponent(const char *label, Entity entity)
+		{
+			auto component = entity.TryGetComponent<ComponentType>();
+			if (component && ComponentNode<ComponentType>::Begin(label))
+			{
+				NodeType::Draw(entity, *component);
+				ComponentNode<ComponentType>::DrawRemoveComponent(entity);
+				ComponentNode<ComponentType>::End();
+			}
 		}
 	};
 }
