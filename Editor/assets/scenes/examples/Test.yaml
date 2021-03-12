@@ -1,8 +1,7 @@
 Scene: Test
 Entities:
   - EntityId: 4
-    Tag:
-      Name: Particle Emitter
+    Tag: Particle Emitter
     Transform:
       Translation: [0, 0, 0.100000001]
       Rotation: [0, 0, 0, 1]
@@ -21,11 +20,10 @@ Entities:
       SizeEnd: 0
       SizeVariation: 0.100000001
       LifeTime: 2
-    NativeScript:
-      Script: TestParticles
+    Script:
+      Name: TestParticles
   - EntityId: 3
-    Tag:
-      Name: Camera2
+    Tag: Camera2
     Transform:
       Translation: [1, 0, 0]
       Rotation: [0, 0, 0, 1]
@@ -39,8 +37,7 @@ Entities:
       PerspectiveNearClip: 0.00999999978
       PerspectiveFarClip: 1000
   - EntityId: 2
-    Tag:
-      Name: Camera1
+    Tag: Camera1
     Transform:
       Translation: [0, 0, 0.100000001]
       Rotation: [0, 0, 0, 1]
@@ -53,11 +50,10 @@ Entities:
       PerspectiveVerticalFov: 0.785398185
       PerspectiveNearClip: 0.00999999978
       PerspectiveFarClip: 1000
-    NativeScript:
-      Script: TestCameraController
+    Script:
+      Name: TestCameraController
   - EntityId: 1
-    Tag:
-      Name: Square2
+    Tag: Square2
     Transform:
       Translation: [0, 0, 0]
       Rotation: [0, 0, 0, 1]
@@ -71,8 +67,7 @@ Entities:
       ShaderFilename: ""
       Transparency: false
   - EntityId: 0
-    Tag:
-      Name: Square1
+    Tag: Square1
     Transform:
       Translation: [0, 0, 0]
       Rotation: [0, 0, 0, 1]

@@ -6,7 +6,7 @@ namespace Hazel
 {
 	void GlfwEventReceiver::OnWindowResize(int width, int height)
 	{
-		event.Type = EventType::WindowClose;
+		event.Type = EventType::WindowResize;
 		event.Categories = EventCategory::Window;
 		event.Blocked = false;
 		event.WindowSize = {static_cast<float>(width), static_cast<float>(height)};

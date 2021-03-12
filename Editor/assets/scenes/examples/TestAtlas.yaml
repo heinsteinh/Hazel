@@ -1,25 +1,23 @@
 Scene: Test
 Entities:
   - EntityId: 2
-    Tag:
-      Name: Camera1
+    Tag: Camera1
     Transform:
-      Translation: [-0.0672879815, -0.18316859, 0.100000001]
+      Translation: [0, 0, 0.100000001]
       Rotation: [0, 0, 0, 1]
       Scale: [1, 1, 1]
     Camera:
       ProjectionType: 0
-      OrthographicSize: 2.70000029
+      OrthographicSize: 2
       OrthographicNearClip: -1
       OrthographicFarClip: 1
       PerspectiveVerticalFov: 0.785398185
       PerspectiveNearClip: 0.00999999978
       PerspectiveFarClip: 1000
-    NativeScript:
-      Script: TestCameraController
+    Script:
+      Name: TestCameraController
   - EntityId: 0
-    Tag:
-      Name: Square1
+    Tag: Square1
     Transform:
       Translation: [0, 0, 0]
       Rotation: [0, 0, 0, 1]
@@ -28,7 +26,7 @@ Entities:
       Color: [1, 1, 1, 1]
       TextureName: SpriteSheet
       TextureFilename: C:\Users\christian\source\repos\Hazel\Editor\assets\textures\SpriteSheet.png
-      TextureRegion: [0, 256, 124, 383]
+      TextureRegion: [0, 5115, 0, 3330]
       ShaderName: ""
       ShaderFilename: ""
       Transparency: false

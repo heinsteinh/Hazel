@@ -60,7 +60,7 @@ namespace Hazel
 
 		void DrawAddComponent(Entity entity)
 		{
-			if (Button::Draw("AddComponent"))
+			if (Button::Draw("Add Component"))
 			{
 				AddComponentPopup::Open();
 			}

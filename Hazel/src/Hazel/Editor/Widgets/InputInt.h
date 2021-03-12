@@ -21,8 +21,8 @@ namespace Hazel
 		{
 			auto temp = static_cast<int>(value);
 			auto changed = Draw(label, temp, settings);
-			value = static_cast<T>(value);
-			return value;
+			value = static_cast<T>(temp);
+			return changed;
 		}
 	};
 }

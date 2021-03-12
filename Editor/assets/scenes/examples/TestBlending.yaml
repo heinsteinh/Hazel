@@ -1,25 +1,9 @@
 Scene: Test
 Entities:
-  - EntityId: 1048578
-    Tag:
-      Name: Square1
+  - EntityId: 1048580
+    Tag: Overlay
     Transform:
-      Translation: [0, 0, 0.100000001]
-      Rotation: [0, 0, 0, 1]
-      Scale: [1.53846157, 1, 1]
-    Sprite:
-      Color: [0, 1, 0.178570986, 1]
-      TextureName: SpriteSheet
-      TextureFilename: C:\Users\christian\source\repos\Hazel\Editor\assets\textures\SpriteSheet.png
-      TextureRegion: [0, 4999, 0, 3336]
-      ShaderName: ""
-      ShaderFilename: ""
-      Transparency: true
-  - EntityId: 1048577
-    Tag:
-      Name: Square2
-    Transform:
-      Translation: [0, 0, 0]
+      Translation: [0, 0, 0.300000012]
       Rotation: [0, 0, 0, 1]
       Scale: [1, 1, 1]
     Sprite:
@@ -30,20 +14,33 @@ Entities:
       ShaderName: ""
       ShaderFilename: ""
       Transparency: true
-  - EntityId: 1048576
-    Tag:
-      Name: Camera
+  - EntityId: 2
+    Tag: Camera
     Transform:
-      Translation: [0.0165710449, -0.166793823, 0.5]
+      Translation: [0, 0, 0.699999988]
       Rotation: [0, 0, 0, 1]
       Scale: [1, 1, 1]
     Camera:
-      ProjectionType: 0
-      OrthographicSize: 2.60000014
+      ProjectionType: 1
+      OrthographicSize: 2.4000001
       OrthographicNearClip: -1
       OrthographicFarClip: 1
-      PerspectiveVerticalFov: 2.38539839
+      PerspectiveVerticalFov: 1.78539824
       PerspectiveNearClip: 0.00999999978
       PerspectiveFarClip: 1000
-    NativeScript:
-      Script: TestCameraController
+    Script:
+      Name: TestCameraController
+  - EntityId: 1048576
+    Tag: Object
+    Transform:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0, 1]
+      Scale: [1.60000002, 0.899999976, 1]
+    Sprite:
+      Color: [0.218395904, 0.99613899, 0.00384610263, 1]
+      TextureName: SpriteSheet
+      TextureFilename: C:\Users\christian\source\repos\Hazel\Editor\assets\textures\SpriteSheet.png
+      TextureRegion: [0, 2560, 0, 1664]
+      ShaderName: ""
+      ShaderFilename: ""
+      Transparency: true

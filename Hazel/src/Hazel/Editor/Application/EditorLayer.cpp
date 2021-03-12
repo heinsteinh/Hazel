@@ -176,6 +176,7 @@ namespace Hazel
 		if (BatchPanel::Draw(rendererInfo))
 		{
 			sceneManager->ResetRenderer(rendererInfo);
+			sceneManager->GetRenderer().SetFramebuffer(framebuffer);
 		}
 		ImGui::End();
 
