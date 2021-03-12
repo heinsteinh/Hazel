@@ -2,35 +2,24 @@
 
 #include <memory>
 
-#include "Private/ApplicationInfo.h"
-#include "Private/ApplicationContext.h"
-#include "Private/ApplicationLayers.h"
+#include "ApplicationInfo.h"
 
 namespace Hazel
 {
+	struct ApplicationPrivate;
+	class ApplicationLayer;
+
 	class Application
 	{
 	private:
-		ApplicationInfo info;
-		ApplicationContext context;
-		ApplicationLayers layers;
+		std::unique_ptr<ApplicationPrivate> application;
 
 	public:
-		Application();
+		Application(const ApplicationInfo &info);
 		virtual ~Application();
 
 		void Run();
-		void Close();
-		void SetGraphicsApi(AvailableGraphicsApi graphicsApi);
-		void SetWindowTitle(const std::string &title);
-		void SetWindowResolution(const glm::vec2 &resolution);
-		void SetVerticalSynchronization(bool verticalSynchronization);
-		void EnableGui(bool guiEnabled);
-		void EnableGuiRender(bool guiRenderingEnabled);
-		void SetClearColor(const glm::vec4 &clearColor);
-		void PushLayer(const std::shared_ptr<Layer> &layer);
-		void PushOverlay(const std::shared_ptr<Layer> &overlay);
+		void PushLayer(std::unique_ptr<ApplicationLayer> layer);
+		void PushOverlay(std::unique_ptr<ApplicationLayer> overlay);
 	};
-
-	std::unique_ptr<Application> CreateApplication(int argc, char **argv);
 }

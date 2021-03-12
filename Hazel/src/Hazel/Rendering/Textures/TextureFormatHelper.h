@@ -16,7 +16,7 @@ namespace Hazel
 			case 4:
 				return TextureFormat::Rgba8;
 			}
-			return TextureFormat::Unknown;
+			return TextureFormat::Rgba8;
 		}
 
 		static constexpr int GetChannelCount(TextureFormat format)

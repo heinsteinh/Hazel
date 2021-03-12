@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Hazel/Scene/Entity/Entity.h"
-#include "Hazel/Scene/Components/CameraComponent.h"
-#include "Hazel/Scene/Components/SpriteComponent.h"
-#include "Hazel/Scene/Components/ParticleComponent.h"
+#include "Hazel/Scene/Scene/Entity.h"
+#include "Hazel/Scene/ComponentManager/ComponentManagers.h"
 #include "Hazel/Editor/Widgets/Button.h"
 #include "Hazel/Editor/Widgets/Popup.h"
 
@@ -20,26 +18,27 @@ namespace Hazel
 			Popup::Open(id);
 		}
 
-		static bool Draw(Entity entity)
+		static bool Draw(Entity entity, const ComponentManagers &componentManagers)
 		{
 			bool changed = false;
 			if (Popup::Begin(id))
 			{
-				changed |= DrawItem<CameraComponent>("Camera", entity);
-				changed |= DrawItem<SpriteComponent>("Sprite", entity);
-				changed |= DrawItem<ParticleComponent>("Particle", entity);
+				componentManagers.ForEach([&](auto &componentManager)
+				{
+					changed |= DrawItem(entity, componentManager);
+				});
 				Popup::End();
 			}
 			return changed;
 		}
 
 	private:
-		template<typename ComponentType>
-		static bool DrawItem(const char *label, Entity entity)
+		static bool DrawItem(Entity entity, ComponentManager &componentManager)
 		{
-			if (Popup::DrawItem(label) && !entity.HasComponent<ComponentType>())
+			auto label = componentManager.GetComponentName().c_str();
+			if (Popup::DrawItem(label) && !componentManager.HasComponent(entity))
 			{
-				entity.AddComponent<ComponentType>();
+				componentManager.AddComponent(entity);
 				Popup::Close();
 				return true;
 			}

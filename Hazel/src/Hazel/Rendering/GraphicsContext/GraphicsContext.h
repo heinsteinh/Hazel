@@ -25,7 +25,7 @@ namespace Hazel
 
 		virtual ~GraphicsContext() = default;
 
-		virtual std::shared_ptr<GuiRenderer> CreateGuiRenderer() = 0;
+		virtual std::unique_ptr<GuiRenderer> CreateGuiRenderer() = 0;
 		virtual std::shared_ptr<Framebuffer> CreateFramebuffer(const FramebufferInfo &info) = 0;
 		virtual std::shared_ptr<Shader> CreateShader(const ShaderInfo &info) = 0;
 		virtual std::shared_ptr<IndexBuffer> CreateIndexBuffer(size_t size) = 0;
@@ -36,6 +36,7 @@ namespace Hazel
 		virtual void Clear(const std::shared_ptr<Framebuffer> &framebuffer = {}) = 0;
 		virtual void DrawIndexed(const DrawCommand &command) = 0;
 		virtual void SwapBuffers() = 0;
+		virtual void SetVerticalSynchronization(bool verticalSynchronization) = 0;
 
 		const GraphicsApiInfo &GetInfo() const
 		{

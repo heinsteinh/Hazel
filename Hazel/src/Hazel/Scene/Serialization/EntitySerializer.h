@@ -1,83 +1,84 @@
 #pragma once
 
+#include "Hazel/Core/Yaml/YamlSerializer.h"
 #include "Hazel/Rendering/Textures/TextureFactory.h"
-#include "Hazel/Scene/Entity/Entity.h"
-#include "TagSerializer.h"
-#include "TransformSerializer.h"
-#include "SpriteSerializer.h"
-#include "CameraSerializer.h"
-#include "ParticleSerializer.h"
-#include "NativeScriptSerializer.h"
-#include "Private/ComponentTexture.h"
-#include "Private/ComponentShader.h"
-#include "Private/ComponentNativeScript.h"
+#include "Hazel/Scene/SceneManager/SceneManager.h"
+#include "Hazel/Scene/Scene/Entity.h"
+#include "Hazel/Scene/Components/Transform/TransformSerializer.h"
 
 namespace Hazel
 {
-	template<>
-	struct YamlSerializer<Entity>
+	class EntitySerializer
 	{
-		static void Serialize(YamlDocument &document, Entity value)
+	private:
+		SceneManager *manager;
+
+	public:
+		EntitySerializer(SceneManager &manager)
+			: manager(&manager)
 		{
-			document.BeginMap().Write("EntityId", value.GetId());
-			Serialize<TagComponent>(document, value, "Tag");
-			Serialize<TransformComponent>(document, value, "Transform");
-			Serialize<SpriteComponent>(document, value, "Sprite");
-			Serialize<CameraComponent>(document, value, "Camera");
-			Serialize<ParticleComponent>(document, value, "Particle");
-			Serialize<NativeScriptComponent>(document, value, "NativeScript");
-			document.EndMap();
 		}
 
-		static void Deserialize(const YamlValue &source, Entity value)
+		void Serialize(YamlDocument &yaml, Entity entity)
 		{
-			Deserialize<TagComponent>(source["Tag"], value);
-			Deserialize<TransformComponent>(source["Transform"], value);
-			Deserialize<SpriteComponent>(source["Sprite"], value);
-			Deserialize<CameraComponent>(source["Camera"], value);
-			Deserialize<ParticleComponent>(source["Particle"], value);
-			Deserialize<NativeScriptComponent>(source["NativeScript"], value);
+			yaml.BeginMap();
+			SerializeHeader(yaml, entity);
+			SerializeComponents(yaml, entity);
+			yaml.EndMap();
+		}
+
+		void Deserialize(const YamlValue &yaml, Entity entity)
+		{
+			DeserializeHeader(yaml, entity);
+			DeserializeComponents(yaml, entity);
 		}
 
 	private:
-		template<typename ComponentType>
-		static void Serialize(YamlDocument &document, Entity entity, const char *label)
+		void SerializeHeader(YamlDocument &yaml, Entity entity)
 		{
-			auto component = entity.TryGetComponent<ComponentType>();
-			if (component)
+			yaml.Write("EntityId", entity.GetId())
+				.Write("Tag", entity.GetTag())
+				.Write("Transform", entity.GetTransform());
+		}
+
+		void SerializeComponents(YamlDocument &yaml, Entity entity)
+		{
+			manager->GetComponentManagers().ForEach([&](auto &componentManager)
 			{
-				document.Write(label, *component);
+				SerializeComponent(yaml, entity, componentManager);
+			});
+		}
+
+		void SerializeComponent(YamlDocument &yaml, Entity entity, ComponentManager &componentManager)
+		{
+			if (componentManager.HasComponent(entity))
+			{
+				yaml.Key().Write(componentManager.GetComponentName()).Value();
+				componentManager.SerializeComponent(entity, yaml);
 			}
 		}
 
-		template<typename ComponentType>
-		static void Deserialize(const YamlValue &source, Entity entity)
+		void DeserializeHeader(const YamlValue &yaml, Entity entity)
 		{
-			if (source.IsValid())
+			yaml["Tag"].Extract(entity.GetTag());
+			yaml["Transform"].Extract(entity.GetTransform());
+		}
+
+		void DeserializeComponents(const YamlValue &yaml, Entity entity)
+		{
+			manager->GetComponentManagers().ForEach([&](auto &componentManager)
 			{
-				auto &component = entity.AddComponent<ComponentType>();
-				source.Extract(component);
-				SetupComponent(source, entity, component);
+				DeserializeComponent(yaml, entity, componentManager);
+			});
+		}
+
+		void DeserializeComponent(const YamlValue &yaml, Entity entity, ComponentManager &componentManager)
+		{
+			auto componentYaml = yaml[componentManager.GetComponentName()];
+			if (componentYaml.IsValid())
+			{
+				componentManager.DeserializeComponent(entity, componentYaml);
 			}
-		}
-
-		template<typename ComponentType>
-		static void SetupComponent(const YamlValue &source, Entity entity, ComponentType &component)
-		{
-		}
-
-		static void SetupComponent(const YamlValue &source, Entity entity, SpriteComponent &component)
-		{
-			component.Material.Shader = ComponentShader::ExtractShader(source, entity);
-			component.Material.Texture = ComponentTexture::ExtractTexture(source, entity);
-			SpriteSerializer::UpdateTextureRegion(source, component.Material.Texture);
-		}
-
-		static void SetupComponent(const YamlValue &source, Entity entity, NativeScriptComponent &component)
-		{
-			component.Script = ComponentNativeScript::ExtractScript(source, entity);
 		}
 	};
-
-	using EntitySerializer = YamlSerializer<Entity>;
 }

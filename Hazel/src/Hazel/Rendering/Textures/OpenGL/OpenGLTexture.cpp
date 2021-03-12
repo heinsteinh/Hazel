@@ -11,10 +11,6 @@ namespace Hazel
 		: Texture(OpenGLTextureFactory::CreateTexture(id, info), info)
 	{
 		Log::Debug("Texture created with id {}.", id);
-		if (info.Data)
-		{
-			BufferData(info.Data);
-		}
 	}
 
 	OpenGLTexture::~OpenGLTexture()
@@ -33,15 +29,15 @@ namespace Hazel
 		glBindTextureUnit(slot, 0);
 	}
 
-	void OpenGLTexture::BufferData(const void *data)
+	void OpenGLTexture::BufferData(const void *data, const Box2D &region)
 	{
 		glTextureSubImage2D(
 			id,
 			0,
-			0,
-			0,
-			static_cast<int>(GetWidth()),
-			static_cast<int>(GetHeight()),
+			static_cast<int>(region.Min.x),
+			static_cast<int>(region.Min.y),
+			static_cast<int>(region.GetWidth()),
+			static_cast<int>(region.GetHeight()),
 			OpenGLTextureFormat::GetTextureFormat(GetFormat()),
 			GL_UNSIGNED_BYTE,
 			data);

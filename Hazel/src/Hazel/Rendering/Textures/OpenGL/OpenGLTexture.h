@@ -16,7 +16,8 @@ namespace Hazel
 
 		void Bind() const;
 		void Unbind() const;
-		void BufferData(const void *data);
+
+		virtual void BufferData(const void *data, const Box2D &region) override;
 
 		uint32_t GetId() const
 		{

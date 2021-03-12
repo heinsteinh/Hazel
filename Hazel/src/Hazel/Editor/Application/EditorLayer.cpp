@@ -6,46 +6,58 @@
 #include "Hazel/Rendering/Textures/TextureFactory.h"
 #include "Hazel/Tests/TestCameraController.h"
 #include "Hazel/Tests/TestParticles.h"
+#include "Hazel/Scene/SceneManager/DefaultSceneManager.h"
+#include "Hazel/Scene/Rendering/SceneRenderer.h"
+#include "Hazel/Scene/Update/SceneUpdater.h"
 #include "Hazel/Scene/Serialization/SceneSerializer.h"
-#include "Hazel/Scene/Components/SpriteComponent.h"
-#include "Hazel/Scene/Components/NativeScriptComponent.h"
 #include "Hazel/Editor/Viewport/EditorWindow.h"
 #include "Hazel/Editor/Viewport/EditorMenu.h"
 #include "Hazel/Editor/Viewport/EditorViewport.h"
 #include "Hazel/Editor/Utils/FpsPanel.h"
 #include "Hazel/Editor/Utils/BatchPanel.h"
 #include "Hazel/Editor/Utils/RendererStatisticsPanel.h"
+#include "Hazel/Editor/Widgets/ImageView.h"
 #include "Hazel/Editor/ScenePanels/SceneHierarchyPanel.h"
 
 namespace Hazel
 {
 	EditorLayer::EditorLayer()
-		: Layer("Hazel Editor")
+		: ApplicationLayer("Hazel Editor")
 	{
 	}
 
 	void EditorLayer::OnAttach()
 	{
-		auto &graphicsContext = GetGraphicsContext();
+		auto application = GetApplication();
+		auto &window = application.GetWindow();
+		auto &graphicsContext = application.GetGraphicsContext();
 
-		framebuffer = graphicsContext.CreateFramebuffer({{GetWindow().GetSize()}});
+		FramebufferInfo framebufferInfo;
+		framebufferInfo.Size = window.GetSize();
+		framebuffer = graphicsContext.CreateFramebuffer(framebufferInfo);
 
 		rendererInfo.GraphicsContext = &graphicsContext;
 		rendererInfo.TextureSlotCount = graphicsContext.GetTextureSlotCount();
-		sceneManager.OnAttach(*this, rendererInfo);
+		sceneManager = DefaultSceneManager::Create(*this, rendererInfo);
 
-		scene = sceneManager.CreateScene("Test");
+		scene = std::make_shared<Scene>("Test");
 
-		auto &renderer = sceneManager.GetRenderer();
-		auto &assetManager = sceneManager.GetAssetManager();
+		auto &assetManager = sceneManager->GetAssetManager();
 
 		std::string testFilename = R"(C:\Users\christian\source\repos\Hazel\Editor\assets\textures\SpriteSheet.png)";
 
-		auto spriteSheet = TextureFactory::CreateTextureFromFile(graphicsContext, testFilename);
-
+		TextureFactory textureFactory(graphicsContext);
+		auto spriteSheet = textureFactory.TryCreateTextureFromFile(testFilename);
 		assetManager.AddTexture(spriteSheet);
-		assetManager.AddScriptFactory<TestCameraController>("TestCameraController");
-		assetManager.AddScriptFactory<TestParticles>("TestParticles");
+
+		assetManager.AddScriptFactory("TestCameraController", []()
+		{
+			return std::make_unique<TestCameraController>();
+		});
+		assetManager.AddScriptFactory("TestParticles", []()
+		{
+			return std::make_unique<TestParticles>();
+		});
 
 		auto square1 = scene->CreateEntity("Square1");
 		square1.AddComponent<SpriteComponent>().Material.Texture = assetManager.GetTexture(testFilename);
@@ -55,7 +67,7 @@ namespace Hazel
 		square2.AddComponent<SpriteComponent>();
 
 		camera1 = scene->CreateEntity("Camera1");
-		camera1.AddComponent<NativeScriptComponent>(assetManager.CreateScript("TestCameraController"));
+		camera1.AddComponent<ScriptComponent>(assetManager.CreateScript("TestCameraController"));
 		camera1.AddComponent<CameraComponent>();
 
 		scene->SetCameraEntity(camera1);
@@ -67,11 +79,12 @@ namespace Hazel
 		auto particleEmitter = scene->CreateEntity("Particle Emitter");
 		particleEmitter.GetTransform().Translation.z += 0.1f;
 		particleEmitter.AddComponent<ParticleComponent>();
-		particleEmitter.AddComponent<NativeScriptComponent>(assetManager.CreateScript("TestParticles"));
+		particleEmitter.AddComponent<ScriptComponent>(assetManager.CreateScript("TestParticles"));
 
-		sceneManager.OnPlay(*scene);
+		SceneUpdater updater(*sceneManager);
+		updater.OnPlay(*scene);
 
-		fileDialog.SetWindow(&GetWindow());
+		fileDialog.SetWindow(&window);
 		fileDialog.SetFilters({{"YAML files", "*.yaml"}});
 	}
 
@@ -86,38 +99,48 @@ namespace Hazel
 			return;
 		}
 
-		sceneManager.OnUpdate(*scene);
+		SceneUpdater updater(*sceneManager);
+		updater.OnUpdate(*scene);
 
-		GetGraphicsContext().Clear(framebuffer);
-		sceneManager.OnRender(*scene, framebuffer);
+		GetApplication().GetGraphicsContext().Clear(framebuffer);
+
+		SceneRenderer renderer(*sceneManager);
+		renderer.RenderScene(*scene);
 	}
 
 	void EditorLayer::OnGui()
 	{
 		EditorWindow::Begin("Hazel");
 
+		auto &application = GetApplication();
+		auto &settings = application.GetSettings();
+
 		auto status = EditorMenu::Draw(GetInput());
 		if (status.Quit)
 		{
-			CloseApplication();
+			settings.Running = false;
 		}
 		if (status.Open && fileDialog.GetOpenFilename())
 		{
-			SceneSerializer::Deserialize(*scene, fileDialog.GetFilename());
-			sceneManager.OnPlay(*scene);
+			SceneSerializer serializer(*sceneManager);
+			serializer.Deserialize(*scene, fileDialog.GetFilename());
+
+			SceneUpdater updater(*sceneManager);
+			updater.OnPlay(*scene);
 		}
 		if (status.Save && fileDialog.GetSaveFilename())
 		{
-			SceneSerializer::Serialize(*scene, fileDialog.GetFilename());
+			SceneSerializer serializer(*sceneManager);
+			serializer.Serialize(*scene, fileDialog.GetFilename());
 		}
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.0f, 0.0f});
 		ImGui::Begin("Viewport");
 
-		EnableGuiKeyboardFilter(!ImGui::IsWindowFocused());
-		EnableGuiMouseFilter(!ImGui::IsWindowHovered());
+		settings.GuiKeyboardFilterEnabled = !ImGui::IsWindowFocused();
+		settings.GuiMouseFilterEnabled = !ImGui::IsWindowHovered();
 
-		auto newViewport = EditorViewport::GetViewport(GetWindow());
+		auto newViewport = EditorViewport::GetViewport(application.GetWindow());
 		auto viewportSize = newViewport.GetSize();
 		if (newViewport != viewport)
 		{
@@ -126,17 +149,16 @@ namespace Hazel
 			Log::Warn("New viewport size: {} {}", viewportSize.x, viewportSize.y);
 			if (!viewport.IsEmpty())
 			{
-				framebuffer = GetGraphicsContext().CreateFramebuffer({viewportSize});
+				framebuffer = application.GetGraphicsContext().CreateFramebuffer({viewportSize});
+				sceneManager->GetRenderer().SetFramebuffer(framebuffer);
 			}
-			sceneManager.OnViewportResize(*scene, newViewport);
+
+			SceneUpdater updater(*sceneManager);
+			updater.OnViewportResize(*scene, newViewport);
 			OnUpdate();
 		}
 
-		ImGui::Image(
-			framebuffer->GetColorAttachment().GetHandle(),
-			{viewportSize.x, viewportSize.y},
-			{0.0f, 1.0f},
-			{1.0f, 0.0f});
+		ImageView::Draw(framebuffer->GetColorAttachment().GetHandle(), viewportSize);
 
 		ImGui::End();
 		ImGui::PopStyleVar();
@@ -149,21 +171,23 @@ namespace Hazel
 		ImGui::End();
 
 		ImGui::Begin("Settings");
-		FpsPanel::Draw(GetDeltaTime());
-		RendererStatisticsPanel::Draw(sceneManager.GetRenderer().GetStatistics());
+		FpsPanel::Draw(application.GetDeltaTime());
+		RendererStatisticsPanel::Draw(sceneManager->GetRenderer().GetStatistics());
 		if (BatchPanel::Draw(rendererInfo))
 		{
-			sceneManager.ResetRenderer(rendererInfo);
+			sceneManager->ResetRenderer(rendererInfo);
 		}
 		ImGui::End();
 
-		SceneHierarchyPanel::Draw("Scene Hierarchy", *scene, selectedEntity);
+		SceneHierarchyPanel scenePanel(*sceneManager);
+		scenePanel.Draw("Scene Hierarchy", *scene, selectedEntity);
 
 		EditorWindow::End();
 	}
 
 	void EditorLayer::OnEvent(Event &e)
 	{
-		sceneManager.OnEvent(*scene, e);
+		SceneUpdater updater(*sceneManager);
+		updater.OnEvent(*scene, e);
 	}
 }

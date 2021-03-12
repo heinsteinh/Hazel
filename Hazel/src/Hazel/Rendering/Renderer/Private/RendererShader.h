@@ -1,14 +1,14 @@
 #pragma once
 
 #include "Hazel/Core/Camera/Camera.h"
-#include "RendererContext.h"
+#include "RendererPrivate.h"
 
 namespace Hazel
 {
 	class RendererShader
 	{
 	public:
-		static void UpdateCamera(RendererContext &context, const Camera &camera)
+		static void UpdateCamera(RendererPrivate &context, const Camera &camera)
 		{
 			context.CameraProjectionType = ProjectionType::Orthographic;
 			context.ViewProjection = camera.GetViewProjection();
@@ -16,12 +16,12 @@ namespace Hazel
 			UploadViewProjection(context, context.Command.Shader.lock());
 		}
 
-		static bool HasShader(RendererContext &context, const std::shared_ptr<Shader> &shader)
+		static bool HasShader(RendererPrivate &context, const std::shared_ptr<Shader> &shader)
 		{
 			return context.Command.Shader.lock() == shader;
 		}
 
-		static void SetShader(RendererContext &context, const std::shared_ptr<Shader> &shader)
+		static void SetShader(RendererPrivate &context, const std::shared_ptr<Shader> &shader)
 		{
 			context.Command.Shader = shader;
 			context.Batch.SetVertexLayout(shader->GetInputLayout());
@@ -29,7 +29,7 @@ namespace Hazel
 		}
 
 	private:
-		static void UploadViewProjection(RendererContext &context, const std::shared_ptr<Shader> &shader)
+		static void UploadViewProjection(RendererPrivate &context, const std::shared_ptr<Shader> &shader)
 		{
 			if (shader)
 			{

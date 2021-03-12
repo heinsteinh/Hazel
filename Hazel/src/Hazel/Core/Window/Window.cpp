@@ -12,15 +12,12 @@ namespace Hazel
 		: title(info.Title)
 	{
 		static GlfwLoader glfwLoader;
-		glfwWindowHint(GLFW_SAMPLES, info.Samples);
 		window = glfwCreateWindow(
 			static_cast<int>(info.Resolution.x),
 			static_cast<int>(info.Resolution.y),
 			info.Title.c_str(),
 			nullptr,
 			nullptr);
-		graphicsContext = info.GraphicsApi->CreateContext(window);
-		SetVerticalSynchronization(info.VerticalSynchronization);
 		GlfwEventSystem::SetupCallbacks(window, eventReceiver);
 		Log::Debug("New window created {}", title);
 	}
@@ -76,24 +73,8 @@ namespace Hazel
 		glfwSetWindowPos(window, static_cast<int>(position.x), static_cast<int>(position.y));
 	}
 
-	bool Window::HasVerticalSynchonization() const
-	{
-		return verticalSynchronization;
-	}
-
-	void Window::SetVerticalSynchronization(bool verticalSynchronization)
-	{
-		this->verticalSynchronization = verticalSynchronization;
-		glfwSwapInterval(verticalSynchronization ? 1 : 0);
-	}
-
 	void Window::SetEventCallback(const EventCallback &callback)
 	{
 		eventReceiver.SetCallback(callback);
-	}
-
-	void Window::PollEvents()
-	{
-		glfwPollEvents();
 	}
 }

@@ -22,6 +22,11 @@ namespace Hazel
 			return viewport;
 		}
 
+		float GetAspectRatio() const
+		{
+			return viewport.GetAspectRatio();
+		}
+
 		void SetViewport(const Box2D &viewport)
 		{
 			this->viewport = viewport;

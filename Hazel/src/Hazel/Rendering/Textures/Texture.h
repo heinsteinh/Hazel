@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hazel/Core/Geometry/Size.h"
+#include "Hazel/Core/Geometry/Box2D.h"
 #include "TextureInfo.h"
 
 namespace Hazel
@@ -19,6 +20,13 @@ namespace Hazel
 		}
 
 		virtual ~Texture() = default;
+
+		virtual void BufferData(const void *data, const Box2D &region) = 0;
+
+		void BufferData(const void *data)
+		{
+			BufferData(data, {glm::vec2(0.0f), GetSize()});
+		}
 
 		void *GetHandle() const
 		{

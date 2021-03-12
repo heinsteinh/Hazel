@@ -7,6 +7,7 @@ namespace Hazel
 	class OpenGLGraphicsApi : public GraphicsApi
 	{
 	public:
-		virtual std::shared_ptr<GraphicsContext> CreateContext(GLFWwindow *window) override;
+		virtual std::unique_ptr<Window> CreateNewWindow(const ApplicationInfo &applicationInfo) override;
+		virtual std::unique_ptr<GraphicsContext> CreateGraphicsContext(const Window &window) override;
 	};
 }

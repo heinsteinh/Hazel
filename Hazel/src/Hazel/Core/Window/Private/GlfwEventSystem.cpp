@@ -6,14 +6,10 @@
 
 namespace Hazel
 {
-	GlfwEventReceiver &GlfwEventSystem::GetReceiver(GLFWwindow *window)
-	{
-		return *static_cast<GlfwEventReceiver *>(glfwGetWindowUserPointer(window));
-	}
-
 	void GlfwEventSystem::RemoveCallbacks(GLFWwindow *window)
 	{
 		glfwSetWindowSizeCallback(window, nullptr);
+		glfwSetWindowRefreshCallback(window, nullptr);
 		glfwSetWindowCloseCallback(window, nullptr);
 		glfwSetKeyCallback(window, nullptr);
 		glfwSetCharCallback(window, nullptr);
@@ -27,11 +23,15 @@ namespace Hazel
 		glfwSetWindowUserPointer(window, &receiver);
 		glfwSetWindowSizeCallback(window, [](GLFWwindow *window, int width, int height)
 		{
-			GetReceiver(window).OnWindowResized(width, height);
+			GetReceiver(window).OnWindowResize(width, height);
+		});
+		glfwSetWindowRefreshCallback(window, [](GLFWwindow *window)
+		{
+			GetReceiver(window).OnWindowRefresh();
 		});
 		glfwSetWindowCloseCallback(window, [](GLFWwindow *window)
 		{
-			GetReceiver(window).OnWindowClosed();
+			GetReceiver(window).OnWindowClose();
 		});
 		glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scancode, int action, int mods)
 		{
@@ -47,11 +47,16 @@ namespace Hazel
 		});
 		glfwSetScrollCallback(window, [](GLFWwindow *window, double x, double y)
 		{
-			GetReceiver(window).OnMouseScrolled(x, y);
+			GetReceiver(window).OnMouseScroll(x, y);
 		});
 		glfwSetCursorPosCallback(window, [](GLFWwindow *window, double x, double y)
 		{
-			GetReceiver(window).OnMouseMoved(x, y);
+			GetReceiver(window).OnMouseMove(x, y);
 		});
+	}
+
+	GlfwEventReceiver &GlfwEventSystem::GetReceiver(GLFWwindow *window)
+	{
+		return *static_cast<GlfwEventReceiver *>(glfwGetWindowUserPointer(window));
 	}
 }

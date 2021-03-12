@@ -11,14 +11,4 @@ namespace Hazel
 		defaultShader(Shader2D::CreateShader(*info.GraphicsContext))
 	{
 	}
-
-	void Renderer2D::BeginScene(const Camera &camera, const std::shared_ptr<Framebuffer> &framebuffer)
-	{
-		renderer.BeginScene(camera, framebuffer);
-	}
-
-	void Renderer2D::EndScene()
-	{
-		renderer.EndScene();
-	}
 }

@@ -5,8 +5,8 @@
 #include "Hazel/Rendering/GraphicsContext/OpenGL/OpenGLId.h"
 #include "Hazel/Rendering/Textures/TextureInfo.h"
 #include "OpenGLTextureFormat.h"
-#include "OpenGLTextureFiltering.h"
-#include "OpenGLTextureWrapping.h"
+#include "OpenGLTextureFilterMode.h"
+#include "OpenGLTextureWrapMode.h"
 
 namespace Hazel
 {
@@ -22,10 +22,10 @@ namespace Hazel
 				OpenGLTextureFormat::GetStorageFormat(info.Format),
 				static_cast<int>(info.Size.x),
 				static_cast<int>(info.Size.y));
-			glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, OpenGLTextureFiltering::GetTextureFiltering(info.MinFilter));
-			glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, OpenGLTextureFiltering::GetTextureFiltering(info.MagFilter));
-			glTextureParameteri(id, GL_TEXTURE_WRAP_S, OpenGLTextureWrapping::GetTextureWrapping(info.WrapS));
-			glTextureParameteri(id, GL_TEXTURE_WRAP_T, OpenGLTextureWrapping::GetTextureWrapping(info.WrapT));
+			glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, OpenGLTextureFilterMode::GetTextureFiltering(info.MinFilterMode));
+			glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, OpenGLTextureFilterMode::GetTextureFiltering(info.MagFilterMode));
+			glTextureParameteri(id, GL_TEXTURE_WRAP_S, OpenGLTextureWrapMode::GetTextureWrapping(info.WrapModeU));
+			glTextureParameteri(id, GL_TEXTURE_WRAP_T, OpenGLTextureWrapMode::GetTextureWrapping(info.WrapModeV));
 			return OpenGLId::GetHandle(id);
 		}
 	};

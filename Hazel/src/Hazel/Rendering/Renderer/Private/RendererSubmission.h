@@ -2,7 +2,7 @@
 
 #include "Hazel/Core/Exceptions/AssertionException.h"
 #include "Hazel/Rendering/Renderer/RendererException.h"
-#include "RendererContext.h"
+#include "RendererPrivate.h"
 #include "RendererShader.h"
 #include "RendererMeshFormat.h"
 #include "RendererDrawCall.h"
@@ -12,7 +12,7 @@ namespace Hazel
 	class RendererSubmission
 	{
 	public:
-		static void Submit(RendererContext &context, const RenderCommand &command)
+		static void Submit(RendererPrivate &context, const RenderCommand &command)
 		{
 			HZ_ASSERT(command.IsValid(), "Render command needs at least a mesh and a shader");
 			SetupShader(context, command);
@@ -24,7 +24,7 @@ namespace Hazel
 		}
 
 	private:
-		static void SetupShader(RendererContext &context, const RenderCommand &command)
+		static void SetupShader(RendererPrivate &context, const RenderCommand &command)
 		{
 			if (!RendererShader::HasShader(context, command.Shader))
 			{
@@ -33,7 +33,7 @@ namespace Hazel
 			}
 		}
 
-		static void SetupMeshFormat(RendererContext &context, const RenderCommand &command)
+		static void SetupMeshFormat(RendererPrivate &context, const RenderCommand &command)
 		{
 			if (!RendererMeshFormat::HasMeshFormat(context, *command.Mesh))
 			{
@@ -42,7 +42,7 @@ namespace Hazel
 			}
 		}
 
-		static bool AddVertices(RendererContext &context, const RenderCommand &command)
+		static bool AddVertices(RendererPrivate &context, const RenderCommand &command)
 		{
 			if (!context.Batch.Add(command))
 			{

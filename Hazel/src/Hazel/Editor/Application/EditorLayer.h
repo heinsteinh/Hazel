@@ -1,12 +1,18 @@
 #pragma once
 
-#include "Hazel/Core/Application/Layer.h"
+#include <memory>
+
+#include "Hazel/Core/Application/ApplicationLayer.h"
 #include "Hazel/Core/FileSystem/FileDialog.h"
-#include "Hazel/Scene/Manager/SceneManager.h"
+#include "Hazel/Rendering/Renderer/RendererInfo.h"
+#include "Hazel/Scene/Scene/Entity.h"
 
 namespace Hazel
 {
-	class EditorLayer : public Layer
+	class SceneManager;
+	class Scene;
+
+	class EditorLayer : public ApplicationLayer
 	{
 	private:
 		Entity selectedEntity;
@@ -14,7 +20,7 @@ namespace Hazel
 		bool useCamera1 = true;
 		RendererInfo rendererInfo;
 		std::shared_ptr<Framebuffer> framebuffer;
-		SceneManager sceneManager;
+		std::unique_ptr<SceneManager> sceneManager;
 		std::shared_ptr<Scene> scene;
 		Entity camera1;
 		Entity camera2;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+
 #include "Hazel/Core/Images/Image.h"
 #include "Hazel/Core/FileSystem/Filename.h"
 #include "Hazel/Rendering/GraphicsContext/GraphicsContext.h"
@@ -9,37 +11,66 @@ namespace Hazel
 {
 	class TextureFactory
 	{
+	private:
+		GraphicsContext *graphicsContext = nullptr;
+
 	public:
-		static std::shared_ptr<Texture> CreateTextureFromFile(GraphicsContext &graphicsContext, const std::string &filename)
+		TextureFactory(GraphicsContext &graphicsContext)
+			: graphicsContext(&graphicsContext)
 		{
-			auto image = Image::FromFile(filename);
-			if (!image.IsValid())
+		}
+
+		std::shared_ptr<Texture> TryCreateTextureFromFile(const std::string &filename)
+		{
+			TextureInfo info;
+			info.Filename = filename;
+			return TryCreateTextureFromFile(info);
+		}
+
+		std::shared_ptr<Texture> TryCreateTextureFromFile(TextureInfo &info)
+		{
+			auto image = Image::FromFile(info.Filename);
+			if (!image.IsValid() || image.IsEmpty())
 			{
 				return nullptr;
 			}
-			TextureInfo info;
-			info.Name = Filename::GetBaseName(filename);
-			info.Filename = filename;
-			info.Size = image.GetSize();
-			info.Data = image.GetData();
-			info.Format = TextureFormatHelper::GetTextureFormat(image.GetChannelCount());
-			auto texture = graphicsContext.CreateTexture(info);
-			return texture;
+			BuildTextureInfo(info, image);
+			return CreateTexture(info, image.GetData());
 		}
 
-		static std::shared_ptr<Texture> CreateFlatTexture(GraphicsContext &graphicsContext, const glm::vec4 &color)
+		std::shared_ptr<Texture> CreateFlatTexture(const glm::vec4 &color)
 		{
-			unsigned char data[4] = {
-				static_cast<unsigned char>(255.0f * color.r),
-				static_cast<unsigned char>(255.0f * color.g),
-				static_cast<unsigned char>(255.0f * color.b),
-				static_cast<unsigned char>(255.0f * color.a)
-			};
 			TextureInfo info;
-			info.Size = {1.0f, 1.0f};
-			info.Data = data;
 			info.Format = TextureFormat::Rgba8;
-			auto texture = graphicsContext.CreateTexture(info);
+			return CreateTexture(info, CreateFlatTextureData(color).data());
+		}
+
+	private:
+		void BuildTextureInfo(TextureInfo &info, const Image &image)
+		{
+			if (info.Name.empty())
+			{
+				info.Name = Filename::GetBaseName(info.Filename);
+			}
+			info.Size = image.GetSize();
+			info.Format = TextureFormatHelper::GetTextureFormat(image.GetChannelCount());
+		}
+
+		std::array<uint8_t, 4> CreateFlatTextureData(const glm::vec4 &color)
+		{
+			return
+			{
+				static_cast<uint8_t>(255.0f * color.r),
+				static_cast<uint8_t>(255.0f * color.g),
+				static_cast<uint8_t>(255.0f * color.b),
+				static_cast<uint8_t>(255.0f * color.a)
+			};
+		}
+
+		std::shared_ptr<Texture> CreateTexture(const TextureInfo &info, const void *data)
+		{
+			auto texture = graphicsContext->CreateTexture(info);
+			texture->BufferData(data);
 			return texture;
 		}
 	};

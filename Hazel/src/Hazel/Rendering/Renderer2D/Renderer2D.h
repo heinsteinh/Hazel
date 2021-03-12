@@ -14,8 +14,19 @@ namespace Hazel
 	public:
 		Renderer2D(const RendererInfo &info);
 
-		void BeginScene(const Camera &camera, const std::shared_ptr<Framebuffer> &framebuffer = nullptr);
-		void EndScene();
+		void BeginScene(const Camera &camera)
+		{
+			renderer.BeginScene(camera);
+		}
+
+		RenderCommand &AddRenderCommand()
+		{
+			return renderer.AddRenderCommand();
+		}
+		void EndScene()
+		{
+			renderer.EndScene();
+		}
 
 		const std::shared_ptr<Mesh> &GetSquareMesh() const
 		{
@@ -32,10 +43,9 @@ namespace Hazel
 			return renderer.GetStatistics();
 		}
 
-		template<typename ...Args>
-		RenderCommand &AddRenderCommand(Args &&...args)
+		void SetFramebuffer(const std::shared_ptr<Framebuffer> &framebuffer)
 		{
-			return renderer.AddRenderCommand(std::forward<Args>(args)...);
+			renderer.SetFramebuffer(framebuffer);
 		}
 	};
 }

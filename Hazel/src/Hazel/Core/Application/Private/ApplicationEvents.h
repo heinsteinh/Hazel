@@ -1,62 +1,60 @@
 #pragma once
 
-#include "ApplicationContext.h"
-#include "ApplicationLayers.h"
-#include "ApplicationUpdate.h"
-#include "Hazel/Core/Application/Layer.h"
+#include "Hazel/Core/Application/ApplicationLayer.h"
+#include "Hazel/Core/Events/Event.h"
 #include "Hazel/Core/Input/InputManager.h"
-#include "Hazel/Core/Events/WindowCloseEvent.h"
-#include "Hazel/Core/Events/WindowResizeEvent.h"
+#include "ApplicationPrivate.h"
+#include "ApplicationUpdate.h"
 
 namespace Hazel
 {
 	class ApplicationEvents
 	{
 	public:
-		static void ProcessEvent(ApplicationContext &context, ApplicationLayers &layers, Event &e)
+		static void ProcessEvent(ApplicationPrivate &application, Event &e)
 		{
-			//Log::Debug("{}.", e);
-			CheckCloseEvent(context, e);
-			AdjustViewport(context, e);
-			DispatchEvent(layers, e);
-			CheckWindowRefresh(context, layers, e);
+			Log::Debug("New Event.");
+			switch (e.Type)
+			{
+			case EventType::WindowClose:
+				OnWindowClose(application, e);
+				break;
+			case EventType::WindowResize:
+				OnWindowResize(application, e);
+				break;
+			case EventType::WindowRefresh:
+				OnWindowRefresh(application, e);
+				break;
+			}
+			DispatchEvent(application, e);
 		}
 
 	private:
-		static void CheckCloseEvent(ApplicationContext &context, Event &e)
+		static void OnWindowClose(ApplicationPrivate &application, Event &e)
 		{
-			e.Dispatch([&](WindowCloseEvent &e)
-			{
-				context.Settings.Running = false;
-			});
+			application.Settings.Running = false;
 		}
 
-		static void AdjustViewport(ApplicationContext &context, Event &e)
+		static void OnWindowResize(ApplicationPrivate &application, Event &e)
 		{
-			e.Dispatch([&](WindowResizeEvent &e)
-			{
-				context.Window->GetGraphicsContext().SetViewport({glm::vec2(0.0f), e.GetSize()});
-			});
+			application.GraphicsContext->SetViewport({glm::vec2(0.0f), e.WindowSize});
 		}
 
-		static void DispatchEvent(ApplicationLayers &layers, Event &e)
+		static void DispatchEvent(ApplicationPrivate &application, Event &e)
 		{
-			layers.Stack.FromTopToBottom([&](const auto &layer)
+			application.Layers.FromTopToBottom([&](auto &layer)
 			{
-				if (!e.IsHandled())
+				if (!e.Blocked)
 				{
-					InputManager::OnEvent(layer->GetInput(), e);
-					layer->OnEvent(e);
+					InputManager::OnEvent(layer.GetInput(), e);
+					layer.OnEvent(e);
 				}
 			});
 		}
 
-		static void CheckWindowRefresh(ApplicationContext &context, ApplicationLayers &layers, Event &e)
+		static void OnWindowRefresh(ApplicationPrivate &application, Event &e)
 		{
-			e.Dispatch([&](WindowResizeEvent &e)
-			{
-				ApplicationUpdate::WindowResizeUpdate(context, layers);
-			});
+			ApplicationUpdate::WindowRefreshUpdate(application);
 		}
 	};
 }

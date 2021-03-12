@@ -21,6 +21,21 @@ namespace Hazel
 			return Max - Min;
 		}
 
+		constexpr float GetWidth() const
+		{
+			return Max.x - Min.x;
+		}
+
+		constexpr float GetHeight() const
+		{
+			return Max.y - Min.y;
+		}
+
+		constexpr float GetDepth() const
+		{
+			return Max.z - Min.z;
+		}
+
 		constexpr float GetVolume() const
 		{
 			auto size = GetSize();

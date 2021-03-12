@@ -8,23 +8,23 @@ namespace Hazel
 	template<>
 	struct YamlSerializer<Box2D>
 	{
-		static void Serialize(YamlDocument &document, const Box2D &value)
+		static void Serialize(YamlDocument &yaml, const Box2D &box)
 		{
-			document.InlineBlock()
+			yaml.InlineBlock()
 				.BeginSequence()
-				.Write(value.Min.x)
-				.Write(value.Max.x)
-				.Write(value.Min.y)
-				.Write(value.Max.y)
+				.Write(box.Min.x)
+				.Write(box.Max.x)
+				.Write(box.Min.y)
+				.Write(box.Max.y)
 				.EndSequence();
 		}
 
-		static void Deserialize(const YamlValue &source, Box2D &value)
+		static void Deserialize(const YamlValue &yaml, Box2D &box)
 		{
-			source[0].Extract(value.Min.x);
-			source[1].Extract(value.Max.x);
-			source[2].Extract(value.Min.y);
-			source[3].Extract(value.Max.y);
+			yaml[0].Extract(box.Min.x);
+			yaml[1].Extract(box.Max.x);
+			yaml[2].Extract(box.Min.y);
+			yaml[3].Extract(box.Max.y);
 		}
 	};
 

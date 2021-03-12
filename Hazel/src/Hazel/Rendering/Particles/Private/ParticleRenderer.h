@@ -9,18 +9,26 @@ namespace Hazel
 {
 	class ParticleRenderer
 	{
+	private:
+		Renderer2D *renderer;
+
 	public:
-		static void RenderParticle(Renderer2D &renderer, const Particle &particle)
+		ParticleRenderer(Renderer2D &renderer)
+			: renderer(&renderer)
 		{
-			auto &command = renderer.AddRenderCommand();
-			command.Mesh = renderer.GetSquareMesh();
+		}
+
+		void RenderParticle(const Particle &particle)
+		{
+			auto &command = renderer->AddRenderCommand();
+			command.Mesh = renderer->GetSquareMesh();
 			command.Transform = particle.Transform;
 			command.Color = GetColor(particle);
-			command.Shader = renderer.GetDefaultShader();
+			command.Shader = renderer->GetDefaultShader();
 		}
 
 	private:
-		static glm::vec4 GetColor(const Particle &particle)
+		glm::vec4 GetColor(const Particle &particle)
 		{
 			return glm::mix(particle.ColorEnd, particle.ColorBegin, particle.GetLife());
 		}

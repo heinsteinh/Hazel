@@ -1,14 +1,9 @@
 #pragma once
 
-#include "imgui.h"
-
-#include "Hazel/Scene/Entity/Entity.h"
-#include "Hazel/Editor/ComponentNodes/TagNode.h"
-#include "Hazel/Editor/ComponentNodes/TransformNode.h"
-#include "Hazel/Editor/ComponentNodes/CameraNode.h"
-#include "Hazel/Editor/ComponentNodes/SpriteNode.h"
-#include "Hazel/Editor/ComponentNodes/ParticleNode.h"
-#include "Hazel/Editor/ComponentNodes/NativeScriptNode.h"
+#include "Hazel/Scene/SceneManager/SceneManager.h"
+#include "Hazel/Scene/Scene/Entity.h"
+#include "Hazel/Scene/Components/Tag/TagWidget.h"
+#include "Hazel/Scene/Components/Transform/TransformWidget.h"
 #include "Hazel/Editor/Widgets/Panel.h"
 #include "Hazel/Editor/Widgets/Button.h"
 #include "Private/ComponentNode.h"
@@ -18,8 +13,16 @@ namespace Hazel
 {
 	class PropertiesPanel
 	{
+	private:
+		SceneManager *manager;
+
 	public:
-		static void Draw(const char *label, Entity entity)
+		PropertiesPanel(SceneManager &manager)
+			: manager(&manager)
+		{
+		}
+
+		void Draw(const char *label, Entity entity)
 		{
 			Panel::Begin(label);
 			if (entity.IsValid())
@@ -31,48 +34,54 @@ namespace Hazel
 		}
 
 	private:
-		static void DrawComponents(Entity entity)
+		void DrawComponents(Entity entity)
 		{
 			DrawTag(entity);
 			DrawTransform("Transform", entity);
-			DrawComponent<CameraComponent, CameraNode>("Camera", entity);
-			DrawComponent<SpriteComponent, SpriteNode>("Sprite", entity);
-			DrawComponent<ParticleComponent, ParticleNode>("Particle", entity);
-			DrawComponent<NativeScriptComponent, NativeScriptNode>("Native Script", entity);
-		}
-
-		static void DrawTag(Entity entity)
-		{
-			TagNode::Draw(entity.GetTag());
-		}
-
-		static void DrawTransform(const char *label, Entity entity)
-		{
-			if (ComponentNode<TransformComponent>::Begin(label))
+			manager->GetComponentManagers().ForEach([&](auto &componentManager)
 			{
-				TransformNode::Draw(entity.GetTransform());
-				ComponentNode<TransformComponent>::End();
+				DrawComponent(entity, componentManager);
+			});
+		}
+
+		void DrawTag(Entity entity)
+		{
+			TagWidget::Draw(entity.GetTag());
+		}
+
+		void DrawTransform(const char *label, Entity entity)
+		{
+			if (ComponentNode::Begin(label))
+			{
+				TransformWidget::Draw(entity.GetTransform());
+				ComponentNode::End();
 			}
 		}
 
-		static void DrawAddComponent(Entity entity)
+		void DrawAddComponent(Entity entity)
 		{
 			if (Button::Draw("AddComponent"))
 			{
 				AddComponentPopup::Open();
 			}
-			AddComponentPopup::Draw(entity);
+			AddComponentPopup::Draw(entity, manager->GetComponentManagers());
 		}
 
-		template<typename ComponentType, typename NodeType>
-		static void DrawComponent(const char *label, Entity entity)
+		static void DrawComponent(Entity entity, ComponentManager &componentManager)
 		{
-			auto component = entity.TryGetComponent<ComponentType>();
-			if (component && ComponentNode<ComponentType>::Begin(label))
+			if (!componentManager.HasComponent(entity))
 			{
-				NodeType::Draw(entity, *component);
-				ComponentNode<ComponentType>::DrawRemoveComponent(entity);
-				ComponentNode<ComponentType>::End();
+				return;
+			}
+			auto label = componentManager.GetComponentName().c_str();
+			if (ComponentNode::Begin(label))
+			{
+				componentManager.DrawComponent(entity);
+				if (ComponentNode::DrawRemoveComponent())
+				{
+					componentManager.RemoveComponent(entity);
+				}
+				ComponentNode::End();
 			}
 		}
 	};

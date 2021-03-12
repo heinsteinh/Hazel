@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Hazel/Core/Events/EventSystem.h"
+#include "ApplicationPrivate.h"
 #include "ApplicationRenderer.h"
 
 namespace Hazel
@@ -7,21 +9,21 @@ namespace Hazel
 	class ApplicationUpdate
 	{
 	public:
-		static void MainLoopUpdate(ApplicationContext &context, ApplicationLayers &layers)
+		static void MainLoopUpdate(ApplicationPrivate &application)
 		{
-			ApplicationRenderer::BeginFrame(context, layers);
-			context.Window->PollEvents();
-			ApplicationRenderer::RenderFrame(context, layers);
-			ApplicationRenderer::RenderGui(context, layers);
-			ApplicationRenderer::EndFrame(context);
+			ApplicationRenderer::BeginFrame(application);
+			EventSystem::PollEvents();
+			ApplicationRenderer::RenderFrame(application);
+			ApplicationRenderer::RenderGui(application);
+			ApplicationRenderer::EndFrame(application);
 		}
 
-		static void WindowResizeUpdate(ApplicationContext &context, ApplicationLayers &layers)
+		static void WindowRefreshUpdate(ApplicationPrivate &application)
 		{
-			ApplicationRenderer::BeginFrame(context, layers);
-			ApplicationRenderer::RenderFrame(context, layers);
-			ApplicationRenderer::RenderGui(context, layers);
-			ApplicationRenderer::EndFrame(context);
+			ApplicationRenderer::BeginFrame(application);
+			ApplicationRenderer::RenderFrame(application);
+			ApplicationRenderer::RenderGui(application);
+			ApplicationRenderer::EndFrame(application);
 		}
 	};
 }

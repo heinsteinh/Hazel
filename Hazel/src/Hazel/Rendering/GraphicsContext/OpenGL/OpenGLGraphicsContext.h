@@ -17,7 +17,7 @@ namespace Hazel
 	public:
 		OpenGLGraphicsContext(GLFWwindow *window);
 
-		virtual std::shared_ptr<GuiRenderer> CreateGuiRenderer() override;
+		virtual std::unique_ptr<GuiRenderer> CreateGuiRenderer() override;
 		virtual std::shared_ptr<Framebuffer> CreateFramebuffer(const FramebufferInfo &info) override;
 		virtual std::shared_ptr<Shader> CreateShader(const ShaderInfo &info) override;
 		virtual std::shared_ptr<IndexBuffer> CreateIndexBuffer(size_t size) override;
@@ -28,5 +28,6 @@ namespace Hazel
 		virtual void Clear(const std::shared_ptr<Framebuffer> &framebuffer = {}) override;
 		virtual void DrawIndexed(const DrawCommand &command) override;
 		virtual void SwapBuffers() override;
+		virtual void SetVerticalSynchronization(bool verticalSynchronization) override;
 	};
 }

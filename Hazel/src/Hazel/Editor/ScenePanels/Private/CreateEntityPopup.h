@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Hazel/Scene/Scene/Scene.h"
 #include "Hazel/Editor/Widgets/Popup.h"
 
 namespace Hazel
@@ -8,8 +7,14 @@ namespace Hazel
 	class CreateEntityPopup
 	{
 	public:
-		static void Draw(Scene &scene)
+		struct Status
 		{
+			bool EntityCreated = false;
+		};
+
+		static Status Draw()
+		{
+			Status status;
 			PopupSettings settings;
 			settings.MouseButton = MouseButton::Right;
 			settings.OpenOverItem = false;
@@ -17,10 +22,11 @@ namespace Hazel
 			{
 				if (Popup::DrawItem("Create Empty Entity"))
 				{
-					auto newEntity = scene.CreateEntity("New Entity");
+					status.EntityCreated = true;
 				}
 				Popup::End();
 			}
+			return status;
 		}
 	};
 }

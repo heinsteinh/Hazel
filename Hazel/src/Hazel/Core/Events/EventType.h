@@ -7,6 +7,7 @@ namespace Hazel
 		Unknown,
 		WindowClose,
 		WindowResize,
+		WindowRefresh,
 		KeyPress,
 		KeyRelease,
 		KeyType,

@@ -2,26 +2,31 @@
 
 #include "GLFW/glfw3.h"
 
-#include "Hazel/Core/Events/WindowCloseEvent.h"
-#include "Hazel/Core/Events/WindowResizeEvent.h"
-#include "Hazel/Core/Events/KeyPressEvent.h"
-#include "Hazel/Core/Events/KeyReleaseEvent.h"
-#include "Hazel/Core/Events/KeyTypeEvent.h"
-#include "Hazel/Core/Events/MouseButtonPressEvent.h"
-#include "Hazel/Core/Events/MouseButtonReleaseEvent.h"
-#include "Hazel/Core/Events/MouseMoveEvent.h"
-#include "Hazel/Core/Events/MouseScrollEvent.h"
-
 namespace Hazel
 {
-	void GlfwEventReceiver::OnWindowResized(int width, int height)
+	void GlfwEventReceiver::OnWindowResize(int width, int height)
 	{
-		callback(WindowResizeEvent(static_cast<float>(width), static_cast<float>(height)));
+		event.Type = EventType::WindowClose;
+		event.Categories = EventCategory::Window;
+		event.Blocked = false;
+		event.WindowSize = {static_cast<float>(width), static_cast<float>(height)};
+		callback(event);
 	}
 
-	void GlfwEventReceiver::OnWindowClosed()
+	void GlfwEventReceiver::OnWindowRefresh()
 	{
-		callback(WindowCloseEvent());
+		event.Type = EventType::WindowRefresh;
+		event.Categories = EventCategory::Window;
+		event.Blocked = false;
+		callback(event);
+	}
+
+	void GlfwEventReceiver::OnWindowClose()
+	{
+		event.Type = EventType::WindowClose;
+		event.Categories = EventCategory::Window;
+		event.Blocked = false;
+		callback(event);
 	}
 
 	void GlfwEventReceiver::OnKey(int key, int scancode, int action, int mods)
@@ -29,22 +34,35 @@ namespace Hazel
 		switch (action)
 		{
 		case GLFW_RELEASE:
-			repeatCount = 0;
-			callback(KeyReleaseEvent(static_cast<Key>(key), scancode, static_cast<KeyModifier>(mods)));
+			event.Type = EventType::KeyRelease;
+			event.RepeatCount = 0;
 			break;
 		case GLFW_PRESS:
-			repeatCount = 0;
-			callback(KeyPressEvent(static_cast<Key>(key), scancode, static_cast<KeyModifier>(mods), 0));
+			event.Type = EventType::KeyPress;
+			event.RepeatCount = 0;
 			break;
 		case GLFW_REPEAT:
-			repeatCount++;
-			callback(KeyPressEvent(static_cast<Key>(key), scancode, static_cast<KeyModifier>(mods), repeatCount));
+			event.Type = EventType::KeyPress;
+			event.RepeatCount++;
+			break;
+		default:
+			return;
 		}
+		event.Categories = EventCategory::Input | EventCategory::Keyboard;
+		event.Blocked = false;
+		event.Key = static_cast<Key>(key);
+		event.Scancode = scancode;
+		event.KeyModifiers = static_cast<KeyModifier>(mods);
+		callback(event);
 	}
 
 	void GlfwEventReceiver::OnChar(unsigned int key)
 	{
-		callback(KeyTypeEvent(key));
+		event.Type = EventType::KeyType;
+		event.Categories = EventCategory::Input | EventCategory::Keyboard;
+		event.Blocked = false;
+		event.Text = key;
+		callback(event);
 	}
 
 	void GlfwEventReceiver::OnMouseButton(int button, int action)
@@ -52,20 +70,35 @@ namespace Hazel
 		switch (action)
 		{
 		case GLFW_RELEASE:
-			callback(MouseButtonReleaseEvent(static_cast<MouseButton>(button)));
+			event.Type = EventType::MouseButtonRelease;
 			break;
 		case GLFW_PRESS:
-			callback(MouseButtonPressEvent(static_cast<MouseButton>(button)));
+			event.Type = EventType::MouseButtonPress;
+			break;
+		default:
+			return;
 		}
+		event.Categories = EventCategory::Input | EventCategory::Mouse | EventCategory::MouseButton;
+		event.Blocked = false;
+		event.MouseButton = static_cast<MouseButton>(button);
+		callback(event);
 	}
 
-	void GlfwEventReceiver::OnMouseScrolled(double x, double y)
+	void GlfwEventReceiver::OnMouseScroll(double x, double y)
 	{
-		callback(MouseScrollEvent(static_cast<float>(x), static_cast<float>(y)));
+		event.Type = EventType::MouseScroll;
+		event.Categories = EventCategory::Input | EventCategory::Mouse;
+		event.Blocked = false;
+		event.MouseScrollOffset = {static_cast<float>(x), static_cast<float>(y)};
+		callback(event);
 	}
 
-	void GlfwEventReceiver::OnMouseMoved(double x, double y)
+	void GlfwEventReceiver::OnMouseMove(double x, double y)
 	{
-		callback(MouseMoveEvent(static_cast<float>(x), static_cast<float>(y)));
+		event.Type = EventType::MouseMove;
+		event.Categories = EventCategory::Input | EventCategory::Mouse;
+		event.Blocked = false;
+		event.MousePosition = {static_cast<float>(x), static_cast<float>(y)};
+		callback(event);
 	}
 }

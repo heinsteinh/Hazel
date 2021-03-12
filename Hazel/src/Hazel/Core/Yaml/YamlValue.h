@@ -8,37 +8,6 @@ namespace Hazel
 {
 	class YamlValue
 	{
-	public:
-		class Iterator
-		{
-		private:
-			YAML::const_iterator iterator;
-
-		public:
-			Iterator() = default;
-
-			Iterator(YAML::const_iterator iterator)
-				: iterator(iterator)
-			{
-			}
-
-			bool operator!=(const Iterator &other) const
-			{
-				return iterator != other.iterator;
-			}
-
-			Iterator &operator++()
-			{
-				++iterator;
-				return *this;
-			}
-
-			YamlValue operator*() const
-			{
-				return *iterator;
-			}
-		};
-
 	private:
 		YAML::Node node;
 
@@ -49,16 +18,6 @@ namespace Hazel
 		}
 
 		YamlValue() = default;
-
-		Iterator begin() const
-		{
-			return node.begin();
-		}
-
-		Iterator end() const
-		{
-			return node.end();
-		}
 
 		bool IsValid() const
 		{
@@ -109,11 +68,35 @@ namespace Hazel
 		}
 
 		template<typename T>
-		T GetValueOr(const T &defaultValue)
+		T GetValueOr(const T &defaultValue) const
 		{
 			T value = defaultValue;
 			Extract(value);
 			return value;
+		}
+
+		template<typename FunctorType>
+		void ForEachSequence(FunctorType functor) const
+		{
+			if (IsSequence())
+			{
+				for (const auto &item : node)
+				{
+					functor(YamlValue(item));
+				}
+			}
+		}
+
+		template<typename FunctorType>
+		void ForEachMap(FunctorType functor) const
+		{
+			if (IsMap())
+			{
+				for (const auto &item : node)
+				{
+					functor(YamlValue(item.first), YamlValue(item.second));
+				}
+			}
 		}
 
 	private:

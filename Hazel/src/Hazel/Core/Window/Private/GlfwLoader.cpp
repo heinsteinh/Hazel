@@ -13,7 +13,7 @@ namespace Hazel
 		{
 			Log::Error("GLFW error (code {}): {}", error, description);
 		});
-		if (!glfwInit())
+		if (glfwInit() == GLFW_FALSE)
 		{
 			throw GlfwException("GLFW cannot be initialized.");
 		}

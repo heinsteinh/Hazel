@@ -5,6 +5,8 @@
 #include "RendererIndices.h"
 #include "RendererVertices.h"
 #include "RendererTextures.h"
+#include "RendererIndexBuilder.h"
+#include "RendererVertexBuilder.h"
 
 namespace Hazel
 {
@@ -16,10 +18,41 @@ namespace Hazel
 		RendererTextures textures;
 
 	public:
-		RendererBatch(const RendererInfo &info);
+		RendererBatch(const RendererInfo &info)
+			: indices(info.IndexFormat, info.IndexBufferSize),
+			vertices(info.VertexBufferSize),
+			textures(*info.GraphicsContext, info.TextureSlotCount)
+		{
+		}
 
-		bool Add(const RenderCommand &command);
-		void Clear();
+		bool Add(const RenderCommand &command)
+		{
+			if (!CanContain(*command.Mesh))
+			{
+				return false;
+			}
+			auto textureSlot = textures.Add(command.Texture);
+			if (!textureSlot)
+			{
+				return false;
+			}
+			RendererIndexBuilder::AddIndices(indices, command.Mesh->Indices, vertices.GetVertexCount());
+			RendererVertexBuilder::AddVertices(vertices, command, *textureSlot);
+			return true;
+		}
+
+		void Clear()
+		{
+			indices.Clear();
+			vertices.Clear();
+			textures.Clear();
+		}
+
+		bool CanContain(const Mesh &mesh)
+		{
+			return indices.CanContain(mesh.Indices.GetIndexCount())
+				&& vertices.CanContain(mesh.Vertices.GetVertexCount());
+		}
 
 		const RendererIndices &GetIndices() const
 		{
@@ -44,12 +77,6 @@ namespace Hazel
 		bool IsEmpty() const
 		{
 			return indices.GetIndexCount() == 0;
-		}
-
-		bool CanContain(const Mesh &mesh)
-		{
-			return indices.CanContain(mesh.Indices.GetIndexCount())
-				&& vertices.CanContain(mesh.Vertices.GetVertexCount());
 		}
 	};
 }

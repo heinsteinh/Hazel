@@ -1,7 +1,6 @@
 #pragma once
 
-#include "ApplicationContext.h"
-#include "ApplicationLayers.h"
+#include "ApplicationPrivate.h"
 #include "Hazel/Core/Gui/GuiLayer.h"
 #include "Hazel/Core/Input/InputManager.h"
 
@@ -10,43 +9,43 @@ namespace Hazel
 	class ApplicationRenderer
 	{
 	public:
-		static void BeginFrame(ApplicationContext &context, ApplicationLayers &layers)
+		static void BeginFrame(ApplicationPrivate &application)
 		{
-			context.DeltaTime = context.Chrono.Reset();
-			context.Window->GetGraphicsContext().Clear();
-			layers.Stack.FromBottomToTop([](const auto &layer)
+			application.DeltaTime = application.Chrono.Reset();
+			application.GraphicsContext->Clear();
+			application.Layers.FromBottomToTop([](auto &layer)
 			{
-				InputManager::OnNewFrame(layer->GetInput());
+				InputManager::OnNewFrame(layer.GetInput());
 			});
 		}
 
-		static void RenderFrame(ApplicationContext &context, ApplicationLayers &layers)
+		static void RenderFrame(ApplicationPrivate &application)
 		{
-			if (!context.Window->IsMinimized())
+			if (!application.Window->IsMinimized())
 			{
-				layers.Stack.FromBottomToTop([](const auto &layer)
+				application.Layers.FromBottomToTop([](auto &layer)
 				{
-					layer->OnUpdate();
+					layer.OnUpdate();
 				});
 			}
 		}
 
-		static void RenderGui(ApplicationContext &context, ApplicationLayers &layers)
+		static void RenderGui(ApplicationPrivate &application)
 		{
-			if (layers.GuiLayer && context.Settings.GuiRenderingEnabled)
+			if (application.GuiLayer && application.Settings.GuiRenderingEnabled)
 			{
-				layers.GuiLayer->BeginRender();
-				layers.Stack.FromBottomToTop([](const auto &layer)
+				application.GuiLayer->BeginRender();
+				application.Layers.FromBottomToTop([](auto &layer)
 				{
-					layer->OnGui();
+					layer.OnGui();
 				});
-				layers.GuiLayer->EndRender();
+				application.GuiLayer->EndRender();
 			}
 		}
 
-		static void EndFrame(ApplicationContext &context)
+		static void EndFrame(ApplicationPrivate &application)
 		{
-			context.Window->GetGraphicsContext().SwapBuffers();
+			application.GraphicsContext->SwapBuffers();
 		}
 	};
 }

@@ -1,6 +1,9 @@
 #pragma once
 
-struct ImGuiContext;
+#include "imgui.h"
+
+#include "GuiConfiguration.h"
+#include "GuiStyle.h"
 
 namespace Hazel
 {
@@ -10,9 +13,23 @@ namespace Hazel
 		ImGuiContext *context;
 
 	public:
-		GuiContext();
-		~GuiContext();
+		GuiContext()
+		{
+			IMGUI_CHECKVERSION();
+			context = ImGui::CreateContext();
+			ImGui::SetCurrentContext(context);
+			GuiConfiguration::SetDefaultConfiguration();
+			GuiStyle::SetDefaultStyle();
+		}
 
-		void MakeCurrent();
+		~GuiContext()
+		{
+			ImGui::DestroyContext(context);
+		}
+
+		void MakeCurrent()
+		{
+			ImGui::SetCurrentContext(context);
+		}
 	};
 }

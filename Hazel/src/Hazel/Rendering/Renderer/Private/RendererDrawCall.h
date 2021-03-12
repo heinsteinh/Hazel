@@ -1,13 +1,13 @@
 #pragma once
 
-#include "RendererContext.h"
+#include "RendererPrivate.h"
 
 namespace Hazel
 {
 	class RendererDrawCall
 	{
 	public:
-		static void Flush(RendererContext &context)
+		static void Flush(RendererPrivate &context)
 		{
 			if (!context.Batch.IsEmpty())
 			{
@@ -18,7 +18,7 @@ namespace Hazel
 		}
 
 	private:
-		static void UpdateStatistics(RendererContext &context)
+		static void UpdateStatistics(RendererPrivate &context)
 		{
 			context.Statistics.IndexCount += context.Batch.GetIndices().GetIndexCount();
 			context.Statistics.VertexCount += context.Batch.GetVertices().GetVertexCount();
@@ -26,7 +26,7 @@ namespace Hazel
 			context.Statistics.DrawCallCount++;
 		}
 
-		static void BufferData(RendererContext &context)
+		static void BufferData(RendererPrivate &context)
 		{
 			context.Buffers.BufferIndices(context.Batch.GetIndices());
 			context.Buffers.BufferVertices(context.Batch.GetVertices());
@@ -42,7 +42,7 @@ namespace Hazel
 			}
 		}
 
-		static void DrawIndexed(RendererContext &context)
+		static void DrawIndexed(RendererPrivate &context)
 		{
 			context.Command.IndexCount = context.Batch.GetIndices().GetIndexCount();
 			context.GraphicsContext->DrawIndexed(context.Command);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RendererContext.h"
+#include "RendererPrivate.h"
 #include "RenderCommandComparator.h"
 
 namespace Hazel
@@ -8,33 +8,33 @@ namespace Hazel
 	class RenderCommandSorter
 	{
 	public:
-		static void SortRenderQueue(RendererContext &context)
+		static void SortRenderQueue(RendererPrivate &renderer)
 		{
-			switch (context.CameraProjectionType)
+			switch (renderer.CameraProjectionType)
 			{
 			case ProjectionType::Orthographic:
-				SortForOrthographicProjection(context);
+				SortForOrthographicProjection(renderer);
 				break;
 			case ProjectionType::Perspective:
-				SortForPerspectiveProjection(context);
+				SortForPerspectiveProjection(renderer);
 				break;
 			}
 		}
 
 	private:
-		static void SortForOrthographicProjection(RendererContext &context)
+		static void SortForOrthographicProjection(RendererPrivate &renderer)
 		{
-			context.RenderQueue.Sort([&](const auto &left, const auto &right)
+			renderer.RenderQueue.Sort([&](const auto &left, const auto &right)
 			{
 				return RenderCommandComparator::CompareForOrthographicProjection(left, right);
 			});
 		}
 
-		static void SortForPerspectiveProjection(RendererContext &context)
+		static void SortForPerspectiveProjection(RendererPrivate &renderer)
 		{
-			context.RenderQueue.Sort([&](const auto &left, const auto &right)
+			renderer.RenderQueue.Sort([&](const auto &left, const auto &right)
 			{
-				return RenderCommandComparator::CompareForPerspectiveProjection(left, right, context.CameraPosition);
+				return RenderCommandComparator::CompareForPerspectiveProjection(left, right, renderer.CameraPosition);
 			});
 		}
 	};

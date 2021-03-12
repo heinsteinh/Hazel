@@ -1,72 +1,63 @@
 #pragma once
 
-#include "Hazel/Scene/Entity/Entity.h"
-#include "Hazel/Scene/Components/TagComponent.h"
-#include "Hazel/Scene/Components/TransformComponent.h"
-#include "Hazel/Scene/Components/NativeScriptComponent.h"
-#include "SceneContext.h"
+#include <string>
+
+#include "entt/entt.hpp"
+
+#include "Hazel/Core/Camera/Camera.h"
+#include "Hazel/Scene/Components/Tag/TagComponent.h"
+#include "Hazel/Scene/Components/Transform/TransformComponent.h"
+#include "Entity.h"
 
 namespace Hazel
 {
 	class Scene
 	{
 	private:
-		SceneContext context;
+		std::string name;
+		Camera camera;
+		entt::entity cameraEntity = entt::null;
+		entt::registry registry;
 
 	public:
-		Scene(const std::string &name, SceneManagerContext &managerContext)
-			: context{name, &managerContext}
+		Scene(const std::string &name)
+			: name(name)
 		{
 		}
 
 		const std::string &GetName() const
 		{
-			return context.Name;
+			return name;
 		}
 
 		void SetName(const std::string &name)
 		{
-			context.Name = name;
-		}
-
-		Layer &GetLayer() const
-		{
-			return *context.ManagerContext->Layer;
-		}
-
-		Renderer2D &GetRenderer() const
-		{
-			return *context.ManagerContext->Renderer;
-		}
-
-		AssetManager &GetAssetManager() const
-		{
-			return context.ManagerContext->AssetManager;
+			this->name = name;
 		}
 
 		Entity GetCameraEntity()
 		{
-			return {context.CameraEntity, context};
+			return {cameraEntity, registry};
 		}
 
-		void SetCameraEntity(Entity primaryCamera)
+		void SetCameraEntity(Entity cameraEntity)
 		{
-			context.CameraEntity = primaryCamera;
+			this->cameraEntity = cameraEntity;
 		}
 
 		const Camera &GetCamera() const
 		{
-			return context.Camera;
+			return camera;
 		}
 
 		Camera &GetCamera()
 		{
-			return context.Camera;
+			return camera;
 		}
 
 		Entity CreateEntity(const std::string &name = {})
 		{
-			Entity entity(context.Registry.create(), context);
+			Entity entity(registry.create(), registry);
 			entity.AddComponent<TagComponent>(name);
 			entity.AddComponent<TransformComponent>();
 			return entity;
@@ -74,47 +65,38 @@ namespace Hazel
 
 		void DestroyEntity(Entity entity)
 		{
-			context.Registry.destroy(entity);
+			registry.destroy(entity);
 		}
 
 		void Clear()
 		{
-			context.CameraEntity = entt::null;
-			context.Registry.clear();
+			cameraEntity = entt::null;
+			registry.clear();
 		}
 
 		template<typename FunctorType>
 		void ForEach(FunctorType functor)
 		{
-			context.Registry.each([&](auto entity)
+			registry.each([&](auto entity)
 			{
-				functor(Entity(entity, context));
+				functor(Entity(entity, registry));
 			});
 		}
 
 		template<typename ComponentType, typename FunctorType>
 		void ForEach(FunctorType functor)
 		{
-			context.Registry.view<ComponentType>().each([&](auto entity, auto &component)
+			registry.view<ComponentType>().each([&](auto entity, auto &component)
 			{
-				functor(Entity(entity, context), component);
+				functor(Entity(entity, registry), component);
 			});
 		}
 
-		template<typename ComponentType, typename FunctorType>
-		void Sort(FunctorType functor)
-		{
-			context.Registry.sort<ComponentType>([&](const entt::entity left, const entt::entity right)
-			{
-				return functor(Entity(left, context), Entity(right, context));
-			}, entt::insertion_sort());
-		}
-
 		template<typename ComponentType>
-		Entity GetFirstEntityWith()
+		Entity Find()
 		{
-			auto view = context.Registry.view<ComponentType>();
-			return view.empty() ? Entity() : Entity(view.front(), context);
+			auto view = registry.view<ComponentType>();
+			return view.empty() ? Entity() : Entity(view.front(), registry);
 		}
 	};
 }

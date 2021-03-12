@@ -1,22 +1,54 @@
 #pragma once
 
-#include "ApplicationSetup.h"
+#include "ApplicationPrivate.h"
 #include "ApplicationUpdate.h"
-#include "ApplicationLayers.h"
 
 namespace Hazel
 {
 	class ApplicationMainLoop
 	{
 	public:
-		static void Run(ApplicationInfo &info, ApplicationContext &context, ApplicationLayers &layers)
+		static void Run(ApplicationPrivate &application)
 		{
-			ApplicationSetup::Setup(info, context, layers);
-			context.Settings.Running = true;
-			while (context.Settings.Running)
+			Init(application);
+			while (IsRunning(application))
 			{
-				ApplicationUpdate::MainLoopUpdate(context, layers);
+				ApplicationUpdate::MainLoopUpdate(application);
 			}
+		}
+
+	private:
+		static void Init(ApplicationPrivate &application)
+		{
+			PushGuiLayer(application);
+			ResetTime(application);
+			Start(application);
+		}
+
+		static void PushGuiLayer(ApplicationPrivate &application)
+		{
+			if (application.GuiEnabled)
+			{
+				auto guiLayer = std::make_unique<GuiLayer>();
+				application.GuiLayer = guiLayer.get();
+				application.Layers.PushOverlay(std::move(guiLayer));
+				application.GuiLayer->Attach(application);
+			}
+		}
+
+		static void ResetTime(ApplicationPrivate &application)
+		{
+			application.Chrono.Reset();
+		}
+
+		static void Start(ApplicationPrivate &application)
+		{
+			application.Settings.Running = true;
+		}
+
+		static bool IsRunning(ApplicationPrivate &application)
+		{
+			return application.Settings.Running;
 		}
 	};
 }

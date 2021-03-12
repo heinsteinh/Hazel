@@ -10,49 +10,16 @@ namespace Hazel
 	{
 	}
 
-	bool ParticleSource::IsEnabled() const
+	void ParticleSource::EmitParticles(float deltaTime)
 	{
-		return enabled;
-	}
-
-	void ParticleSource::SetEnabled(bool enabled)
-	{
-		this->enabled = enabled;
-	}
-
-	size_t ParticleSource::GetMaxParticleCount() const
-	{
-		return pool.GetSize();
-	}
-
-	void ParticleSource::SetMaxParticleCount(size_t maxParticleCount)
-	{
-		pool.Resize(maxParticleCount);
-	}
-
-	float ParticleSource::GetEmissionRate() const
-	{
-		return rate;
-	}
-
-	void ParticleSource::SetEmissionRate(float rate)
-	{
-		this->rate = rate;
-	}
-
-	void ParticleSource::EmitParticles(const glm::vec3 &position, const ParticleInfo &info, int count)
-	{
-		for (int i = 0; i < count; i++)
+		if (!enabled)
 		{
-			emitter.SetupParticle(pool.AddParticle(), position, info);
+			return;
 		}
-	}
-
-	void ParticleSource::AutoEmitParticles(const glm::vec3 &position, const ParticleInfo &info, float deltaTime)
-	{
-		if (enabled)
+		auto count = rate.GetCount(deltaTime);
+		for (int i = 0; i < count; ++i)
 		{
-			EmitParticles(position, info, rate.GetCount(deltaTime));
+			emitter.SetupParticle(pool.AddParticle(), info);
 		}
 	}
 
@@ -69,11 +36,12 @@ namespace Hazel
 
 	void ParticleSource::RenderParticles(Renderer2D &renderer)
 	{
+		ParticleRenderer particleRenderer(renderer);
 		for (const auto &particle : pool)
 		{
 			if (particle.Active)
 			{
-				ParticleRenderer::RenderParticle(renderer, particle);
+				particleRenderer.RenderParticle(particle);
 			}
 		}
 	}

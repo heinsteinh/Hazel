@@ -2,12 +2,14 @@
 
 #include "imgui.h"
 
+#include "Hazel/Rendering/GuiRenderer/GuiRenderer.h"
 #include "Private/GuiEventFilter.h"
+#include "Private/GuiContext.h"
 
 namespace Hazel
 {
 	GuiLayer::GuiLayer()
-		: Layer("GUI")
+		: ApplicationLayer("GUI")
 	{
 	}
 
@@ -23,39 +25,49 @@ namespace Hazel
 		renderer->RenderDrawData();
 	}
 
-	bool GuiLayer::WantCaptureKeyboard() const
-	{
-		return IsGuiKeyboardFilterEnabled() && ImGui::GetIO().WantCaptureKeyboard;
-	}
-
-	bool GuiLayer::WantCaptureMouse() const
-	{
-		return IsGuiMouseFilterEnabled() && ImGui::GetIO().WantCaptureMouse;
-	}
-
-	bool GuiLayer::WantBlockEvent(Event &e) const
-	{
-		return WantCaptureKeyboard() && e.IsInCategory(EventCategory::Keyboard)
-			|| WantCaptureMouse() && e.IsInCategory(EventCategory::Mouse);
-	}
-
 	void GuiLayer::OnAttach()
 	{
 		context = std::make_unique<GuiContext>();
-		renderer = GetGraphicsContext().CreateGuiRenderer();
+		renderer = GetApplication().GetGraphicsContext().CreateGuiRenderer();
 	}
 
 	void GuiLayer::OnDetach()
 	{
-		context.reset();
-		renderer.reset();
+		context = nullptr;
+		renderer = nullptr;
 	}
 
 	void GuiLayer::OnEvent(Event &e)
 	{
-		if (GuiEventFilter::CanBlockEvent(e.GetType()) && WantBlockEvent(e))
+		if (GuiEventFilter::CanBlockEvent(e.Type) && WantBlockEvent(e))
 		{
-			e.Discard();
+			e.Blocked = true;
 		}
+	}
+
+	bool GuiLayer::CanBlockKeyboard() const
+	{
+		return GetApplication().GetSettings().GuiKeyboardFilterEnabled;
+	}
+
+	bool GuiLayer::CanBlockMouse() const
+	{
+		return GetApplication().GetSettings().GuiMouseFilterEnabled;
+	}
+
+	bool GuiLayer::WantCaptureKeyboard() const
+	{
+		return CanBlockKeyboard() && ImGui::GetIO().WantCaptureKeyboard;
+	}
+
+	bool GuiLayer::WantCaptureMouse() const
+	{
+		return CanBlockMouse() && ImGui::GetIO().WantCaptureMouse;
+	}
+
+	bool GuiLayer::WantBlockEvent(Event &e) const
+	{
+		return WantCaptureKeyboard() && e.Categories & EventCategory::Keyboard
+			|| WantCaptureMouse() && e.Categories & EventCategory::Mouse;
 	}
 }

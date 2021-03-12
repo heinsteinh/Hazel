@@ -1,18 +1,28 @@
 #pragma once
 
 #include "Hazel/Scene/Scene/Scene.h"
-#include "EntityPanel.h"
+#include "Hazel/Scene/SceneManager/SceneManager.h"
+#include "EntityListPanel.h"
 #include "PropertiesPanel.h"
 
 namespace Hazel
 {
 	class SceneHierarchyPanel
 	{
+	private:
+		SceneManager *manager;
+
 	public:
-		static void Draw(const char *label, Scene &scene, Entity &selectedEntity)
+		SceneHierarchyPanel(SceneManager &manager)
+			: manager(&manager)
 		{
-			EntityPanel::Draw(label, scene, selectedEntity);
-			PropertiesPanel::Draw("Properties", selectedEntity);
+		}
+
+		void Draw(const char *label, Scene &scene, Entity &selectedEntity)
+		{
+			EntityListPanel::Draw(label, scene, selectedEntity);
+			PropertiesPanel properties(*manager);
+			properties.Draw("Properties", selectedEntity);
 		}
 	};
 }

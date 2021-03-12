@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "glad/glad.h"
 
 #include "Hazel/Rendering/Textures/TextureFormat.h"

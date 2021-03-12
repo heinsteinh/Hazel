@@ -6,34 +6,40 @@
 
 namespace Hazel
 {
+	SceneSerializer::SceneSerializer(SceneManager &manager)
+		: manager(&manager)
+	{
+	}
+
 	void SceneSerializer::Serialize(Scene &scene, const std::string &filename)
 	{
-		YamlDocument document;
-		document.BeginMap();
-		document.Write("Scene", scene.GetName());
-		document.Key().Write("Entities").Value().BeginSequence();
+		YamlDocument yaml;
+		yaml.BeginMap();
+		yaml.Write("Scene", scene.GetName());
+		yaml.Key().Write("Entities").Value().BeginSequence();
+		EntitySerializer serializer(*manager);
 		scene.ForEach([&](auto entity)
 		{
-			document.Write(entity);
+			serializer.Serialize(yaml, entity);
 		});
-		document.EndSequence().EndMap();
-		FileWriter::Write(filename, document.GetData());
+		yaml.EndSequence().EndMap();
+		FileWriter::Write(filename, yaml.GetData());
 	}
 
 	void SceneSerializer::Deserialize(Scene &scene, const std::string &filename)
 	{
-		auto source = YamlValue::FromYaml(FileReader::ReadAll(filename));
-		std::string name;
-		source["Scene"].Extract(name);
+		auto yaml = YamlValue::FromYaml(FileReader::ReadAll(filename));
+		auto name = yaml["Scene"].GetValueOr(std::string());
 		if (name.empty())
 		{
 			throw SceneParsingException("Missing scene name");
 		}
 		scene.SetName(name);
 		scene.Clear();
-		for (const auto &entity : source["Entities"])
+		EntitySerializer serializer(*manager);
+		yaml["Entities"].ForEachSequence([&](auto entity)
 		{
-			entity.Extract(scene.CreateEntity());
-		}
+			serializer.Deserialize(entity, scene.CreateEntity());
+		});
 	}
 }

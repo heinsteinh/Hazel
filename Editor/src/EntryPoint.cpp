@@ -1,9 +1,7 @@
 #include "Hazel/Editor/Application/Editor.h"
 
-namespace Hazel
+int main(int argc, char **argv)
 {
-	std::unique_ptr<Application> CreateApplication(int argc, char **argv)
-	{
-		return std::make_unique<Editor>();
-	}
+	Hazel::Editor editor;
+	editor.Run();
 }

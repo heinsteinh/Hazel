@@ -1,5 +1,6 @@
 #include "Renderer.h"
 
+#include "Private/RendererPrivate.h"
 #include "Private/RendererShader.h"
 #include "Private/RendererDrawCall.h"
 #include "Private/RendererSubmission.h"
@@ -8,25 +9,43 @@
 namespace Hazel
 {
 	Renderer::Renderer(const RendererInfo &info)
-		: context(info)
+		: renderer(std::make_unique<RendererPrivate>(info))
 	{
 	}
 
-	void Renderer::BeginScene(const Camera &camera, const std::shared_ptr<Framebuffer> &framebuffer)
+	Renderer::~Renderer()
 	{
-		context.Statistics.Reset();
-		context.Command.Framebuffer = framebuffer;
-		RendererShader::UpdateCamera(context, camera);
+	}
+
+	void Renderer::BeginScene(const Camera &camera)
+	{
+		renderer->Statistics.Reset();
+		RendererShader::UpdateCamera(*renderer, camera);
+	}
+
+	RenderCommand &Renderer::AddRenderCommand()
+	{
+		return renderer->RenderQueue.Add();
 	}
 
 	void Renderer::EndScene()
 	{
-		RenderCommandSorter::SortRenderQueue(context);
-		for (const auto &command : context.RenderQueue)
+		RenderCommandSorter::SortRenderQueue(*renderer);
+		for (const auto &command : renderer->RenderQueue)
 		{
-			RendererSubmission::Submit(context, command);
+			RendererSubmission::Submit(*renderer, command);
 		}
-		RendererDrawCall::Flush(context);
-		context.RenderQueue.Clear();
+		RendererDrawCall::Flush(*renderer);
+		renderer->RenderQueue.Clear();
+	}
+
+	const RendererStatistics &Renderer::GetStatistics() const
+	{
+		return renderer->Statistics;
+	}
+
+	void Renderer::SetFramebuffer(const std::shared_ptr<Framebuffer> &framebuffer)
+	{
+		renderer->Command.Framebuffer = framebuffer;
 	}
 }

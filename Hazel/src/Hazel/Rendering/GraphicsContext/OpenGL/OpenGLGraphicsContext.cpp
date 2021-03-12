@@ -18,10 +18,10 @@ namespace Hazel
 	{
 	}
 
-	std::shared_ptr<GuiRenderer> OpenGLGraphicsContext::CreateGuiRenderer()
+	std::unique_ptr<GuiRenderer> OpenGLGraphicsContext::CreateGuiRenderer()
 	{
 		handle.MakeCurrent();
-		return std::make_shared<OpenGLGuiRenderer>(handle, context);
+		return std::make_unique<OpenGLGuiRenderer>(handle, context);
 	}
 
 	std::shared_ptr<Framebuffer> OpenGLGraphicsContext::CreateFramebuffer(const FramebufferInfo &info)
@@ -83,5 +83,11 @@ namespace Hazel
 	void OpenGLGraphicsContext::SwapBuffers()
 	{
 		glfwSwapBuffers(handle);
+	}
+
+	void OpenGLGraphicsContext::SetVerticalSynchronization(bool verticalSynchronization)
+	{
+		handle.MakeCurrent();
+		glfwSwapInterval(verticalSynchronization ? 1 : 0);
 	}
 }

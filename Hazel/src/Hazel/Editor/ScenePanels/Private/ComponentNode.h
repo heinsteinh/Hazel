@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hazel/Scene/Entity/Entity.h"
+#include "Hazel/Scene/Scene/Entity.h"
 #include "Hazel/Editor/Widgets/Panel.h"
 #include "Hazel/Editor/Widgets/TreeNode.h"
 #include "Hazel/Editor/Widgets/Spacer.h"
@@ -9,27 +9,20 @@
 
 namespace Hazel
 {
-	template<typename ComponentType>
 	class ComponentNode
 	{
-	private:
-		static inline const void *id = reinterpret_cast<const void *>(typeid(ComponentType).hash_code());
-
 	public:
 		static bool Begin(const char *label)
 		{
 			TreeNodeSettings settings;
 			settings.DefaultOpen = true;
 			settings.Framed = true;
-			return TreeNode::Begin(label, id, settings);
+			return TreeNode::Begin(label, label, settings);
 		}
 
-		static void DrawRemoveComponent(Entity entity)
+		static bool DrawRemoveComponent()
 		{
-			if (Button::Draw("Remove Component"))
-			{
-				entity.RemoveComponent<ComponentType>();
-			}
+			return Button::Draw("Remove Component");
 		}
 
 		static void End()

@@ -6,30 +6,24 @@
 #include "RendererStatistics.h"
 #include "RendererException.h"
 #include "RenderCommand.h"
-#include "Private/RendererContext.h"
 
 namespace Hazel
 {
+	struct RendererPrivate;
+
 	class Renderer
 	{
 	private:
-		RendererContext context;
+		std::unique_ptr<RendererPrivate> renderer;
 
 	public:
 		Renderer(const RendererInfo &info);
+		~Renderer();
 
-		void BeginScene(const Camera &camera, const std::shared_ptr<Framebuffer> &framebuffer = nullptr);
+		void BeginScene(const Camera &camera);
+		RenderCommand &AddRenderCommand();
 		void EndScene();
-
-		const RendererStatistics &GetStatistics() const
-		{
-			return context.Statistics;
-		}
-
-		template<typename ...Args>
-		RenderCommand &AddRenderCommand(Args &&...args)
-		{
-			return context.RenderQueue.Emplace(std::forward<Args>(args)...);
-		}
+		const RendererStatistics &GetStatistics() const;
+		void SetFramebuffer(const std::shared_ptr<Framebuffer> &framebuffer);
 	};
 }

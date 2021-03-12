@@ -9,23 +9,23 @@ namespace Hazel
 	template<>
 	struct YamlSerializer<glm::vec4>
 	{
-		static void Serialize(YamlDocument &document, const glm::vec4 &value)
+		static void Serialize(YamlDocument &yaml, const glm::vec4 &v)
 		{
-			document.InlineBlock()
+			yaml.InlineBlock()
 				.BeginSequence()
-				.Write(value.x)
-				.Write(value.y)
-				.Write(value.z)
-				.Write(value.w)
+				.Write(v.x)
+				.Write(v.y)
+				.Write(v.z)
+				.Write(v.w)
 				.EndSequence();
 		}
 
-		static void Deserialize(const YamlValue &source, glm::vec4 &value)
+		static void Deserialize(const YamlValue &yaml, glm::vec4 &v)
 		{
-			source[0].Extract(value.x);
-			source[1].Extract(value.y);
-			source[2].Extract(value.z);
-			source[3].Extract(value.w);
+			yaml[0].Extract(v.x);
+			yaml[1].Extract(v.y);
+			yaml[2].Extract(v.z);
+			yaml[3].Extract(v.w);
 		}
 	};
 

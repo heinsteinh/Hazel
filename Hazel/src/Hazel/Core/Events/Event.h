@@ -1,80 +1,29 @@
 #pragma once
 
-#include <sstream>
-
 #include "spdlog/fmt/ostr.h"
+#include "glm/glm.hpp"
 
-#include "Hazel/Core/Utils/FunctorTraits.h"
+#include "Hazel/Core/Input/Key.h"
+#include "Hazel/Core/Input/KeyModifier.h"
+#include "Hazel/Core/Input/MouseButton.h"
 #include "EventType.h"
 #include "EventCategory.h"
 
 namespace Hazel
 {
-	class Event
+	struct Event
 	{
-	private:
-		EventType type = EventType::Unknown;
-		EventCategory categories = EventCategory::None;
-		bool handled = false;
-
-	public:
-		constexpr Event(EventType type, EventCategory categories)
-			: type(type),
-			categories(categories)
-		{
-		}
-
-		virtual ~Event() = default;
-
-		Event(const Event &other) = delete;
-		Event &operator=(const Event &other) = delete;
-
-		constexpr EventType GetType() const
-		{
-			return type;
-		}
-
-		constexpr bool IsInCategory(EventCategory category) const
-		{
-			return categories & category;
-		}
-
-		constexpr bool IsHandled() const
-		{
-			return handled;
-		}
-
-		constexpr void Discard()
-		{
-			handled = true;
-		}
-
-		const char *GetName() const
-		{
-			return typeid(*this).name() + 13;
-		}
-
-		template<typename FunctorType>
-		void Dispatch(FunctorType functor)
-		{
-			using Traits = FunctorTraits<FunctorType>;
-			static_assert(Traits::ArgCount == 1, "Functor must take only one argument.");
-			using EventType = std::decay_t<Traits::ArgType<0>>;
-			static_assert(std::is_convertible_v<EventType &, Event &>, "Functor argument must be an event.");
-			if (!handled && type == EventType::Type)
-			{
-				functor(static_cast<EventType &>(*this));
-			}
-		}
-
-		virtual std::string ToString() const
-		{
-			return GetName();
-		}
+		EventType Type = EventType::Unknown;
+		EventCategory Categories = EventCategory::None;
+		bool Blocked = false;
+		Key Key = Key::Invalid;
+		int Scancode = 0;
+		KeyModifier KeyModifiers = KeyModifier::None;
+		int RepeatCount = 0;
+		unsigned int Text = 0;
+		MouseButton MouseButton = MouseButton::Invalid;
+		glm::vec2 MousePosition{0.0f};
+		glm::vec2 MouseScrollOffset{0.0f};
+		glm::vec2 WindowSize{0.0f};
 	};
-}
-
-inline std::ostream &operator<<(std::ostream &stream, const Hazel::Event &e)
-{
-	return stream << e.ToString();
 }

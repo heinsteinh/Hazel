@@ -2,26 +2,27 @@
 
 #include <functional>
 
+#include "Hazel/Core/Events/Event.h"
+
 namespace Hazel
 {
-	class Event;
-
 	using EventCallback = std::function<void(Event &)>;
 
 	class GlfwEventReceiver
 	{
 	private:
+		Event event;
 		EventCallback callback;
-		int repeatCount = 0;
 
 	public:
-		void OnWindowResized(int width, int height);
-		void OnWindowClosed();
+		void OnWindowResize(int width, int height);
+		void OnWindowRefresh();
+		void OnWindowClose();
 		void OnKey(int key, int scancode, int action, int mods);
 		void OnChar(unsigned int key);
 		void OnMouseButton(int button, int action);
-		void OnMouseScrolled(double x, double y);
-		void OnMouseMoved(double x, double y);
+		void OnMouseScroll(double x, double y);
+		void OnMouseMove(double x, double y);
 
 		void SendEvent(Event &e)
 		{

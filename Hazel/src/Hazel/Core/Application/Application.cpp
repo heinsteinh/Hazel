@@ -1,12 +1,15 @@
 #include "Application.h"
 
 #include "Hazel/Core/Logging/Log.h"
+#include "Private/ApplicationSetup.h"
 #include "Private/ApplicationMainLoop.h"
 
 namespace Hazel
 {
-	Application::Application()
+	Application::Application(const ApplicationInfo &info)
+		: application(std::make_unique<ApplicationPrivate>())
 	{
+		ApplicationSetup::SetupApplicationContext(*application, info);
 		Log::Debug("Application created.");
 	}
 
@@ -18,58 +21,19 @@ namespace Hazel
 	void Application::Run()
 	{
 		Log::Info("Application started.");
-		ApplicationMainLoop::Run(info, context, layers);
+		ApplicationMainLoop::Run(*application);
 		Log::Info("Application stopped.");
 	}
 
-	void Application::Close()
+	void Application::PushLayer(std::unique_ptr<ApplicationLayer> layer)
 	{
-		Log::Info("Exiting application");
-		context.Settings.Running = false;
+		layer->Attach(*application);
+		application->Layers.PushLayer(std::move(layer));
 	}
 
-	void Application::SetGraphicsApi(AvailableGraphicsApi graphicsApi)
+	void Application::PushOverlay(std::unique_ptr<ApplicationLayer> overlay)
 	{
-		info.GraphicsApi = graphicsApi;
-	}
-
-	void Application::SetWindowTitle(const std::string &title)
-	{
-		info.WindowInfo.Title = title;
-	}
-
-	void Application::SetWindowResolution(const glm::vec2 &resolution)
-	{
-		info.WindowInfo.Resolution = resolution;
-	}
-
-	void Application::SetVerticalSynchronization(bool verticalSynchronization)
-	{
-		info.WindowInfo.VerticalSynchronization = verticalSynchronization;
-	}
-
-	void Application::EnableGui(bool guiEnabled)
-	{
-		context.Settings.GuiEnabled = guiEnabled;
-	}
-
-	void Application::EnableGuiRender(bool guiRenderingEnabled)
-	{
-		context.Settings.GuiRenderingEnabled = guiRenderingEnabled;
-	}
-
-	void Application::SetClearColor(const glm::vec4 &clearColor)
-	{
-		info.ClearColor = clearColor;
-	}
-
-	void Application::PushLayer(const std::shared_ptr<Layer> &layer)
-	{
-		layers.Stack.PushLayer(layer);
-	}
-
-	void Application::PushOverlay(const std::shared_ptr<Layer> &overlay)
-	{
-		layers.Stack.PushOverlay(overlay);
+		overlay->Attach(*application);
+		application->Layers.PushOverlay(std::move(overlay));
 	}
 }

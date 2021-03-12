@@ -1,55 +1,57 @@
 #pragma once
 
-#include "ApplicationInfo.h"
-#include "ApplicationContext.h"
-#include "ApplicationLayers.h"
-#include "ApplicationEvents.h"
 #include "Hazel/Core/Gui/GuiLayer.h"
 #include "Hazel/Core/Logging/Log.h"
-#include "Hazel/Rendering/GraphicsApi/GraphicsApiFactory.h"
+#include "ApplicationPrivate.h"
+#include "ApplicationInfo.h"
+#include "ApplicationEvents.h"
+#include "ApplicationGraphicsApi.h"
 
 namespace Hazel
 {
 	class ApplicationSetup
 	{
 	public:
-		static void Setup(ApplicationInfo &info, ApplicationContext &context, ApplicationLayers &layers)
+		static void SetupApplicationContext(ApplicationPrivate &application, const ApplicationInfo &info)
 		{
 			Log::Debug("Application setup.");
-			SetupWindow(info, context);
-			SetupEventSystem(context, layers);
-			SetupLayers(context, layers);
-			context.Chrono.Reset();
+			InitGraphicsApi(application, info);
+			CreateApplicationWindow(application, info);
+			CreateGraphicsContext(application, info);
+			InitSettings(application, info);
+			SetEventCallback(application);
 		}
 
 	private:
-		static void SetupWindow(ApplicationInfo &info, ApplicationContext &context)
+		static void InitGraphicsApi(ApplicationPrivate &application, const ApplicationInfo &info)
 		{
-			context.GraphicsApi = GraphicsApiFactory::CreateApi(info.GraphicsApi);
-			info.WindowInfo.GraphicsApi = context.GraphicsApi.get();
-			context.Window = std::make_unique<Window>(info.WindowInfo);
-			context.Window->GetGraphicsContext().SetClearColor(info.ClearColor);
+			application.GraphicsApi = ApplicationGraphicsApi::Create(info.GraphicsApi);
 		}
 
-		static void SetupEventSystem(ApplicationContext &context, ApplicationLayers &layers)
+		static void CreateApplicationWindow(ApplicationPrivate &application, const ApplicationInfo &info)
 		{
-			context.Window->SetEventCallback([&](Event &e)
-			{
-				ApplicationEvents::ProcessEvent(context, layers, e);
-			});
+			application.Window = application.GraphicsApi->CreateNewWindow(info);
 		}
 
-		static void SetupLayers(ApplicationContext &context, ApplicationLayers &layers)
+		static void CreateGraphicsContext(ApplicationPrivate &application, const ApplicationInfo &info)
 		{
-			if (context.Settings.GuiEnabled)
+			application.GraphicsContext = application.GraphicsApi->CreateGraphicsContext(*application.Window);
+			application.GraphicsContext->SetVerticalSynchronization(info.VerticalSynchronization);
+			application.GraphicsContext->SetClearColor(info.ClearColor);
+		}
+
+		static void InitSettings(ApplicationPrivate &application, const ApplicationInfo &info)
+		{
+			application.GuiEnabled = info.GuiEnabled;
+			application.Settings.GuiRenderingEnabled = info.GuiRenderingEnabled;
+			application.Chrono.Reset();
+		}
+
+		static void SetEventCallback(ApplicationPrivate &application)
+		{
+			application.Window->SetEventCallback([&](Event &e)
 			{
-				layers.GuiLayer = std::make_shared<GuiLayer>();
-				layers.Stack.PushOverlay(layers.GuiLayer);
-			}
-			layers.Stack.FromBottomToTop([&](const auto &layer)
-			{
-				layer->Attach(context);
-				layer->OnAttach();
+				ApplicationEvents::ProcessEvent(application, e);
 			});
 		}
 	};

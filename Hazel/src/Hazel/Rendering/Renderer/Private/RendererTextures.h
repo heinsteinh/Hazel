@@ -15,7 +15,7 @@ namespace Hazel
 	public:
 		RendererTextures(GraphicsContext &graphicsContext, size_t slotCount)
 			: textures(slotCount),
-			whiteTexture(TextureFactory::CreateFlatTexture(graphicsContext, glm::vec4(1.0f)))
+			whiteTexture(TextureFactory(graphicsContext).CreateFlatTexture(glm::vec4(1.0f)))
 		{
 			textures.Add(whiteTexture);
 		}

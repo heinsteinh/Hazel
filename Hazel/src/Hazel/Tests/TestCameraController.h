@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Hazel/Scene/Scripting/NativeScript.h"
+#include "Hazel/Scene/Assets/Script.h"
 #include "CameraController.h"
 #include "Controller.h"
-#include "Hazel/Scene/Components/CameraComponent.h"
+#include "Hazel/Scene/Components/Camera/CameraComponent.h"
 
 namespace Hazel
 {
-	class TestCameraController : public NativeScript
+	class TestCameraController : public Script
 	{
 	private:
 		Controller controller;
@@ -16,14 +16,16 @@ namespace Hazel
 	public:
 		virtual void OnUpdate() override
 		{
-			auto deltaTime = GetDeltaTime();
-			auto &input = GetInput();
-			auto camera = TryGetComponent<CameraComponent>();
+			auto context = GetSceneManager();
+			auto entity = GetEntity();
+			auto deltaTime = context.GetDeltaTime();
+			auto &input = context.GetInput();
+			auto camera = entity.TryGetComponent<CameraComponent>();
 			if (camera)
 			{
 				cameraController.UpdateProjection(camera->Projection, input, deltaTime);
 			}
-			controller.UpdateTransform(GetTransform(), input, deltaTime);
+			controller.UpdateTransform(entity.GetTransform(), input, deltaTime);
 		}
 	};
 }
